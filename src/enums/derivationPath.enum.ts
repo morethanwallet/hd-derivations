@@ -1,5 +1,6 @@
 const CommonDerivationPath = {
   NATIVE_SEG_WIT_BTC: "m/84'/0'/0'/0",
+  SEG_WIT_BTC: "m/49'/0'/0'/0",
   LEGACY_BTC: "m/44'/0'/0'/0",
   TAPROOT_BTC: "m/86'/0'/0'/0",
   LEGACY_DOGE: "m/44'/3'/0'/0",
@@ -18,6 +19,7 @@ const CommonDerivationPath = {
 
 const CoinomiDerivationPath = {
   NATIVE_SEG_WIT_BTC: "m/84'/0'/0'/0",
+  SEG_WIT_BTC: "m/49'/0'/0'/0",
   LEGACY_BTC: "m/44'/0'/0'/0",
   TAPROOT_BTC: "m/86'/0'/0'/0",
   LEGACY_DOGE: "m/44'/3'/0'/0",

@@ -1,6 +1,6 @@
 import { type ValueOf } from "@/types/index.js";
 import { DerivationPath } from "@/enums/index.js";
-import { AbstractAddress, type Address } from "../types/index.js";
+import { type AbstractAddress, type Address } from "../types/index.js";
 import { networks } from "bitcoinjs-lib";
 import {
   AvaxXAddress,
@@ -12,6 +12,7 @@ import {
   XrpAddress,
   ZcashTransparentAddress,
   TaprootAddress,
+  P2wpkhInP2shAddress,
 } from "../common/index.js";
 import { SolanaAddress } from "../solana/index.js";
 import { CardanoAddress } from "../cardano/index.js";
@@ -36,6 +37,15 @@ const derivationPathToAddress: Record<
     },
     createAddressInstance: (addressConfig, mnemonic) => {
       return new P2wpkhAddress(addressConfig, mnemonic);
+    },
+  },
+  [DerivationPath.SEG_WIT_BTC]: {
+    config: {
+      derivationPath: DerivationPath.SEG_WIT_BTC,
+      keysConfig: networks.bitcoin,
+    },
+    createAddressInstance: (addressConfig, mnemonic) => {
+      return new P2wpkhInP2shAddress(addressConfig, mnemonic);
     },
   },
   [DerivationPath.LEGACY_BTC]: {
