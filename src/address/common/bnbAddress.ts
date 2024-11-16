@@ -13,8 +13,11 @@ import {
 import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
 import { DerivationPath } from "@/enums/index.js";
-import { searchFromMnemonic } from "../helpers/index.js";
-import { EMPTY_MNEMONIC, FIRST_ADDRESS_INDEX } from "../constants/index.js";
+import {
+  EMPTY_MNEMONIC,
+  FIRST_ADDRESS_INDEX,
+  SEARCH_FROM_MNEMONIC_LIMIT,
+} from "../constants/index.js";
 
 const BNB_HRP = "bnb";
 
@@ -43,12 +46,11 @@ class BnbAddress extends Keys implements AbstractAddress<typeof DerivationPath.B
   }
 
   public importByPrivateKey(privateKey: string): AddressMetadata<typeof DerivationPath.BNB> {
-    const mnemonicResults = searchFromMnemonic<typeof DerivationPath.BNB>(
-      privateKey,
-      this.getAddressMetadata.bind(this)
-    );
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const addressMetadata = this.getAddressMetadata(i);
 
-    if (mnemonicResults !== null) return mnemonicResults;
+      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);

@@ -10,8 +10,11 @@ import {
   type KeyPair,
 } from "../types/index.js";
 import { getKeyPairFromEc } from "./helpers/index.js";
-import { searchFromMnemonic } from "../helpers/index.js";
-import { FIRST_ADDRESS_INDEX, EMPTY_MNEMONIC } from "../constants/index.js";
+import {
+  FIRST_ADDRESS_INDEX,
+  EMPTY_MNEMONIC,
+  SEARCH_FROM_MNEMONIC_LIMIT,
+} from "../constants/index.js";
 
 const PUBLIC_KEY_PREFIX_END_INDEX = 1;
 const X_ONLY_PUBLIC_KEY_LENGTH = 32;
@@ -48,12 +51,11 @@ class TaprootAddress extends Keys implements AbstractAddress<typeof DerivationPa
   public importByPrivateKey(
     privateKey: string
   ): AddressMetadata<typeof DerivationPath.TAPROOT_BTC> {
-    const mnemonicResults = searchFromMnemonic<typeof DerivationPath.TAPROOT_BTC>(
-      privateKey,
-      this.getAddressMetadata.bind(this)
-    );
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const addressMetadata = this.getAddressMetadata(i);
 
-    if (mnemonicResults !== null) return mnemonicResults;
+      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);

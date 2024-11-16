@@ -11,8 +11,11 @@ import {
 import { ExceptionMessage } from "@/exceptions/index.js";
 import { DerivationPath } from "@/enums/index.js";
 import { getKeyPairFromEc } from "./helpers/index.js";
-import { searchFromMnemonic } from "../helpers/index.js";
-import { EMPTY_MNEMONIC, FIRST_ADDRESS_INDEX } from "../constants/index.js";
+import {
+  EMPTY_MNEMONIC,
+  FIRST_ADDRESS_INDEX,
+  SEARCH_FROM_MNEMONIC_LIMIT,
+} from "../constants/index.js";
 
 const HEXADECIMAL_SYSTEM_IDENTIFIER = 16;
 
@@ -66,12 +69,11 @@ class ZcashTransparentAddress
   public importByPrivateKey(
     privateKey: string
   ): AddressMetadata<typeof DerivationPath.ZEC_TRANSPARENT> {
-    const mnemonicResults = searchFromMnemonic<typeof DerivationPath.ZEC_TRANSPARENT>(
-      privateKey,
-      this.getAddressMetadata.bind(this)
-    );
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const addressMetadata = this.getAddressMetadata(i);
 
-    if (mnemonicResults !== null) return mnemonicResults;
+      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);

@@ -1,7 +1,7 @@
 import { payments } from "bitcoinjs-lib";
 import { Keys } from "./keys/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
-import { EMPTY_MNEMONIC } from "../constants/index.js";
+import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
 import { DerivationPath } from "@/enums/index.js";
 import {
@@ -11,7 +11,6 @@ import {
   type KeyPair,
 } from "../types/index.js";
 import { getKeyPairFromEc } from "./helpers/index.js";
-import { searchFromMnemonic } from "../helpers/index.js";
 import { FIRST_ADDRESS_INDEX } from "../constants/index.js";
 
 type NetworkDerivationPath = typeof DerivationPath.LEGACY_DOGE | typeof DerivationPath.LEGACY_BTC;
@@ -45,12 +44,11 @@ class P2pkhAddress extends Keys implements AbstractAddress<NetworkDerivationPath
   }
 
   public importByPrivateKey(privateKey: string): AddressMetadata<NetworkDerivationPath> {
-    const mnemonicResults = searchFromMnemonic<NetworkDerivationPath>(
-      privateKey,
-      this.getAddressMetadata.bind(this)
-    );
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const addressMetadata = this.getAddressMetadata(i);
 
-    if (mnemonicResults !== null) return mnemonicResults;
+      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);

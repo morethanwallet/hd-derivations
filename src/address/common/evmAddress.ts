@@ -17,8 +17,11 @@ import {
 } from "../types/index.js";
 import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
-import { searchFromMnemonic } from "../helpers/index.js";
-import { EMPTY_MNEMONIC, FIRST_ADDRESS_INDEX } from "../constants/index.js";
+import {
+  EMPTY_MNEMONIC,
+  FIRST_ADDRESS_INDEX,
+  SEARCH_FROM_MNEMONIC_LIMIT,
+} from "../constants/index.js";
 import { type DerivationPath } from "@/enums/index.js";
 
 type NetworkDerivationPath =
@@ -54,12 +57,11 @@ class EvmAddress extends Keys implements AbstractAddress<NetworkDerivationPath> 
   }
 
   public importByPrivateKey(privateKey: string): AddressMetadata<NetworkDerivationPath> {
-    const mnemonicResults = searchFromMnemonic<NetworkDerivationPath>(
-      privateKey,
-      this.getAddressMetadata.bind(this)
-    );
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const addressMetadata = this.getAddressMetadata(i);
 
-    if (mnemonicResults !== null) return mnemonicResults;
+      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    }
 
     const rawPrivateKey = toUint8Array(
       Buffer.from(this.checkAndRemoveHexPrefix(privateKey), "hex")

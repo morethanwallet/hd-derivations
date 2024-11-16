@@ -11,8 +11,11 @@ import {
 } from "../types/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
 import { getKeyPairFromEc } from "./helpers/index.js";
-import { searchFromMnemonic } from "../helpers/index.js";
-import { FIRST_ADDRESS_INDEX, EMPTY_MNEMONIC } from "../constants/index.js";
+import {
+  FIRST_ADDRESS_INDEX,
+  EMPTY_MNEMONIC,
+  SEARCH_FROM_MNEMONIC_LIMIT,
+} from "../constants/index.js";
 
 class CashAddrAddress extends Keys implements AbstractAddress<typeof DerivationPath.CASH_ADDR_BCH> {
   private addressConfig: AddressConfig;
@@ -43,12 +46,11 @@ class CashAddrAddress extends Keys implements AbstractAddress<typeof DerivationP
   public importByPrivateKey(
     privateKey: string
   ): AddressMetadata<typeof DerivationPath.CASH_ADDR_BCH> {
-    const mnemonicResults = searchFromMnemonic<typeof DerivationPath.CASH_ADDR_BCH>(
-      privateKey,
-      this.getAddressMetadata.bind(this)
-    );
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const addressMetadata = this.getAddressMetadata(i);
 
-    if (mnemonicResults !== null) return mnemonicResults;
+      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);

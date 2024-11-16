@@ -7,14 +7,12 @@ import {
   PrivateKey,
   type PublicKey,
 } from "@emurgo/cardano-serialization-lib-nodejs";
+import { type AbstractAddress, type AddressConfig, type AddressMetadata } from "../types/index.js";
 import {
-  type AbstractAddress,
-  type CardanoAddressMetadata,
-  type AddressConfig,
-  type AddressMetadata,
-} from "../types/index.js";
-import { searchFromMnemonic } from "../helpers/index.js";
-import { EMPTY_MNEMONIC, FIRST_ADDRESS_INDEX } from "../constants/index.js";
+  EMPTY_MNEMONIC,
+  FIRST_ADDRESS_INDEX,
+  SEARCH_FROM_MNEMONIC_LIMIT,
+} from "../constants/index.js";
 import { type DerivationPath } from "@/enums/index.js";
 
 type RawKeys = {
@@ -76,12 +74,15 @@ class CardanoAddress extends Keys implements AbstractAddress<typeof DerivationPa
     paymentPrivateKey: string,
     stakingPrivateKey: string
   ): AddressMetadata<typeof DerivationPath.ADA> {
-    const mnemonicResults = searchFromMnemonic<typeof DerivationPath.ADA>(
-      paymentPrivateKey,
-      this.getAddressMetadata.bind(this)
-    );
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const addressMetadata = this.getAddressMetadata(i);
 
-    if (mnemonicResults !== null) return mnemonicResults;
+      if (
+        addressMetadata.privateKey === paymentPrivateKey &&
+        addressMetadata.stakingPrivateKey === stakingPrivateKey
+      )
+        return addressMetadata;
+    }
 
     const rawPaymentPublicKey = PrivateKey.from_hex(paymentPrivateKey).to_public();
     const rawStakingPublicKey = PrivateKey.from_hex(stakingPrivateKey).to_public();

@@ -10,8 +10,11 @@ import {
   type KeyPair,
 } from "../types/index.js";
 import { getKeyPairFromEc } from "./helpers/index.js";
-import { searchFromMnemonic } from "../helpers/index.js";
-import { EMPTY_MNEMONIC, FIRST_ADDRESS_INDEX } from "../constants/index.js";
+import {
+  EMPTY_MNEMONIC,
+  FIRST_ADDRESS_INDEX,
+  SEARCH_FROM_MNEMONIC_LIMIT,
+} from "../constants/index.js";
 
 class P2wpkhAddress
   extends Keys
@@ -47,12 +50,11 @@ class P2wpkhAddress
   public importByPrivateKey(
     privateKey: string
   ): AddressMetadata<typeof DerivationPath.NATIVE_SEG_WIT_BTC> {
-    const mnemonicResults = searchFromMnemonic<typeof DerivationPath.NATIVE_SEG_WIT_BTC>(
-      privateKey,
-      this.getAddressMetadata.bind(this)
-    );
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const addressMetadata = this.getAddressMetadata(i);
 
-    if (mnemonicResults !== null) return mnemonicResults;
+      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);
