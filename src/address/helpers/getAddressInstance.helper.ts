@@ -3,7 +3,7 @@ import { DerivationPath } from "@/enums/index.js";
 import { type AbstractAddress, type Address } from "../types/index.js";
 import { networks } from "bitcoinjs-lib";
 import {
-  AvaxXAddress,
+  AvaxAddress,
   BnbAddress,
   CashAddrAddress,
   EvmAddress,
@@ -140,13 +140,13 @@ const derivationPathToAddress: Record<
       return new BnbAddress(addressConfig, mnemonic);
     },
   },
-  [DerivationPath.AVAX_X]: {
+  [DerivationPath.AVAX]: {
     config: {
-      derivationPath: DerivationPath.AVAX_X,
+      derivationPath: DerivationPath.AVAX,
       keysConfig: networks.bitcoin,
     },
     createAddressInstance: (addressConfig, mnemonic) => {
-      return new AvaxXAddress(addressConfig, mnemonic);
+      return new AvaxAddress(addressConfig, mnemonic);
     },
   },
   [DerivationPath.AVAX_C]: {
