@@ -4,7 +4,7 @@ import { type DerivationPath } from "@/enums/index.js";
 
 type CommonAddressMetadata = {
   path: string;
-  address: string | undefined;
+  address: string;
   mnemonic: string;
 } & KeyPair;
 
@@ -23,10 +23,18 @@ type AddressConfig = {
   derivationPath: string;
 };
 
+type BitcoinCoreAddress =
+  | typeof DerivationPath.LEGACY_BTC
+  | typeof DerivationPath.TAPROOT_BTC
+  | typeof DerivationPath.SEG_WIT_BTC
+  | typeof DerivationPath.NATIVE_SEG_WIT_BTC;
+
 type AbstractAddress<T extends ValueOf<typeof DerivationPath>> = {
   getAddressMetadata: T extends typeof DerivationPath.AVAX
     ? (addressIndex: number, chainType: AvaxChainType) => AddressMetadata<T>
-    : (addressIndex: number, base58RootKey?: string) => AddressMetadata<T>;
+    : T extends BitcoinCoreAddress
+    ? (addressIndex: number, base58RootKey?: string) => AddressMetadata<T>
+    : (addressIndex: number) => AddressMetadata<T>;
   importByPrivateKey: T extends typeof DerivationPath.ADA
     ? (privateKey: string, stakingPrivateKey: string) => AddressMetadata<T>
     : T extends typeof DerivationPath.AVAX
