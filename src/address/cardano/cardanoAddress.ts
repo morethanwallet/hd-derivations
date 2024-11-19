@@ -5,9 +5,16 @@ import {
   NetworkInfo,
   Credential,
   PrivateKey,
-  type PublicKey,
+  PublicKey,
+  EnterpriseAddress,
+  RewardAddress,
 } from "@emurgo/cardano-serialization-lib-nodejs";
-import { type AbstractAddress, type AddressConfig, type AddressMetadata } from "../types/index.js";
+import {
+  type CardanoAddressMetadata,
+  type CardanoShelleyAddressType,
+  type AbstractAddress,
+  type AddressConfig,
+} from "../types/index.js";
 import {
   EMPTY_MNEMONIC,
   FIRST_ADDRESS_INDEX,
@@ -38,6 +45,8 @@ function convertDerivationPathToIntegersArray(derivationPath: string): string[] 
     .filter((segment) => !Number.isNaN(Number.parseInt(segment)));
 }
 
+// TODO: Refactor typing and code
+
 class CardanoAddress extends Keys implements AbstractAddress<typeof DerivationPath.ADA> {
   private derivationPath: string;
 
@@ -47,59 +56,226 @@ class CardanoAddress extends Keys implements AbstractAddress<typeof DerivationPa
     this.derivationPath = addressConfig.derivationPath;
   }
 
-  public getAddressMetadata(addressIndex: number): AddressMetadata<typeof DerivationPath.ADA> {
+  public getAddressMetadata<C extends CardanoShelleyAddressType>(
+    addressIndex: number,
+    addressType: C
+  ): CardanoAddressMetadata<C> {
     const rootKey = this.getRootKey();
     const account = this.getAccount(rootKey);
-    const paymentNode = this.getNode(account, addressIndex, Change.EXTERNAL);
-    const stakingNode = this.getNode(account, addressIndex, Change.CHIMERIC);
-    const rawPaymentKeys = this.getRawKeys(paymentNode);
-    const rawStakingKeys = this.getRawKeys(stakingNode);
-    const paymentCredential = this.getCredential(rawPaymentKeys.publicKey);
-    const stakingCredential = this.getCredential(rawStakingKeys.publicKey);
-    const address = this.generateAddress(paymentCredential, stakingCredential);
+
+    switch (addressType) {
+      case "base": {
+        return {
+          ...this.getBaseAddressMetadata(account, addressIndex),
+        } as CardanoAddressMetadata<C>;
+      }
+      case "reward": {
+        return {
+          ...this.getRewardAddressMetadata(account, addressIndex),
+        } as CardanoAddressMetadata<C>;
+      }
+      case "enterprise": {
+        return {
+          ...this.getEnterpriseAddressMetadata(account, addressIndex),
+        } as CardanoAddressMetadata<C>;
+      }
+    }
+
+    throw new Error("Invalid Cardano address type");
+  }
+
+  public importByPrivateKey<C extends CardanoShelleyAddressType>(
+    privateKey: string,
+    rewardPrivateKey: C extends "base" ? string : null,
+    addressType: C
+  ): CardanoAddressMetadata<C> {
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const addressMetadata = this.getAddressMetadata<C>(i, addressType);
+
+      if (this.isCardanoBaseAddress(addressMetadata)) {
+        if (
+          addressMetadata.enterprisePrivateKey === privateKey &&
+          addressMetadata.rewardPrivateKey === rewardPrivateKey
+        ) {
+          return addressMetadata;
+        }
+      } else if (addressMetadata.privateKey === privateKey) {
+        return addressMetadata;
+      }
+    }
+
+    switch (addressType) {
+      case "base": {
+        return {
+          ...this.importBaseMetadataByPrivateKey(privateKey, rewardPrivateKey!),
+        } as CardanoAddressMetadata<C>;
+      }
+      case "reward": {
+        return {
+          ...this.importRewardMetadataByPrivateKey(privateKey),
+        } as CardanoAddressMetadata<C>;
+      }
+      case "enterprise": {
+        return {
+          ...this.importEnterpriseMetadataByPrivateKey(privateKey),
+        } as CardanoAddressMetadata<C>;
+      }
+    }
+
+    throw new Error("Invalid Cardano address type");
+  }
+
+  private importEnterpriseMetadataByPrivateKey(
+    privateKey: string
+  ): CardanoAddressMetadata<"enterprise"> {
+    const rawPublicKey = PrivateKey.from_hex(privateKey).to_public();
+    const credential = this.getCredential(rawPublicKey);
+    const address = this.getEnterpriseAddress(credential);
 
     return {
       address,
-      privateKey: rawPaymentKeys.privateKey.to_hex(),
-      publicKey: rawPaymentKeys.publicKey.to_hex(),
-      stakingPrivateKey: rawStakingKeys.privateKey.to_hex(),
-      stakingPublicKey: rawStakingKeys.publicKey.to_hex(),
+      privateKey,
+      publicKey: rawPublicKey.to_hex(),
+      path: this.getFullDerivationPath(FIRST_ADDRESS_INDEX, Change.EXTERNAL),
+      mnemonic: EMPTY_MNEMONIC,
+    };
+  }
+
+  private importRewardMetadataByPrivateKey(privateKey: string): CardanoAddressMetadata<"reward"> {
+    const rawPublicKey = PrivateKey.from_hex(privateKey).to_public();
+    const credential = this.getCredential(rawPublicKey);
+    const address = this.getRewardAddress(credential);
+
+    return {
+      address,
+      privateKey,
+      publicKey: rawPublicKey.to_hex(),
+      path: this.getFullDerivationPath(FIRST_ADDRESS_INDEX, Change.CHIMERIC),
+      mnemonic: EMPTY_MNEMONIC,
+    };
+  }
+
+  private importBaseMetadataByPrivateKey(
+    enterprisePrivateKey: string,
+    rewardPrivateKey: string
+  ): CardanoAddressMetadata<"base"> {
+    const rawEnterprisePublicKey = PrivateKey.from_hex(enterprisePrivateKey).to_public();
+    const rawRewardPublicKey = PrivateKey.from_hex(rewardPrivateKey).to_public();
+    const enterpriseCredential = this.getCredential(rawEnterprisePublicKey);
+    const rewardCredential = this.getCredential(rawRewardPublicKey);
+    const address = this.getBaseAddress(enterpriseCredential, rewardCredential);
+
+    return {
+      address,
+      enterprisePrivateKey,
+      rewardPrivateKey,
+      enterprisePublicKey: rawEnterprisePublicKey.to_hex(),
+      enterprisePath: this.getFullDerivationPath(FIRST_ADDRESS_INDEX, Change.EXTERNAL),
+      rewardPublicKey: rawRewardPublicKey.to_hex(),
+      rewardPath: this.getFullDerivationPath(FIRST_ADDRESS_INDEX, Change.CHIMERIC),
+      mnemonic: EMPTY_MNEMONIC,
+    };
+  }
+
+  private getEnterpriseAddressMetadata(
+    account: Bip32PrivateKey,
+    addressIndex: number
+  ): CardanoAddressMetadata<"enterprise"> {
+    const node = account.derive(Change.EXTERNAL).derive(addressIndex);
+    const { privateKey, publicKey } = this.getRawKeys(node);
+    const credential = this.getCredential(publicKey);
+    const address = this.getEnterpriseAddress(credential);
+
+    return {
+      address,
       path: this.getFullDerivationPath(addressIndex, Change.EXTERNAL),
-      stakingPath: this.getFullDerivationPath(addressIndex, Change.CHIMERIC),
+      privateKey: privateKey.to_hex(),
+      publicKey: publicKey.to_hex(),
       mnemonic: this.mnemonic,
     };
   }
 
-  public importByPrivateKey(
-    paymentPrivateKey: string,
-    stakingPrivateKey: string
-  ): AddressMetadata<typeof DerivationPath.ADA> {
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const addressMetadata = this.getAddressMetadata(i);
-
-      if (
-        addressMetadata.privateKey === paymentPrivateKey &&
-        addressMetadata.stakingPrivateKey === stakingPrivateKey
-      )
-        return addressMetadata;
-    }
-
-    const rawPaymentPublicKey = PrivateKey.from_hex(paymentPrivateKey).to_public();
-    const rawStakingPublicKey = PrivateKey.from_hex(stakingPrivateKey).to_public();
-    const paymentCredential = this.getCredential(rawPaymentPublicKey);
-    const stakingCredential = this.getCredential(rawStakingPublicKey);
-    const address = this.generateAddress(paymentCredential, stakingCredential);
+  private getRewardAddressMetadata(
+    account: Bip32PrivateKey,
+    addressIndex: number
+  ): CardanoAddressMetadata<"reward"> {
+    const node = account.derive(Change.CHIMERIC).derive(addressIndex);
+    const { privateKey, publicKey } = this.getRawKeys(node);
+    const credential = this.getCredential(publicKey);
+    const address = this.getRewardAddress(credential);
 
     return {
       address,
-      privateKey: paymentPrivateKey,
-      publicKey: rawPaymentPublicKey.to_hex(),
-      stakingPrivateKey: stakingPrivateKey,
-      stakingPublicKey: rawStakingPublicKey.to_hex(),
-      path: this.getFullDerivationPath(FIRST_ADDRESS_INDEX, Change.EXTERNAL),
-      stakingPath: this.getFullDerivationPath(FIRST_ADDRESS_INDEX, Change.CHIMERIC),
-      mnemonic: EMPTY_MNEMONIC,
+      path: this.getFullDerivationPath(addressIndex, Change.CHIMERIC),
+      privateKey: privateKey.to_hex(),
+      publicKey: publicKey.to_hex(),
+      mnemonic: this.mnemonic,
     };
+  }
+
+  private getBaseAddressMetadata(
+    account: Bip32PrivateKey,
+    addressIndex: number
+  ): CardanoAddressMetadata<"base"> {
+    const enterpriseAddressMetadata = this.getEnterpriseAddressMetadata(account, addressIndex);
+    const rewardAddressMetadata = this.getRewardAddressMetadata(account, addressIndex);
+
+    const enterpriseCredential = this.getCredential(
+      PublicKey.from_hex(enterpriseAddressMetadata.publicKey)
+    );
+
+    const stakingCredential = this.getCredential(
+      PublicKey.from_hex(rewardAddressMetadata.publicKey)
+    );
+
+    const address = this.getBaseAddress(enterpriseCredential, stakingCredential);
+
+    return {
+      address,
+      enterprisePath: enterpriseAddressMetadata.path,
+      enterprisePrivateKey: enterpriseAddressMetadata.privateKey,
+      enterprisePublicKey: enterpriseAddressMetadata.publicKey,
+      rewardPath: rewardAddressMetadata.path,
+      rewardPrivateKey: rewardAddressMetadata.privateKey,
+      rewardPublicKey: rewardAddressMetadata.publicKey,
+      mnemonic: this.mnemonic,
+    };
+  }
+
+  private getEnterpriseAddress(
+    credential: Credential
+  ): CardanoAddressMetadata<"enterprise">["address"] {
+    const address = EnterpriseAddress.new(NetworkInfo.mainnet().network_id(), credential);
+
+    return address.to_address().to_bech32();
+  }
+
+  private getRewardAddress(credential: Credential): CardanoAddressMetadata<"reward">["address"] {
+    const address = RewardAddress.new(NetworkInfo.mainnet().network_id(), credential);
+
+    return address.to_address().to_bech32();
+  }
+
+  private getBaseAddress(
+    enterpriseCredential: Credential,
+    rewardCredential: Credential
+  ): CardanoAddressMetadata<"base">["address"] {
+    const address = BaseAddress.new(
+      NetworkInfo.mainnet().network_id(),
+      enterpriseCredential,
+      rewardCredential
+    );
+
+    return address.to_address().to_bech32();
+  }
+
+  private isCardanoBaseAddress(metadata: unknown): metadata is CardanoAddressMetadata<"base"> {
+    return (
+      typeof metadata === "object" &&
+      !!metadata &&
+      "rewardPrivateKey" in metadata &&
+      "enterprisePrivateKey" in metadata
+    );
   }
 
   private getFullDerivationPath(addressIndex: number, change: number): string {
@@ -117,10 +293,6 @@ class CardanoAddress extends Keys implements AbstractAddress<typeof DerivationPa
     return account;
   }
 
-  private getNode(account: Bip32PrivateKey, addressIndex: number, change: Change): Bip32PrivateKey {
-    return account.derive(change).derive(addressIndex);
-  }
-
   private getRawKeys(node: Bip32PrivateKey): RawKeys {
     const publicKey = node.to_public().to_raw_key();
     const privateKey = node.to_raw_key();
@@ -130,16 +302,6 @@ class CardanoAddress extends Keys implements AbstractAddress<typeof DerivationPa
 
   private getCredential(rawPublicKey: PublicKey): Credential {
     return Credential.from_keyhash(rawPublicKey.hash());
-  }
-
-  private generateAddress(paymentCredential: Credential, stakingCredential: Credential): string {
-    const baseAddress = BaseAddress.new(
-      NetworkInfo.mainnet().network_id(),
-      paymentCredential,
-      stakingCredential
-    );
-
-    return baseAddress.to_address().to_bech32();
   }
 }
 

@@ -6,7 +6,6 @@ import {
   type AddressConfig,
   type KeyPair,
 } from "../types/index.js";
-import { searchFromMnemonic } from "../helpers/index.js";
 import { Keypair } from "@solana/web3.js";
 import { EMPTY_MNEMONIC, FIRST_ADDRESS_INDEX } from "../constants/index.js";
 import { type DerivationPath } from "@/enums/index.js";
