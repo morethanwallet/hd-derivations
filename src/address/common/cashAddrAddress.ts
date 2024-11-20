@@ -26,9 +26,7 @@ class CashAddrAddress extends Keys implements AbstractAddress<typeof DerivationP
     this.addressConfig = addressConfig;
   }
 
-  public getAddressMetadata(
-    addressIndex: number
-  ): AddressMetadata<typeof DerivationPath.CASH_ADDR_BCH> {
+  public getAddressMetadata(addressIndex: number): AddressMetadata {
     const path = this.getFullDerivationPath(addressIndex);
     const node = this.bip32RootKey.derivePath(path);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
@@ -43,9 +41,7 @@ class CashAddrAddress extends Keys implements AbstractAddress<typeof DerivationP
     };
   }
 
-  public importByPrivateKey(
-    privateKey: string
-  ): AddressMetadata<typeof DerivationPath.CASH_ADDR_BCH> {
+  public importByPrivateKey(privateKey: string): AddressMetadata {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const addressMetadata = this.getAddressMetadata(i);
 
@@ -65,7 +61,7 @@ class CashAddrAddress extends Keys implements AbstractAddress<typeof DerivationP
     };
   }
 
-  private getAddress(publicKey: Uint8Array): string | undefined {
+  private getAddress(publicKey: Uint8Array): string {
     const { address } = payments.p2pkh({
       network: this.addressConfig.keysConfig,
       pubkey: publicKey,

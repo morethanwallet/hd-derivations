@@ -24,10 +24,7 @@ class P2pkhAddress extends Keys implements AbstractAddress<NetworkDerivationPath
     this.addressConfig = addressConfig;
   }
 
-  public getAddressMetadata(
-    addressIndex: number,
-    base58RootKey?: string
-  ): AddressMetadata<NetworkDerivationPath> {
+  public getAddressMetadata(addressIndex: number, base58RootKey?: string): AddressMetadata {
     const path = this.getFullDerivationPath(addressIndex);
     const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.bip32RootKey;
     const node = rootKey.derivePath(path);
@@ -43,7 +40,7 @@ class P2pkhAddress extends Keys implements AbstractAddress<NetworkDerivationPath
     };
   }
 
-  public importByPrivateKey(privateKey: string): AddressMetadata<NetworkDerivationPath> {
+  public importByPrivateKey(privateKey: string): AddressMetadata {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const addressMetadata = this.getAddressMetadata(i);
 
@@ -63,7 +60,7 @@ class P2pkhAddress extends Keys implements AbstractAddress<NetworkDerivationPath
     };
   }
 
-  private getAddress(publicKey: Uint8Array): string | undefined {
+  private getAddress(publicKey: Uint8Array): string {
     const { address } = payments.p2pkh({
       network: this.addressConfig.keysConfig,
       pubkey: publicKey,

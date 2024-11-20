@@ -30,7 +30,7 @@ class BnbAddress extends Keys implements AbstractAddress<typeof DerivationPath.B
     this.derivationPath = addressConfig.derivationPath;
   }
 
-  public getAddressMetadata(addressIndex: number): AddressMetadata<typeof DerivationPath.BNB> {
+  public getAddressMetadata(addressIndex: number): AddressMetadata {
     const path = this.getFullDerivationPath(addressIndex);
     const node = this.bip32RootKey.derivePath(path);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
@@ -45,7 +45,7 @@ class BnbAddress extends Keys implements AbstractAddress<typeof DerivationPath.B
     };
   }
 
-  public importByPrivateKey(privateKey: string): AddressMetadata<typeof DerivationPath.BNB> {
+  public importByPrivateKey(privateKey: string): AddressMetadata {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const addressMetadata = this.getAddressMetadata(i);
 

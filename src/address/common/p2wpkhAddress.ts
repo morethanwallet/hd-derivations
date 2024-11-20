@@ -28,10 +28,7 @@ class P2wpkhAddress
     this.addressConfig = addressConfig;
   }
 
-  public getAddressMetadata(
-    addressIndex: number,
-    base58RootKey?: string
-  ): AddressMetadata<typeof DerivationPath.NATIVE_SEG_WIT_BTC> {
+  public getAddressMetadata(addressIndex: number, base58RootKey?: string): AddressMetadata {
     const path = this.getFullDerivationPath(addressIndex);
     const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.bip32RootKey;
     const node = rootKey.derivePath(path);
@@ -47,9 +44,7 @@ class P2wpkhAddress
     };
   }
 
-  public importByPrivateKey(
-    privateKey: string
-  ): AddressMetadata<typeof DerivationPath.NATIVE_SEG_WIT_BTC> {
+  public importByPrivateKey(privateKey: string): AddressMetadata {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const addressMetadata = this.getAddressMetadata(i);
 
@@ -69,7 +64,7 @@ class P2wpkhAddress
     };
   }
 
-  private getAddress(publicKey: Uint8Array): string | undefined {
+  private getAddress(publicKey: Uint8Array): string {
     const { address } = payments.p2wpkh({
       network: this.addressConfig.keysConfig,
       pubkey: publicKey,

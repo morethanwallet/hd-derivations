@@ -49,9 +49,7 @@ class ZcashTransparentAddress
     this.addressConfig = addressConfig;
   }
 
-  public getAddressMetadata(
-    addressIndex: number
-  ): AddressMetadata<typeof DerivationPath.ZEC_TRANSPARENT> {
+  public getAddressMetadata(addressIndex: number): AddressMetadata {
     const path = this.getFullDerivationPath(addressIndex);
     const node = this.bip32RootKey.derivePath(path);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
@@ -66,9 +64,7 @@ class ZcashTransparentAddress
     };
   }
 
-  public importByPrivateKey(
-    privateKey: string
-  ): AddressMetadata<typeof DerivationPath.ZEC_TRANSPARENT> {
+  public importByPrivateKey(privateKey: string): AddressMetadata {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const addressMetadata = this.getAddressMetadata(i);
 
@@ -88,7 +84,7 @@ class ZcashTransparentAddress
     };
   }
 
-  private getAddress(publicKey: Uint8Array): string | undefined {
+  private getAddress(publicKey: Uint8Array): string {
     const ripemd160 = hash160(publicKey);
     const prefix = splitPrefixIntoBytesArray(this.addressConfig.keysConfig.pubKeyHash);
     const addressBytes = toUint8Array(Buffer.concat([prefix, ripemd160]));

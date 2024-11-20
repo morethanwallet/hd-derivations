@@ -29,10 +29,7 @@ class TaprootAddress extends Keys implements AbstractAddress<typeof DerivationPa
     this.addressConfig = addressConfig;
   }
 
-  public getAddressMetadata(
-    addressIndex: number,
-    base58RootKey?: string
-  ): AddressMetadata<typeof DerivationPath.TAPROOT_BTC> {
+  public getAddressMetadata(addressIndex: number, base58RootKey?: string): AddressMetadata {
     const path = this.getFullDerivationPath(addressIndex);
     const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.bip32RootKey;
     const node = rootKey.derivePath(path);
@@ -48,9 +45,7 @@ class TaprootAddress extends Keys implements AbstractAddress<typeof DerivationPa
     };
   }
 
-  public importByPrivateKey(
-    privateKey: string
-  ): AddressMetadata<typeof DerivationPath.TAPROOT_BTC> {
+  public importByPrivateKey(privateKey: string): AddressMetadata {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const addressMetadata = this.getAddressMetadata(i);
 
@@ -70,16 +65,16 @@ class TaprootAddress extends Keys implements AbstractAddress<typeof DerivationPa
     };
   }
 
-  private getAddress(publicKey: Uint8Array): string | undefined {
+  private getAddress(publicKey: Uint8Array): string {
     const xOnlyPublicKey = this.toXOnlyPublicKey(publicKey);
     const { address } = payments.p2tr({ internalPubkey: xOnlyPublicKey });
-    assert(address, AddressError, ExceptionMessage.P2WPKH_ADDRESS_GENERATION_FAILED);
+    assert(address, AddressError, ExceptionMessage.TAPROOT_ADDRESS_GENERATION_FAILED);
 
     return address;
   }
 
   private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
-    return getKeyPairFromEc(ExceptionMessage.P2WPKH_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
+    return getKeyPairFromEc(ExceptionMessage.TAPROOT_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
   }
 
   private getFullDerivationPath(addressIndex: number): string {

@@ -41,7 +41,7 @@ class EvmAddress extends Keys implements AbstractAddress<NetworkDerivationPath> 
     this.derivationPath = addressConfig.derivationPath;
   }
 
-  public getAddressMetadata(addressIndex: number): AddressMetadata<NetworkDerivationPath> {
+  public getAddressMetadata(addressIndex: number): AddressMetadata {
     const path = this.getFullDerivationPath(addressIndex);
     const node = this.bip32RootKey.derivePath(path);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
@@ -56,7 +56,7 @@ class EvmAddress extends Keys implements AbstractAddress<NetworkDerivationPath> 
     };
   }
 
-  public importByPrivateKey(privateKey: string): AddressMetadata<NetworkDerivationPath> {
+  public importByPrivateKey(privateKey: string): AddressMetadata {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const addressMetadata = this.getAddressMetadata(i);
 

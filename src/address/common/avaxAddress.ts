@@ -34,10 +34,7 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof DerivationPath.
     this.derivationPath = addressConfig.derivationPath;
   }
 
-  public getAddressMetadata(
-    addressIndex: number,
-    chainType: AvaxChainType
-  ): AddressMetadata<typeof DerivationPath.AVAX> {
+  public getAddressMetadata(addressIndex: number, chainType: AvaxChainType): AddressMetadata {
     const path = this.getFullDerivationPath(addressIndex);
     const node = this.bip32RootKey.derivePath(path);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
@@ -52,10 +49,7 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof DerivationPath.
     };
   }
 
-  public importByPrivateKey(
-    privateKey: string,
-    chainType: AvaxChainType
-  ): AddressMetadata<typeof DerivationPath.AVAX> {
+  public importByPrivateKey(privateKey: string, chainType: AvaxChainType): AddressMetadata {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const addressMetadata = this.getAddressMetadata(i, chainType);
 
