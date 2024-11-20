@@ -28,12 +28,12 @@ class P2wpkhInP2shAddress
     this.addressConfig = addressConfig;
   }
 
-  public getAddressMetadata(
-    addressIndex: number
-  ): AddressMetadata<typeof DerivationPath.NATIVE_SEG_WIT_BTC> {
+  public getAddressMetadata(addressIndex: number, base58RootKey?: string): AddressMetadata {
     const path = this.getFullDerivationPath(addressIndex);
-    const rootKey = this.bip32RootKey;
-    const node = rootKey.derivePath(path);
+    const bip32RootKey = base58RootKey
+      ? this.getRootKeyFromBase58(base58RootKey)
+      : this.bip32RootKey;
+    const node = bip32RootKey.derivePath(path);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(node.publicKey);
 
@@ -46,9 +46,7 @@ class P2wpkhInP2shAddress
     };
   }
 
-  public importByPrivateKey(
-    privateKey: string
-  ): AddressMetadata<typeof DerivationPath.NATIVE_SEG_WIT_BTC> {
+  public importByPrivateKey(privateKey: string): AddressMetadata {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const addressMetadata = this.getAddressMetadata(i);
 
@@ -67,16 +65,16 @@ class P2wpkhInP2shAddress
     };
   }
 
-  private getAddress(publicKey: Uint8Array): string | undefined {
+  private getAddress(publicKey: Uint8Array): string {
     const redeem = payments.p2wpkh({ pubkey: publicKey });
     const { address } = payments.p2sh({ redeem });
-    assert(address, AddressError, ExceptionMessage.P2WPKH_ADDRESS_GENERATION_FAILED);
+    assert(address, AddressError, ExceptionMessage.P2WPKH_IN_P2SH_ADDRESS_GENERATION_FAILED);
 
     return address;
   }
 
   private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
-    return getKeyPairFromEc(ExceptionMessage.P2WPKH_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
+    return getKeyPairFromEc(ExceptionMessage.P2WPKH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
   }
 
   private getFullDerivationPath(addressIndex: number): string {
