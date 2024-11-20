@@ -16,7 +16,7 @@ import {
   SEARCH_FROM_MNEMONIC_LIMIT,
 } from "../constants/index.js";
 
-class P2wshAddress
+class P2wshInP2shAddress
   extends Keys
   implements AbstractAddress<typeof DerivationPath.NATIVE_SEG_WIT_BTC>
 {
@@ -65,14 +65,20 @@ class P2wshAddress
 
   private getAddress(publicKey: Uint8Array): string {
     const requiredSignatures = 1;
-    
-    const redeem = payments.p2ms({
+
+    const p2wshRedeem = payments.p2ms({
       m: requiredSignatures,
       pubkeys: [publicKey],
       network: this.addressConfig.keysConfig,
     });
 
-    const { address } = payments.p2wsh({ redeem, network: this.addressConfig.keysConfig });
+    const p2shRedeem = payments.p2wsh({ redeem: p2wshRedeem });
+
+    const { address } = payments.p2sh({
+      redeem: p2shRedeem,
+      network: this.addressConfig.keysConfig,
+    });
+
     assert(address, AddressError, ExceptionMessage.P2WSH_ADDRESS_GENERATION_FAILED);
 
     return address;
@@ -87,4 +93,4 @@ class P2wshAddress
   }
 }
 
-export { P2wshAddress };
+export { P2wshInP2shAddress };
