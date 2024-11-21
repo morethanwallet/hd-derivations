@@ -21,6 +21,8 @@ type CardanoBaseAddressMetadata = Pick<AddressMetadata, "address" | "mnemonic"> 
 
 type CardanoShelleyAddressType = "base" | "reward" | "enterprise";
 
+type XrpAddressType = "x" | "base";
+
 type CardanoAddressMetadata<T extends CardanoShelleyAddressType> = T extends "base"
   ? CardanoBaseAddressMetadata
   : AddressMetadata;
@@ -39,6 +41,8 @@ type BitcoinCoreAddress =
 type AbstractAddress<T extends ValueOf<typeof DerivationPath>> = {
   getAddressMetadata: T extends typeof DerivationPath.AVAX
     ? (addressIndex: number, chainType: AvaxChainType) => AddressMetadata
+    : T extends typeof DerivationPath.XRP
+    ? (addressIndex: number, chainType: XrpAddressType, destinationTag?: number) => AddressMetadata
     : T extends BitcoinCoreAddress
     ? (addressIndex: number, base58RootKey?: string) => AddressMetadata
     : T extends typeof DerivationPath.ADA
@@ -55,6 +59,8 @@ type AbstractAddress<T extends ValueOf<typeof DerivationPath>> = {
       ) => CardanoAddressMetadata<C>
     : T extends typeof DerivationPath.AVAX
     ? (privateKey: string, chainType: AvaxChainType) => AddressMetadata
+    : T extends typeof DerivationPath.XRP
+    ? (privateKey: string, chainType: XrpAddressType, destinationTag?: number) => AddressMetadata
     : (privateKey: string) => AddressMetadata;
 };
 
@@ -70,4 +76,5 @@ export {
   type AbstractAddress,
   type CardanoAddressMetadata,
   type CardanoShelleyAddressType,
+  type XrpAddressType,
 };
