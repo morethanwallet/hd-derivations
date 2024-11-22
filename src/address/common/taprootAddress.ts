@@ -1,38 +1,33 @@
 import { payments } from "bitcoinjs-lib";
 import { Keys } from "./keys/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
-import { DerivationPath } from "@/enums/index.js";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
+import { type CommonAddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
-  type AbstractAddress,
-  type AddressMetadata,
-  type AddressConfig,
-  type KeyPair,
-} from "../types/index.js";
-import { getKeyPairFromEc } from "./helpers/index.js";
+  appendAddressToDerivationPath,
+  getKeyPairFromEc,
+  removeDerivationPathAddress,
+} from "./helpers/index.js";
 import {
   FIRST_ADDRESS_INDEX,
   EMPTY_MNEMONIC,
   SEARCH_FROM_MNEMONIC_LIMIT,
 } from "../constants/index.js";
+import { type Mnemonic } from "@/mnemonic/index.js";
+import { type AbstractAddress } from "./types/index.js";
 
 const PUBLIC_KEY_PREFIX_END_INDEX = 1;
 const X_ONLY_PUBLIC_KEY_LENGTH = 32;
 const X_Y_PUBLIC_KEY_LENGTH = 33;
 
-class TaprootAddress extends Keys implements AbstractAddress<typeof DerivationPath.TAPROOT_BTC> {
-  private addressConfig: AddressConfig;
-
-  public constructor(addressConfig: AddressConfig, mnemonic?: string) {
-    super(addressConfig.keysConfig, mnemonic);
-
-    this.addressConfig = addressConfig;
+class TaprootAddress extends Keys implements AbstractAddress<true> {
+  public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
+    super(keysConfig, mnemonic);
   }
 
-  public getAddressMetadata(addressIndex: number, base58RootKey?: string): AddressMetadata {
-    const path = this.getFullDerivationPath(addressIndex);
-    const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.bip32RootKey;
-    const node = rootKey.derivePath(path);
+  public getData(derivationPath: string, base58RootKey?: string): CommonAddressData {
+    const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.rootKey;
+    const node = rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(node.publicKey);
 
@@ -40,16 +35,27 @@ class TaprootAddress extends Keys implements AbstractAddress<typeof DerivationPa
       privateKey,
       publicKey,
       address,
-      path,
-      mnemonic: this.mnemonic,
+      path: derivationPath,
+      mnemonic: this.mnemonic.getMnemonic(),
     };
   }
 
-  public importByPrivateKey(privateKey: string): AddressMetadata {
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const addressMetadata = this.getAddressMetadata(i);
+  public importByPrivateKey(
+    derivationPath: string,
+    privateKey: string,
+    base58RootKey?: string
+  ): CommonAddressData {
+    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const derivationPathWithAddress = appendAddressToDerivationPath(
+        derivationPathWithoutAddress,
+        i
+      );
+
+      const data = this.getData(derivationPathWithAddress, base58RootKey);
+
+      if (data.privateKey === privateKey) return data;
     }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
@@ -61,7 +67,7 @@ class TaprootAddress extends Keys implements AbstractAddress<typeof DerivationPa
       publicKey,
       address,
       mnemonic: EMPTY_MNEMONIC,
-      path: this.getFullDerivationPath(FIRST_ADDRESS_INDEX),
+      path: appendAddressToDerivationPath(derivationPath, FIRST_ADDRESS_INDEX),
     };
   }
 
@@ -75,10 +81,6 @@ class TaprootAddress extends Keys implements AbstractAddress<typeof DerivationPa
 
   private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
     return getKeyPairFromEc(ExceptionMessage.TAPROOT_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
-  }
-
-  private getFullDerivationPath(addressIndex: number): string {
-    return `${this.addressConfig.derivationPath}/${addressIndex}`;
   }
 
   private toXOnlyPublicKey(publicKey: Uint8Array): Uint8Array {

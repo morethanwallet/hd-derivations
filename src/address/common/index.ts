@@ -8,3 +8,5 @@ export { XrpAddress } from "./xrpAddress.js";
 export { ZcashTransparentAddress } from "./zcashTransparentAddress.js";
 export { TaprootAddress } from "./taprootAddress.js";
 export { P2wpkhInP2shAddress } from "./p2wpkhInP2shAddress.js";
+export { P2wshAddress } from "./p2wshAddress.js";
+export { P2wshInP2shAddress } from "./p2wshInP2shAddress.js";

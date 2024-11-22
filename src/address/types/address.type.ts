@@ -4,13 +4,13 @@ import { type DerivationPath } from "@/enums/index.js";
 
 // TODO: Refactor Cardano typing
 
-type AddressMetadata = {
+type CommonAddressData = {
   path: string;
   address: string;
   mnemonic: string;
 } & KeyPair;
 
-type CardanoBaseAddressMetadata = Pick<AddressMetadata, "address" | "mnemonic"> & {
+type CardanoBaseAddressMetadata = Pick<CommonAddressData, "address" | "mnemonic"> & {
   enterprisePrivateKey: string;
   enterprisePublicKey: string;
   enterprisePath: string;
@@ -23,7 +23,7 @@ type CardanoShelleyAddressType = "base" | "reward" | "enterprise";
 
 type CardanoAddressMetadata<T extends CardanoShelleyAddressType> = T extends "base"
   ? CardanoBaseAddressMetadata
-  : AddressMetadata;
+  : CommonAddressData;
 
 type AddressConfig = {
   keysConfig: KeysConfig;
@@ -38,15 +38,15 @@ type BitcoinCoreAddress =
 
 type AbstractAddress<T extends ValueOf<typeof DerivationPath>> = {
   getAddressMetadata: T extends typeof DerivationPath.AVAX
-    ? (addressIndex: number, chainType: AvaxChainType) => AddressMetadata
+    ? (addressIndex: number, chainType: AvaxChainType) => CommonAddressData
     : T extends BitcoinCoreAddress
-    ? (addressIndex: number, base58RootKey?: string) => AddressMetadata
+    ? (addressIndex: number, base58RootKey?: string) => CommonAddressData
     : T extends typeof DerivationPath.ADA
     ? <C extends CardanoShelleyAddressType>(
         addressIndex: number,
         addressType: C
       ) => CardanoAddressMetadata<C>
-    : (addressIndex: number) => AddressMetadata;
+    : (addressIndex: number) => CommonAddressData;
   importByPrivateKey: T extends typeof DerivationPath.ADA
     ? <C extends CardanoShelleyAddressType>(
         privateKey: string,
@@ -54,8 +54,8 @@ type AbstractAddress<T extends ValueOf<typeof DerivationPath>> = {
         addressType: C
       ) => CardanoAddressMetadata<C>
     : T extends typeof DerivationPath.AVAX
-    ? (privateKey: string, chainType: AvaxChainType) => AddressMetadata
-    : (privateKey: string) => AddressMetadata;
+    ? (privateKey: string, chainType: AvaxChainType) => CommonAddressData
+    : (privateKey: string) => CommonAddressData;
 };
 
 type Address<T extends ValueOf<typeof DerivationPath>> = {
@@ -65,7 +65,7 @@ type Address<T extends ValueOf<typeof DerivationPath>> = {
 
 export {
   type Address,
-  type AddressMetadata,
+  type CommonAddressData,
   type AddressConfig,
   type AbstractAddress,
   type CardanoAddressMetadata,

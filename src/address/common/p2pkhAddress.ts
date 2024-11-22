@@ -3,31 +3,24 @@ import { Keys } from "./keys/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
-import { DerivationPath } from "@/enums/index.js";
+import { type CommonAddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
-  type AbstractAddress,
-  type AddressMetadata,
-  type AddressConfig,
-  type KeyPair,
-} from "../types/index.js";
-import { getKeyPairFromEc } from "./helpers/index.js";
+  appendAddressToDerivationPath,
+  getKeyPairFromEc,
+  removeDerivationPathAddress,
+} from "./helpers/index.js";
 import { FIRST_ADDRESS_INDEX } from "../constants/index.js";
+import { type Mnemonic } from "@/mnemonic/index.js";
+import { type AbstractAddress } from "./types/index.js";
 
-type NetworkDerivationPath = typeof DerivationPath.LEGACY_DOGE | typeof DerivationPath.LEGACY_BTC;
-
-class P2pkhAddress extends Keys implements AbstractAddress<NetworkDerivationPath> {
-  private addressConfig: AddressConfig;
-
-  public constructor(addressConfig: AddressConfig, mnemonic?: string) {
-    super(addressConfig.keysConfig, mnemonic);
-
-    this.addressConfig = addressConfig;
+class P2pkhAddress extends Keys implements AbstractAddress<true> {
+  public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
+    super(keysConfig, mnemonic);
   }
 
-  public getAddressMetadata(addressIndex: number, base58RootKey?: string): AddressMetadata {
-    const path = this.getFullDerivationPath(addressIndex);
-    const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.bip32RootKey;
-    const node = rootKey.derivePath(path);
+  public getData(derivationPath: string, base58RootKey?: string): CommonAddressData {
+    const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.rootKey;
+    const node = rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(node.publicKey);
 
@@ -35,16 +28,27 @@ class P2pkhAddress extends Keys implements AbstractAddress<NetworkDerivationPath
       privateKey,
       publicKey,
       address,
-      path,
-      mnemonic: this.mnemonic,
+      path: derivationPath,
+      mnemonic: this.mnemonic.getMnemonic(),
     };
   }
 
-  public importByPrivateKey(privateKey: string): AddressMetadata {
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const addressMetadata = this.getAddressMetadata(i);
+  public importByPrivateKey(
+    derivationPath: string,
+    privateKey: string,
+    base58RootKey?: string
+  ): CommonAddressData {
+    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const derivationPathWithAddress = appendAddressToDerivationPath(
+        derivationPathWithoutAddress,
+        i
+      );
+
+      const data = this.getData(derivationPathWithAddress, base58RootKey);
+
+      if (data.privateKey === privateKey) return data;
     }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
@@ -56,16 +60,12 @@ class P2pkhAddress extends Keys implements AbstractAddress<NetworkDerivationPath
       publicKey,
       address,
       mnemonic: EMPTY_MNEMONIC,
-      path: this.getFullDerivationPath(FIRST_ADDRESS_INDEX),
+      path: appendAddressToDerivationPath(derivationPath, FIRST_ADDRESS_INDEX),
     };
   }
 
   private getAddress(publicKey: Uint8Array): string {
-    const { address } = payments.p2pkh({
-      network: this.addressConfig.keysConfig,
-      pubkey: publicKey,
-    });
-
+    const { address } = payments.p2pkh({ network: this.keysConfig, pubkey: publicKey });
     assert(address, AddressError, ExceptionMessage.P2PKH_ADDRESS_GENERATION_FAILED);
 
     return address;
@@ -73,10 +73,6 @@ class P2pkhAddress extends Keys implements AbstractAddress<NetworkDerivationPath
 
   private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
     return getKeyPairFromEc(ExceptionMessage.P2PKH_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
-  }
-
-  private getFullDerivationPath(addressIndex: number): string {
-    return `${this.addressConfig.derivationPath}/${addressIndex}`;
   }
 }
 

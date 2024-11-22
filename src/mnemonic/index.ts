@@ -7,7 +7,7 @@ import {
 } from "bip39";
 
 class Mnemonic {
-  protected mnemonic: string;
+  private mnemonic: string;
 
   public constructor(mnemonic?: string) {
     this.mnemonic = mnemonic === undefined ? generateMnemonic() : mnemonic;
@@ -20,11 +20,11 @@ class Mnemonic {
     }
   }
 
-  protected getSeed(): Buffer {
+  public getSeed(): Buffer {
     return mnemonicToSeedSync(this.mnemonic);
   }
 
-  protected getEntropy(): string {
+  public getEntropy(): string {
     return mnemonicToEntropy(this.mnemonic);
   }
 

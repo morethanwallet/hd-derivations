@@ -1,2 +1,21 @@
-export { type KeysConfig, type KeyPair, type AbstractAddress } from "./types/index.js";
+export {
+  type KeysConfig,
+  type KeyPair,
+  type AbstractAddress,
+  type CommonAddressData,
+} from "./types/index.js";
 export { getAddressInstance } from "./helpers/index.js";
+export {
+  AvaxAddress,
+  BnbAddress,
+  CashAddrAddress,
+  EvmAddress,
+  P2pkhAddress,
+  P2wpkhAddress,
+  P2wshAddress,
+  XrpAddress,
+  ZcashTransparentAddress,
+  TaprootAddress,
+  P2wpkhInP2shAddress,
+  P2wshInP2shAddress,
+} from "./common/index.js";

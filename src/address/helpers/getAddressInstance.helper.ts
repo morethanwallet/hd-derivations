@@ -7,12 +7,8 @@ import {
   BnbAddress,
   CashAddrAddress,
   EvmAddress,
-  P2pkhAddress,
-  P2wpkhAddress,
   XrpAddress,
   ZcashTransparentAddress,
-  TaprootAddress,
-  P2wpkhInP2shAddress,
 } from "../common/index.js";
 import { SolanaAddress } from "../solana/index.js";
 import { CardanoAddress } from "../cardano/index.js";
@@ -21,42 +17,6 @@ const derivationPathToAddress: Record<
   ValueOf<typeof DerivationPath>,
   Address<ValueOf<typeof DerivationPath>>
 > = {
-  [DerivationPath.TAPROOT_BTC]: {
-    config: {
-      derivationPath: DerivationPath.TAPROOT_BTC,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new TaprootAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.NATIVE_SEG_WIT_BTC]: {
-    config: {
-      derivationPath: DerivationPath.NATIVE_SEG_WIT_BTC,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new P2wpkhAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.SEG_WIT_BTC]: {
-    config: {
-      derivationPath: DerivationPath.SEG_WIT_BTC,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new P2wpkhInP2shAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.LEGACY_BTC]: {
-    config: {
-      derivationPath: DerivationPath.LEGACY_BTC,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new P2pkhAddress(addressConfig, mnemonic);
-    },
-  },
   [DerivationPath.LEGACY_DOGE]: {
     config: {
       derivationPath: DerivationPath.LEGACY_DOGE,
@@ -201,15 +161,6 @@ const derivationPathToAddress: Record<
     },
     createAddressInstance: (addressConfig, mnemonic) => {
       return new EvmAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.MULTI_BIT_HD_LEGACY_BTC]: {
-    config: {
-      derivationPath: DerivationPath.MULTI_BIT_HD_LEGACY_BTC,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new P2pkhAddress(addressConfig, mnemonic);
     },
   },
 };

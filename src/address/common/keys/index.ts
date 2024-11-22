@@ -2,21 +2,23 @@ import { type BIP32API, BIP32Factory, type BIP32Interface } from "bip32";
 import { type KeysConfig } from "@/address/index.js";
 import { toUint8Array } from "@/helpers/index.js";
 import { ecc } from "@/ecc/index.js";
-import { Mnemonic } from "@/mnemonic/index.js";
+import { type Mnemonic } from "@/mnemonic/index.js";
 
-class Keys extends Mnemonic {
+class Keys {
   private bip32: BIP32API;
-  protected bip32RootKey: BIP32Interface;
+  protected rootKey: BIP32Interface;
+  protected mnemonic: Mnemonic;
+  protected keysConfig: KeysConfig;
 
-  public constructor(keysConfig: KeysConfig, mnemonic?: string) {
-    super(mnemonic);
-
+  public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     this.bip32 = BIP32Factory(ecc);
-    this.bip32RootKey = this.getBip32RootKeyFromSeed(keysConfig);
+    this.mnemonic = mnemonic;
+    this.keysConfig = keysConfig;
+    this.rootKey = this.getBip32RootKeyFromSeed(keysConfig);
   }
 
   protected getBip32RootKeyFromSeed(keysConfig: KeysConfig): BIP32Interface {
-    const seed = this.getSeed();
+    const seed = this.mnemonic.getSeed();
 
     return this.bip32.fromSeed(toUint8Array(seed), keysConfig);
   }

@@ -1,36 +1,25 @@
 import { payments } from "bitcoinjs-lib";
 import { Keys } from "./keys/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
-import { DerivationPath } from "@/enums/index.js";
+import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
+import { type CommonAddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
-  type AbstractAddress,
-  type AddressMetadata,
-  type AddressConfig,
-  type KeyPair,
-} from "../types/index.js";
-import { getKeyPairFromEc } from "./helpers/index.js";
-import {
-  EMPTY_MNEMONIC,
-  FIRST_ADDRESS_INDEX,
-  SEARCH_FROM_MNEMONIC_LIMIT,
-} from "../constants/index.js";
+  appendAddressToDerivationPath,
+  getKeyPairFromEc,
+  removeDerivationPathAddress,
+} from "./helpers/index.js";
+import { FIRST_ADDRESS_INDEX } from "../constants/index.js";
+import { type Mnemonic } from "@/mnemonic/index.js";
+import { type AbstractAddress } from "./types/index.js";
 
-class P2wshAddress
-  extends Keys
-  implements AbstractAddress<typeof DerivationPath.NATIVE_SEG_WIT_BTC>
-{
-  private addressConfig: AddressConfig;
-
-  public constructor(addressConfig: AddressConfig, mnemonic?: string) {
-    super(addressConfig.keysConfig, mnemonic);
-
-    this.addressConfig = addressConfig;
+class P2wshAddress extends Keys implements AbstractAddress {
+  public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
+    super(keysConfig, mnemonic);
   }
 
-  public getAddressMetadata(addressIndex: number): AddressMetadata {
-    const path = this.getFullDerivationPath(addressIndex);
-    const node = this.bip32RootKey.derivePath(path);
+  public getData(derivationPath: string): CommonAddressData {
+    const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(node.publicKey);
 
@@ -38,18 +27,25 @@ class P2wshAddress
       privateKey,
       publicKey,
       address,
-      path,
-      mnemonic: this.mnemonic,
+      path: derivationPath,
+      mnemonic: this.mnemonic.getMnemonic(),
     };
   }
 
-  public importByPrivateKey(privateKey: string): AddressMetadata {
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const addressMetadata = this.getAddressMetadata(i);
+  public importByPrivateKey(derivationPath: string, privateKey: string): CommonAddressData {
+    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const derivationPathWithAddress = appendAddressToDerivationPath(
+        derivationPathWithoutAddress,
+        i
+      );
+
+      const data = this.getData(derivationPathWithAddress);
+
+      if (data.privateKey === privateKey) return data;
     }
-    
+
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);
     const address = this.getAddress(toUint8Array(Buffer.from(publicKey, "hex")));
@@ -59,20 +55,20 @@ class P2wshAddress
       publicKey,
       address,
       mnemonic: EMPTY_MNEMONIC,
-      path: this.getFullDerivationPath(FIRST_ADDRESS_INDEX),
+      path: appendAddressToDerivationPath(derivationPath, FIRST_ADDRESS_INDEX),
     };
   }
 
   private getAddress(publicKey: Uint8Array): string {
     const requiredSignatures = 1;
-    
+
     const redeem = payments.p2ms({
       m: requiredSignatures,
       pubkeys: [publicKey],
-      network: this.addressConfig.keysConfig,
+      network: this.keysConfig,
     });
 
-    const { address } = payments.p2wsh({ redeem, network: this.addressConfig.keysConfig });
+    const { address } = payments.p2wsh({ redeem, network: this.keysConfig });
     assert(address, AddressError, ExceptionMessage.P2WSH_ADDRESS_GENERATION_FAILED);
 
     return address;
@@ -80,10 +76,6 @@ class P2wshAddress
 
   private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
     return getKeyPairFromEc(ExceptionMessage.P2WSH_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
-  }
-
-  private getFullDerivationPath(addressIndex: number): string {
-    return `${this.addressConfig.derivationPath}/${addressIndex}`;
   }
 }
 
