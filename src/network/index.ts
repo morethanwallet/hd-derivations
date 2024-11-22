@@ -1,1 +1,1 @@
-export { Bitcoin, BitcoinCore } from "./bitcoin/index.js";
+export { Bitcoin, BitcoinCore, MultiBitHd } from "./bitcoin/index.js";
