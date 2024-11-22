@@ -1,9 +1,9 @@
 import { type CommonAddressData } from "@/address/index.js";
 import { type BitcoinCoreAddress, type BitcoinAddress } from "./index.js";
 
-type BitcoinNetworkType = "bitcoinCore" | "multiBitHd" | "bitcoin";
+type BitcoinNetwork = "bitcoinCore" | "multiBitHd" | "bitcoin";
 
-type GetAddressData<T extends BitcoinNetworkType> = T extends "bitcoin"
+type GetAddressData<T extends BitcoinNetwork> = T extends "bitcoin"
   ? (addressType: BitcoinAddress, derivationPath: string) => CommonAddressData
   : T extends "bitcoinCore"
   ? (
@@ -13,7 +13,7 @@ type GetAddressData<T extends BitcoinNetworkType> = T extends "bitcoin"
     ) => CommonAddressData
   : (derivationPath: string) => CommonAddressData;
 
-type ImportByPrivateKey<T extends BitcoinNetworkType> = T extends "bitcoin"
+type ImportByPrivateKey<T extends BitcoinNetwork> = T extends "bitcoin"
   ? (addressType: BitcoinAddress, derivationPath: string, privateKey: string) => CommonAddressData
   : T extends "bitcoinCore"
   ? (
@@ -23,7 +23,7 @@ type ImportByPrivateKey<T extends BitcoinNetworkType> = T extends "bitcoin"
     ) => CommonAddressData
   : (derivationPath: string, privateKey: string) => CommonAddressData;
 
-type AbstractNetwork<T extends BitcoinNetworkType> = {
+type AbstractNetwork<T extends BitcoinNetwork> = {
   getAddressData: GetAddressData<T>;
   importByPrivateKey: ImportByPrivateKey<T>;
 };

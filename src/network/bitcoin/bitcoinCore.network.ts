@@ -5,8 +5,9 @@ import {
   TaprootAddress,
 } from "@/address/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { networks } from "bitcoinjs-lib";
 import { type AbstractNetwork, type BitcoinCoreAddress } from "./types/index.js";
+import { type NetworkType } from "@/network/index.js";
+import { config } from "./config/index.js";
 
 class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
   private p2pkhAddress: P2pkhAddress;
@@ -14,11 +15,11 @@ class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
   private p2wpkhAddress: P2wpkhAddress;
   private taprootAddress: TaprootAddress;
 
-  public constructor(mnemonic: Mnemonic) {
-    this.p2pkhAddress = new P2pkhAddress(networks.bitcoin, mnemonic);
-    this.p2wpkhInP2shAddress = new P2wpkhInP2shAddress(networks.bitcoin, mnemonic);
-    this.p2wpkhAddress = new P2wpkhAddress(networks.bitcoin, mnemonic);
-    this.taprootAddress = new TaprootAddress(networks.bitcoin, mnemonic);
+  public constructor(mnemonic: Mnemonic, type: NetworkType) {
+    this.p2pkhAddress = new P2pkhAddress(config[type].legacy.keysConfig, mnemonic);
+    this.p2wpkhInP2shAddress = new P2wpkhInP2shAddress(config[type].segWit.keysConfig, mnemonic);
+    this.p2wpkhAddress = new P2wpkhAddress(config[type].nativeSegWit.keysConfig, mnemonic);
+    this.taprootAddress = new TaprootAddress(config[type].taproot.keysConfig, mnemonic);
   }
 
   public getAddressData(
