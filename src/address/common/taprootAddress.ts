@@ -7,7 +7,7 @@ import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
   removeDerivationPathAddress,
-} from "./helpers/index.js";
+} from "../helpers/index.js";
 import {
   FIRST_ADDRESS_INDEX,
   EMPTY_MNEMONIC,

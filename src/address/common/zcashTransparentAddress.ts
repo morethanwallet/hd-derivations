@@ -8,7 +8,7 @@ import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
   removeDerivationPathAddress,
-} from "./helpers/index.js";
+} from "../helpers/index.js";
 import {
   EMPTY_MNEMONIC,
   FIRST_ADDRESS_INDEX,
@@ -55,7 +55,7 @@ class ZcashTransparentAddress extends Keys implements AbstractAddress {
       mnemonic: this.mnemonic.getMnemonic(),
     };
   }
-
+  // TODO: Replace all private/public-key parameter types with KeyPair["private/public-Key"]
   public importByPrivateKey(derivationPath: string, privateKey: string): CommonAddressData {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 

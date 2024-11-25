@@ -8,7 +8,7 @@ import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
   removeDerivationPathAddress,
-} from "./helpers/index.js";
+} from "../helpers/index.js";
 import { FIRST_ADDRESS_INDEX } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "./types/index.js";
