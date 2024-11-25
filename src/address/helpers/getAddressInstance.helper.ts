@@ -2,14 +2,7 @@ import { type ValueOf } from "@/types/index.js";
 import { DerivationPath } from "@/enums/index.js";
 import { type AbstractAddress, type Address } from "../types/index.js";
 import { networks } from "bitcoinjs-lib";
-import {
-  AvaxAddress,
-  BnbAddress,
-  CashAddrAddress,
-  EvmAddress,
-  XrpAddress,
-  ZcashTransparentAddress,
-} from "../common/index.js";
+import { AvaxAddress, BnbAddress, EvmAddress } from "../common/index.js";
 import { SolanaAddress } from "../solana/index.js";
 import { CardanoAddress } from "../cardano/index.js";
 
@@ -17,15 +10,6 @@ const derivationPathToAddress: Record<
   ValueOf<typeof DerivationPath>,
   Address<ValueOf<typeof DerivationPath>>
 > = {
-  [DerivationPath.XRP]: {
-    config: {
-      derivationPath: DerivationPath.XRP,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new XrpAddress(addressConfig, mnemonic);
-    },
-  },
   [DerivationPath.SOL]: {
     config: {
       derivationPath: DerivationPath.SOL,
@@ -114,15 +98,6 @@ const derivationPathToAddress: Record<
     },
     createAddressInstance: (addressConfig, mnemonic) => {
       return new EvmAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.MULTI_BIT_HD_LEGACY_BTC]: {
-    config: {
-      derivationPath: DerivationPath.MULTI_BIT_HD_LEGACY_BTC,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new P2pkhAddress(addressConfig, mnemonic);
     },
   },
 };

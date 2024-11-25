@@ -1,38 +1,32 @@
-import { Keys } from "./keys/index.js";
-import { DerivationPath } from "@/enums/index.js";
 import { ExceptionMessage } from "@/exceptions/index.js";
 import { toUint8Array } from "@/helpers/index.js";
+import { type CommonAddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
-  type AbstractAddress,
-  type AddressMetadata,
-  type AddressConfig,
-  type KeyPair,
-  type XrpAddressType,
-} from "../types/index.js";
-import { getKeyPairFromEc } from "./helpers/index.js";
+  appendAddressToDerivationPath,
+  getKeyPairFromEc,
+  removeDerivationPathAddress,
+} from "../helpers/index.js";
 import {
   FIRST_ADDRESS_INDEX,
   EMPTY_MNEMONIC,
   SEARCH_FROM_MNEMONIC_LIMIT,
 } from "../constants/index.js";
 import { Wallet } from "xrpl";
+import { Keys } from "../common/index.js";
+import { type Mnemonic } from "@/mnemonic/index.js";
+import { type AbstractAddress, type AddressType } from "./types/index.js";
 
-class XrpAddress extends Keys implements AbstractAddress<typeof DerivationPath.XRP> {
-  private derivationPath: string;
-
-  public constructor(addressConfig: AddressConfig, mnemonic?: string) {
-    super(addressConfig.keysConfig, mnemonic);
-
-    this.derivationPath = addressConfig.derivationPath;
+class XrpAddress extends Keys implements AbstractAddress {
+  public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
+    super(keysConfig, mnemonic);
   }
 
-  public getAddressMetadata(
-    addressIndex: number,
-    addressType: XrpAddressType,
+  public getData(
+    derivationPath: string,
+    addressType: AddressType,
     destinationTag?: number
-  ): AddressMetadata {
-    const path = this.getFullDerivationPath(addressIndex);
-    const node = this.bip32RootKey.derivePath(path);
+  ): CommonAddressData {
+    const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const wallet = this.getWallet(privateKey, publicKey);
     const address = this.getAddress(wallet, addressType, destinationTag);
@@ -41,20 +35,28 @@ class XrpAddress extends Keys implements AbstractAddress<typeof DerivationPath.X
       privateKey,
       publicKey,
       address,
-      path,
-      mnemonic: this.mnemonic,
+      path: derivationPath,
+      mnemonic: this.mnemonic.getMnemonic(),
     };
   }
 
   public importByPrivateKey(
+    derivationPath: string,
     privateKey: KeyPair["privateKey"],
-    addressType: XrpAddressType,
+    addressType: AddressType,
     destinationTag?: number
-  ): AddressMetadata {
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const addressMetadata = this.getAddressMetadata(i, addressType, destinationTag);
+  ): CommonAddressData {
+    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const derivationPathWithAddress = appendAddressToDerivationPath(
+        derivationPathWithoutAddress,
+        i
+      );
+
+      const data = this.getData(derivationPathWithAddress, addressType, destinationTag);
+
+      if (data.privateKey === privateKey) return data;
     }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
@@ -67,7 +69,7 @@ class XrpAddress extends Keys implements AbstractAddress<typeof DerivationPath.X
       publicKey,
       address,
       mnemonic: EMPTY_MNEMONIC,
-      path: this.getFullDerivationPath(FIRST_ADDRESS_INDEX),
+      path: appendAddressToDerivationPath(derivationPath, FIRST_ADDRESS_INDEX),
     };
   }
 
@@ -75,16 +77,12 @@ class XrpAddress extends Keys implements AbstractAddress<typeof DerivationPath.X
     return getKeyPairFromEc(ExceptionMessage.XRP_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
   }
 
-  private getAddress(wallet: Wallet, addressType: XrpAddressType, destinationTag?: number): string {
+  private getAddress(wallet: Wallet, addressType: AddressType, destinationTag?: number): string {
     return addressType === "base" ? wallet.classicAddress : wallet.getXAddress(destinationTag);
   }
 
   private getWallet(privateKey: KeyPair["privateKey"], publicKey: KeyPair["publicKey"]): Wallet {
     return new Wallet(publicKey, privateKey);
-  }
-
-  private getFullDerivationPath(addressIndex: number): string {
-    return `${this.derivationPath}/${addressIndex}`;
   }
 }
 

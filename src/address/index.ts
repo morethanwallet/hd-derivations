@@ -13,9 +13,9 @@ export {
   P2pkhAddress,
   P2wpkhAddress,
   P2wshAddress,
-  XrpAddress,
   ZcashTransparentAddress,
   TaprootAddress,
   P2wpkhInP2shAddress,
   P2wshInP2shAddress,
 } from "./common/index.js";
+export { XrpAddress } from "./xrp/index.js";
