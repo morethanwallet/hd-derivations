@@ -1,5 +1,4 @@
 const CommonDerivationPath = {
-  CASH_ADDR_BCH: "m/44'/145'/0'/0",
   XRP: "m/44'/144'/0'/0",
   SOL: "m/44'/501'/0'/0'",
   ADA: "m/1852'/1815'/0'",
@@ -12,7 +11,6 @@ const CommonDerivationPath = {
 } as const;
 
 const CoinomiDerivationPath = {
-  CASH_ADDR_BCH: "m/44'/145'/0'/0",
   XRP: "m/44'/144'/0'/0",
   SOL: "m/44'/501'/0'/0'",
   ADA: "m/1852'/1815'/0'",

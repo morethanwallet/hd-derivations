@@ -17,15 +17,6 @@ const derivationPathToAddress: Record<
   ValueOf<typeof DerivationPath>,
   Address<ValueOf<typeof DerivationPath>>
 > = {
-  [DerivationPath.CASH_ADDR_BCH]: {
-    config: {
-      derivationPath: DerivationPath.CASH_ADDR_BCH,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new CashAddrAddress(addressConfig, mnemonic);
-    },
-  },
   [DerivationPath.XRP]: {
     config: {
       derivationPath: DerivationPath.XRP,
