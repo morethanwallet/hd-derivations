@@ -21,6 +21,8 @@ type CardanoBaseAddressMetadata = Pick<CommonAddressData, "address" | "mnemonic"
 
 type CardanoShelleyAddressType = "base" | "reward" | "enterprise";
 
+type XrpAddressType = "x" | "base";
+
 type CardanoAddressMetadata<T extends CardanoShelleyAddressType> = T extends "base"
   ? CardanoBaseAddressMetadata
   : CommonAddressData;
@@ -30,17 +32,15 @@ type AddressConfig = {
   derivationPath: string;
 };
 
-type BitcoinCoreAddress =
-  | typeof DerivationPath.LEGACY_BTC
-  | typeof DerivationPath.TAPROOT_BTC
-  | typeof DerivationPath.SEG_WIT_BTC
-  | typeof DerivationPath.NATIVE_SEG_WIT_BTC;
-
 type AbstractAddress<T extends ValueOf<typeof DerivationPath>> = {
   getAddressMetadata: T extends typeof DerivationPath.AVAX
     ? (addressIndex: number, chainType: AvaxChainType) => CommonAddressData
-    : T extends BitcoinCoreAddress
-    ? (addressIndex: number, base58RootKey?: string) => CommonAddressData
+    : T extends typeof DerivationPath.XRP
+    ? (
+        addressIndex: number,
+        chainType: XrpAddressType,
+        destinationTag?: number
+      ) => CommonAddressData
     : T extends typeof DerivationPath.ADA
     ? <C extends CardanoShelleyAddressType>(
         addressIndex: number,
@@ -55,6 +55,8 @@ type AbstractAddress<T extends ValueOf<typeof DerivationPath>> = {
       ) => CardanoAddressMetadata<C>
     : T extends typeof DerivationPath.AVAX
     ? (privateKey: string, chainType: AvaxChainType) => CommonAddressData
+    : T extends typeof DerivationPath.XRP
+    ? (privateKey: string, chainType: XrpAddressType, destinationTag?: number) => CommonAddressData
     : (privateKey: string) => CommonAddressData;
 };
 
@@ -70,4 +72,5 @@ export {
   type AbstractAddress,
   type CardanoAddressMetadata,
   type CardanoShelleyAddressType,
+  type XrpAddressType,
 };

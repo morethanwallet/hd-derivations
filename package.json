@@ -35,17 +35,16 @@
     "@avalabs/avalanchejs": "^4.0.5",
     "@binance-chain/javascript-sdk": "^4.2.2",
     "@solana/web3.js": "^1.95.4",
-    "base-x": "^5.0.0",
     "bchaddrjs": "^0.5.2",
     "bip32": "^5.0.0-rc.0",
     "bip39": "^3.1.0",
     "bitcoinjs-lib": "^7.0.0-rc.0",
     "blake2b": "^2.1.4",
     "bs58": "^6.0.0",
-    "bs58check": "^4.0.0",
     "ecpair": "^3.0.0-rc.0",
     "ethereumjs-util": "^7.1.5",
     "micro-key-producer": "^0.7.1",
-    "tiny-secp256k1": "^2.2.3"
+    "tiny-secp256k1": "^2.2.3",
+    "xrpl": "^4.0.0"
   }
 }

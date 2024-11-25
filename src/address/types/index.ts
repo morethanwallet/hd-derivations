@@ -6,5 +6,6 @@ export {
   type CommonAddressData,
   type CardanoAddressMetadata,
   type CardanoShelleyAddressType,
+  type XrpAddressType,
 } from "./address.type.js";
 export { type AvaxChainType } from "./avaxChainType.type.js";
