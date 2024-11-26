@@ -2,22 +2,12 @@ import { type ValueOf } from "@/types/index.js";
 import { DerivationPath } from "@/enums/index.js";
 import { type AbstractAddress, type Address } from "../types/index.js";
 import { networks } from "bitcoinjs-lib";
-import { SolanaAddress } from "../solana/index.js";
 import { CardanoAddress } from "../cardano/index.js";
 
 const derivationPathToAddress: Record<
   ValueOf<typeof DerivationPath>,
   Address<ValueOf<typeof DerivationPath>>
 > = {
-  [DerivationPath.SOL]: {
-    config: {
-      derivationPath: DerivationPath.SOL,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new SolanaAddress(addressConfig, mnemonic);
-    },
-  },
   [DerivationPath.ADA]: {
     config: {
       derivationPath: DerivationPath.ADA,
