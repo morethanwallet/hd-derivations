@@ -2,7 +2,7 @@ import { type ValueOf } from "@/types/index.js";
 import { DerivationPath } from "@/enums/index.js";
 import { type AbstractAddress, type Address } from "../types/index.js";
 import { networks } from "bitcoinjs-lib";
-import { BnbAddress, EvmAddress } from "../common/index.js";
+import { EvmAddress } from "../common/index.js";
 import { SolanaAddress } from "../solana/index.js";
 import { CardanoAddress } from "../cardano/index.js";
 
@@ -26,15 +26,6 @@ const derivationPathToAddress: Record<
     },
     createAddressInstance: (addressConfig, mnemonic) => {
       return new CardanoAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.BNB]: {
-    config: {
-      derivationPath: DerivationPath.BNB,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new BnbAddress(addressConfig, mnemonic);
     },
   },
   [DerivationPath.AVAX_C]: {

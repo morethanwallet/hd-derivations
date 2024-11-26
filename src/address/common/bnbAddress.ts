@@ -4,35 +4,27 @@ import {
   getPublicKeyFromPrivateKey,
   getAddressFromPrivateKey,
 } from "@binance-chain/javascript-sdk/lib/crypto";
-import {
-  type AbstractAddress,
-  type AddressMetadata,
-  type AddressConfig,
-  type KeyPair,
-} from "../types/index.js";
+import { type CommonAddressData, type KeysConfig, type KeyPair } from "../types/index.js";
+import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
 import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
-import { DerivationPath } from "@/enums/index.js";
 import {
   EMPTY_MNEMONIC,
   FIRST_ADDRESS_INDEX,
   SEARCH_FROM_MNEMONIC_LIMIT,
 } from "../constants/index.js";
+import { type Mnemonic } from "@/mnemonic/index.js";
+import { type AbstractAddress } from "./types/index.js";
 
-const BNB_HRP = "bnb";
+const HRP = "bnb";
 
-class BnbAddress extends Keys implements AbstractAddress<typeof DerivationPath.BNB> {
-  private derivationPath: string;
-
-  public constructor(addressConfig: AddressConfig, mnemonic?: string) {
-    super(addressConfig.keysConfig, mnemonic);
-
-    this.derivationPath = addressConfig.derivationPath;
+class BnbAddress extends Keys implements AbstractAddress {
+  public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
+    super(keysConfig, mnemonic);
   }
 
-  public getAddressMetadata(addressIndex: number): AddressMetadata {
-    const path = this.getFullDerivationPath(addressIndex);
-    const node = this.bip32RootKey.derivePath(path);
+  public getData(derivationPath: string): CommonAddressData {
+    const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(privateKey);
 
@@ -40,16 +32,26 @@ class BnbAddress extends Keys implements AbstractAddress<typeof DerivationPath.B
       privateKey,
       publicKey,
       address,
-      path,
-      mnemonic: this.mnemonic,
+      path: derivationPath,
+      mnemonic: this.mnemonic.getMnemonic(),
     };
   }
 
-  public importByPrivateKey(privateKey: string): AddressMetadata {
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const addressMetadata = this.getAddressMetadata(i);
+  public importByPrivateKey(
+    derivationPath: string,
+    privateKey: KeyPair["privateKey"]
+  ): CommonAddressData {
+    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const derivationPathWithAddress = appendAddressToDerivationPath(
+        derivationPathWithoutAddress,
+        i
+      );
+
+      const data = this.getData(derivationPathWithAddress);
+
+      if (data.privateKey === privateKey) return data;
     }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
@@ -61,12 +63,12 @@ class BnbAddress extends Keys implements AbstractAddress<typeof DerivationPath.B
       publicKey,
       address,
       mnemonic: EMPTY_MNEMONIC,
-      path: this.getFullDerivationPath(FIRST_ADDRESS_INDEX),
+      path: appendAddressToDerivationPath(derivationPath, FIRST_ADDRESS_INDEX),
     };
   }
 
-  private getAddress(privateKey: string): string {
-    return getAddressFromPrivateKey(privateKey, BNB_HRP);
+  private getAddress(privateKey: KeyPair["privateKey"]): string {
+    return getAddressFromPrivateKey(privateKey, HRP);
   }
 
   private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
@@ -76,10 +78,6 @@ class BnbAddress extends Keys implements AbstractAddress<typeof DerivationPath.B
     const publicKey = getPublicKeyFromPrivateKey(privateKey);
 
     return { privateKey, publicKey };
-  }
-
-  private getFullDerivationPath(addressIndex: number): string {
-    return `${this.derivationPath}/${addressIndex}`;
   }
 }
 

@@ -5,3 +5,4 @@ export { Zcash } from "./zcash/index.js";
 export { BitcoinCash } from "./bitcoin-cash/index.js";
 export { Xrp } from "./xrp/index.js";
 export { Avax } from "./avax/index.js";
+export { Bnb } from "./bnb/index.js";
