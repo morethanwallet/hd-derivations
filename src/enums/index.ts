@@ -1,5 +1,1 @@
-export {
-  DerivationPath,
-  CoinomiDerivationPath,
-  CommonDerivationPath,
-} from "./derivationPath.enum.js";
+export { DerivationPath, CommonDerivationPath } from "./derivationPath.enum.js";

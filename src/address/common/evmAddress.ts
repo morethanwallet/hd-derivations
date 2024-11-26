@@ -9,12 +9,8 @@ import {
 } from "ethereumjs-util";
 import { Keys } from "./keys/index.js";
 import { ecPair, type ECPairInterface } from "@/ecc/index.js";
-import {
-  type AbstractAddress,
-  type AddressMetadata,
-  type AddressConfig,
-  type KeyPair,
-} from "../types/index.js";
+import { type CommonAddressData, type KeysConfig, type KeyPair } from "../types/index.js";
+import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
 import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
 import {
@@ -22,28 +18,16 @@ import {
   FIRST_ADDRESS_INDEX,
   SEARCH_FROM_MNEMONIC_LIMIT,
 } from "../constants/index.js";
-import { type DerivationPath } from "@/enums/index.js";
+import { type Mnemonic } from "@/mnemonic/index.js";
+import { type AbstractAddress } from "./types/index.js";
 
-type NetworkDerivationPath =
-  | typeof DerivationPath.ETH
-  | typeof DerivationPath.BSC
-  | typeof DerivationPath.AVAX_C
-  | typeof DerivationPath.ETC
-  | typeof DerivationPath.COINOMI_ETH
-  | typeof DerivationPath.COINOMI_ETC;
-
-class EvmAddress extends Keys implements AbstractAddress<NetworkDerivationPath> {
-  private derivationPath: string;
-
-  public constructor(addressConfig: AddressConfig, mnemonic?: string) {
-    super(addressConfig.keysConfig, mnemonic);
-
-    this.derivationPath = addressConfig.derivationPath;
+class EvmAddress extends Keys implements AbstractAddress {
+  public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
+    super(keysConfig, mnemonic);
   }
 
-  public getAddressMetadata(addressIndex: number): AddressMetadata {
-    const path = this.getFullDerivationPath(addressIndex);
-    const node = this.bip32RootKey.derivePath(path);
+  public getData(derivationPath: string): CommonAddressData {
+    const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(publicKey);
 
@@ -51,16 +35,26 @@ class EvmAddress extends Keys implements AbstractAddress<NetworkDerivationPath> 
       privateKey,
       publicKey,
       address,
-      path,
-      mnemonic: this.mnemonic,
+      path: derivationPath,
+      mnemonic: this.mnemonic.getMnemonic(),
     };
   }
 
-  public importByPrivateKey(privateKey: string): AddressMetadata {
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const addressMetadata = this.getAddressMetadata(i);
+  public importByPrivateKey(
+    derivationPath: string,
+    privateKey: KeyPair["privateKey"]
+  ): CommonAddressData {
+    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-      if (addressMetadata.privateKey === privateKey) return addressMetadata;
+    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+      const derivationPathWithAddress = appendAddressToDerivationPath(
+        derivationPathWithoutAddress,
+        i
+      );
+
+      const data = this.getData(derivationPathWithAddress);
+
+      if (data.privateKey === privateKey) return data;
     }
 
     const rawPrivateKey = toUint8Array(
@@ -75,11 +69,11 @@ class EvmAddress extends Keys implements AbstractAddress<NetworkDerivationPath> 
       publicKey,
       address,
       mnemonic: EMPTY_MNEMONIC,
-      path: this.getFullDerivationPath(FIRST_ADDRESS_INDEX),
+      path: appendAddressToDerivationPath(derivationPath, FIRST_ADDRESS_INDEX),
     };
   }
 
-  private getAddress(publicKey: string): string {
+  private getAddress(publicKey: KeyPair["publicKey"]): string {
     const publicKeyBuffer = Buffer.from(publicKey, "hex");
     const addressBuffer = publicToAddress(publicKeyBuffer);
     const hexAddress = addHexPrefix(addressBuffer.toString("hex"));
@@ -102,11 +96,7 @@ class EvmAddress extends Keys implements AbstractAddress<NetworkDerivationPath> 
     return Buffer.from(publicKey.buffer, publicKey.byteOffset, publicKey.byteLength);
   }
 
-  private getFullDerivationPath(addressIndex: number): string {
-    return `${this.derivationPath}/${addressIndex}`;
-  }
-
-  private checkAndRemoveHexPrefix(publicKey: string): string {
+  private checkAndRemoveHexPrefix(publicKey: KeyPair["publicKey"]): string {
     return isHexPrefixed(publicKey) ? stripHexPrefix(publicKey) : publicKey;
   }
 }

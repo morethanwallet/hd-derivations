@@ -2,7 +2,6 @@ import { type ValueOf } from "@/types/index.js";
 import { DerivationPath } from "@/enums/index.js";
 import { type AbstractAddress, type Address } from "../types/index.js";
 import { networks } from "bitcoinjs-lib";
-import { EvmAddress } from "../common/index.js";
 import { SolanaAddress } from "../solana/index.js";
 import { CardanoAddress } from "../cardano/index.js";
 
@@ -26,60 +25,6 @@ const derivationPathToAddress: Record<
     },
     createAddressInstance: (addressConfig, mnemonic) => {
       return new CardanoAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.AVAX_C]: {
-    config: {
-      derivationPath: DerivationPath.ETH,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new EvmAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.ETH]: {
-    config: {
-      derivationPath: DerivationPath.ETH,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new EvmAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.BSC]: {
-    config: {
-      derivationPath: DerivationPath.ETH,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new EvmAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.ETC]: {
-    config: {
-      derivationPath: DerivationPath.ETC,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new EvmAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.COINOMI_ETH]: {
-    config: {
-      derivationPath: DerivationPath.COINOMI_ETH,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new EvmAddress(addressConfig, mnemonic);
-    },
-  },
-  [DerivationPath.COINOMI_ETC]: {
-    config: {
-      derivationPath: DerivationPath.COINOMI_ETC,
-      keysConfig: networks.bitcoin,
-    },
-    createAddressInstance: (addressConfig, mnemonic) => {
-      return new EvmAddress(addressConfig, mnemonic);
     },
   },
 };
