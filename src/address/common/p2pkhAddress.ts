@@ -41,12 +41,12 @@ class P2pkhAddress extends Keys implements AbstractAddress<true> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const derivationPathWithAddress = appendAddressToDerivationPath(
+      const incrementedDerivationPath = appendAddressToDerivationPath(
         derivationPathWithoutAddress,
         i
       );
 
-      const data = this.getData(derivationPathWithAddress, base58RootKey);
+      const data = this.getData(incrementedDerivationPath, base58RootKey);
 
       if (data.privateKey === privateKey) return data;
     }

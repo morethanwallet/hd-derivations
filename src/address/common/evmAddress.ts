@@ -47,12 +47,12 @@ class EvmAddress extends Keys implements AbstractAddress {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const derivationPathWithAddress = appendAddressToDerivationPath(
+      const incrementedDerivationPath = appendAddressToDerivationPath(
         derivationPathWithoutAddress,
         i
       );
 
-      const data = this.getData(derivationPathWithAddress);
+      const data = this.getData(incrementedDerivationPath);
 
       if (data.privateKey === privateKey) return data;
     }
