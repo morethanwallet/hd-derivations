@@ -6,7 +6,6 @@ export {
 } from "./types/index.js";
 export { getAddressInstance } from "./helpers/index.js";
 export {
-  AvaxAddress,
   BnbAddress,
   CashAddrAddress,
   EvmAddress,
@@ -19,3 +18,4 @@ export {
   P2wshInP2shAddress,
 } from "./common/index.js";
 export { XrpAddress } from "./xrp/index.js";
+export { AvaxAddress } from "./avax/index.js";

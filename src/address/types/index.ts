@@ -7,4 +7,3 @@ export {
   type CardanoAddressMetadata,
   type CardanoShelleyAddressType,
 } from "./address.type.js";
-export { type AvaxChainType } from "./avaxChainType.type.js";

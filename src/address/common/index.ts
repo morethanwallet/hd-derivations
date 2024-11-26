@@ -1,4 +1,3 @@
-export { AvaxAddress } from "./avaxAddress.js";
 export { BnbAddress } from "./bnbAddress.js";
 export { CashAddrAddress } from "./cashAddrAddress.js";
 export { EvmAddress } from "./evmAddress.js";
