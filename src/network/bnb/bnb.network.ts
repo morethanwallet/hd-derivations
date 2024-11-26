@@ -1,6 +1,6 @@
 import { BnbAddress, type KeyPair } from "@/address/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractNetwork } from "./types/index.js";
+import { type AbstractNetwork } from "@/network/types/index.js";
 import { config } from "./config/index.js";
 
 class Bnb implements AbstractNetwork {

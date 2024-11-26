@@ -1,6 +1,6 @@
 import { P2pkhAddress } from "@/address/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractNetwork } from "./types/index.js";
+import { type AbstractNetwork } from "@/network/types/index.js";
 import { type NetworkPurpose } from "@/network/index.js";
 import { config } from "./config/index.js";
 
