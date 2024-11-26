@@ -1,14 +1,14 @@
 import { P2pkhAddress } from "@/address/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractNetwork } from "./types/index.js";
-import { type NetworkType } from "@/network/index.js";
+import { type NetworkPurpose } from "@/network/index.js";
 import { config } from "./config/index.js";
 
 class MultiBitHd implements AbstractNetwork<"multiBitHd"> {
   private p2pkhAddress: P2pkhAddress;
 
-  public constructor(mnemonic: Mnemonic, type: NetworkType) {
-    this.p2pkhAddress = new P2pkhAddress(config[type].legacy.keysConfig, mnemonic);
+  public constructor(mnemonic: Mnemonic, purpose: NetworkPurpose) {
+    this.p2pkhAddress = new P2pkhAddress(config[purpose].legacy.keysConfig, mnemonic);
   }
 
   public getAddressData(derivationPath: string) {

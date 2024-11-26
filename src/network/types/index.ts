@@ -1,1 +1,1 @@
-export { type NetworkType } from "./networkType.type.js";
+export { type NetworkPurpose } from "./networkPurpose.type.js";

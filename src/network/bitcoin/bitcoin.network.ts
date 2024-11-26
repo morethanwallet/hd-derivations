@@ -8,7 +8,7 @@ import {
 } from "@/address/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractNetwork, type BitcoinAddress } from "./types/index.js";
-import { type NetworkType } from "@/network/index.js";
+import { type NetworkPurpose } from "@/network/index.js";
 import { config } from "./config/index.js";
 
 class Bitcoin implements AbstractNetwork<"bitcoin"> {
@@ -19,13 +19,13 @@ class Bitcoin implements AbstractNetwork<"bitcoin"> {
   private p2wshAddress: P2wshAddress;
   private p2wshInP2shAddress: P2wshInP2shAddress;
 
-  public constructor(mnemonic: Mnemonic, type: NetworkType) {
-    this.p2pkhAddress = new P2pkhAddress(config[type].legacy.keysConfig, mnemonic);
-    this.p2wpkhInP2shAddress = new P2wpkhInP2shAddress(config[type].segWit.keysConfig, mnemonic);
-    this.p2wpkhAddress = new P2wpkhAddress(config[type].nativeSegWit.keysConfig, mnemonic);
-    this.taprootAddress = new TaprootAddress(config[type].taproot.keysConfig, mnemonic);
-    this.p2wshAddress = new P2wshAddress(config[type].p2wsh.keysConfig, mnemonic);
-    this.p2wshInP2shAddress = new P2wshInP2shAddress(config[type].p2wshInP2sh.keysConfig, mnemonic);
+  public constructor(mnemonic: Mnemonic, purpose: NetworkPurpose) {
+    this.p2pkhAddress = new P2pkhAddress(config[purpose].legacy.keysConfig, mnemonic);
+    this.p2wpkhInP2shAddress = new P2wpkhInP2shAddress(config[purpose].segWit.keysConfig, mnemonic);
+    this.p2wpkhAddress = new P2wpkhAddress(config[purpose].nativeSegWit.keysConfig, mnemonic);
+    this.taprootAddress = new TaprootAddress(config[purpose].taproot.keysConfig, mnemonic);
+    this.p2wshAddress = new P2wshAddress(config[purpose].p2wsh.keysConfig, mnemonic);
+    this.p2wshInP2shAddress = new P2wshInP2shAddress(config[purpose].p2wshInP2sh.keysConfig, mnemonic);
   }
 
   public getAddressData(addressType: BitcoinAddress, derivationPath: string) {
