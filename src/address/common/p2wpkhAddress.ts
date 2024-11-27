@@ -14,7 +14,7 @@ import {
   SEARCH_FROM_MNEMONIC_LIMIT,
 } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractAddress } from "./types/index.js";
+import { type AbstractAddress } from "@/address/index.js";
 
 class P2wpkhAddress extends Keys implements AbstractAddress<true> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {

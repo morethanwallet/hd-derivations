@@ -14,7 +14,7 @@ import {
   SEARCH_FROM_MNEMONIC_LIMIT,
 } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractAddress } from "./types/index.js";
+import { type AbstractAddress } from "@/address/index.js";
 
 const PUBLIC_KEY_PREFIX_END_INDEX = 1;
 const X_ONLY_PUBLIC_KEY_LENGTH = 32;

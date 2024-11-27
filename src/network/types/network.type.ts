@@ -1,4 +1,4 @@
-import { AbstractAddress } from "@/address/common/index.js";
+import { type AbstractAddress } from "@/address/index.js";
 
 type NetworkPurpose = "mainnet" | "testnet" | "regtest";
 

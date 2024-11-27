@@ -9,7 +9,7 @@ import {
   SEARCH_FROM_MNEMONIC_LIMIT,
 } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractAddress } from "@/address/common/index.js";
+import { type AbstractAddress } from "@/address/index.js";
 
 class SolanaAddress extends Keys implements AbstractAddress {
   public constructor(mnemonic: Mnemonic) {

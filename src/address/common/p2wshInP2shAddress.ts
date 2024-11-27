@@ -11,7 +11,7 @@ import {
 } from "../helpers/index.js";
 import { FIRST_ADDRESS_INDEX } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractAddress } from "./types/index.js";
+import { type AbstractAddress } from "@/address/index.js";
 
 class P2wshInP2shAddress extends Keys implements AbstractAddress {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {

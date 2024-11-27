@@ -1,4 +1,9 @@
-export { type KeysConfig, type KeyPair, type AddressData } from "./types/index.js";
+export {
+  type KeysConfig,
+  type KeyPair,
+  type AddressData,
+  type AbstractAddress,
+} from "./types/index.js";
 export {
   BnbAddress,
   CashAddrAddress,
