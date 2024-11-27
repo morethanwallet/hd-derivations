@@ -8,11 +8,7 @@ import {
   getKeyPairFromEc,
   removeDerivationPathAddress,
 } from "../helpers/index.js";
-import {
-  FIRST_ADDRESS_INDEX,
-  EMPTY_MNEMONIC,
-  SEARCH_FROM_MNEMONIC_LIMIT,
-} from "../constants/index.js";
+import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "@/address/index.js";
 

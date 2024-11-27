@@ -3,11 +3,7 @@ import base58 from "bs58";
 import { type AddressData, type KeyPair } from "../types/index.js";
 import { Keypair } from "@solana/web3.js";
 import { appendAddressToDerivationPath } from "./helpers/index.js";
-import {
-  EMPTY_MNEMONIC,
-  FIRST_ADDRESS_INDEX,
-  SEARCH_FROM_MNEMONIC_LIMIT,
-} from "../constants/index.js";
+import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "@/address/index.js";
 

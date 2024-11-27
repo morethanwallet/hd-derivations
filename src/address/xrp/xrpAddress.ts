@@ -6,11 +6,7 @@ import {
   getKeyPairFromEc,
   removeDerivationPathAddress,
 } from "../helpers/index.js";
-import {
-  FIRST_ADDRESS_INDEX,
-  EMPTY_MNEMONIC,
-  SEARCH_FROM_MNEMONIC_LIMIT,
-} from "../constants/index.js";
+import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { Wallet } from "xrpl";
 import { Keys } from "../common/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
