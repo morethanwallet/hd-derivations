@@ -63,7 +63,7 @@ class BnbAddress extends Keys implements AbstractAddress {
       publicKey,
       address,
       mnemonic: EMPTY_MNEMONIC,
-      path: appendAddressToDerivationPath(derivationPath, FIRST_ADDRESS_INDEX),
+      path: derivationPath,
     };
   }
 

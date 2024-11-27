@@ -63,7 +63,7 @@ class P2wpkhInP2shAddress extends Keys implements AbstractAddress<true> {
       publicKey,
       address,
       mnemonic: EMPTY_MNEMONIC,
-      path: appendAddressToDerivationPath(derivationPath, FIRST_ADDRESS_INDEX),
+      path: derivationPath,
     };
   }
 

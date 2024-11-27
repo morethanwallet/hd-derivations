@@ -46,7 +46,7 @@ class SolanaAddress extends Keys implements AbstractAddress {
       privateKey,
       publicKey,
       address: publicKey,
-      path: appendAddressToDerivationPath(derivationPath, FIRST_ADDRESS_INDEX),
+      path: derivationPath,
       mnemonic: EMPTY_MNEMONIC,
     };
   }
