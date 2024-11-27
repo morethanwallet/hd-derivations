@@ -3,7 +3,7 @@ import {
   NetworkInfo,
   Credential,
   PrivateKey,
-  RewardAddress as LibraryRewardAddress,
+  EnterpriseAddress as LibraryEnterpriseAddress,
 } from "@emurgo/cardano-serialization-lib-nodejs";
 import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
@@ -13,16 +13,16 @@ import { getAccount, getAddressValue, getCredential } from "./helpers/index.js";
 import { type KeyPair } from "../index.js";
 import { Change } from "./enums/index.js";
 
-class RewardAddress extends Keys implements AbstractAddress<"reward"> {
+class EnterpriseAddress extends Keys implements AbstractAddress<"enterprise"> {
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
   }
 
-  public getData(derivationPath: string): AddressData<"reward"> {
+  public getData(derivationPath: string): AddressData<"enterprise"> {
     const rootKey = this.getRootKey();
     const account = getAccount(rootKey, derivationPath);
     const addressValue = getAddressValue(derivationPath);
-    const node = account.derive(Change.CHIMERIC).derive(addressValue);
+    const node = account.derive(Change.EXTERNAL).derive(addressValue);
     const { privateKey, publicKey } = this.getRawKeys(node);
     const credential = getCredential(publicKey);
     const address = this.getAddress(credential);
@@ -39,7 +39,7 @@ class RewardAddress extends Keys implements AbstractAddress<"reward"> {
   public importByPrivateKey(
     derivationPath: string,
     privateKey: KeyPair["privateKey"]
-  ): AddressData<"reward"> {
+  ): AddressData<"enterprise"> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -66,11 +66,11 @@ class RewardAddress extends Keys implements AbstractAddress<"reward"> {
     };
   }
 
-  private getAddress(credential: Credential): AddressData<"reward">["address"] {
-    const address = LibraryRewardAddress.new(NetworkInfo.mainnet().network_id(), credential);
+  private getAddress(credential: Credential): AddressData<"enterprise">["address"] {
+    const address = LibraryEnterpriseAddress.new(NetworkInfo.mainnet().network_id(), credential);
 
     return address.to_address().to_bech32();
   }
 }
 
-export { RewardAddress };
+export { EnterpriseAddress };
