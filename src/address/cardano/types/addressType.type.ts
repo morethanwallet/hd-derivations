@@ -1,3 +1,5 @@
 type AddressType = "base" | "reward" | "enterprise" | "byron";
 
-export { type AddressType };
+type ReturnTypeCompatibleAddressType = Exclude<AddressType, "base">;
+
+export { type AddressType, type ReturnTypeCompatibleAddressType };
