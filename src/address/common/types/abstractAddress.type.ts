@@ -1,12 +1,12 @@
-import { type CommonAddressData } from "@/address/index.js";
+import { type AddressData } from "@/address/index.js";
 
 type AbstractAddress<IsBitcoinCoreCompatible extends boolean = false> = {
   getData: IsBitcoinCoreCompatible extends true
-    ? (derivationPath: string, base58RootKey?: string) => CommonAddressData
-    : (derivationPath: string) => CommonAddressData;
+    ? (derivationPath: string, base58RootKey?: string) => AddressData
+    : (derivationPath: string) => AddressData;
   importByPrivateKey: IsBitcoinCoreCompatible extends true
-    ? (derivationPath: string, privateKey: string, base58RootKey?: string) => CommonAddressData
-    : (derivationPath: string, privateKey: string) => CommonAddressData;
+    ? (derivationPath: string, privateKey: string, base58RootKey?: string) => AddressData
+    : (derivationPath: string, privateKey: string) => AddressData;
 };
 
 export { type AbstractAddress };

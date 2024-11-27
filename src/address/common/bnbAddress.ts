@@ -4,7 +4,7 @@ import {
   getPublicKeyFromPrivateKey,
   getAddressFromPrivateKey,
 } from "@binance-chain/javascript-sdk/lib/crypto";
-import { type CommonAddressData, type KeysConfig, type KeyPair } from "../types/index.js";
+import { type AddressData, type KeysConfig, type KeyPair } from "../types/index.js";
 import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
 import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
@@ -23,7 +23,7 @@ class BnbAddress extends Keys implements AbstractAddress {
     super(keysConfig, mnemonic);
   }
 
-  public getData(derivationPath: string): CommonAddressData {
+  public getData(derivationPath: string): AddressData {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(privateKey);
@@ -40,7 +40,7 @@ class BnbAddress extends Keys implements AbstractAddress {
   public importByPrivateKey(
     derivationPath: string,
     privateKey: KeyPair["privateKey"]
-  ): CommonAddressData {
+  ): AddressData {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {

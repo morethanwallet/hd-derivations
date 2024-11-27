@@ -1,6 +1,6 @@
 import { ExceptionMessage } from "@/exceptions/index.js";
 import { toUint8Array } from "@/helpers/index.js";
-import { type CommonAddressData, type KeyPair, type KeysConfig } from "../types/index.js";
+import { type AddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
@@ -25,7 +25,7 @@ class XrpAddress extends Keys implements AbstractAddress {
     derivationPath: string,
     addressType: AddressType,
     destinationTag?: number
-  ): CommonAddressData {
+  ): AddressData {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const wallet = this.getWallet(privateKey, publicKey);
@@ -45,7 +45,7 @@ class XrpAddress extends Keys implements AbstractAddress {
     privateKey: KeyPair["privateKey"],
     addressType: AddressType,
     destinationTag?: number
-  ): CommonAddressData {
+  ): AddressData {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {

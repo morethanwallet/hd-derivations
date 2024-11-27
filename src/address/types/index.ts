@@ -3,7 +3,7 @@ export {
   type AbstractAddress,
   type Address,
   type AddressConfig,
-  type CommonAddressData,
+  type AddressData,
   type CardanoAddressMetadata,
   type CardanoShelleyAddressType,
 } from "./address.type.js";

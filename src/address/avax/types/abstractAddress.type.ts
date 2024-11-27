@@ -1,4 +1,4 @@
-import { type KeyPair, type CommonAddressData } from "@/address/index.js";
+import { type KeyPair, type AddressData } from "@/address/index.js";
 import { type NetworkPurpose, type NetworkType } from "@/network/avax/index.js";
 
 type AbstractAddress = {
@@ -6,13 +6,13 @@ type AbstractAddress = {
     derivationPath: string,
     networkType: NetworkType,
     networkPurpose: NetworkPurpose
-  ) => CommonAddressData;
+  ) => AddressData;
   importByPrivateKey: (
     derivationPath: string,
     privateKey: KeyPair["privateKey"],
     networkType: NetworkType,
     networkPurpose: NetworkPurpose
-  ) => CommonAddressData;
+  ) => AddressData;
 };
 
 export { type AbstractAddress };

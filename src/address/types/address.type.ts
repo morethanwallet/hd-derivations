@@ -4,13 +4,12 @@ import { type DerivationPath } from "@/enums/index.js";
 
 // TODO: Refactor Cardano typing
 
-type CommonAddressData = {
+type AddressData = {
   path: string;
   address: string;
   mnemonic: string;
 } & KeyPair;
-
-type CardanoBaseAddressMetadata = Pick<CommonAddressData, "address" | "mnemonic"> & {
+type CardanoBaseAddressMetadata = Pick<AddressData, "address" | "mnemonic"> & {
   enterprisePrivateKey: string;
   enterprisePublicKey: string;
   enterprisePath: string;
@@ -23,7 +22,7 @@ type CardanoShelleyAddressType = "base" | "reward" | "enterprise";
 
 type CardanoAddressMetadata<T extends CardanoShelleyAddressType> = T extends "base"
   ? CardanoBaseAddressMetadata
-  : CommonAddressData;
+  : AddressData;
 
 type AddressConfig = {
   keysConfig: KeysConfig;
@@ -36,14 +35,14 @@ type AbstractAddress<T extends ValueOf<typeof DerivationPath>> = {
         addressIndex: number,
         addressType: C
       ) => CardanoAddressMetadata<C>
-    : (addressIndex: number) => CommonAddressData;
+    : (addressIndex: number) => AddressData;
   importByPrivateKey: T extends typeof DerivationPath.ADA
     ? <C extends CardanoShelleyAddressType>(
         privateKey: string,
         rewardPrivateKey: C extends "base" ? string : null,
         addressType: C
       ) => CardanoAddressMetadata<C>
-    : (privateKey: string) => CommonAddressData;
+    : (privateKey: string) => AddressData;
 };
 
 type Address<T extends ValueOf<typeof DerivationPath>> = {
@@ -53,7 +52,7 @@ type Address<T extends ValueOf<typeof DerivationPath>> = {
 
 export {
   type Address,
-  type CommonAddressData,
+  type AddressData,
   type AddressConfig,
   type AbstractAddress,
   type CardanoAddressMetadata,

@@ -2,7 +2,7 @@ import { Keys } from "./keys/index.js";
 import { payments } from "bitcoinjs-lib";
 import { toCashAddress } from "bchaddrjs";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
-import { type CommonAddressData, type KeyPair, type KeysConfig } from "../types/index.js";
+import { type AddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
 import {
   appendAddressToDerivationPath,
@@ -22,7 +22,7 @@ class CashAddrAddress extends Keys implements AbstractAddress {
     super(keysConfig, mnemonic);
   }
 
-  public getData(derivationPath: string): CommonAddressData {
+  public getData(derivationPath: string): AddressData {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(node.publicKey);
@@ -36,7 +36,7 @@ class CashAddrAddress extends Keys implements AbstractAddress {
     };
   }
 
-  public importByPrivateKey(derivationPath: string, privateKey: string): CommonAddressData {
+  public importByPrivateKey(derivationPath: string, privateKey: string): AddressData {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {

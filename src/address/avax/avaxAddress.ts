@@ -1,7 +1,7 @@
 import { utils } from "@avalabs/avalanchejs";
 import { crypto } from "bitcoinjs-lib";
 import { toUint8Array } from "@/helpers/index.js";
-import { type CommonAddressData, type KeyPair, type KeysConfig } from "../types/index.js";
+import { type AddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import { ExceptionMessage } from "@/exceptions/index.js";
 import {
   appendAddressToDerivationPath,
@@ -37,7 +37,7 @@ class AvaxAddress extends Keys implements AbstractAddress {
     derivationPath: string,
     networkType: NetworkType,
     networkPurpose: NetworkPurpose
-  ): CommonAddressData {
+  ): AddressData {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(node.publicKey, networkType, networkPurpose);
@@ -56,7 +56,7 @@ class AvaxAddress extends Keys implements AbstractAddress {
     privateKey: KeyPair["privateKey"],
     networkType: NetworkType,
     networkPurpose: NetworkPurpose
-  ): CommonAddressData {
+  ): AddressData {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {

@@ -1,6 +1,6 @@
 import { Keys } from "./keys/index.js";
 import base58 from "bs58";
-import { type CommonAddressData, type KeyPair } from "../types/index.js";
+import { type AddressData, type KeyPair } from "../types/index.js";
 import { Keypair } from "@solana/web3.js";
 import { appendAddressToDerivationPath } from "./helpers/index.js";
 import {
@@ -16,7 +16,7 @@ class SolanaAddress extends Keys implements AbstractAddress {
     super(mnemonic);
   }
 
-  public getData(derivationPath: string): CommonAddressData {
+  public getData(derivationPath: string): AddressData {
     const { privateKey, publicKey } = this.getKeyPair(derivationPath);
 
     return {
@@ -31,7 +31,7 @@ class SolanaAddress extends Keys implements AbstractAddress {
   public importByPrivateKey(
     derivationPath: string,
     privateKey: KeyPair["privateKey"]
-  ): CommonAddressData {
+  ): AddressData {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const incrementedDerivationPath = appendAddressToDerivationPath(derivationPath, i);
       const data = this.getData(incrementedDerivationPath);

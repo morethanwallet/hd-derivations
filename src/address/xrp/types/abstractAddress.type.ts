@@ -1,4 +1,4 @@
-import { type KeyPair, type CommonAddressData } from "@/address/index.js";
+import { type KeyPair, type AddressData } from "@/address/index.js";
 import { type AddressType } from "./index.js";
 
 type AbstractAddress = {
@@ -6,13 +6,13 @@ type AbstractAddress = {
     derivationPath: string,
     addressType: AddressType,
     destinationTag?: number
-  ) => CommonAddressData;
+  ) => AddressData;
   importByPrivateKey: (
     derivationPath: string,
     privateKey: KeyPair["privateKey"],
     addressType: AddressType,
     destinationTag?: number
-  ) => CommonAddressData;
+  ) => AddressData;
 };
 
 export { type AbstractAddress };

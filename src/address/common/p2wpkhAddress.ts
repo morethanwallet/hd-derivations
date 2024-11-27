@@ -2,7 +2,7 @@ import { payments } from "bitcoinjs-lib";
 import { Keys } from "./keys/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
-import { type CommonAddressData, type KeyPair, type KeysConfig } from "../types/index.js";
+import { type AddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
@@ -21,7 +21,7 @@ class P2wpkhAddress extends Keys implements AbstractAddress<true> {
     super(keysConfig, mnemonic);
   }
 
-  public getData(derivationPath: string, base58RootKey?: string): CommonAddressData {
+  public getData(derivationPath: string, base58RootKey?: string): AddressData {
     const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.rootKey;
     const node = rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
@@ -40,7 +40,7 @@ class P2wpkhAddress extends Keys implements AbstractAddress<true> {
     derivationPath: string,
     privateKey: string,
     base58RootKey?: string
-  ): CommonAddressData {
+  ): AddressData {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
