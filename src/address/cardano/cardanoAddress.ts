@@ -9,18 +9,14 @@ import {
   EnterpriseAddress,
   RewardAddress,
 } from "@emurgo/cardano-serialization-lib-nodejs";
-import {
-  type CardanoAddressMetadata,
-  type CardanoShelleyAddressType,
-  type AbstractAddress,
-  type AddressConfig,
-} from "../types/index.js";
+import { type CardanoAddressMetadata, type CardanoShelleyAddressType } from "../types/index.js";
 import {
   EMPTY_MNEMONIC,
   FIRST_ADDRESS_INDEX,
   SEARCH_FROM_MNEMONIC_LIMIT,
 } from "../constants/index.js";
-import { type DerivationPath } from "@/enums/index.js";
+import { type Mnemonic } from "@/mnemonic/index.js";
+import { type AbstractAddress } from "./types/index.js";
 
 type RawKeys = {
   privateKey: PrivateKey;
@@ -45,15 +41,9 @@ function convertDerivationPathToIntegersArray(derivationPath: string): string[] 
     .filter((segment) => !Number.isNaN(Number.parseInt(segment)));
 }
 
-// TODO: Refactor typing and code
-
-class CardanoAddress extends Keys implements AbstractAddress<typeof DerivationPath.ADA> {
-  private derivationPath: string;
-
-  public constructor(addressConfig: AddressConfig, mnemonic?: string) {
+class CardanoAddress extends Keys implements AbstractAddress {
+  public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
-
-    this.derivationPath = addressConfig.derivationPath;
   }
 
   public getAddressMetadata<C extends CardanoShelleyAddressType>(

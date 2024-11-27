@@ -1,10 +1,4 @@
-export {
-  type KeysConfig,
-  type KeyPair,
-  type AbstractAddress,
-  type CommonAddressData,
-} from "./types/index.js";
-export { getAddressInstance } from "./helpers/index.js";
+export { type KeysConfig, type KeyPair, type AddressData } from "./types/index.js";
 export {
   BnbAddress,
   CashAddrAddress,
