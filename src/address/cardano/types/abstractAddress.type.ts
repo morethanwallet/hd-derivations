@@ -1,15 +1,11 @@
 import { type KeyPair, type AddressData as CommonAddressData } from "@/address/index.js";
-import { type AddressType } from "./index.js";
+import { type AddressType, type BaseAddressKeyPair } from "./index.js";
 import { type ReturnTypeCompatibleAddressType } from "./addressType.type.js";
 
 type BaseAddressData = Pick<CommonAddressData, "address" | "mnemonic"> & {
-  enterprisePrivateKey: string;
-  enterprisePublicKey: string;
   enterprisePath: string;
-  rewardPrivateKey: string;
-  rewardPublicKey: string;
   rewardPath: string;
-};
+} & BaseAddressKeyPair;
 
 type AddressData<C extends AddressType> = C extends ReturnTypeCompatibleAddressType
   ? CommonAddressData
@@ -17,11 +13,13 @@ type AddressData<C extends AddressType> = C extends ReturnTypeCompatibleAddressT
 
 type GetData<C extends AddressType> = (derivationPath: string) => AddressData<C>;
 
-type ImportByPrivateKey<C extends AddressType> = (
-  derivationPath: string,
-  privateKey: KeyPair["privateKey"],
-  destinationTag?: number
-) => AddressData<C>;
+type ImportByPrivateKey<C extends AddressType> = C extends ReturnTypeCompatibleAddressType
+  ? (derivationPath: string, privateKey: KeyPair["privateKey"]) => AddressData<C>
+  : (
+      derivationPath: string,
+      enterprisePrivateKey: BaseAddressKeyPair["enterprisePrivateKey"],
+      rewardPrivateKey: BaseAddressKeyPair["rewardPrivateKey"]
+    ) => AddressData<C>;
 
 type AbstractAddress<C extends AddressType> = {
   getData: GetData<C>;
