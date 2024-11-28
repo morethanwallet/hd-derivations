@@ -1,4 +1,4 @@
-import { type AddressError } from "../addressError.exception.js";
+import { type AddressError } from "@/address/exceptions/index.js";
 
 type CustomError = typeof AddressError | typeof Error;
 

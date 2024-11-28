@@ -3,7 +3,7 @@ import bs58check from "bs58check";
 import { hash160 } from "bitcoinjs-lib/src/crypto";
 import { toUint8Array } from "@/helpers/index.js";
 import { type KeysConfig, type KeyPair, type AddressData } from "../types/index.js";
-import { ExceptionMessage } from "@/exceptions/index.js";
+import { ExceptionMessage } from "../exceptions/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
