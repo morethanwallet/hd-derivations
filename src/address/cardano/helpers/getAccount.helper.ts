@@ -18,7 +18,6 @@ function convertDerivationPathToAccountSegments(derivationPath: string): string[
 
 function getAccount(rootKey: Bip32PrivateKey, derivationPath: string): Bip32PrivateKey {
   const pathSegments = convertDerivationPathToAccountSegments(derivationPath);
-  console.log(pathSegments);
   let account = rootKey;
 
   for (let pathSegment of pathSegments) {
