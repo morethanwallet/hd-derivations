@@ -25,9 +25,13 @@ class Bitcoin implements AbstractNetwork<"bitcoin"> {
     this.p2wpkhAddress = new P2wpkhAddress(config[purpose].nativeSegWit.keysConfig, mnemonic);
     this.taprootAddress = new TaprootAddress(config[purpose].taproot.keysConfig, mnemonic);
     this.p2wshAddress = new P2wshAddress(config[purpose].p2wsh.keysConfig, mnemonic);
-    this.p2wshInP2shAddress = new P2wshInP2shAddress(config[purpose].p2wshInP2sh.keysConfig, mnemonic);
+    this.p2wshInP2shAddress = new P2wshInP2shAddress(
+      config[purpose].p2wshInP2sh.keysConfig,
+      mnemonic
+    );
   }
 
+  // TODO: Make the derivation path as the first parameter for consistency
   public getAddressData(addressType: BitcoinAddress, derivationPath: string) {
     switch (addressType) {
       case "legacy": {
