@@ -1,4 +1,4 @@
-type AddressType = "base" | "reward" | "enterprise" | "byron";
+type AddressType = "base" | "reward" | "enterprise";
 
 type ReturnTypeCompatibleAddressType = Exclude<AddressType, "base">;
 
