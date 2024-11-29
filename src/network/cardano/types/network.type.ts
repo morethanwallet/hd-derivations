@@ -1,4 +1,10 @@
 import { type AddressType, type AddressData } from "@/address/cardano/index.js";
+import { type NetworkPurpose as CommonNetworkPurpose } from "@/network/index.js";
+
+type NetworkPurpose =
+  | Extract<CommonNetworkPurpose, "mainnet">
+  | "testnetPreprod"
+  | "testnetPreview";
 
 type GetAddressData =
   | ((
@@ -11,13 +17,14 @@ type ImportByPrivateKey =
   | ((
       derivationPath: string,
       addressType: Exclude<AddressType, "base">,
-      privateKey: AddressData<"enterprise" | "reward">["privateKey"]
+      privateKey: AddressData<"enterprise" | "reward">["privateKey"],
+      rewardPrivateKey?: AddressData<"base">["rewardPrivateKey"]
     ) => AddressData<"enterprise" | "reward">)
   | ((
       derivationPath: string,
       addressType: Extract<AddressType, "base">,
       enterprisePrivateKey: AddressData<"base">["enterprisePrivateKey"],
-      rewardPrivateKey: AddressData<"base">["rewardPrivateKey"]
+      rewardPrivateKey?: AddressData<"base">["rewardPrivateKey"]
     ) => AddressData<"base">);
 
 type AbstractNetwork = {
@@ -25,4 +32,4 @@ type AbstractNetwork = {
   importByPrivateKey: ImportByPrivateKey;
 };
 
-export { type AbstractNetwork };
+export { type AbstractNetwork, type ImportByPrivateKey, type NetworkPurpose };

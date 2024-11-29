@@ -1,5 +1,6 @@
-import { type AddressError } from "../addressError.exception.js";
+import { type AddressError } from "@/address/exceptions/index.js";
+import { type NetworkError } from "@/network/exceptions/index.js";
 
-type CustomError = typeof AddressError | typeof Error;
+type CustomError = typeof AddressError | typeof NetworkError | typeof Error;
 
 export { CustomError };

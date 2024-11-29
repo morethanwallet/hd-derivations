@@ -1,15 +1,18 @@
-import { BaseAddress, EnterpriseAddress, RewardAddress, type KeyPair } from "@/address/index.js";
+import { BaseAddress, EnterpriseAddress, RewardAddress } from "@/address/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractNetwork } from "./types/index.js";
+import { type NetworkPurpose, type AbstractNetwork } from "./types/index.js";
 import { type AddressData, type AddressType } from "@/address/cardano/index.js";
 import { assert } from "@/helpers/assert.helper.js";
+import { ExceptionMessage, NetworkError } from "../exceptions/index.js";
 
 class Cardano implements AbstractNetwork {
+  private purpose: NetworkPurpose;
   private baseAddress: BaseAddress;
   private enterpriseAddress: EnterpriseAddress;
   private rewardAddress: RewardAddress;
 
-  public constructor(mnemonic: Mnemonic) {
+  public constructor(mnemonic: Mnemonic, purpose: NetworkPurpose) {
+    this.purpose = purpose;
     this.baseAddress = new BaseAddress(mnemonic);
     this.enterpriseAddress = new EnterpriseAddress(mnemonic);
     this.rewardAddress = new RewardAddress(mnemonic);
@@ -29,13 +32,13 @@ class Cardano implements AbstractNetwork {
   ): AddressData<AddressType> {
     switch (addressType) {
       case "reward": {
-        return this.rewardAddress.getData(derivationPath);
+        return this.rewardAddress.getData(derivationPath, this.purpose);
       }
       case "enterprise": {
-        return this.enterpriseAddress.getData(derivationPath);
+        return this.enterpriseAddress.getData(derivationPath, this.purpose);
       }
       case "base": {
-        return this.baseAddress.getData(derivationPath);
+        return this.baseAddress.getData(derivationPath, this.purpose);
       }
     }
   }
@@ -43,13 +46,14 @@ class Cardano implements AbstractNetwork {
   public importByPrivateKey(
     derivationPath: string,
     addressType: Exclude<AddressType, "base">,
-    privateKey: AddressData<"enterprise" | "reward">["privateKey"]
+    privateKey: AddressData<"enterprise" | "reward">["privateKey"],
+    rewardPrivateKey?: AddressData<"base">["rewardPrivateKey"]
   ): AddressData<"enterprise" | "reward">;
   public importByPrivateKey(
     derivationPath: string,
     addressType: Extract<AddressType, "base">,
     enterprisePrivateKey: AddressData<"base">["enterprisePrivateKey"],
-    rewardPrivateKey: AddressData<"base">["rewardPrivateKey"]
+    rewardPrivateKey?: AddressData<"base">["rewardPrivateKey"]
   ): AddressData<"base">;
   public importByPrivateKey(
     derivationPath: string,
@@ -59,16 +63,22 @@ class Cardano implements AbstractNetwork {
       | AddressData<"base">["enterprisePrivateKey"],
     rewardPrivateKey?: AddressData<"base">["rewardPrivateKey"]
   ): AddressData<AddressType> {
-    assert(addressType === "base" && !rewardPrivateKey, Error, "")
     switch (addressType) {
       case "reward": {
-        return this.rewardAddress.importByPrivateKey(derivationPath, privateKey);
+        return this.rewardAddress.importByPrivateKey(derivationPath, privateKey, this.purpose);
       }
       case "enterprise": {
-        return this.enterpriseAddress.importByPrivateKey(derivationPath, privateKey);
+        return this.enterpriseAddress.importByPrivateKey(derivationPath, privateKey, this.purpose);
       }
       case "base": {
-        return this.baseAddress.importByPrivateKey(derivationPath, privateKey, rewardPrivateKey);
+        assert(rewardPrivateKey, NetworkError, ExceptionMessage.CARDANO_REWARD_KEY_IS_REQUIRED);
+        
+        return this.baseAddress.importByPrivateKey(
+          derivationPath,
+          privateKey,
+          rewardPrivateKey,
+          this.purpose
+        );
       }
     }
   }

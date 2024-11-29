@@ -2,7 +2,7 @@ import { payments } from "bitcoinjs-lib";
 import { Keys } from "./keys/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
-import { ExceptionMessage, AddressError } from "@/exceptions/index.js";
+import { ExceptionMessage, AddressError } from "../exceptions/index.js";
 import { type AddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
   appendAddressToDerivationPath,

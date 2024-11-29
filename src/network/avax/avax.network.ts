@@ -8,8 +8,8 @@ class Avax implements AbstractNetwork {
   private avaxAddress: AvaxAddress;
 
   public constructor(mnemonic: Mnemonic, purpose: NetworkPurpose) {
-    this.avaxAddress = new AvaxAddress(config.keysConfig, mnemonic);
     this.purpose = purpose;
+    this.avaxAddress = new AvaxAddress(config.keysConfig, mnemonic);
   }
 
   public getAddressData(derivationPath: string, networkType: NetworkType) {

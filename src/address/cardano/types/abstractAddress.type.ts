@@ -1,6 +1,7 @@
 import { type KeyPair, type AddressData as CommonAddressData } from "@/address/index.js";
 import { type AddressType, type BaseAddressKeyPair } from "./index.js";
 import { type ReturnTypeCompatibleAddressType } from "./addressType.type.js";
+import { type NetworkPurpose } from "@/network/cardano/index.js";
 
 type BaseAddressData = Pick<CommonAddressData, "address" | "mnemonic"> & {
   enterprisePath: string;
@@ -11,14 +12,22 @@ type AddressData<C extends AddressType> = C extends ReturnTypeCompatibleAddressT
   ? CommonAddressData
   : BaseAddressData;
 
-type GetData<C extends AddressType> = (derivationPath: string) => AddressData<C>;
+type GetData<C extends AddressType> = (
+  derivationPath: string,
+  networkPurpose: NetworkPurpose
+) => AddressData<C>;
 
 type ImportByPrivateKey<C extends AddressType> = C extends ReturnTypeCompatibleAddressType
-  ? (derivationPath: string, privateKey: KeyPair["privateKey"]) => AddressData<C>
+  ? (
+      derivationPath: string,
+      privateKey: KeyPair["privateKey"],
+      networkPurpose: NetworkPurpose
+    ) => AddressData<C>
   : (
       derivationPath: string,
       enterprisePrivateKey: BaseAddressKeyPair["enterprisePrivateKey"],
-      rewardPrivateKey: BaseAddressKeyPair["rewardPrivateKey"]
+      rewardPrivateKey: BaseAddressKeyPair["rewardPrivateKey"],
+      networkPurpose: NetworkPurpose
     ) => AddressData<C>;
 
 type AbstractAddress<C extends AddressType> = {

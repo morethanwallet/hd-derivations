@@ -1,6 +1,5 @@
 import { Keys } from "./keys/index.js";
 import {
-  NetworkInfo,
   Credential,
   PrivateKey,
   BaseAddress as LibraryBaseAddress,
@@ -10,10 +9,11 @@ import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../h
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { BaseAddressKeyPair, type AbstractAddress, type AddressData } from "./types/index.js";
-import { getCredential, updateDerivationPathChange } from "./helpers/index.js";
+import { getCredential, getNetworkId, updateDerivationPathChange } from "./helpers/index.js";
 import { Change } from "./enums/index.js";
 import { EnterpriseAddress } from "./enterpriseAddress.js";
 import { RewardAddress } from "./rewardAddress.js";
+import { type NetworkPurpose } from "@/network/cardano/index.js";
 
 class BaseAddress extends Keys implements AbstractAddress<"base"> {
   private enterpriseAddress: EnterpriseAddress;
@@ -26,12 +26,12 @@ class BaseAddress extends Keys implements AbstractAddress<"base"> {
     this.rewardAddress = new RewardAddress(mnemonic);
   }
 
-  public getData(derivationPath: string): AddressData<"base"> {
-    const enterpriseAddressData = this.enterpriseAddress.getData(derivationPath);
-    const rewardAddressData = this.rewardAddress.getData(derivationPath);
+  public getData(derivationPath: string, networkPurpose: NetworkPurpose): AddressData<"base"> {
+    const enterpriseAddressData = this.enterpriseAddress.getData(derivationPath, networkPurpose);
+    const rewardAddressData = this.rewardAddress.getData(derivationPath, networkPurpose);
     const enterpriseCredential = getCredential(PublicKey.from_hex(enterpriseAddressData.publicKey));
     const stakingCredential = getCredential(PublicKey.from_hex(rewardAddressData.publicKey));
-    const address = this.getAddress(enterpriseCredential, stakingCredential);
+    const address = this.getAddress(enterpriseCredential, stakingCredential, networkPurpose);
 
     return {
       address,
@@ -48,7 +48,8 @@ class BaseAddress extends Keys implements AbstractAddress<"base"> {
   public importByPrivateKey(
     derivationPath: string,
     enterprisePrivateKey: BaseAddressKeyPair["enterprisePrivateKey"],
-    rewardPrivateKey: BaseAddressKeyPair["rewardPrivateKey"]
+    rewardPrivateKey: BaseAddressKeyPair["rewardPrivateKey"],
+    networkPurpose: NetworkPurpose
   ): AddressData<"base"> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
@@ -58,7 +59,7 @@ class BaseAddress extends Keys implements AbstractAddress<"base"> {
         i
       );
 
-      const data = this.getData(incrementedDerivationPath);
+      const data = this.getData(incrementedDerivationPath, networkPurpose);
 
       if (
         data.enterprisePrivateKey === enterprisePrivateKey &&
@@ -72,7 +73,7 @@ class BaseAddress extends Keys implements AbstractAddress<"base"> {
     const rawRewardPublicKey = PrivateKey.from_hex(rewardPrivateKey).to_public();
     const enterpriseCredential = getCredential(rawEnterprisePublicKey);
     const rewardCredential = getCredential(rawRewardPublicKey);
-    const address = this.getAddress(enterpriseCredential, rewardCredential);
+    const address = this.getAddress(enterpriseCredential, rewardCredential, networkPurpose);
 
     return {
       address,
@@ -88,10 +89,11 @@ class BaseAddress extends Keys implements AbstractAddress<"base"> {
 
   private getAddress(
     enterpriseCredential: Credential,
-    rewardCredential: Credential
+    rewardCredential: Credential,
+    networkPurpose: NetworkPurpose
   ): AddressData<"base">["address"] {
     const address = LibraryBaseAddress.new(
-      NetworkInfo.mainnet().network_id(),
+      getNetworkId(networkPurpose),
       enterpriseCredential,
       rewardCredential
     );

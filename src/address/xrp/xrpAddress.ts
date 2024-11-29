@@ -1,4 +1,4 @@
-import { ExceptionMessage } from "@/exceptions/index.js";
+import { ExceptionMessage } from "../exceptions/index.js";
 import { toUint8Array } from "@/helpers/index.js";
 import { type AddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
