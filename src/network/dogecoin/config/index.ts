@@ -1,10 +1,10 @@
 import { type KeysConfig } from "@/address/index.js";
-import { type Address } from "../types/index.js";
+import { type AddressType } from "@/address/dogecoin/index.js";
 import { type NetworkPurpose } from "@/network/index.js";
 
 type Config = {
   [networkPurpose in NetworkPurpose]: {
-    [address in Address]: {
+    [address in AddressType]: {
       keysConfig: KeysConfig;
     };
   };

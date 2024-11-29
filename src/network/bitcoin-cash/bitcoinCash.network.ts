@@ -1,6 +1,7 @@
 import { CashAddrAddress, P2pkhAddress } from "@/address/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type Address, type AbstractNetwork } from "./types/index.js";
+import { type AbstractNetwork } from "./types/index.js";
+import { type AddressType } from "@/address/bitcoin-cash/index.js";
 import { type NetworkPurpose } from "@/network/index.js";
 import { config } from "./config/index.js";
 
@@ -13,7 +14,7 @@ class BitcoinCash implements AbstractNetwork {
     this.p2pkhAddress = new P2pkhAddress(config[purpose].legacy.keysConfig, mnemonic);
   }
 
-  public getAddressData(derivationPath: string, addressType: Address) {
+  public getAddressData(derivationPath: string, addressType: AddressType) {
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.getData(derivationPath);
@@ -24,7 +25,7 @@ class BitcoinCash implements AbstractNetwork {
     }
   }
 
-  public importByPrivateKey(derivationPath: string, privateKey: string, addressType: Address) {
+  public importByPrivateKey(derivationPath: string, privateKey: string, addressType: AddressType) {
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.importByPrivateKey(derivationPath, privateKey);
