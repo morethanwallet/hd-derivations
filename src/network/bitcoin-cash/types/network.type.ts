@@ -3,11 +3,11 @@ import { type Address } from "./index.js";
 
 // TODO: Use Abstract Address values where applicable
 type AbstractNetwork = {
-  getAddressData: (addressType: Address, derivationPath: string) => AddressData;
+  getAddressData: (derivationPath: string, addressType: Address) => AddressData;
   importByPrivateKey: (
-    addressType: Address,
     derivationPath: string,
-    privateKey: string
+    privateKey: string,
+    addressType: Address
   ) => AddressData;
 };
 

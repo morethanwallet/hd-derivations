@@ -45,14 +45,14 @@ class Cardano implements AbstractNetwork {
 
   public importByPrivateKey(
     derivationPath: string,
-    addressType: Exclude<AddressType, "base">,
     privateKey: AddressData<"enterprise" | "reward">["privateKey"],
+    addressType: Exclude<AddressType, "base">,
     rewardPrivateKey?: AddressData<"base">["rewardPrivateKey"]
   ): AddressData<"enterprise" | "reward">;
   public importByPrivateKey(
     derivationPath: string,
-    addressType: Extract<AddressType, "base">,
     enterprisePrivateKey: AddressData<"base">["enterprisePrivateKey"],
+    addressType: Extract<AddressType, "base">,
     rewardPrivateKey?: AddressData<"base">["rewardPrivateKey"]
   ): AddressData<"base">;
   public importByPrivateKey(
@@ -72,7 +72,7 @@ class Cardano implements AbstractNetwork {
       }
       case "base": {
         assert(rewardPrivateKey, NetworkError, ExceptionMessage.CARDANO_REWARD_KEY_IS_REQUIRED);
-        
+
         return this.baseAddress.importByPrivateKey(
           derivationPath,
           privateKey,

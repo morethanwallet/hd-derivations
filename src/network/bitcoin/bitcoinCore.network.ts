@@ -23,8 +23,8 @@ class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
   }
 
   public getAddressData(
-    addressType: BitcoinCoreAddress,
     derivationPath: string,
+    addressType: BitcoinCoreAddress,
     base58RootKey: string
   ) {
     switch (addressType) {
@@ -44,9 +44,9 @@ class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
   }
 
   public importByPrivateKey(
-    addressType: BitcoinCoreAddress,
     derivationPath: string,
-    privateKey: string
+    privateKey: string,
+    addressType: BitcoinCoreAddress
   ) {
     switch (addressType) {
       case "legacy": {

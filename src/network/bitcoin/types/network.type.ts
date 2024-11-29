@@ -5,15 +5,15 @@ import { type AbstractNetwork as CommonAbstractNetwork } from "@/network/types/i
 type BitcoinNetwork = "bitcoinCore" | "multiBitHd" | "bitcoin";
 
 type GetAddressData<T extends BitcoinNetwork> = T extends "bitcoin"
-  ? (addressType: BitcoinAddress, derivationPath: string) => AddressData
+  ? (derivationPath: string, addressType: BitcoinAddress) => AddressData
   : T extends "bitcoinCore"
-  ? (addressType: BitcoinCoreAddress, derivationPath: string, base58RootKey: string) => AddressData
+  ? (derivationPath: string, addressType: BitcoinCoreAddress, base58RootKey: string) => AddressData
   : CommonAbstractNetwork["getAddressData"];
 
 type ImportByPrivateKey<T extends BitcoinNetwork> = T extends "bitcoin"
-  ? (addressType: BitcoinAddress, derivationPath: string, privateKey: string) => AddressData
+  ? (derivationPath: string, privateKey: string, addressType: BitcoinAddress) => AddressData
   : T extends "bitcoinCore"
-  ? (addressType: BitcoinCoreAddress, derivationPath: string, base58RootKey: string) => AddressData
+  ? (derivationPath: string, privateKey: string, addressType: BitcoinCoreAddress) => AddressData
   : CommonAbstractNetwork["importByPrivateKey"];
 
 type AbstractNetwork<T extends BitcoinNetwork> = {

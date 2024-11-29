@@ -16,14 +16,14 @@ type GetAddressData =
 type ImportByPrivateKey =
   | ((
       derivationPath: string,
-      addressType: Exclude<AddressType, "base">,
       privateKey: AddressData<"enterprise" | "reward">["privateKey"],
+      addressType: Exclude<AddressType, "base">,
       rewardPrivateKey?: AddressData<"base">["rewardPrivateKey"]
     ) => AddressData<"enterprise" | "reward">)
   | ((
       derivationPath: string,
-      addressType: Extract<AddressType, "base">,
       enterprisePrivateKey: AddressData<"base">["enterprisePrivateKey"],
+      addressType: Exclude<AddressType, "base">,
       rewardPrivateKey?: AddressData<"base">["rewardPrivateKey"]
     ) => AddressData<"base">);
 

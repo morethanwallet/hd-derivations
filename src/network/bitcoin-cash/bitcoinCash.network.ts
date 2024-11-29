@@ -13,7 +13,7 @@ class BitcoinCash implements AbstractNetwork {
     this.p2pkhAddress = new P2pkhAddress(config[purpose].legacy.keysConfig, mnemonic);
   }
 
-  public getAddressData(addressType: Address, derivationPath: string) {
+  public getAddressData(derivationPath: string, addressType: Address) {
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.getData(derivationPath);
@@ -24,7 +24,7 @@ class BitcoinCash implements AbstractNetwork {
     }
   }
 
-  public importByPrivateKey(addressType: Address, derivationPath: string, privateKey: string) {
+  public importByPrivateKey(derivationPath: string, privateKey: string, addressType: Address) {
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.importByPrivateKey(derivationPath, privateKey);

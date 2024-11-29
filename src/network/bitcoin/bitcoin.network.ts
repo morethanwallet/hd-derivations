@@ -31,8 +31,7 @@ class Bitcoin implements AbstractNetwork<"bitcoin"> {
     );
   }
 
-  // TODO: Make the derivation path as the first parameter for consistency
-  public getAddressData(addressType: BitcoinAddress, derivationPath: string) {
+  public getAddressData(derivationPath: string, addressType: BitcoinAddress) {
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.getData(derivationPath);
@@ -56,9 +55,9 @@ class Bitcoin implements AbstractNetwork<"bitcoin"> {
   }
 
   public importByPrivateKey(
-    addressType: BitcoinAddress,
     derivationPath: string,
-    privateKey: string
+    privateKey: string,
+    addressType: BitcoinAddress
   ) {
     switch (addressType) {
       case "legacy": {
