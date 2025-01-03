@@ -57,10 +57,10 @@ class Cardano implements AbstractNetwork {
   ): AddressData<"base">;
   public importByPrivateKey(
     derivationPath: string,
-    addressType: AddressType,
     privateKey:
       | AddressData<"enterprise" | "reward">["privateKey"]
       | AddressData<"base">["enterprisePrivateKey"],
+    addressType: AddressType,
     rewardPrivateKey?: AddressData<"base">["rewardPrivateKey"]
   ): AddressData<AddressType> {
     switch (addressType) {
