@@ -29,7 +29,7 @@ class P2wpkhAddress extends Keys implements AbstractAddress<true> {
       publicKey,
       address,
       path: derivationPath,
-      mnemonic: this.mnemonic.getMnemonic(),
+      mnemonic: base58RootKey ? EMPTY_MNEMONIC : this.mnemonic.getMnemonic(),
     };
   }
 
