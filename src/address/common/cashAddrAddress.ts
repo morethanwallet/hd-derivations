@@ -14,6 +14,10 @@ import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 
+const REGTEST_PREFIX = "bchreg";
+const HRP_DELIMITER = ":";
+const ADDRESS_INDEX = 1;
+
 // TODO: Move this class to bitcoin-cash folder
 class CashAddrAddress extends Keys implements AbstractAddress {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
@@ -64,7 +68,16 @@ class CashAddrAddress extends Keys implements AbstractAddress {
     const { address } = payments.p2pkh({ network: this.keysConfig, pubkey: publicKey });
     assert(address, AddressError, ExceptionMessage.CASH_ADDR_ADDRESS_GENERATION_FAILED);
 
-    return toCashAddress(address);
+    const formattedAddress = toCashAddress(address);
+
+    if (this.keysConfig.bech32 === REGTEST_PREFIX) {
+      return REGTEST_PREFIX.concat(
+        HRP_DELIMITER,
+        String(formattedAddress.split(HRP_DELIMITER)[ADDRESS_INDEX])
+      );
+    }
+
+    return formattedAddress;
   }
 
   private getKeyPair(source: BIP32Interface | string): KeyPair {
