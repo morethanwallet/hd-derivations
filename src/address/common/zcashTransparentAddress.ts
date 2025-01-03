@@ -12,7 +12,9 @@ import {
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "@/address/index.js";
+import { type BIP32Interface } from "bip32";
 
+// TODO: Move this class to the zcash folder
 const HEXADECIMAL_SYSTEM_IDENTIFIER = 16;
 
 function splitPrefixIntoBytesArray(prefix: number): Uint8Array {
@@ -40,7 +42,7 @@ class ZcashTransparentAddress extends Keys implements AbstractAddress {
 
   public getData(derivationPath: string): AddressData {
     const node = this.rootKey.derivePath(derivationPath);
-    const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
+    const { privateKey, publicKey } = this.getKeyPair(node);
     const address = this.getAddress(node.publicKey);
 
     return {
@@ -66,8 +68,7 @@ class ZcashTransparentAddress extends Keys implements AbstractAddress {
       if (data.privateKey === privateKey) return data;
     }
 
-    const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
-    const { publicKey } = this.getKeyPair(rawPrivateKey);
+    const { publicKey } = this.getKeyPair(privateKey);
     const address = this.getAddress(toUint8Array(Buffer.from(publicKey, "hex")));
 
     return {
@@ -87,8 +88,8 @@ class ZcashTransparentAddress extends Keys implements AbstractAddress {
     return bs58check.encode(addressBytes);
   }
 
-  private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
-    return getKeyPairFromEc(ExceptionMessage.ZCASH_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
+  private getKeyPair(source: BIP32Interface | string): KeyPair {
+    return getKeyPairFromEc(ExceptionMessage.P2WPKH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED, source);
   }
 }
 
