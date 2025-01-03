@@ -110,8 +110,6 @@ describe("Cardano", () => {
 
     describe("importByPrivateKey", () => {
       it("Imports correct enterprise address data", () => {
-        console.log(MOCK_COMMON_MAINNET_ADDRESS_DATA.enterprise.path);
-        console.log(MOCK_COMMON_MAINNET_ADDRESS_DATA.enterprise.privateKey);
         const addressData = cardanoMainnet.importByPrivateKey(
           MOCK_COMMON_MAINNET_ADDRESS_DATA.enterprise.path,
           MOCK_COMMON_MAINNET_ADDRESS_DATA.enterprise.privateKey,
