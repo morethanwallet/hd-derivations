@@ -13,6 +13,7 @@ import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.j
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
+import { config } from "@/network/bitcoin-cash/index.js";
 
 const REGTEST_PREFIX = "bchreg";
 const HRP_DELIMITER = ":";
@@ -70,7 +71,7 @@ class CashAddrAddress extends Keys implements AbstractAddress {
 
     const formattedAddress = toCashAddress(address);
 
-    if (this.keysConfig.bech32 === REGTEST_PREFIX) {
+    if (this.keysConfig.bech32 === config.regtest.cashAddr.keysConfig.bech32) {
       return REGTEST_PREFIX.concat(
         HRP_DELIMITER,
         String(formattedAddress.split(HRP_DELIMITER)[ADDRESS_INDEX])
