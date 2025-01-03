@@ -17,7 +17,12 @@ type GetAddressData<T extends BitcoinNetwork> = T extends "bitcoin"
 type ImportByPrivateKey<T extends BitcoinNetwork> = T extends "bitcoin"
   ? (derivationPath: string, privateKey: string, addressType: BitcoinAddressType) => AddressData
   : T extends "bitcoinCore"
-  ? (derivationPath: string, privateKey: string, addressType: BitcoinCoreAddressType) => AddressData
+  ? (
+      derivationPath: string,
+      privateKey: string,
+      addressType: BitcoinCoreAddressType,
+      base58RootKey: string
+    ) => AddressData
   : CommonAbstractNetwork["importByPrivateKey"];
 
 type AbstractNetwork<T extends BitcoinNetwork> = {
