@@ -8,11 +8,14 @@ import {
   stripHexPrefix,
 } from "ethereumjs-util";
 import { Keys } from "./keys/index.js";
-import { ecPair, type ECPairInterface } from "@/ecc/index.js";
 import { type AddressData, type KeysConfig, type KeyPair } from "../types/index.js";
-import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
-import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
-import { ExceptionMessage, AddressError } from "../exceptions/index.js";
+import {
+  appendAddressToDerivationPath,
+  getKeyPairFromEc,
+  removeDerivationPathAddress,
+} from "../helpers/index.js";
+import { toUint8Array } from "@/helpers/index.js";
+import { ExceptionMessage } from "../exceptions/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "@/address/index.js";
@@ -70,22 +73,27 @@ class EvmAddress extends Keys implements AbstractAddress {
   }
 
   private getAddress(publicKey: KeyPair["publicKey"]): string {
-    const publicKeyBuffer = Buffer.from(publicKey, "hex");
-    const addressBuffer = publicToAddress(publicKeyBuffer);
+    const unprefixedPublicKey = this.checkAndRemoveHexPrefix(publicKey);
+    const publicKeyBuffer = this.getPublicKeyBuffer(
+      toUint8Array(Buffer.from(unprefixedPublicKey, "hex"))
+    );
+    const evmPublicKey = importPublic(publicKeyBuffer);
+    const addressBuffer = publicToAddress(evmPublicKey);
     const hexAddress = addHexPrefix(addressBuffer.toString("hex"));
 
     return toChecksumAddress(hexAddress);
   }
 
   private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
-    assert(rawPrivateKey, AddressError, ExceptionMessage.EVM_PRIVATE_KEY_GENERATION_FAILED);
-    const keyPair: ECPairInterface = ecPair.fromPrivateKey(rawPrivateKey);
-    const privateKey = bufferToHex(keyPair.privateKey);
-    const hexPublicKey = toHexFromBytes(keyPair.publicKey);
-    const publicKeyBuffer = this.getPublicKeyBuffer(toUint8Array(Buffer.from(hexPublicKey, "hex")));
-    const evmPublicKey = importPublic(publicKeyBuffer).toString("hex");
+    const { privateKey, publicKey } = getKeyPairFromEc(
+      ExceptionMessage.EVM_PRIVATE_KEY_GENERATION_FAILED,
+      rawPrivateKey
+    );
 
-    return { privateKey, publicKey: evmPublicKey };
+    return {
+      privateKey: bufferToHex(Buffer.from(privateKey, "hex")),
+      publicKey: addHexPrefix(publicKey),
+    };
   }
 
   private getPublicKeyBuffer(publicKey: Uint8Array): Buffer {
