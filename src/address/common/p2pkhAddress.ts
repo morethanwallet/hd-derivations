@@ -11,6 +11,7 @@ import {
 } from "../helpers/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "@/address/index.js";
+import { type BIP32Interface } from "bip32";
 
 class P2pkhAddress extends Keys implements AbstractAddress<true> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
@@ -20,7 +21,7 @@ class P2pkhAddress extends Keys implements AbstractAddress<true> {
   public getData(derivationPath: string, base58RootKey?: string): AddressData {
     const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.rootKey;
     const node = rootKey.derivePath(derivationPath);
-    const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
+    const { privateKey, publicKey } = this.getKeyPair(node);
     const address = this.getAddress(node.publicKey);
 
     return {
@@ -50,8 +51,7 @@ class P2pkhAddress extends Keys implements AbstractAddress<true> {
       if (data.privateKey === privateKey) return data;
     }
 
-    const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
-    const { publicKey } = this.getKeyPair(rawPrivateKey);
+    const { publicKey } = this.getKeyPair(privateKey);
     const address = this.getAddress(toUint8Array(Buffer.from(publicKey, "hex")));
 
     return {
@@ -70,8 +70,8 @@ class P2pkhAddress extends Keys implements AbstractAddress<true> {
     return address;
   }
 
-  private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
-    return getKeyPairFromEc(ExceptionMessage.P2PKH_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
+  private getKeyPair(source: BIP32Interface | string): KeyPair {
+    return getKeyPairFromEc(ExceptionMessage.P2WPKH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED, source);
   }
 }
 

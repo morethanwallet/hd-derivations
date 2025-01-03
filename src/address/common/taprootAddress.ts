@@ -1,6 +1,6 @@
 import { payments } from "bitcoinjs-lib";
 import { Keys } from "./keys/index.js";
-import { assert, toUint8Array } from "@/helpers/index.js";
+import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage, AddressError } from "../exceptions/index.js";
 import { type AddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
@@ -11,6 +11,7 @@ import {
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "@/address/index.js";
+import { type BIP32Interface } from "bip32";
 
 const PUBLIC_KEY_PREFIX_END_INDEX = 1;
 const X_ONLY_PUBLIC_KEY_LENGTH = 32;
@@ -24,7 +25,7 @@ class TaprootAddress extends Keys implements AbstractAddress<true> {
   public getData(derivationPath: string, base58RootKey?: string): AddressData {
     const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.rootKey;
     const node = rootKey.derivePath(derivationPath);
-    const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
+    const { privateKey, publicKey } = this.getKeyPair(node);
     const address = this.getAddress(node.publicKey);
 
     return {
@@ -54,8 +55,7 @@ class TaprootAddress extends Keys implements AbstractAddress<true> {
       if (data.privateKey === privateKey) return data;
     }
 
-    const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
-    const { publicKey } = this.getKeyPair(rawPrivateKey);
+    const { publicKey } = this.getKeyPair(privateKey);
     const address = this.getAddress(toUint8Array(Buffer.from(publicKey, "hex")));
 
     return {
@@ -69,14 +69,23 @@ class TaprootAddress extends Keys implements AbstractAddress<true> {
 
   private getAddress(publicKey: Uint8Array): string {
     const xOnlyPublicKey = this.toXOnlyPublicKey(publicKey);
-    const { address } = payments.p2tr({ internalPubkey: xOnlyPublicKey });
+    const { address } = payments.p2tr({ internalPubkey: xOnlyPublicKey, network: this.keysConfig });
     assert(address, AddressError, ExceptionMessage.TAPROOT_ADDRESS_GENERATION_FAILED);
 
     return address;
   }
 
-  private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
-    return getKeyPairFromEc(ExceptionMessage.TAPROOT_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
+  private getKeyPair(source: BIP32Interface | string): KeyPair {
+    const keyPair = getKeyPairFromEc(
+      ExceptionMessage.P2WPKH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED,
+      source
+    );
+
+    const publicKey = toHexFromBytes(
+      this.toXOnlyPublicKey(toUint8Array(Buffer.from(keyPair.publicKey, "hex")))
+    );
+
+    return { privateKey: keyPair.privateKey, publicKey };
   }
 
   private toXOnlyPublicKey(publicKey: Uint8Array): Uint8Array {
