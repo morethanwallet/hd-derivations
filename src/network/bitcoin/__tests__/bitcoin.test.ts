@@ -130,7 +130,7 @@ beforeEach(() => {
   bitcoinRegtest = new Bitcoin(mnemonic, "regtest");
 });
 
-describe("Bitcoin network", () => {
+describe("Bitcoin", () => {
   describe("mainnet", () => {
     describe("getAddressData", () => {
       it("Generates correct legacy address data", () => {

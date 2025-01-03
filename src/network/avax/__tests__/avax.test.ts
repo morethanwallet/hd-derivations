@@ -20,7 +20,7 @@ beforeEach(() => {
   avaxTestnet = new Avax(mnemonic, "testnet");
 });
 
-describe("Avax network family", () => {
+describe("Avax", () => {
   describe("getAddressData", () => {
     it("Generates correct mainnet Avax-X address data", () => {
       const mockAddressData = {
