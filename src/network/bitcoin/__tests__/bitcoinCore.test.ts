@@ -4,8 +4,12 @@ import { describe, it, expect } from "vitest";
 import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
-const BASE58_ROOT_KEY =
+const MOCK_MAINNET_BASE58_ROOT_KEY =
   "xprv9s21ZrQH143K3YUjneyHb6vt9zazjahQ2odtmGFLCtFngSTY7byQbbxqBkiQLMtyUXhLfrananx8F6WvdtRKbQNQnvCZbgg58b4zqB6ZTkw";
+const MOCK_TESTNET_BASE58_ROOT_KEY =
+  "tprv8ZgxMBicQKsPeFEpt7eKry87VLERMJnhewHcRLs9D6VxLe4D5Uh8omt4HpNhj8wrnSaoTANw151WGqsiZz3Qw2z7Gv7Jn5ApwftwD8HrZ2p";
+const MOCK_REGTEST_BASE58_ROOT_KEY =
+  "tprv8ZgxMBicQKsPeGDV4kjnRnSQLgZ7XkAX865JEAWGmafNoC547ze9v5qoQ7kBLVNYtAEEXf5wEaRuJi5MYLA5aQQkgQ6HJftmvEKiCocPVtk";
 
 const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
   legacy: {
@@ -41,48 +45,62 @@ const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
 const MOCK_COMMON_TESTNET_ADDRESS_DATA = {
   legacy: {
     mnemonic: EMPTY_MNEMONIC,
-    address: "mt3g135aijz8KKzY8KWHHhELiUvBJw7ZaV",
-    privateKey: "L1DY4NF8DyWPP8fiy787Au9L48TNk6x5fPZtCVxP5npgL7B7VkdS",
-    publicKey: "0272bf7ef034cab9e0cd72aff6902f4a401fd5ad3dc68e6d46db5a016ac6e26ac5",
-    path: "m/44'/1'/0'/0/3",
+    address: "mn5qavm24T71bNQFBgX5Ai1K7mvoETir8P",
+    privateKey: "cS425vtTUSCf1s1y3c6gJvVyBvjL7cmHNrKBCE6MLpcT1zEYVWKe",
+    publicKey: "038095c7b111b24045a827e91b3593d4d8916874164e8410ff15816cd8240ad040",
+    path: "m/44'/1'/0'/0/0",
   },
   segWit: {
     mnemonic: EMPTY_MNEMONIC,
-    address: "2N63XGQKDHES9mSuas84jLT7GwtBmjVH231",
-    privateKey: "L5doRfdDzhfijYGmSnh9UBxHB8RGQTkQAcpSAwWpgd43e819uiWg",
-    publicKey: "02066063380d08e100333f32c38ef81d4694c1104547e74f1c88bcadbbdc818300",
-    path: "m/49'/1'/0'/0/3",
+    address: "2Mw2pZTv2pPoaHk5k19WJDvAcNSJHbmnqEr",
+    privateKey: "cTRdfBcU3mrn4zHB238g7ixjMzVohLNyXDG5sZfu56KvCEASD7ZH",
+    publicKey: "02912e08187152e8f6c591c8c82b585467ab58420ee078917480e856c7115be00a",
+    path: "m/49'/1'/0'/0/0",
   },
   nativeSegWit: {
     mnemonic: EMPTY_MNEMONIC,
-    address: "tb1qc2a6nu2pm3es63v32q8k8d9mg0pekpqajhctt6",
-    privateKey: "L3QfEqbsENbjuK6y5iFAySm9skueK2FRneeG7C7M3VvcGzdKGxnL",
-    publicKey: "021eb59b65589de8a34ad1960297a866045c88ea0045f16aff6b159cc50936b182",
-    path: "m/84'/1'/0'/0/3",
+    address: "tb1qu8tyxff2ujh30k3xf33dt5wh4shuwkzg0rzzhl",
+    privateKey: "cVBdijhsE58XUyMJq1gbstiQb4uwPaiGbKfs2UikRZrjdb62twmK",
+    publicKey: "0233daf36998b48d458ed986847f17595061a14b5d0c91e7b742a32787139c8ec8",
+    path: "m/84'/1'/0'/0/2",
   },
   taproot: {
     mnemonic: EMPTY_MNEMONIC,
-    address: "tb1pv532s48lxsftqvg97yepvqvcw83cw3v0l9pm6m2t2mc32frguntsn970ze",
-    privateKey: "L44Lzgq9H642QkeSDDH6kGvCW3U9iRg9cCKB4CSFMG78vA6M3937",
-    publicKey: "f1a3b678e585cfb1f3b99774574d13011183d90a1d68f92e2de890f2032a8d9c",
-    path: "m/86'/1'/0'/0/5",
+    address: "tb1pxp3tyngnjjyqxgsydhjacpdalu9737v0qe0e9ag6jcln9v8fgddqfdc00z",
+    privateKey: "cS8Kta9psMut3k5Xb47zKF66uwgdcCqiC2L1SSrXon22zdTUKNRh",
+    publicKey: "d0d374e22ad8ff098366c96732809624b1f9fd073053e95d42c35c79a8a0b0cc",
+    path: "m/86'/1'/0'/0/0",
   },
 };
 
 const MOCK_COMMON_REGTEST_ADDRESS_DATA = {
   legacy: {
-    ...MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy,
+    mnemonic: EMPTY_MNEMONIC,
+    address: "n2ByQmfCWwj8wKaPYWqyea4e8jkzTRSujm",
+    privateKey: "cMkgWCqUtycwWXmbWuKEL2MJEoBtzYh6quH148RBvKA6dqTEHxEg",
+    publicKey: "030692884e85f960460bc00c94b5fe813de1b8635a56586524322770019e31af2c",
+    path: "m/44'/1'/0'/0/0",
   },
   segWit: {
-    ...MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit,
+    mnemonic: EMPTY_MNEMONIC,
+    address: "2NEoYCKxkqkHzoPvJja3rSYDQaphF5KFFQT",
+    privateKey: "cQo2zzA2VzvwwQsQrGR6nehAA2Fxw21kgTkU3yUWHSdevx3KvUxG",
+    publicKey: "03df4fe090aa38ec0efe88ac15051ddff60c97c37602423e6800ec4553bcdc2610",
+    path: "m/49'/1'/0'/0/0",
   },
   nativeSegWit: {
-    ...MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit,
-    address: "bcrt1qc2a6nu2pm3es63v32q8k8d9mg0pekpqas7pxun",
+    mnemonic: EMPTY_MNEMONIC,
+    address: "bcrt1qs6fjs349d0a4fh3hhl688fvss4d9wpaen85ty2",
+    privateKey: "cRrAq9bwToxS3sW4Dyc4bo2w7Mg9RaJbXfh2tLRosEWwiTHUVqCW",
+    publicKey: "0208c0f34068a4617085db68275a18d68347ca6a433d62aca4b02cd7826ddc877d",
+    path: "m/84'/1'/0'/0/0",
   },
   taproot: {
-    ...MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot,
-    address: "bcrt1pv532s48lxsftqvg97yepvqvcw83cw3v0l9pm6m2t2mc32frgunts7u5fhr",
+    mnemonic: EMPTY_MNEMONIC,
+    address: "bcrt1pnz4x87kwd9vudakr0spu37r59jt9jsvt8l8us2wz7lf4rtpdhqeqgnf7yy",
+    privateKey: "cV2pJmYyM7uJi2rY4HcJuXPYGLibzuv93EhSPqcKpoGupLGQU9vw",
+    publicKey: "19c7182e9759b85d149805f2aa235a68de54fe4f4362d2ca875b04317c310bfd",
+    path: "m/86'/1'/0'/0/1",
   },
 };
 
@@ -105,7 +123,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreMainnet.getAddressData(
           MOCK_COMMON_MAINNET_ADDRESS_DATA.legacy.path,
           "legacy",
-          BASE58_ROOT_KEY
+          MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.legacy).toEqual(addressData);
@@ -115,7 +133,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreMainnet.getAddressData(
           MOCK_COMMON_MAINNET_ADDRESS_DATA.segWit.path,
           "segWit",
-          BASE58_ROOT_KEY
+          MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.segWit).toEqual(addressData);
@@ -125,7 +143,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreMainnet.getAddressData(
           MOCK_COMMON_MAINNET_ADDRESS_DATA.nativeSegWit.path,
           "nativeSegWit",
-          BASE58_ROOT_KEY
+          MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.nativeSegWit).toEqual(addressData);
@@ -135,7 +153,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreMainnet.getAddressData(
           MOCK_COMMON_MAINNET_ADDRESS_DATA.taproot.path,
           "taproot",
-          BASE58_ROOT_KEY
+          MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.taproot).toEqual(addressData);
@@ -148,7 +166,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_MAINNET_ADDRESS_DATA.legacy.path,
           MOCK_COMMON_MAINNET_ADDRESS_DATA.legacy.privateKey,
           "legacy",
-          BASE58_ROOT_KEY
+          MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.legacy);
@@ -159,7 +177,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_MAINNET_ADDRESS_DATA.segWit.path,
           MOCK_COMMON_MAINNET_ADDRESS_DATA.segWit.privateKey,
           "segWit",
-          BASE58_ROOT_KEY
+          MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.segWit);
@@ -170,7 +188,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_MAINNET_ADDRESS_DATA.nativeSegWit.path,
           MOCK_COMMON_MAINNET_ADDRESS_DATA.nativeSegWit.privateKey,
           "nativeSegWit",
-          BASE58_ROOT_KEY
+          MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.nativeSegWit);
@@ -181,7 +199,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_MAINNET_ADDRESS_DATA.taproot.path,
           MOCK_COMMON_MAINNET_ADDRESS_DATA.taproot.privateKey,
           "taproot",
-          BASE58_ROOT_KEY
+          MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.taproot);
@@ -195,7 +213,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreTestnet.getAddressData(
           MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy.path,
           "legacy",
-          BASE58_ROOT_KEY
+          MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy).toEqual(addressData);
@@ -205,7 +223,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreTestnet.getAddressData(
           MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit.path,
           "segWit",
-          BASE58_ROOT_KEY
+          MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit).toEqual(addressData);
@@ -215,7 +233,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreTestnet.getAddressData(
           MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit.path,
           "nativeSegWit",
-          BASE58_ROOT_KEY
+          MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit).toEqual(addressData);
@@ -225,7 +243,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreTestnet.getAddressData(
           MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot.path,
           "taproot",
-          BASE58_ROOT_KEY
+          MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot).toEqual(addressData);
@@ -238,7 +256,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy.path,
           MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy.privateKey,
           "legacy",
-          BASE58_ROOT_KEY
+          MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy);
@@ -249,7 +267,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit.path,
           MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit.privateKey,
           "segWit",
-          BASE58_ROOT_KEY
+          MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit);
@@ -260,7 +278,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit.path,
           MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit.privateKey,
           "nativeSegWit",
-          BASE58_ROOT_KEY
+          MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit);
@@ -271,7 +289,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot.path,
           MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot.privateKey,
           "taproot",
-          BASE58_ROOT_KEY
+          MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot);
@@ -285,7 +303,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreRegtest.getAddressData(
           MOCK_COMMON_REGTEST_ADDRESS_DATA.legacy.path,
           "legacy",
-          BASE58_ROOT_KEY
+          MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_REGTEST_ADDRESS_DATA.legacy).toEqual(addressData);
@@ -295,7 +313,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreRegtest.getAddressData(
           MOCK_COMMON_REGTEST_ADDRESS_DATA.segWit.path,
           "segWit",
-          BASE58_ROOT_KEY
+          MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_REGTEST_ADDRESS_DATA.segWit).toEqual(addressData);
@@ -305,7 +323,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreRegtest.getAddressData(
           MOCK_COMMON_REGTEST_ADDRESS_DATA.nativeSegWit.path,
           "nativeSegWit",
-          BASE58_ROOT_KEY
+          MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_REGTEST_ADDRESS_DATA.nativeSegWit).toEqual(addressData);
@@ -315,7 +333,7 @@ describe("Bitcoin Core", () => {
         const addressData = bitcoinCoreRegtest.getAddressData(
           MOCK_COMMON_REGTEST_ADDRESS_DATA.taproot.path,
           "taproot",
-          BASE58_ROOT_KEY
+          MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
         expect(MOCK_COMMON_REGTEST_ADDRESS_DATA.taproot).toEqual(addressData);
@@ -328,7 +346,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_REGTEST_ADDRESS_DATA.legacy.path,
           MOCK_COMMON_REGTEST_ADDRESS_DATA.legacy.privateKey,
           "legacy",
-          BASE58_ROOT_KEY
+          MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.legacy);
@@ -339,7 +357,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_REGTEST_ADDRESS_DATA.segWit.path,
           MOCK_COMMON_REGTEST_ADDRESS_DATA.segWit.privateKey,
           "segWit",
-          BASE58_ROOT_KEY
+          MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.segWit);
@@ -350,7 +368,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_REGTEST_ADDRESS_DATA.nativeSegWit.path,
           MOCK_COMMON_REGTEST_ADDRESS_DATA.nativeSegWit.privateKey,
           "nativeSegWit",
-          BASE58_ROOT_KEY
+          MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.nativeSegWit);
@@ -361,7 +379,7 @@ describe("Bitcoin Core", () => {
           MOCK_COMMON_REGTEST_ADDRESS_DATA.taproot.path,
           MOCK_COMMON_REGTEST_ADDRESS_DATA.taproot.privateKey,
           "taproot",
-          BASE58_ROOT_KEY
+          MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
         expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.taproot);
