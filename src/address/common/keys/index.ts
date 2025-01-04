@@ -24,7 +24,7 @@ class Keys {
   }
 
   protected getRootKeyFromBase58(base58RootKey: string): BIP32Interface {
-    return this.bip32.fromBase58(base58RootKey);
+    return this.bip32.fromBase58(base58RootKey, this.keysConfig);
   }
 }
 
