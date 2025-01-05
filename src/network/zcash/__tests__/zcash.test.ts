@@ -37,7 +37,7 @@ beforeEach(() => {
 describe("Zcash", () => {
   describe("mainnet", () => {
     describe("getAddressData", () => {
-      it("Generates correct legacy address data", () => {
+      it("Generates correct transparent address data", () => {
         const addressData = zcashMainnet.getAddressData(MOCK_COMMON_MAINNET_ADDRESS_DATA.path);
 
         expect(MOCK_COMMON_MAINNET_ADDRESS_DATA).toEqual(addressData);
@@ -45,7 +45,7 @@ describe("Zcash", () => {
     });
 
     describe("importByPrivateKey", () => {
-      it("Imports correct legacy address data", () => {
+      it("Imports correct transparent address data", () => {
         const addressData = zcashMainnet.importByPrivateKey(
           MOCK_COMMON_MAINNET_ADDRESS_DATA.path,
           MOCK_COMMON_MAINNET_ADDRESS_DATA.privateKey
@@ -58,7 +58,7 @@ describe("Zcash", () => {
 
   describe("testnet", () => {
     describe("getAddressData", () => {
-      it("Generates correct legacy address data", () => {
+      it("Generates correct transparent address data", () => {
         const addressData = zcashTestnet.getAddressData(MOCK_COMMON_TESTNET_ADDRESS_DATA.path);
 
         expect(MOCK_COMMON_TESTNET_ADDRESS_DATA).toEqual(addressData);
@@ -66,7 +66,7 @@ describe("Zcash", () => {
     });
 
     describe("importByPrivateKey", () => {
-      it("Imports correct legacy address data", () => {
+      it("Imports correct transparent address data", () => {
         const addressData = zcashTestnet.importByPrivateKey(
           MOCK_COMMON_TESTNET_ADDRESS_DATA.path,
           MOCK_COMMON_TESTNET_ADDRESS_DATA.privateKey
@@ -79,7 +79,7 @@ describe("Zcash", () => {
 
   describe("regtest", () => {
     describe("getAddressData", () => {
-      it("Generates correct legacy address data", () => {
+      it("Generates correct transparent address data", () => {
         const addressData = zcashRegtest.getAddressData(MOCK_COMMON_REGTEST_ADDRESS_DATA.path);
 
         expect(MOCK_COMMON_REGTEST_ADDRESS_DATA).toEqual(addressData);
@@ -87,7 +87,7 @@ describe("Zcash", () => {
     });
 
     describe("importByPrivateKey", () => {
-      it("Imports correct legacy address data", () => {
+      it("Imports correct transparent address data", () => {
         const addressData = zcashRegtest.importByPrivateKey(
           MOCK_COMMON_REGTEST_ADDRESS_DATA.path,
           MOCK_COMMON_REGTEST_ADDRESS_DATA.privateKey
