@@ -70,7 +70,11 @@ class XrpAddress extends Keys implements AbstractAddress {
   }
 
   private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
-    return getKeyPairFromEc(ExceptionMessage.XRP_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
+    return getKeyPairFromEc(
+      ExceptionMessage.XRP_PRIVATE_KEY_GENERATION_FAILED,
+      this.keysConfig,
+      rawPrivateKey
+    );
   }
 
   private getAddress(wallet: Wallet, addressType: AddressType, destinationTag?: number): string {

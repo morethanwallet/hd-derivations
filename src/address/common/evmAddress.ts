@@ -87,6 +87,7 @@ class EvmAddress extends Keys implements AbstractAddress {
   private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
     const { privateKey, publicKey } = getKeyPairFromEc(
       ExceptionMessage.EVM_PRIVATE_KEY_GENERATION_FAILED,
+      this.keysConfig,
       rawPrivateKey
     );
 

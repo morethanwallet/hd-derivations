@@ -82,7 +82,11 @@ class CashAddrAddress extends Keys implements AbstractAddress {
   }
 
   private getKeyPair(source: BIP32Interface | string): KeyPair {
-    return getKeyPairFromEc(ExceptionMessage.CASH_ADDR_PRIVATE_KEY_GENERATION_FAILED, source);
+    return getKeyPairFromEc(
+      ExceptionMessage.CASH_ADDR_PRIVATE_KEY_GENERATION_FAILED,
+      this.keysConfig,
+      source
+    );
   }
 }
 

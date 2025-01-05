@@ -78,6 +78,7 @@ class TaprootAddress extends Keys implements AbstractAddress<true> {
   private getKeyPair(source: BIP32Interface | string): KeyPair {
     const keyPair = getKeyPairFromEc(
       ExceptionMessage.P2WPKH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED,
+      this.keysConfig,
       source
     );
 

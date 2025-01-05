@@ -67,10 +67,7 @@ class AvaxAddress extends Keys implements AbstractAddress {
     }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
-    const { publicKey } = getKeyPairFromEc(
-      ExceptionMessage.AVAX_PRIVATE_KEY_GENERATION_FAILED,
-      rawPrivateKey
-    );
+    const { publicKey } = this.getKeyPair(rawPrivateKey);
 
     const address = this.getAddress(
       toUint8Array(Buffer.from(publicKey, "hex")),
@@ -101,7 +98,11 @@ class AvaxAddress extends Keys implements AbstractAddress {
   }
 
   private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
-    return getKeyPairFromEc(ExceptionMessage.AVAX_PRIVATE_KEY_GENERATION_FAILED, rawPrivateKey);
+    return getKeyPairFromEc(
+      ExceptionMessage.AVAX_PRIVATE_KEY_GENERATION_FAILED,
+      this.keysConfig,
+      rawPrivateKey
+    );
   }
 }
 
