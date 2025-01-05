@@ -45,7 +45,7 @@ const config: Config = {
     legacy: {
       keysConfig: {
         messagePrefix: "\x19Dogecoin Signed Message:\n",
-        bech32: "doge",
+        bech32: "dcrt",
         bip32: {
           public: 0x043587cf,
           private: 0x04358394,
