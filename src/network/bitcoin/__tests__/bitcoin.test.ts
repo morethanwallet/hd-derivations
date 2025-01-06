@@ -5,11 +5,19 @@ import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 
-const MOCK_COMMON_MAINNET_DERIVATION_PATH = {
-  legacy: "m/44'/0'/0'/0/0",
-  segWit: "m/49'/0'/0'/0/0",
-  nativeSegWit: "m/84'/0'/0'/0/0",
-  taproot: "m/86'/0'/0'/0/0",
+const MOCK_COMMON_DERIVATION_PATH = {
+  mainnet: {
+    legacy: "m/44'/0'/0'/0/0",
+    segWit: "m/49'/0'/0'/0/0",
+    nativeSegWit: "m/84'/0'/0'/0/0",
+    taproot: "m/86'/0'/0'/0/0",
+  },
+  testnet: {
+    legacy: "m/44'/1'/0'/0/0",
+    segWit: "m/49'/1'/0'/0/0",
+    nativeSegWit: "m/84'/1'/0'/0/0",
+    taproot: "m/86'/1'/0'/0/0",
+  },
 };
 
 const MOCK_COMMON_MAINNET_SEGWIT_ADDRESS_DATA = {
@@ -17,13 +25,13 @@ const MOCK_COMMON_MAINNET_SEGWIT_ADDRESS_DATA = {
     mnemonic: MNEMONIC,
     privateKey: "KzJPKD7B7wezTn9QZvHAGSH2CXvdhmcurq3WoEvsgPpBwzitdC81",
     publicKey: "0317e1f9c3fd3d6d630cf1f1f4ec442cb9a93ff8c076ab71bcad5bb7ed8d17348c",
-    path: MOCK_COMMON_MAINNET_DERIVATION_PATH.segWit,
+    path: MOCK_COMMON_DERIVATION_PATH.mainnet.segWit,
   },
   nonNative: {
     mnemonic: EMPTY_MNEMONIC,
     privateKey: "KxvjmXm3z1s7L4WeRvbWHD54UhKnGVqst9QL9vd2jZ4zUKsHZrKx",
     publicKey: "0217007e56bf94ddba9898ed2bedcd1692dbbbf34824bcd81bd0f55ac5329e6098",
-    path: MOCK_COMMON_MAINNET_DERIVATION_PATH.segWit,
+    path: MOCK_COMMON_DERIVATION_PATH.mainnet.segWit,
   },
 };
 
@@ -34,7 +42,7 @@ const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
       address: "176d1FZHP88mMFoyaTA2sZ5UA19CY33Phn",
       privateKey: "L3hhRruT6ZGHKutu49Spfq68zHuhGDm8b7ahr4bcLD2AbTJWBJnr",
       publicKey: "03d3f020b78cc3c5b0e7bb49ef8e13d9718ef223b34819fb4c5c35ddec76bc90c0",
-      path: MOCK_COMMON_MAINNET_DERIVATION_PATH.legacy,
+      path: MOCK_COMMON_DERIVATION_PATH.mainnet.legacy,
     },
     segWit: {
       ...MOCK_COMMON_MAINNET_SEGWIT_ADDRESS_DATA.native,
@@ -45,14 +53,14 @@ const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
       address: "bc1qzccrsckwsr7t76sz54kjwmhkxyts94e573hpd8",
       privateKey: "L4VQdCsiDczvSBSAro7GvS41qkFdMAy8htNF5Zcx6g4ip5C88DKC",
       publicKey: "02326c7f6b115952cf752f27bfbedcebfa93f6b3f460aac780e76be12d805a9d04",
-      path: MOCK_COMMON_MAINNET_DERIVATION_PATH.nativeSegWit,
+      path: MOCK_COMMON_DERIVATION_PATH.mainnet.nativeSegWit,
     },
     taproot: {
       mnemonic: MNEMONIC,
       address: "bc1pqlgwhczvyfftzu8kjwkmyxay4xd2qghmazwqty8dtw5sempknd2qhkag2t",
       privateKey: "L4obzibVhVrw5V2hCUQAiipuXBw5X8W1bdR3WzTZUgafDLmeUzzR",
       publicKey: "eb2c29de66f2581f95f881847492bab0a9e9000856202bf1f10d537f6eeacfe5",
-      path: MOCK_COMMON_MAINNET_DERIVATION_PATH.taproot,
+      path: MOCK_COMMON_DERIVATION_PATH.mainnet.taproot,
     },
     p2wsh: {
       ...MOCK_COMMON_MAINNET_SEGWIT_ADDRESS_DATA.native,
@@ -69,7 +77,7 @@ const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
       address: "1DpokrQjdBPbgxhvA7DuwEa2d4sAWxGe2K",
       privateKey: "L2qPambu4AcbJTfATtyJDyMpTRDdeTX1A8RpNDSvcHWbFADogPwK",
       publicKey: "03ef3463bbb9bb2de72842c2d45035f7cdcc1d6de6c339a6dd504445e4019626bc",
-      path: MOCK_COMMON_MAINNET_DERIVATION_PATH.legacy,
+      path: MOCK_COMMON_DERIVATION_PATH.mainnet.legacy,
     },
     segWit: {
       ...MOCK_COMMON_MAINNET_SEGWIT_ADDRESS_DATA.nonNative,
@@ -80,14 +88,14 @@ const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
       address: "bc1qsy9hltg0u8an5g0kuty23e3hdve2eqaxaadv3y",
       privateKey: "L2oT3UVFFqESwhuwJBsV3LX61aDRQWfiiFKpbghtbArTVWMP84uH",
       publicKey: "035e80a741f89eb8dbe171d7841968a7296dd6dc0cb75d4d85b45de16c1014fa71",
-      path: MOCK_COMMON_MAINNET_DERIVATION_PATH.nativeSegWit,
+      path: MOCK_COMMON_DERIVATION_PATH.mainnet.nativeSegWit,
     },
     taproot: {
       mnemonic: EMPTY_MNEMONIC,
       address: "bc1pndv2wuuprqu4ku5c4dz3uvke3s8n0yf4wkdejcu53uprwfwc9h8qv59h9a",
       privateKey: "L17b91gnDPNZiqaubKXrDzzRQaiJkizmvzMWqxc4mxuy7WkFGQLL",
       publicKey: "c5a5b24c05fcc0c98a217ef9df5984a08ab2db876be75b4f6fb64fdfb2149499",
-      path: MOCK_COMMON_MAINNET_DERIVATION_PATH.taproot,
+      path: MOCK_COMMON_DERIVATION_PATH.mainnet.taproot,
     },
     p2wsh: {
       ...MOCK_COMMON_MAINNET_SEGWIT_ADDRESS_DATA.nonNative,
@@ -100,25 +108,18 @@ const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
   },
 };
 
-const MOCK_COMMON_TESTNET_DERIVATION_PATH = {
-  legacy: "m/44'/1'/0'/0/0",
-  segWit: "m/49'/1'/0'/0/0",
-  nativeSegWit: "m/84'/1'/0'/0/0",
-  taproot: "m/86'/1'/0'/0/0",
-};
-
 const MOCK_COMMON_TESTNET_SEGWIT_ADDRESS_DATA = {
   native: {
     mnemonic: MNEMONIC,
     privateKey: "cQjBQLBCeuyn1FeJE72M93vQJgMjoMXH9CkgidtjqjBsiLRjJKLK",
     publicKey: "0338848902420d91c7789bd62edb88814ce27ecd48f5ac9dd1d0f08682864c6755",
-    path: MOCK_COMMON_TESTNET_DERIVATION_PATH.segWit,
+    path: MOCK_COMMON_DERIVATION_PATH.testnet.segWit,
   },
   nonNative: {
     mnemonic: EMPTY_MNEMONIC,
     privateKey: "cVhAbPqGLxUNtDRKrADt6PWyaoAiic7xxUPkB2SzKqM658VwkxZT",
     publicKey: "033e504e8e281c8a8c96cc17e3874fbfeb5cb68208d0caa8ef1becd82a110946b9",
-    path: MOCK_COMMON_TESTNET_DERIVATION_PATH.segWit,
+    path: MOCK_COMMON_DERIVATION_PATH.testnet.segWit,
   },
 };
 
@@ -129,7 +130,7 @@ const MOCK_COMMON_TESTNET_ADDRESS_DATA = {
       address: "mk2hF1aSuKkBZtCUM9jDfjgFLE5gGJ8U8c",
       privateKey: "cQEPGT34NWGzWnW1JE3d5GKaBcEQJqUsDdxH2jXD97CkXaAaXHEn",
       publicKey: "02d76e63231c59c216550ef886d362d58ba96ee30eb56caa99f5cdaf651b9a9a6e",
-      path: MOCK_COMMON_TESTNET_DERIVATION_PATH.legacy,
+      path: MOCK_COMMON_DERIVATION_PATH.testnet.legacy,
     },
     segWit: {
       ...MOCK_COMMON_TESTNET_SEGWIT_ADDRESS_DATA.native,
@@ -164,7 +165,7 @@ const MOCK_COMMON_TESTNET_ADDRESS_DATA = {
       address: "n48G9HDQafyjS2fbPstLGt4n1dSR1NESS8",
       privateKey: "cNR3CCytyuoqq9oK9iALZ1E6Q2brp2izuQ3ZWQApa3GposUD4bhN",
       publicKey: "03d57fe1f3989eda6bc663cf844cb3804db972d309ebd56f7ef5536b338d2756a8",
-      path: MOCK_COMMON_TESTNET_DERIVATION_PATH.legacy,
+      path: MOCK_COMMON_DERIVATION_PATH.testnet.legacy,
     },
     segWit: {
       ...MOCK_COMMON_TESTNET_SEGWIT_ADDRESS_DATA.nonNative,
@@ -175,14 +176,14 @@ const MOCK_COMMON_TESTNET_ADDRESS_DATA = {
       address: "tb1qe8deaenmchr00kr7r2vt9dmp55zjyagtr3safk",
       privateKey: "cUVDbb4yxqEZ2iQ2by2H2YiYUXUtc5FTBtk4v2EGz1Aza2LjxXUy",
       publicKey: "02c55122c6123a5cacfa827756eb4e989a218182da09080b1749ceb168a3b2fb6d",
-      path: MOCK_COMMON_TESTNET_DERIVATION_PATH.nativeSegWit,
+      path: MOCK_COMMON_DERIVATION_PATH.testnet.nativeSegWit,
     },
     taproot: {
       mnemonic: EMPTY_MNEMONIC,
       address: "tb1pdc89mkscf59pctu2q70vkx7569p4fh8vk54jxdng9qugeyf4slzqeresaf",
       privateKey: "cRxhDCSgAgYupdH6XGmBdHhbwDhqkjyRtKbYYC7U99ywddBDZPQ1",
       publicKey: "069522ff55becbb9a056ba1eb892c8c83c16db8a6de54fe22752daa4d74f58fe",
-      path: MOCK_COMMON_TESTNET_DERIVATION_PATH.taproot,
+      path: MOCK_COMMON_DERIVATION_PATH.testnet.taproot,
     },
     p2wsh: {
       ...MOCK_COMMON_TESTNET_SEGWIT_ADDRESS_DATA.nonNative,
