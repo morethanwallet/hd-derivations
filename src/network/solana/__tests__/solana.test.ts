@@ -38,7 +38,6 @@ describe("Solana", () => {
   describe("getAddressData", () => {
     it("Generates correct address data", () => {
       const addressData = solana.getAddressData(MOCK_ADDRESS_DATA.native.path);
-      console.log(addressData);
       expect(MOCK_ADDRESS_DATA.native).toEqual(addressData);
     });
   });
