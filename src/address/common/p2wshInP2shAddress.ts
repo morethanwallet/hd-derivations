@@ -67,7 +67,7 @@ class P2wshInP2shAddress extends Keys implements AbstractAddress {
       network: this.keysConfig,
     });
 
-    const p2shRedeem = payments.p2wsh({ redeem: p2wshRedeem });
+    const p2shRedeem = payments.p2wsh({ redeem: p2wshRedeem, network: this.keysConfig });
 
     const { address } = payments.p2sh({
       redeem: p2shRedeem,
