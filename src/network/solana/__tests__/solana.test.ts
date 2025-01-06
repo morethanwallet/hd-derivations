@@ -53,15 +53,16 @@ describe("Solana", () => {
         expect(addressData).toEqual(MOCK_ADDRESS_DATA.native);
       });
     });
-  });
-  describe("Import from a non-native mnemonic", () => {
-    it("Imports correct address data", () => {
-      const addressData = solana.importByPrivateKey(
-        MOCK_ADDRESS_DATA.nonNative.path,
-        MOCK_ADDRESS_DATA.nonNative.privateKey
-      );
 
-      expect(addressData).toEqual(MOCK_ADDRESS_DATA.nonNative);
+    describe("Import from a non-native mnemonic", () => {
+      it("Imports correct address data", () => {
+        const addressData = solana.importByPrivateKey(
+          MOCK_ADDRESS_DATA.nonNative.path,
+          MOCK_ADDRESS_DATA.nonNative.privateKey
+        );
+
+        expect(addressData).toEqual(MOCK_ADDRESS_DATA.nonNative);
+      });
     });
   });
 });

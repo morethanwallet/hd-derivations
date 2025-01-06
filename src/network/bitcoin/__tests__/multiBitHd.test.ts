@@ -145,16 +145,16 @@ describe("MultiBit HD", () => {
           expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.native);
         });
       });
-    });
 
-    describe("Import from a non-native mnemonic", () => {
-      it("Imports correct address data", () => {
-        const addressData = multiBitHdRegtest.importByPrivateKey(
-          MOCK_REGTEST_ADDRESS_DATA.nonNative.path,
-          MOCK_REGTEST_ADDRESS_DATA.nonNative.privateKey
-        );
+      describe("Import from a non-native mnemonic", () => {
+        it("Imports correct address data", () => {
+          const addressData = multiBitHdRegtest.importByPrivateKey(
+            MOCK_REGTEST_ADDRESS_DATA.nonNative.path,
+            MOCK_REGTEST_ADDRESS_DATA.nonNative.privateKey
+          );
 
-        expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative);
+          expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative);
+        });
       });
     });
   });
