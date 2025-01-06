@@ -5,42 +5,47 @@ import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 
+const MOCK_COMMON_DERIVATION_PATH = "m/44'/9000'/0'/0/0";
+
+const MOCK_COMMON_ADDRESS_DATA = {
+  native: {
+    mnemonic: MNEMONIC,
+    path: MOCK_COMMON_DERIVATION_PATH,
+    publicKey: "03fe1af122c37da0765c691057f18e3d2810efba796068b2cb710f36710ba8ad3b",
+    privateKey: "ae1c060b7d334b62797a911a8478a40c20489124c6c5d84c2391ffddf38b3d16",
+  },
+  nonNative: {
+    mnemonic: EMPTY_MNEMONIC,
+    path: MOCK_COMMON_DERIVATION_PATH,
+    publicKey: "03db3460d315df5ee81ee8209c53acda36ab567dbc128f1c8313e0a63dd5a29734",
+    privateKey: "262723ff31600c88d9ba431cd7ff1d59f13359708f7bf9d426c58f3b508b1b83",
+  },
+};
+
 const MOCK_MAINNET_ADDRESS_DATA = {
   native: {
     x: {
-      mnemonic: MNEMONIC,
-      path: "m/44'/9000'/0'/0/0",
-      publicKey: "03fe1af122c37da0765c691057f18e3d2810efba796068b2cb710f36710ba8ad3b",
-      privateKey: "ae1c060b7d334b62797a911a8478a40c20489124c6c5d84c2391ffddf38b3d16",
+      ...MOCK_COMMON_ADDRESS_DATA.native,
       address: "X-avax1ecca9lzv4gj68826c2856ll0zz8aknxfcky982",
     },
     p: {
-      mnemonic: MNEMONIC,
-      path: "m/44'/9000'/0'/0/0",
-      publicKey: "03fe1af122c37da0765c691057f18e3d2810efba796068b2cb710f36710ba8ad3b",
-      privateKey: "ae1c060b7d334b62797a911a8478a40c20489124c6c5d84c2391ffddf38b3d16",
+      ...MOCK_COMMON_ADDRESS_DATA.native,
       address: "P-avax1ecca9lzv4gj68826c2856ll0zz8aknxfcky982",
     },
   },
   nonNative: {
     x: {
-      mnemonic: EMPTY_MNEMONIC,
-      path: "m/44'/9000'/0'/0/0",
-      publicKey: "03db3460d315df5ee81ee8209c53acda36ab567dbc128f1c8313e0a63dd5a29734",
-      privateKey: "262723ff31600c88d9ba431cd7ff1d59f13359708f7bf9d426c58f3b508b1b83",
+      ...MOCK_COMMON_ADDRESS_DATA.nonNative,
       address: "X-avax10tkns2y49yy6vpe2reh4hay794yqfmzqxhjtl0",
     },
     p: {
-      mnemonic: EMPTY_MNEMONIC,
-      path: "m/44'/9000'/0'/0/0",
-      publicKey: "03db3460d315df5ee81ee8209c53acda36ab567dbc128f1c8313e0a63dd5a29734",
-      privateKey: "262723ff31600c88d9ba431cd7ff1d59f13359708f7bf9d426c58f3b508b1b83",
+      ...MOCK_COMMON_ADDRESS_DATA.nonNative,
       address: "P-avax10tkns2y49yy6vpe2reh4hay794yqfmzqxhjtl0",
     },
   },
 };
 
-const MOCK_COMMON_ADDRESS_DATA = {
+const MOCK_TESTNET_ADDRESS_DATA = {
   native: {
     x: {
       ...MOCK_MAINNET_ADDRESS_DATA.native.x,
@@ -96,44 +101,48 @@ describe("Avax", () => {
     });
 
     describe("importByPrivateKey", () => {
-      it("Imports correct Avax-X address data", () => {
-        const avaxXAddressData = avaxMainnet.importByPrivateKey(
-          MOCK_MAINNET_ADDRESS_DATA.native.x.path,
-          MOCK_MAINNET_ADDRESS_DATA.native.x.privateKey,
-          "X"
-        );
+      describe("Import from a native mnemonic", () => {
+        it("Imports correct Avax-X address data", () => {
+          const avaxXAddressData = avaxMainnet.importByPrivateKey(
+            MOCK_MAINNET_ADDRESS_DATA.native.x.path,
+            MOCK_MAINNET_ADDRESS_DATA.native.x.privateKey,
+            "X"
+          );
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(avaxXAddressData);
+          expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(avaxXAddressData);
+        });
+
+        it("Imports correct Avax-P address data", () => {
+          const avaxXAddressData = avaxMainnet.importByPrivateKey(
+            MOCK_MAINNET_ADDRESS_DATA.native.p.path,
+            MOCK_MAINNET_ADDRESS_DATA.native.p.privateKey,
+            "P"
+          );
+
+          expect(MOCK_MAINNET_ADDRESS_DATA.native.p).toEqual(avaxXAddressData);
+        });
       });
 
-      it("Imports correct Avax-P address data", () => {
-        const avaxXAddressData = avaxMainnet.importByPrivateKey(
-          MOCK_MAINNET_ADDRESS_DATA.native.p.path,
-          MOCK_MAINNET_ADDRESS_DATA.native.p.privateKey,
-          "P"
-        );
+      describe("Import from a non-native mnemonic", () => {
+        it("Imports correct Avax-X address data", () => {
+          const avaxXAddressData = avaxMainnet.importByPrivateKey(
+            MOCK_MAINNET_ADDRESS_DATA.nonNative.x.path,
+            MOCK_MAINNET_ADDRESS_DATA.nonNative.x.privateKey,
+            "X"
+          );
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.p).toEqual(avaxXAddressData);
-      });
+          expect(MOCK_MAINNET_ADDRESS_DATA.nonNative.x).toEqual(avaxXAddressData);
+        });
 
-      it("Imports correct Avax-X address data from a private key from a non-native mnemonic", () => {
-        const avaxXAddressData = avaxMainnet.importByPrivateKey(
-          MOCK_MAINNET_ADDRESS_DATA.nonNative.x.path,
-          MOCK_MAINNET_ADDRESS_DATA.nonNative.x.privateKey,
-          "X"
-        );
+        it("Imports correct Avax-P address data", () => {
+          const avaxXAddressData = avaxMainnet.importByPrivateKey(
+            MOCK_MAINNET_ADDRESS_DATA.nonNative.p.path,
+            MOCK_MAINNET_ADDRESS_DATA.nonNative.p.privateKey,
+            "P"
+          );
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.nonNative.x).toEqual(avaxXAddressData);
-      });
-
-      it("Imports correct Avax-P address data from a private key from a non-native mnemonic", () => {
-        const avaxXAddressData = avaxMainnet.importByPrivateKey(
-          MOCK_MAINNET_ADDRESS_DATA.nonNative.p.path,
-          MOCK_MAINNET_ADDRESS_DATA.nonNative.p.privateKey,
-          "P"
-        );
-
-        expect(MOCK_MAINNET_ADDRESS_DATA.nonNative.p).toEqual(avaxXAddressData);
+          expect(MOCK_MAINNET_ADDRESS_DATA.nonNative.p).toEqual(avaxXAddressData);
+        });
       });
     });
   });
@@ -141,57 +150,67 @@ describe("Avax", () => {
   describe("testnet", () => {
     describe("getAddressData", () => {
       it("Generates correct Avax-X address data", () => {
-        const addressData = avaxTestnet.getAddressData(MOCK_COMMON_ADDRESS_DATA.native.x.path, "X");
+        const addressData = avaxTestnet.getAddressData(
+          MOCK_TESTNET_ADDRESS_DATA.native.x.path,
+          "X"
+        );
 
-        expect(MOCK_COMMON_ADDRESS_DATA.native.x).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(addressData);
       });
 
       it("Generates correct Avax-P address data", () => {
-        const addressData = avaxTestnet.getAddressData(MOCK_COMMON_ADDRESS_DATA.native.p.path, "P");
+        const addressData = avaxTestnet.getAddressData(
+          MOCK_TESTNET_ADDRESS_DATA.native.p.path,
+          "P"
+        );
 
-        expect(MOCK_COMMON_ADDRESS_DATA.native.p).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.native.p).toEqual(addressData);
       });
     });
 
     describe("importByPrivateKey", () => {
-      it("Imports correct Avax-X address data", () => {
-        const avaxXAddressData = avaxTestnet.importByPrivateKey(
-          MOCK_COMMON_ADDRESS_DATA.native.x.path,
-          MOCK_COMMON_ADDRESS_DATA.native.x.privateKey,
-          "X"
-        );
+      describe("Import from a native mnemonic", () => {
+        it("Imports correct Avax-X address data", () => {
+          const avaxXAddressData = avaxTestnet.importByPrivateKey(
+            MOCK_TESTNET_ADDRESS_DATA.native.x.path,
+            MOCK_TESTNET_ADDRESS_DATA.native.x.privateKey,
+            "X"
+          );
 
-        expect(MOCK_COMMON_ADDRESS_DATA.native.x).toEqual(avaxXAddressData);
+          expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(avaxXAddressData);
+        });
+
+        it("Imports correct Avax-P address data", () => {
+          const avaxXAddressData = avaxTestnet.importByPrivateKey(
+            MOCK_TESTNET_ADDRESS_DATA.native.p.path,
+            MOCK_TESTNET_ADDRESS_DATA.native.p.privateKey,
+            "P"
+          );
+
+          expect(MOCK_TESTNET_ADDRESS_DATA.native.p).toEqual(avaxXAddressData);
+        });
       });
 
-      it("Imports correct Avax-P address data", () => {
-        const avaxXAddressData = avaxTestnet.importByPrivateKey(
-          MOCK_COMMON_ADDRESS_DATA.native.p.path,
-          MOCK_COMMON_ADDRESS_DATA.native.p.privateKey,
-          "P"
-        );
+      describe("Import from a non-native mnemonic", () => {
+        it("Imports correct Avax-X address data", () => {
+          const avaxXAddressData = avaxTestnet.importByPrivateKey(
+            MOCK_TESTNET_ADDRESS_DATA.nonNative.x.path,
+            MOCK_TESTNET_ADDRESS_DATA.nonNative.x.privateKey,
+            "X"
+          );
 
-        expect(MOCK_COMMON_ADDRESS_DATA.native.p).toEqual(avaxXAddressData);
-      });
+          expect(MOCK_TESTNET_ADDRESS_DATA.nonNative.x).toEqual(avaxXAddressData);
+        });
 
-      it("Imports correct Avax-X address data from a private key from a non-native mnemonic", () => {
-        const avaxXAddressData = avaxTestnet.importByPrivateKey(
-          MOCK_COMMON_ADDRESS_DATA.nonNative.x.path,
-          MOCK_COMMON_ADDRESS_DATA.nonNative.x.privateKey,
-          "X"
-        );
+        it("Imports correct Avax-P address data", () => {
+          const avaxXAddressData = avaxTestnet.importByPrivateKey(
+            MOCK_TESTNET_ADDRESS_DATA.nonNative.p.path,
+            MOCK_TESTNET_ADDRESS_DATA.nonNative.p.privateKey,
+            "P"
+          );
 
-        expect(MOCK_COMMON_ADDRESS_DATA.nonNative.x).toEqual(avaxXAddressData);
-      });
-
-      it("Imports correct Avax-P address data from a private key from a non-native mnemonic", () => {
-        const avaxXAddressData = avaxTestnet.importByPrivateKey(
-          MOCK_COMMON_ADDRESS_DATA.nonNative.p.path,
-          MOCK_COMMON_ADDRESS_DATA.nonNative.p.privateKey,
-          "P"
-        );
-
-        expect(MOCK_COMMON_ADDRESS_DATA.nonNative.p).toEqual(avaxXAddressData);
+          expect(MOCK_TESTNET_ADDRESS_DATA.nonNative.p).toEqual(avaxXAddressData);
+        });
       });
     });
   });
