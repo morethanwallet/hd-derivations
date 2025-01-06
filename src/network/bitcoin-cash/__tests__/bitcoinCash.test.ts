@@ -135,7 +135,7 @@ describe("Bitcoin Cash", () => {
     });
 
     describe("importByPrivateKey", () => {
-      describe("Import from a private key from a native mnemonic", () => {
+      describe("Import from a native mnemonic", () => {
         it("Imports correct legacy address data", () => {
           const addressData = bitcoinCashMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.legacy.path,
@@ -157,7 +157,7 @@ describe("Bitcoin Cash", () => {
         });
       });
 
-      describe("Import from a private key from a non-native mnemonic", () => {
+      describe("Import from a non-native mnemonic", () => {
         it("Imports correct legacy address data", () => {
           const addressData = bitcoinCashMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.legacy.path,
@@ -203,7 +203,7 @@ describe("Bitcoin Cash", () => {
     });
 
     describe("importByPrivateKey", () => {
-      describe("Import from a private key from a native mnemonic", () => {
+      describe("Import from a native mnemonic", () => {
         it("Imports correct legacy address data", () => {
           const addressData = bitcoinCashTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.native.legacy.path,
@@ -225,7 +225,7 @@ describe("Bitcoin Cash", () => {
         });
       });
 
-      describe("Import from a private key from a non-native mnemonic", () => {
+      describe("Import from a non-native mnemonic", () => {
         it("Imports correct legacy address data", () => {
           const addressData = bitcoinCashTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.nonNative.legacy.path,
@@ -271,7 +271,7 @@ describe("Bitcoin Cash", () => {
     });
 
     describe("importByPrivateKey", () => {
-      describe("Import from a private key from a native mnemonic", () => {
+      describe("Import from a native mnemonic", () => {
         it("Imports correct legacy address data", () => {
           const addressData = bitcoinCashRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.native.legacy.path,
@@ -293,7 +293,7 @@ describe("Bitcoin Cash", () => {
         });
       });
 
-      describe("Import from a private key from a non-native mnemonic", () => {
+      describe("Import from a non-native mnemonic", () => {
         it("Imports correct legacy address data", () => {
           const addressData = bitcoinCashRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.nonNative.legacy.path,

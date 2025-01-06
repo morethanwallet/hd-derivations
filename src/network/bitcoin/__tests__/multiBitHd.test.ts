@@ -67,7 +67,7 @@ describe("MultiBit HD", () => {
     });
 
     describe("importByPrivateKey", () => {
-      describe("Import from a private key from a native mnemonic", () => {
+      describe("Import from a native mnemonic", () => {
         it("Imports correct address data", () => {
           const addressData = multiBitHdMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.path,
@@ -78,7 +78,7 @@ describe("MultiBit HD", () => {
         });
       });
 
-      describe("Import from a private key from a non-native mnemonic", () => {
+      describe("Import from a non-native mnemonic", () => {
         it("Imports correct address data", () => {
           const addressData = multiBitHdMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.path,
@@ -101,7 +101,7 @@ describe("MultiBit HD", () => {
     });
 
     describe("importByPrivateKey", () => {
-      describe("Import from a private key from a native mnemonic", () => {
+      describe("Import from a native mnemonic", () => {
         it("Imports correct address data", () => {
           const addressData = multiBitHdTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.native.path,
@@ -112,7 +112,7 @@ describe("MultiBit HD", () => {
         });
       });
 
-      describe("Import from a private key from a non-native mnemonic", () => {
+      describe("Import from a non-native mnemonic", () => {
         it("Imports correct address data", () => {
           const addressData = multiBitHdTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.nonNative.path,
@@ -135,7 +135,7 @@ describe("MultiBit HD", () => {
     });
 
     describe("importByPrivateKey", () => {
-      describe("Import from a private key from a native mnemonic", () => {
+      describe("Import from a native mnemonic", () => {
         it("Imports correct address data", () => {
           const addressData = multiBitHdRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.native.path,
@@ -147,7 +147,7 @@ describe("MultiBit HD", () => {
       });
     });
 
-    describe("Import from a private key from a non-native mnemonic", () => {
+    describe("Import from a non-native mnemonic", () => {
       it("Imports correct address data", () => {
         const addressData = multiBitHdRegtest.importByPrivateKey(
           MOCK_REGTEST_ADDRESS_DATA.nonNative.path,
