@@ -118,7 +118,7 @@ class ZcashTransparentAddress extends Keys implements AbstractAddress {
         publicKey: toHexFromBytes(keyPair.publicKey),
       };
     }
-    
+
     return getKeyPairFromEc(
       ExceptionMessage.ZCASH_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
