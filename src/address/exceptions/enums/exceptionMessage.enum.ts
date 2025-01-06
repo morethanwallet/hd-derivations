@@ -18,6 +18,7 @@ const ExceptionMessage = {
   EVM_PRIVATE_KEY_GENERATION_FAILED: "Failed to generate an EVM private key",
   XRP_PRIVATE_KEY_GENERATION_FAILED: "Failed to generate a Ripple private key",
   ZCASH_PRIVATE_KEY_GENERATION_FAILED: "Failed to generate a Zcash private key",
+  ZCASH_INVALID_WIF_PREFIX: "Zcash WIF prefix is invalid",
 } as const;
 
 export { ExceptionMessage };

@@ -1,9 +1,9 @@
 import { Keys } from "./keys/index.js";
 import bs58check from "bs58check";
 import { hash160 } from "bitcoinjs-lib/src/crypto";
-import { toUint8Array } from "@/helpers/index.js";
+import { toHexFromBytes, toUint8Array } from "@/helpers/index.js";
 import { type KeysConfig, type KeyPair, type AddressData } from "../types/index.js";
-import { ExceptionMessage } from "../exceptions/index.js";
+import { AddressError, ExceptionMessage } from "../exceptions/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
@@ -13,6 +13,8 @@ import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.j
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
+import { ecPair } from "@/ecc/index.js";
+import { networks } from "bitcoinjs-lib";
 
 // TODO: Move this class to the zcash folder
 const HEXADECIMAL_SYSTEM_IDENTIFIER = 16;
@@ -89,6 +91,34 @@ class ZcashTransparentAddress extends Keys implements AbstractAddress {
   }
 
   private getKeyPair(source: BIP32Interface | string): KeyPair {
+    if (typeof source === "string") {
+      const decoded = bs58check.decode(source);
+      const networkPrefixIndex = 0;
+      const privateKeyStartIndex = 1;
+      const isCompressedByteStartIndex = 33;
+      const wifCompressedLength = 34;
+      const wifCompressedByte = 0x01;
+
+      if (decoded[networkPrefixIndex] !== this.keysConfig.wif) {
+        throw new AddressError(ExceptionMessage.ZCASH_INVALID_WIF_PREFIX);
+      }
+
+      const privateKey = decoded.slice(privateKeyStartIndex, isCompressedByteStartIndex);
+      const compressed =
+        decoded.length === wifCompressedLength &&
+        decoded[isCompressedByteStartIndex] === wifCompressedByte;
+
+      const keyPair = ecPair.fromPrivateKey(privateKey, {
+        compressed,
+        network: networks.bitcoin,
+      });
+
+      return {
+        privateKey: toHexFromBytes(keyPair.privateKey),
+        publicKey: toHexFromBytes(keyPair.publicKey),
+      };
+    }
+    
     return getKeyPairFromEc(
       ExceptionMessage.ZCASH_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
