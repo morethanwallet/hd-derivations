@@ -54,6 +54,7 @@ describe("Bnb", () => {
         expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native);
       });
     });
+
     describe("Import from a non-native mnemonic", () => {
       it("Imports correct address data", () => {
         const addressData = bnb.importByPrivateKey(
