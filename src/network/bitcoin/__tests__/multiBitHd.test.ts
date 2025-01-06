@@ -7,7 +7,7 @@ const MNEMONIC = "wheel buffalo audit boost fetch science rib erosion spoon sold
 
 const MOCK_COMMON_DERIVATION_PATH = "m/0'/0/0";
 
-const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
+const MOCK_MAINNET_ADDRESS_DATA = {
   native: {
     mnemonic: MNEMONIC,
     address: "15bnzW95e5QWn398wt2d1AyE8woQqxyaa3",
@@ -24,24 +24,24 @@ const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
   },
 };
 
-const MOCK_COMMON_TESTNET_ADDRESS_DATA = {
+const MOCK_TESTNET_ADDRESS_DATA = {
   native: {
-    ...MOCK_COMMON_MAINNET_ADDRESS_DATA.native,
+    ...MOCK_MAINNET_ADDRESS_DATA.native,
     mnemonic: MNEMONIC,
     address: "mk7kHZE4T6qmZ9ckfSzzq6BYzwQ7egmN7D",
     privateKey: "cP2GquLWHZxi2Ls4GX5BeBbc8q1rhDms3TqewR18iWq23wXpimJi",
   },
   nonNative: {
-    ...MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative,
+    ...MOCK_MAINNET_ADDRESS_DATA.nonNative,
     mnemonic: EMPTY_MNEMONIC,
     address: "n1c72rS9BvKZGQE2JuXNpLGSqxbCaXJdcx",
     privateKey: "cRGpkDw2T58GKmbfpoVJtFSj3uMRZkCmeRPozAUcaPFT95u6xoDj",
   },
 };
 
-const MOCK_COMMON_REGTEST_ADDRESS_DATA = {
-  native: { ...MOCK_COMMON_TESTNET_ADDRESS_DATA.native },
-  nonNative: { ...MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative },
+const MOCK_REGTEST_ADDRESS_DATA = {
+  native: { ...MOCK_TESTNET_ADDRESS_DATA.native },
+  nonNative: { ...MOCK_TESTNET_ADDRESS_DATA.nonNative },
 };
 
 let mnemonic: Mnemonic;
@@ -60,11 +60,9 @@ describe("MultiBit HD", () => {
   describe("mainnet", () => {
     describe("getAddressData", () => {
       it("Generates correct address data", () => {
-        const addressData = multiBitHdMainnet.getAddressData(
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.native.path
-        );
+        const addressData = multiBitHdMainnet.getAddressData(MOCK_MAINNET_ADDRESS_DATA.native.path);
 
-        expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.native).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native).toEqual(addressData);
       });
     });
 
@@ -72,22 +70,22 @@ describe("MultiBit HD", () => {
       describe("Import from a private key from a native mnemonic", () => {
         it("Imports correct address data", () => {
           const addressData = multiBitHdMainnet.importByPrivateKey(
-            MOCK_COMMON_MAINNET_ADDRESS_DATA.native.path,
-            MOCK_COMMON_MAINNET_ADDRESS_DATA.native.privateKey
+            MOCK_MAINNET_ADDRESS_DATA.native.path,
+            MOCK_MAINNET_ADDRESS_DATA.native.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.native);
+          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native);
         });
       });
 
       describe("Import from a private key from a non-native mnemonic", () => {
         it("Imports correct address data", () => {
           const addressData = multiBitHdMainnet.importByPrivateKey(
-            MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative.path,
-            MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative.privateKey
+            MOCK_MAINNET_ADDRESS_DATA.nonNative.path,
+            MOCK_MAINNET_ADDRESS_DATA.nonNative.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative);
+          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative);
         });
       });
     });
@@ -96,11 +94,9 @@ describe("MultiBit HD", () => {
   describe("testnet", () => {
     describe("getAddressData", () => {
       it("Generates correct address data", () => {
-        const addressData = multiBitHdTestnet.getAddressData(
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.native.path
-        );
+        const addressData = multiBitHdTestnet.getAddressData(MOCK_TESTNET_ADDRESS_DATA.native.path);
 
-        expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.native).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.native).toEqual(addressData);
       });
     });
 
@@ -108,22 +104,22 @@ describe("MultiBit HD", () => {
       describe("Import from a private key from a native mnemonic", () => {
         it("Imports correct address data", () => {
           const addressData = multiBitHdTestnet.importByPrivateKey(
-            MOCK_COMMON_TESTNET_ADDRESS_DATA.native.path,
-            MOCK_COMMON_TESTNET_ADDRESS_DATA.native.privateKey
+            MOCK_TESTNET_ADDRESS_DATA.native.path,
+            MOCK_TESTNET_ADDRESS_DATA.native.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.native);
+          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.native);
         });
       });
 
       describe("Import from a private key from a non-native mnemonic", () => {
         it("Imports correct address data", () => {
           const addressData = multiBitHdTestnet.importByPrivateKey(
-            MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative.path,
-            MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative.privateKey
+            MOCK_TESTNET_ADDRESS_DATA.nonNative.path,
+            MOCK_TESTNET_ADDRESS_DATA.nonNative.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative);
+          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative);
         });
       });
     });
@@ -132,11 +128,9 @@ describe("MultiBit HD", () => {
   describe("regtest", () => {
     describe("getAddressData", () => {
       it("Generates correct address data", () => {
-        const addressData = multiBitHdRegtest.getAddressData(
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.native.path
-        );
+        const addressData = multiBitHdRegtest.getAddressData(MOCK_REGTEST_ADDRESS_DATA.native.path);
 
-        expect(MOCK_COMMON_REGTEST_ADDRESS_DATA.native).toEqual(addressData);
+        expect(MOCK_REGTEST_ADDRESS_DATA.native).toEqual(addressData);
       });
     });
 
@@ -144,11 +138,11 @@ describe("MultiBit HD", () => {
       describe("Import from a private key from a native mnemonic", () => {
         it("Imports correct address data", () => {
           const addressData = multiBitHdRegtest.importByPrivateKey(
-            MOCK_COMMON_REGTEST_ADDRESS_DATA.native.path,
-            MOCK_COMMON_REGTEST_ADDRESS_DATA.native.privateKey
+            MOCK_REGTEST_ADDRESS_DATA.native.path,
+            MOCK_REGTEST_ADDRESS_DATA.native.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.native);
+          expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.native);
         });
       });
     });
@@ -156,11 +150,11 @@ describe("MultiBit HD", () => {
     describe("Import from a private key from a non-native mnemonic", () => {
       it("Imports correct address data", () => {
         const addressData = multiBitHdRegtest.importByPrivateKey(
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.nonNative.path,
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.nonNative.privateKey
+          MOCK_REGTEST_ADDRESS_DATA.nonNative.path,
+          MOCK_REGTEST_ADDRESS_DATA.nonNative.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.nonNative);
+        expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative);
       });
     });
   });

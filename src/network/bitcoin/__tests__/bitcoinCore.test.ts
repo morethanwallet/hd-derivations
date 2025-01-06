@@ -11,7 +11,7 @@ const MOCK_TESTNET_BASE58_ROOT_KEY =
 const MOCK_REGTEST_BASE58_ROOT_KEY =
   "tprv8ZgxMBicQKsPeGDV4kjnRnSQLgZ7XkAX865JEAWGmafNoC547ze9v5qoQ7kBLVNYtAEEXf5wEaRuJi5MYLA5aQQkgQ6HJftmvEKiCocPVtk";
 
-const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
+const MOCK_MAINNET_ADDRESS_DATA = {
   legacy: {
     mnemonic: EMPTY_MNEMONIC,
     address: "1K7kjgwibEETCfkDe7fiSz7pjijDG7jKBi",
@@ -42,7 +42,7 @@ const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
   },
 };
 
-const MOCK_COMMON_TESTNET_ADDRESS_DATA = {
+const MOCK_TESTNET_ADDRESS_DATA = {
   legacy: {
     mnemonic: EMPTY_MNEMONIC,
     address: "mn5qavm24T71bNQFBgX5Ai1K7mvoETir8P",
@@ -73,7 +73,7 @@ const MOCK_COMMON_TESTNET_ADDRESS_DATA = {
   },
 };
 
-const MOCK_COMMON_REGTEST_ADDRESS_DATA = {
+const MOCK_REGTEST_ADDRESS_DATA = {
   legacy: {
     mnemonic: EMPTY_MNEMONIC,
     address: "n2ByQmfCWwj8wKaPYWqyea4e8jkzTRSujm",
@@ -121,88 +121,88 @@ describe("Bitcoin Core", () => {
     describe("getAddressData", () => {
       it("Generates correct legacy address data", () => {
         const addressData = bitcoinCoreMainnet.getAddressData(
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.legacy.path,
+          MOCK_MAINNET_ADDRESS_DATA.legacy.path,
           "legacy",
           MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.legacy).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.legacy).toEqual(addressData);
       });
 
       it("Generates correct segWit address data", () => {
         const addressData = bitcoinCoreMainnet.getAddressData(
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.segWit.path,
+          MOCK_MAINNET_ADDRESS_DATA.segWit.path,
           "segWit",
           MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.segWit).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.segWit).toEqual(addressData);
       });
 
       it("Generates correct native segWit address data", () => {
         const addressData = bitcoinCoreMainnet.getAddressData(
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.nativeSegWit.path,
+          MOCK_MAINNET_ADDRESS_DATA.nativeSegWit.path,
           "nativeSegWit",
           MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.nativeSegWit).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.nativeSegWit).toEqual(addressData);
       });
 
       it("Generates correct taproot address data", () => {
         const addressData = bitcoinCoreMainnet.getAddressData(
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.taproot.path,
+          MOCK_MAINNET_ADDRESS_DATA.taproot.path,
           "taproot",
           MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.taproot).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.taproot).toEqual(addressData);
       });
     });
 
     describe("importByPrivateKey", () => {
       it("Imports correct legacy address data", () => {
         const addressData = bitcoinCoreMainnet.importByPrivateKey(
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.legacy.path,
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.legacy.privateKey,
+          MOCK_MAINNET_ADDRESS_DATA.legacy.path,
+          MOCK_MAINNET_ADDRESS_DATA.legacy.privateKey,
           "legacy",
           MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.legacy);
+        expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.legacy);
       });
 
       it("Imports correct segWit address data", () => {
         const addressData = bitcoinCoreMainnet.importByPrivateKey(
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.segWit.path,
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.segWit.privateKey,
+          MOCK_MAINNET_ADDRESS_DATA.segWit.path,
+          MOCK_MAINNET_ADDRESS_DATA.segWit.privateKey,
           "segWit",
           MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.segWit);
+        expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.segWit);
       });
 
       it("Imports correct native segWit address data", () => {
         const addressData = bitcoinCoreMainnet.importByPrivateKey(
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.nativeSegWit.path,
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.nativeSegWit.privateKey,
+          MOCK_MAINNET_ADDRESS_DATA.nativeSegWit.path,
+          MOCK_MAINNET_ADDRESS_DATA.nativeSegWit.privateKey,
           "nativeSegWit",
           MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.nativeSegWit);
+        expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nativeSegWit);
       });
 
       it("Imports correct taproot address data", () => {
         const addressData = bitcoinCoreMainnet.importByPrivateKey(
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.taproot.path,
-          MOCK_COMMON_MAINNET_ADDRESS_DATA.taproot.privateKey,
+          MOCK_MAINNET_ADDRESS_DATA.taproot.path,
+          MOCK_MAINNET_ADDRESS_DATA.taproot.privateKey,
           "taproot",
           MOCK_MAINNET_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.taproot);
+        expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.taproot);
       });
     });
   });
@@ -211,88 +211,88 @@ describe("Bitcoin Core", () => {
     describe("getAddressData", () => {
       it("Generates correct legacy address data", () => {
         const addressData = bitcoinCoreTestnet.getAddressData(
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy.path,
+          MOCK_TESTNET_ADDRESS_DATA.legacy.path,
           "legacy",
           MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.legacy).toEqual(addressData);
       });
 
       it("Generates correct segWit address data", () => {
         const addressData = bitcoinCoreTestnet.getAddressData(
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit.path,
+          MOCK_TESTNET_ADDRESS_DATA.segWit.path,
           "segWit",
           MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.segWit).toEqual(addressData);
       });
 
       it("Generates correct native segWit address data", () => {
         const addressData = bitcoinCoreTestnet.getAddressData(
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit.path,
+          MOCK_TESTNET_ADDRESS_DATA.nativeSegWit.path,
           "nativeSegWit",
           MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.nativeSegWit).toEqual(addressData);
       });
 
       it("Generates correct taproot address data", () => {
         const addressData = bitcoinCoreTestnet.getAddressData(
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot.path,
+          MOCK_TESTNET_ADDRESS_DATA.taproot.path,
           "taproot",
           MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.taproot).toEqual(addressData);
       });
     });
 
     describe("importByPrivateKey", () => {
       it("Imports correct legacy address data", () => {
         const addressData = bitcoinCoreTestnet.importByPrivateKey(
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy.path,
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy.privateKey,
+          MOCK_TESTNET_ADDRESS_DATA.legacy.path,
+          MOCK_TESTNET_ADDRESS_DATA.legacy.privateKey,
           "legacy",
           MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.legacy);
+        expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.legacy);
       });
 
       it("Imports correct segWit address data", () => {
         const addressData = bitcoinCoreTestnet.importByPrivateKey(
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit.path,
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit.privateKey,
+          MOCK_TESTNET_ADDRESS_DATA.segWit.path,
+          MOCK_TESTNET_ADDRESS_DATA.segWit.privateKey,
           "segWit",
           MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.segWit);
+        expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.segWit);
       });
 
       it("Imports correct native segWit address data", () => {
         const addressData = bitcoinCoreTestnet.importByPrivateKey(
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit.path,
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit.privateKey,
+          MOCK_TESTNET_ADDRESS_DATA.nativeSegWit.path,
+          MOCK_TESTNET_ADDRESS_DATA.nativeSegWit.privateKey,
           "nativeSegWit",
           MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.nativeSegWit);
+        expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.nativeSegWit);
       });
 
       it("Imports correct taproot address data", () => {
         const addressData = bitcoinCoreTestnet.importByPrivateKey(
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot.path,
-          MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot.privateKey,
+          MOCK_TESTNET_ADDRESS_DATA.taproot.path,
+          MOCK_TESTNET_ADDRESS_DATA.taproot.privateKey,
           "taproot",
           MOCK_TESTNET_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.taproot);
+        expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.taproot);
       });
     });
   });
@@ -301,88 +301,88 @@ describe("Bitcoin Core", () => {
     describe("getAddressData", () => {
       it("Generates correct legacy address data", () => {
         const addressData = bitcoinCoreRegtest.getAddressData(
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.legacy.path,
+          MOCK_REGTEST_ADDRESS_DATA.legacy.path,
           "legacy",
           MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_REGTEST_ADDRESS_DATA.legacy).toEqual(addressData);
+        expect(MOCK_REGTEST_ADDRESS_DATA.legacy).toEqual(addressData);
       });
 
       it("Generates correct segWit address data", () => {
         const addressData = bitcoinCoreRegtest.getAddressData(
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.segWit.path,
+          MOCK_REGTEST_ADDRESS_DATA.segWit.path,
           "segWit",
           MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_REGTEST_ADDRESS_DATA.segWit).toEqual(addressData);
+        expect(MOCK_REGTEST_ADDRESS_DATA.segWit).toEqual(addressData);
       });
 
       it("Generates correct native segWit address data", () => {
         const addressData = bitcoinCoreRegtest.getAddressData(
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.nativeSegWit.path,
+          MOCK_REGTEST_ADDRESS_DATA.nativeSegWit.path,
           "nativeSegWit",
           MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_REGTEST_ADDRESS_DATA.nativeSegWit).toEqual(addressData);
+        expect(MOCK_REGTEST_ADDRESS_DATA.nativeSegWit).toEqual(addressData);
       });
 
       it("Generates correct taproot address data", () => {
         const addressData = bitcoinCoreRegtest.getAddressData(
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.taproot.path,
+          MOCK_REGTEST_ADDRESS_DATA.taproot.path,
           "taproot",
           MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
-        expect(MOCK_COMMON_REGTEST_ADDRESS_DATA.taproot).toEqual(addressData);
+        expect(MOCK_REGTEST_ADDRESS_DATA.taproot).toEqual(addressData);
       });
     });
 
     describe("importByPrivateKey", () => {
       it("Imports correct legacy address data", () => {
         const addressData = bitcoinCoreRegtest.importByPrivateKey(
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.legacy.path,
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.legacy.privateKey,
+          MOCK_REGTEST_ADDRESS_DATA.legacy.path,
+          MOCK_REGTEST_ADDRESS_DATA.legacy.privateKey,
           "legacy",
           MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.legacy);
+        expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.legacy);
       });
 
       it("Imports correct segWit address data", () => {
         const addressData = bitcoinCoreRegtest.importByPrivateKey(
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.segWit.path,
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.segWit.privateKey,
+          MOCK_REGTEST_ADDRESS_DATA.segWit.path,
+          MOCK_REGTEST_ADDRESS_DATA.segWit.privateKey,
           "segWit",
           MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.segWit);
+        expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.segWit);
       });
 
       it("Imports correct native segWit address data", () => {
         const addressData = bitcoinCoreRegtest.importByPrivateKey(
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.nativeSegWit.path,
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.nativeSegWit.privateKey,
+          MOCK_REGTEST_ADDRESS_DATA.nativeSegWit.path,
+          MOCK_REGTEST_ADDRESS_DATA.nativeSegWit.privateKey,
           "nativeSegWit",
           MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.nativeSegWit);
+        expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.nativeSegWit);
       });
 
       it("Imports correct taproot address data", () => {
         const addressData = bitcoinCoreRegtest.importByPrivateKey(
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.taproot.path,
-          MOCK_COMMON_REGTEST_ADDRESS_DATA.taproot.privateKey,
+          MOCK_REGTEST_ADDRESS_DATA.taproot.path,
+          MOCK_REGTEST_ADDRESS_DATA.taproot.privateKey,
           "taproot",
           MOCK_REGTEST_BASE58_ROOT_KEY
         );
 
-        expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.taproot);
+        expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.taproot);
       });
     });
   });
