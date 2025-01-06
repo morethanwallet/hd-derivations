@@ -116,7 +116,7 @@ describe("Avax", () => {
         expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.native.p).toEqual(avaxXAddressData);
       });
 
-      it("Imports correct Avax-X address data with a private key from a non-native mnemonic", () => {
+      it("Imports correct Avax-X address data from a private key from a non-native mnemonic", () => {
         const avaxXAddressData = avaxMainnet.importByPrivateKey(
           MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative.x.path,
           MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative.x.privateKey,
@@ -126,7 +126,7 @@ describe("Avax", () => {
         expect(MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative.x).toEqual(avaxXAddressData);
       });
 
-      it("Imports correct Avax-P address data with a private key from a non-native mnemonic", () => {
+      it("Imports correct Avax-P address data from a private key from a non-native mnemonic", () => {
         const avaxXAddressData = avaxMainnet.importByPrivateKey(
           MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative.p.path,
           MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative.p.privateKey,
@@ -180,7 +180,7 @@ describe("Avax", () => {
         expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.native.p).toEqual(avaxXAddressData);
       });
 
-      it("Imports correct Avax-X address data with a private key from a non-native mnemonic", () => {
+      it("Imports correct Avax-X address data from a private key from a non-native mnemonic", () => {
         const avaxXAddressData = avaxTestnet.importByPrivateKey(
           MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative.x.path,
           MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative.x.privateKey,
@@ -190,7 +190,7 @@ describe("Avax", () => {
         expect(MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative.x).toEqual(avaxXAddressData);
       });
 
-      it("Imports correct Avax-P address data with a private key from a non-native mnemonic", () => {
+      it("Imports correct Avax-P address data from a private key from a non-native mnemonic", () => {
         const avaxXAddressData = avaxTestnet.importByPrivateKey(
           MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative.p.path,
           MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative.p.privateKey,

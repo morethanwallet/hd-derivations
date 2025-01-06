@@ -82,7 +82,7 @@ describe("Dogecoin", () => {
         expect(addressData).toEqual(MOCK_COMMON_MAINNET_ADDRESS_DATA.native);
       });
 
-      it("Imports correct address data with a private key from a non-native mnemonic", () => {
+      it("Imports correct address data from a private key from a non-native mnemonic", () => {
         const addressData = dogecoinMainnet.importByPrivateKey(
           MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative.path,
           MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative.privateKey
@@ -114,7 +114,7 @@ describe("Dogecoin", () => {
         expect(addressData).toEqual(MOCK_COMMON_TESTNET_ADDRESS_DATA.native);
       });
 
-      it("Imports correct address data", () => {
+      it("Imports correct address data from a private key from a non-native mnemonic", () => {
         const addressData = dogecoinTestnet.importByPrivateKey(
           MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative.path,
           MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative.privateKey
@@ -146,7 +146,7 @@ describe("Dogecoin", () => {
         expect(addressData).toEqual(MOCK_COMMON_REGTEST_ADDRESS_DATA.native);
       });
 
-      it("Imports correct address data", () => {
+      it("Imports correct address data from a private key from a non-native mnemonic", () => {
         const addressData = dogecoinRegtest.importByPrivateKey(
           MOCK_COMMON_REGTEST_ADDRESS_DATA.nonNative.path,
           MOCK_COMMON_REGTEST_ADDRESS_DATA.nonNative.privateKey
