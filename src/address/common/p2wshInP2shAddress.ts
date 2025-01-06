@@ -74,14 +74,14 @@ class P2wshInP2shAddress extends Keys implements AbstractAddress {
       network: this.keysConfig,
     });
 
-    assert(address, AddressError, ExceptionMessage.P2WSH_ADDRESS_GENERATION_FAILED);
+    assert(address, AddressError, ExceptionMessage.P2WSH_IN_P2SH_ADDRESS_GENERATION_FAILED);
 
     return address;
   }
 
   private getKeyPair(source: BIP32Interface | string): KeyPair {
     return getKeyPairFromEc(
-      ExceptionMessage.P2WPKH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED,
+      ExceptionMessage.P2WSH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
       source
     );

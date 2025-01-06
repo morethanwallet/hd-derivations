@@ -9,6 +9,8 @@ const ExceptionMessage = {
   P2WPKH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED: "Failed to generate a P2WPKH in P2SH private key",
   P2WSH_ADDRESS_GENERATION_FAILED: "Failed to generate a P2WSH address",
   P2WSH_PRIVATE_KEY_GENERATION_FAILED: "Failed to generate a P2WSH private key",
+  P2WSH_IN_P2SH_ADDRESS_GENERATION_FAILED: "Failed to generate a P2WSH in P2SH address",
+  P2WSH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED: "Failed to generate a P2WSH in P2SH private key",
   AVAX_PRIVATE_KEY_GENERATION_FAILED: "Failed to generate an Avalanche private key",
   BNB_PRIVATE_KEY_GENERATION_FAILED: "Failed to generate a BNB Beacon private key",
   CASH_ADDR_ADDRESS_GENERATION_FAILED: "Failed to generate a Cash Addr address",

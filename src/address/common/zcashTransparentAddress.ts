@@ -90,7 +90,7 @@ class ZcashTransparentAddress extends Keys implements AbstractAddress {
 
   private getKeyPair(source: BIP32Interface | string): KeyPair {
     return getKeyPairFromEc(
-      ExceptionMessage.P2WPKH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED,
+      ExceptionMessage.ZCASH_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
       source
     );

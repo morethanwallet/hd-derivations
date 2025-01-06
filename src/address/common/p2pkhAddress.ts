@@ -72,7 +72,7 @@ class P2pkhAddress extends Keys implements AbstractAddress<true> {
 
   private getKeyPair(source: BIP32Interface | string): KeyPair {
     return getKeyPairFromEc(
-      ExceptionMessage.P2WPKH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED,
+      ExceptionMessage.P2PKH_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
       source
     );
