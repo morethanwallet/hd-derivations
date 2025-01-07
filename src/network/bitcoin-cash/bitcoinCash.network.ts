@@ -4,6 +4,8 @@ import { type AbstractNetwork } from "./types/index.js";
 import { type AddressType } from "@/address/bitcoin-cash/index.js";
 import { type NetworkPurpose } from "@/network/index.js";
 import { config } from "./config/index.js";
+import { validateDerivationPath } from "@/helpers/index.js";
+import { derivationPathSegmentToAllowedValue } from "./validation/index.js";
 
 class BitcoinCash implements AbstractNetwork {
   private cashAddrAddress: CashAddrAddress;
@@ -15,6 +17,8 @@ class BitcoinCash implements AbstractNetwork {
   }
 
   public getAddressData(derivationPath: string, addressType: AddressType) {
+    this.validateDerivationPath(derivationPath);
+
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.getData(derivationPath);
@@ -34,6 +38,14 @@ class BitcoinCash implements AbstractNetwork {
         return this.cashAddrAddress.importByPrivateKey(derivationPath, privateKey);
       }
     }
+  }
+
+  private validateDerivationPath(derivationPath: string): void | never {
+    validateDerivationPath({
+      derivationPath,
+      allowedPurpose: derivationPathSegmentToAllowedValue.purpose,
+      allowedCoin: derivationPathSegmentToAllowedValue.coin,
+    });
   }
 }
 

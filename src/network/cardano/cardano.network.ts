@@ -4,6 +4,8 @@ import { type NetworkPurpose, type AbstractNetwork } from "./types/index.js";
 import { type AddressData, type AddressType } from "@/address/cardano/index.js";
 import { assert } from "@/helpers/assert.helper.js";
 import { ExceptionMessage, NetworkError } from "../exceptions/index.js";
+import { validateDerivationPath } from "@/helpers/index.js";
+import { derivationPathSegmentToAllowedValue } from "./validation/index.js";
 
 class Cardano implements AbstractNetwork {
   private purpose: NetworkPurpose;
@@ -30,6 +32,8 @@ class Cardano implements AbstractNetwork {
     derivationPath: string,
     addressType: AddressType
   ): AddressData<AddressType> {
+    this.validateDerivationPath(derivationPath);
+
     switch (addressType) {
       case "reward": {
         return this.rewardAddress.getData(derivationPath, this.purpose);
@@ -81,6 +85,14 @@ class Cardano implements AbstractNetwork {
         );
       }
     }
+  }
+
+  private validateDerivationPath(derivationPath: string): void | never {
+    validateDerivationPath({
+      derivationPath,
+      allowedPurpose: derivationPathSegmentToAllowedValue.purpose,
+      allowedCoin: derivationPathSegmentToAllowedValue.coin,
+    });
   }
 }
 

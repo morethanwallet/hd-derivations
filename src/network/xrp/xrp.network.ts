@@ -3,6 +3,8 @@ import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractNetwork } from "./types/index.js";
 import { config } from "./config/index.js";
 import { type AddressType } from "@/address/xrp/index.js";
+import { validateDerivationPath } from "@/helpers/index.js";
+import { derivationPathSegmentToAllowedValue } from "./validation/index.js";
 
 class Xrp implements AbstractNetwork {
   private xrpAddress: XrpAddress;
@@ -12,6 +14,8 @@ class Xrp implements AbstractNetwork {
   }
 
   public getAddressData(derivationPath: string, addressType: AddressType, destinationTag?: number) {
+    this.validateDerivationPath(derivationPath);
+
     return this.xrpAddress.getData(derivationPath, addressType, destinationTag);
   }
 
@@ -27,6 +31,14 @@ class Xrp implements AbstractNetwork {
       addressType,
       destinationTag
     );
+  }
+
+  private validateDerivationPath(derivationPath: string): void | never {
+    validateDerivationPath({
+      derivationPath,
+      allowedPurpose: derivationPathSegmentToAllowedValue.purpose,
+      allowedCoin: derivationPathSegmentToAllowedValue.coin,
+    });
   }
 }
 
