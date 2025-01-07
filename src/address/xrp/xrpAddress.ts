@@ -17,15 +17,16 @@ class XrpAddress extends Keys implements AbstractAddress {
     super(keysConfig, mnemonic);
   }
 
-  public getData(
-    derivationPath: string,
-    addressType: AddressType,
-    destinationTag?: number
-  ): AddressData {
+  public getData({
+    derivationPath,
+    addressType,
+    isTestnet,
+    destinationTag,
+  }: Parameters<AbstractAddress["getData"]>[0]): AddressData {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const wallet = this.getWallet(privateKey, publicKey);
-    const address = this.getAddress(wallet, addressType, destinationTag);
+    const address = this.getAddress(wallet, addressType, isTestnet, destinationTag);
 
     return {
       privateKey,
@@ -36,12 +37,13 @@ class XrpAddress extends Keys implements AbstractAddress {
     };
   }
 
-  public importByPrivateKey(
-    derivationPath: string,
-    privateKey: KeyPair["privateKey"],
-    addressType: AddressType,
-    destinationTag?: number
-  ): AddressData {
+  public importByPrivateKey({
+    derivationPath,
+    privateKey,
+    addressType,
+    isTestnet,
+    destinationTag,
+  }: Parameters<AbstractAddress["importByPrivateKey"]>[0]): AddressData {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -50,7 +52,12 @@ class XrpAddress extends Keys implements AbstractAddress {
         i
       );
 
-      const data = this.getData(incrementedDerivationPath, addressType, destinationTag);
+      const data = this.getData({
+        addressType,
+        isTestnet,
+        destinationTag,
+        derivationPath: incrementedDerivationPath,
+      });
 
       if (data.privateKey === privateKey) return data;
     }
@@ -58,7 +65,7 @@ class XrpAddress extends Keys implements AbstractAddress {
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);
     const wallet = this.getWallet(privateKey, publicKey);
-    const address = this.getAddress(wallet, addressType, destinationTag);
+    const address = this.getAddress(wallet, addressType, isTestnet, destinationTag);
 
     return {
       privateKey,
@@ -77,8 +84,15 @@ class XrpAddress extends Keys implements AbstractAddress {
     );
   }
 
-  private getAddress(wallet: Wallet, addressType: AddressType, destinationTag?: number): string {
-    return addressType === "base" ? wallet.classicAddress : wallet.getXAddress(destinationTag);
+  private getAddress(
+    wallet: Wallet,
+    addressType: AddressType,
+    isTestnet: boolean,
+    destinationTag?: number
+  ): string {
+    return addressType === "base"
+      ? wallet.classicAddress
+      : wallet.getXAddress(destinationTag, isTestnet);
   }
 
   private getWallet(privateKey: KeyPair["privateKey"], publicKey: KeyPair["publicKey"]): Wallet {
