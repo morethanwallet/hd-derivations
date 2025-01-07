@@ -1,4 +1,4 @@
-import { DERIVATION_PATH_DELIMITER } from "@/constants/index.js";
+import { DERIVATION_PATH_DELIMITER } from "@/address/constants/index.js";
 
 const ADDRESS_INDEX = -1;
 

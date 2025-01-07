@@ -1,4 +1,4 @@
-import { DERIVATION_PATH_DELIMITER } from "@/constants/index.js";
+import { DERIVATION_PATH_DELIMITER } from "@/address/constants/index.js";
 
 function updateDerivationPathChange(derivationPath: string, change: number): string {
   const splittedPath = derivationPath.split(DERIVATION_PATH_DELIMITER);

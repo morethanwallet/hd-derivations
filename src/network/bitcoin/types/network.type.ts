@@ -30,4 +30,4 @@ type AbstractNetwork<T extends BitcoinNetwork> = {
   importByPrivateKey: ImportByPrivateKey<T>;
 };
 
-export { type AbstractNetwork, type BitcoinNetwork };
+export { type AbstractNetwork };
