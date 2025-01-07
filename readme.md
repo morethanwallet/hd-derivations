@@ -2,7 +2,7 @@
 
 ## General info
 
-This package is designed to for generating cryptographic metadata for various blockchain networks. It provides users with the ability to derive addresses, private keys, and public keys for any supported network using a single mnemonic or private key. Additionally, it supports non-standard derivation methods, allowing for seamless migration from other clients.
+This package is designed for generating cryptographic metadata for various blockchain networks. It provides users with the ability to derive addresses, private keys, and public keys for any supported network using a single mnemonic or private key. Additionally, it supports non-standard derivation methods, allowing for seamless migration from other clients.
 
 ## Features
 
