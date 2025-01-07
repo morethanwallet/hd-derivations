@@ -1,4 +1,4 @@
-import { DERIVATION_PATH_DELIMITER } from "../constants/index.js";
+import { DERIVATION_PATH_DELIMITER } from "@/constants/index.js";
 
 const ROOT_KEY_SYMBOL_START_INDEX = 0;
 const ADDRESS_START_INDEX = -1;
