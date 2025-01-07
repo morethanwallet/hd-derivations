@@ -5,20 +5,20 @@ import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 
-const MOCK_COMMON_DERIVATION_PATH = "m/44'/145'/0'/0/0";
+const MOCK_COMMON_DERIVATION_PATH = { mainnet: "m/44'/145'/0'/0/0", testnet: "m/44'/1'/0'/0/0" };
 
 const MOCK_COMMON_MAINNET_ADDRESS_DATA = {
   native: {
     mnemonic: MNEMONIC,
     privateKey: "Kysn6FCsYUwSwYVdUD4c6kdntJeZCZWpPYPj6LjEV2pDPyWNFhjX",
     publicKey: "0333d222cc1fd501e74b6d64cb1e4dd85bbcb28d9ce3fd6a30133f5aa6211a8fc3",
-    path: MOCK_COMMON_DERIVATION_PATH,
+    path: MOCK_COMMON_DERIVATION_PATH.mainnet,
   },
   nonNative: {
     mnemonic: EMPTY_MNEMONIC,
     privateKey: "KxUYbZfVLLEFehzKcNXJSJvmBjbYswf9ZEsasfH5vFbdvvwS1F31",
     publicKey: "03d3a1e1860cf3946b00ee9831a8df63557b820e71a004a842bb12e0dd1acb6c6a",
-    path: MOCK_COMMON_DERIVATION_PATH,
+    path: MOCK_COMMON_DERIVATION_PATH.mainnet,
   },
 };
 
@@ -47,12 +47,16 @@ const MOCK_MAINNET_ADDRESS_DATA = {
 
 const MOCK_COMMON_TESTNET_ADDRESS_DATA = {
   native: {
-    ...MOCK_COMMON_MAINNET_ADDRESS_DATA.native,
-    privateKey: "cQEmZACiyYdi6yxtrcsjU58rWXwxs1cWTaYCCmBjz9UDeiXPuAjp",
+    mnemonic: MNEMONIC,
+    privateKey: "cQEPGT34NWGzWnW1JE3d5GKaBcEQJqUsDdxH2jXD97CkXaAaXHEn",
+    publicKey: "02d76e63231c59c216550ef886d362d58ba96ee30eb56caa99f5cdaf651b9a9a6e",
+    path: MOCK_COMMON_DERIVATION_PATH.testnet,
   },
   nonNative: {
-    ...MOCK_COMMON_MAINNET_ADDRESS_DATA.nonNative,
-    privateKey: "cNqY4UfLmPvWp9TaznLRodRpoxtxYPkqdH23z5jbRNFeBg39dg4L",
+    mnemonic: EMPTY_MNEMONIC,
+    privateKey: "cPS2rfjHVcJxNCTnxgoALhzeqCFFHadE4tButfB4L2aoowkMP4m7",
+    publicKey: "028db811636159b5b3e2b949e70630ef75dabab371c56f5ebd8f86677a24c5c2ee",
+    path: MOCK_COMMON_DERIVATION_PATH.testnet,
   },
 };
 
@@ -60,21 +64,21 @@ const MOCK_TESTNET_ADDRESS_DATA = {
   native: {
     legacy: {
       ...MOCK_COMMON_TESTNET_ADDRESS_DATA.native,
-      address: "n3XkFdF1uRXJcbGhvVadfgqcMe18L2M4Tc",
+      address: "mk2hF1aSuKkBZtCUM9jDfjgFLE5gGJ8U8c",
     },
     cashAddr: {
       ...MOCK_COMMON_TESTNET_ADDRESS_DATA.native,
-      address: "bchtest:qrchjgvn4keqa6qwesjvywyj2fy46x2ex5sgzuxsdq",
+      address: "bchtest:qqccq645kqhy9sp3vz2xx293a0xa5ywcwgvc06zrfh",
     },
   },
   nonNative: {
     legacy: {
       ...MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative,
-      address: "mraJ6VfzYaTxvPdxaT7dVngSBt8SmH4bF2",
+      address: "mv6xfUhaYnC3HzGmtdCu2edHLnm4VHUyxi",
     },
     cashAddr: {
       ...MOCK_COMMON_TESTNET_ADDRESS_DATA.nonNative,
-      address: "bchtest:qpu5k2gfmn34jmlmqjtyqvmq75753sq63y3eqmmrrw",
+      address: "bchtest:qzsqqdj8px2eqpyt3llvjalc7pjfel7cqgxgpm9m55",
     },
   },
 };
@@ -86,7 +90,7 @@ const MOCK_REGTEST_ADDRESS_DATA = {
     },
     cashAddr: {
       ...MOCK_TESTNET_ADDRESS_DATA.native.cashAddr,
-      address: "bchreg:qrchjgvn4keqa6qwesjvywyj2fy46x2ex5sgzuxsdq",
+      address: "bchreg:qqccq645kqhy9sp3vz2xx293a0xa5ywcwgvc06zrfh",
     },
   },
   nonNative: {
@@ -95,7 +99,7 @@ const MOCK_REGTEST_ADDRESS_DATA = {
     },
     cashAddr: {
       ...MOCK_TESTNET_ADDRESS_DATA.nonNative.cashAddr,
-      address: "bchreg:qpu5k2gfmn34jmlmqjtyqvmq75753sq63y3eqmmrrw",
+      address: "bchreg:qzsqqdj8px2eqpyt3llvjalc7pjfel7cqgxgpm9m55",
     },
   },
 };

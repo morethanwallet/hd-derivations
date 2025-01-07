@@ -5,7 +5,7 @@ import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 
-const MOCK_COMMON_DERIVATION_PATH = "m/44'/133'/0'/0/0";
+const MOCK_COMMON_DERIVATION_PATH = { mainnet: "m/44'/133'/0'/0/0", testnet: "m/44'/1'/0'/0/0" };
 
 const MOCK_MAINNET_ADDRESS_DATA = {
   native: {
@@ -13,27 +13,31 @@ const MOCK_MAINNET_ADDRESS_DATA = {
     address: "t1go5yyUMNUakm8HAnMrvM6aDkvaUZTQzQg",
     privateKey: "L4Mijb5oxci7ow72HqDCi3sn2sqZ86tg3uFVskCYqTQ4QZ3i9Hgw",
     publicKey: "0396a610bdb90fbff9759696ec2e3ad6827107d1e64b0aa1d1c62541b88544e24b",
-    path: MOCK_COMMON_DERIVATION_PATH,
+    path: MOCK_COMMON_DERIVATION_PATH.mainnet,
   },
   nonNative: {
     mnemonic: EMPTY_MNEMONIC,
     address: "t1efrqPbdbh1irKubpD1VSroiAX2jPdbNxF",
     privateKey: "KxXRpZEhuoBEqKsp8f2UeCU2jm56bsGzUP1gHNbGsGJqqsEa1Vob",
     publicKey: "02fbc76ef4c6a425f182a9d8e2b5e3b5d71c047bade46dcb3f63974a0b6eac1a91",
-    path: MOCK_COMMON_DERIVATION_PATH,
+    path: MOCK_COMMON_DERIVATION_PATH.mainnet,
   },
 };
 
 const MOCK_TESTNET_ADDRESS_DATA = {
   native: {
-    ...MOCK_MAINNET_ADDRESS_DATA.native,
-    address: "tmYdqJoxkm96FuNUcT6AfCmEyMufJ655nBL",
-    privateKey: "cUiiCW5fPgQNyNaHgF2L5NNqf78xnYzN7wPxzAf4La44fJ5JophX",
+    mnemonic: MNEMONIC,
+    address: "tmEE6H8Q1THc2XeyCEjshqJEbKsksdYbi3j",
+    privateKey: "cQEPGT34NWGzWnW1JE3d5GKaBcEQJqUsDdxH2jXD97CkXaAaXHEn",
+    publicKey: "02d76e63231c59c216550ef886d362d58ba96ee30eb56caa99f5cdaf651b9a9a6e",
+    path: MOCK_COMMON_DERIVATION_PATH.testnet,
   },
   nonNative: {
-    ...MOCK_MAINNET_ADDRESS_DATA.nonNative,
-    address: "tmWWcAE62zMXDza73UwKEJXUTmW7YxV53UJ",
-    privateKey: "cNtRHUEZLrsVzmM5X4qc1Wy6MzNWGKNgYRA9Po3nNNxr6cPJnUHf",
+    mnemonic: EMPTY_MNEMONIC,
+    address: "tmQJMhbX96k3tFm3VnDMPCDBdLSSFvttqcn",
+    privateKey: "cPS2rfjHVcJxNCTnxgoALhzeqCFFHadE4tButfB4L2aoowkMP4m7",
+    publicKey: "028db811636159b5b3e2b949e70630ef75dabab371c56f5ebd8f86677a24c5c2ee",
+    path: MOCK_COMMON_DERIVATION_PATH.testnet,
   },
 };
 
