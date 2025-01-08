@@ -1,7 +1,12 @@
 import { utils } from "@avalabs/avalanchejs";
 import { crypto } from "bitcoinjs-lib";
 import { toUint8Array } from "@/helpers/index.js";
-import { type AddressData, type KeyPair, type KeysConfig } from "../types/index.js";
+import {
+  type AbstractAddress,
+  type AddressData,
+  type KeyPair,
+  type KeysConfig,
+} from "../types/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
 import {
   appendAddressToDerivationPath,
@@ -11,8 +16,8 @@ import {
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { Keys } from "../common/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractAddress } from "./types/index.js";
 import { type NetworkType, type NetworkPurpose } from "@/families/avax/index.js";
+import { type AddressType } from "../index.js";
 
 const Prefix: Record<NetworkType, string> = {
   X: "X-",
@@ -24,7 +29,7 @@ const Hrp: Record<Uppercase<NetworkPurpose>, string> = {
   TESTNET: "fuji",
 } as const;
 
-class AvaxAddress extends Keys implements AbstractAddress {
+class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVAX> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
