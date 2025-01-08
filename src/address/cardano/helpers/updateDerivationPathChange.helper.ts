@@ -1,11 +1,12 @@
 import { DERIVATION_PATH_DELIMITER } from "@/constants/index.js";
+import { getDerivationPathSegmentsArray } from "@/helpers/index.js";
 
 function updateDerivationPathChange(derivationPath: string, change: number): string {
-  const splittedPath = derivationPath.split(DERIVATION_PATH_DELIMITER);
+  const pathSegmentsArray = getDerivationPathSegmentsArray(derivationPath);
   const changePositionIndex = 4;
-  splittedPath[changePositionIndex] = String(change);
+  pathSegmentsArray[changePositionIndex] = String(change);
 
-  return splittedPath.join(DERIVATION_PATH_DELIMITER);
+  return pathSegmentsArray.join(DERIVATION_PATH_DELIMITER);
 }
 
-export {updateDerivationPathChange}
+export { updateDerivationPathChange };

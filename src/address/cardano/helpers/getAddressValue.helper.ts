@@ -1,9 +1,9 @@
-import { DERIVATION_PATH_DELIMITER } from "@/constants/index.js";
+import { getDerivationPathSegmentsArray } from "@/helpers/index.js";
 
 const ADDRESS_INDEX = -1;
 
 function getAddressValue(derivationPath: string): number {
-  return Number(derivationPath.split(DERIVATION_PATH_DELIMITER).slice(ADDRESS_INDEX).pop());
+  return Number(getDerivationPathSegmentsArray(derivationPath).slice(ADDRESS_INDEX).pop());
 }
 
 export { getAddressValue };

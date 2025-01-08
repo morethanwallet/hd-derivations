@@ -1,5 +1,10 @@
-import { HARDEN_RANGE_START_INDEX } from "@/constants/index.js";
+import { DECIMAL_SYSTEM_IDENTIFIER, HARDEN_RANGE_START_INDEX } from "@/constants/index.js";
 
-const hardenDerivationPathValue = (number: number): number => HARDEN_RANGE_START_INDEX + number;
+function hardenDerivationPathValue(value: string | number): number {
+  const formattedValue =
+    typeof value === "string" ? Number.parseInt(value, DECIMAL_SYSTEM_IDENTIFIER) : value;
+
+  return HARDEN_RANGE_START_INDEX + formattedValue;
+}
 
 export { hardenDerivationPathValue };
