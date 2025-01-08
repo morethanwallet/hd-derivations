@@ -8,7 +8,7 @@ class MultiBitHd implements AbstractNetwork<"multiBitHd"> {
   private p2pkhAddress: P2pkhAddress;
 
   public constructor(mnemonic: Mnemonic, purpose: NetworkPurpose) {
-    this.p2pkhAddress = new P2pkhAddress(config[purpose].legacy.keysConfig, mnemonic);
+    this.p2pkhAddress = new P2pkhAddress(config[purpose].btcLegacy.keysConfig, mnemonic);
   }
 
   public getAddressData(derivationPath: string) {
