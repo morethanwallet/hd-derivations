@@ -18,9 +18,9 @@ import { toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractAddress } from "@/address/index.js";
+import { type AddressType, type AbstractAddress } from "@/address/index.js";
 
-class EvmAddress extends Keys implements AbstractAddress {
+class EvmAddress extends Keys implements AbstractAddress<typeof AddressType.EVM> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }

@@ -10,11 +10,11 @@ import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage, AddressError } from "../exceptions/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractAddress } from "@/address/index.js";
+import { type AddressType, type AbstractAddress } from "@/address/index.js";
 
 const HRP = "bnb";
 
-class BnbAddress extends Keys implements AbstractAddress {
+class BnbAddress extends Keys implements AbstractAddress<typeof AddressType.BNB> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }

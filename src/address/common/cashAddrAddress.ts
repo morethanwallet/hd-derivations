@@ -11,7 +11,7 @@ import {
 } from "../helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractAddress } from "@/address/index.js";
+import { type AddressType, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 import { config } from "@/families/bitcoin-cash/index.js";
 
@@ -20,7 +20,7 @@ const HRP_DELIMITER = ":";
 const ADDRESS_INDEX = 1;
 
 // TODO: Move this class to bitcoin-cash folder
-class CashAddrAddress extends Keys implements AbstractAddress {
+class CashAddrAddress extends Keys implements AbstractAddress<typeof AddressType.BCH_CASH_ADDR> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
