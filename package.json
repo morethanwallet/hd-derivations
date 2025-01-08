@@ -28,6 +28,7 @@
     "groestlcoinjs-lib": "^6.1.5",
     "handshake-util": "^1.2.0",
     "nebulas": "^0.5.9",
+    "ts-essentials": "^10.0.4",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3",
     "unorm": "^1.6.0",
