@@ -17,7 +17,7 @@ import {
 } from "./helpers/index.js";
 import { type KeyPair } from "../index.js";
 import { Change } from "./enums/index.js";
-import { type NetworkPurpose } from "@/network/cardano/index.js";
+import { type NetworkPurpose } from "@/families/cardano/index.js";
 
 class EnterpriseAddress extends Keys implements AbstractAddress<"enterprise"> {
   public constructor(mnemonic: Mnemonic) {

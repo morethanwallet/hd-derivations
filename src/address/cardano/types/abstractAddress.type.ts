@@ -1,7 +1,7 @@
 import { type KeyPair, type AddressData as CommonAddressData } from "@/address/index.js";
 import { type AddressType, type BaseAddressKeyPair } from "./index.js";
 import { type ReturnTypeCompatibleAddressType } from "./addressType.type.js";
-import { type NetworkPurpose } from "@/network/cardano/index.js";
+import { type NetworkPurpose } from "@/families/cardano/index.js";
 
 type BaseAddressData = Pick<CommonAddressData, "address" | "mnemonic"> & {
   enterprisePath: string;

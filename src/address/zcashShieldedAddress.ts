@@ -5,7 +5,7 @@ import {
   type AddressMetadata,
   type Keys,
   type NetworkConfig,
-} from "@/network/index.js";
+} from "@/families/index.js";
 import { toUint8Array } from "@/helpers/index.js";
 import blake2b from "blake2b";
 

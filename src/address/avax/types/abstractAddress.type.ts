@@ -1,5 +1,5 @@
 import { type KeyPair, type AddressData } from "@/address/index.js";
-import { type NetworkPurpose, type NetworkType } from "@/network/avax/index.js";
+import { type NetworkPurpose, type NetworkType } from "@/families/avax/index.js";
 
 type AbstractAddress = {
   getData: (

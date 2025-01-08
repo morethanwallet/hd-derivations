@@ -13,7 +13,7 @@ import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.j
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
-import { config } from "@/network/bitcoin-cash/index.js";
+import { config } from "@/families/bitcoin-cash/index.js";
 
 const REGTEST_PREFIX = "bchreg";
 const HRP_DELIMITER = ":";

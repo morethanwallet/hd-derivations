@@ -13,7 +13,7 @@ import { getCredential, getNetworkId, updateDerivationPathChange } from "./helpe
 import { Change } from "./enums/index.js";
 import { EnterpriseAddress } from "./enterpriseAddress.js";
 import { RewardAddress } from "./rewardAddress.js";
-import { type NetworkPurpose } from "@/network/cardano/index.js";
+import { type NetworkPurpose } from "@/families/cardano/index.js";
 
 class BaseAddress extends Keys implements AbstractAddress<"base"> {
   private enterpriseAddress: EnterpriseAddress;

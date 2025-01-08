@@ -1,0 +1,26 @@
+import { ZcashTransparentAddress } from "@/address/index.js";
+import { type Mnemonic } from "@/mnemonic/index.js";
+import { type AbstractNetwork } from "./types/index.js";
+import { type NetworkPurpose } from "@/families/index.js";
+import { config } from "./config/index.js";
+
+class Zcash implements AbstractNetwork {
+  private transparentAddress: ZcashTransparentAddress;
+
+  public constructor(mnemonic: Mnemonic, purpose: NetworkPurpose) {
+    this.transparentAddress = new ZcashTransparentAddress(
+      config[purpose].transparent.keysConfig,
+      mnemonic
+    );
+  }
+
+  public getAddressData(derivationPath: string) {
+    return this.transparentAddress.getData(derivationPath);
+  }
+
+  public importByPrivateKey(derivationPath: string, privateKey: string) {
+    return this.transparentAddress.importByPrivateKey(derivationPath, privateKey);
+  }
+}
+
+export { Zcash };

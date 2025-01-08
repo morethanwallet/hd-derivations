@@ -12,7 +12,7 @@ import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.j
 import { Keys } from "../common/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractAddress } from "./types/index.js";
-import { type NetworkType, type NetworkPurpose } from "@/network/avax/index.js";
+import { type NetworkType, type NetworkPurpose } from "@/families/avax/index.js";
 
 const Prefix: Record<NetworkType, string> = {
   X: "X-",

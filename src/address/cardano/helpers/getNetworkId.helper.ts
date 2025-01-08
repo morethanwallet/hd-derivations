@@ -1,4 +1,4 @@
-import { type NetworkPurpose } from "@/network/cardano/index.js";
+import { type NetworkPurpose } from "@/families/cardano/index.js";
 import { NetworkInfo } from "@emurgo/cardano-serialization-lib-nodejs";
 
 function getNetworkId(networkPurpose: NetworkPurpose): number {
