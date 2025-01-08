@@ -1,5 +1,6 @@
-import { DERIVATION_PATH_DELIMITER } from "@/constants/index.js";
+import { DERIVATION_PATH_DELIMITER, HARDEN_RANGE_START_INDEX } from "@/constants/index.js";
 import { ExceptionMessage } from "@/exceptions/index.js";
+import { hardenDerivationPathValue } from "./hardenDerivationPathValue.helper.js";
 
 function validateDerivationPath(path: string): void | never {
   const invalidPathLength = 0;
@@ -8,9 +9,8 @@ function validateDerivationPath(path: string): void | never {
   const delimiterIndex = 1;
   const hardenedSuffix = "'";
   const maxDepth = 255;
-  const hardenedRangeStartIndex = 2 ** 31;
-  const maxNormalRangeIndex = hardenedRangeStartIndex - 1;
-  const maxHardenedRangeIndex = 2 ** 32 - 1;
+  const maxNormalRangeIndex = HARDEN_RANGE_START_INDEX - 1;
+  const maxHardenedRangeIndex = 4294967295; // 2 ** 32 - 1
   const purposeIndex = 1;
   const validSegmentSymbols = /^[0-9]+'?$/g;
   const maxInvalidCharactersLength = 0;
@@ -49,7 +49,7 @@ function validateDerivationPath(path: string): void | never {
     }
 
     if (
-      (isHardened && numericIndexValue + hardenedRangeStartIndex > maxHardenedRangeIndex) ||
+      (isHardened && hardenDerivationPathValue(numericIndexValue) > maxHardenedRangeIndex) ||
       (!isHardened && numericIndexValue > maxNormalRangeIndex)
     ) {
       throw new Error(

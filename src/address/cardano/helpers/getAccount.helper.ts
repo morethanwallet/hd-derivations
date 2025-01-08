@@ -1,9 +1,8 @@
+import { hardenDerivationPathValue } from "@/helpers/index.js";
 import { Bip32PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
 
-const HARDENED_RANGE_START = 2147483648;
 const PURPOSE_START_INDEX = 0;
 const ACCOUNT_END_INDEX = 3;
-const harden = (number: number): number => HARDENED_RANGE_START + number;
 
 function convertDerivationPathToAccountSegments(derivationPath: string): string[] {
   const nanDerivationPathCharactersRegExp = /[m'/]/g;
@@ -21,7 +20,7 @@ function getAccount(rootKey: Bip32PrivateKey, derivationPath: string): Bip32Priv
   let account = rootKey;
 
   for (let pathSegment of pathSegments) {
-    account = account.derive(harden(Number(pathSegment)));
+    account = account.derive(hardenDerivationPathValue(Number(pathSegment)));
   }
 
   return account;
