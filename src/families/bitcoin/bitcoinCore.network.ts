@@ -16,15 +16,10 @@ class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
   private taprootAddress: TaprootAddress;
 
   public constructor(mnemonic: Mnemonic, purpose: NetworkPurpose) {
-    this.p2pkhAddress = new P2pkhAddress(config[purpose].btcLegacy.keysConfig, mnemonic);
-
-    this.p2wpkhInP2shAddress = new P2wpkhInP2shAddress(
-      config[purpose].btcSegWit.keysConfig,
-      mnemonic
-    );
-
-    this.p2wpkhAddress = new P2wpkhAddress(config[purpose].btcNativeSegWit.keysConfig, mnemonic);
-    this.taprootAddress = new TaprootAddress(config[purpose].btcTaproot.keysConfig, mnemonic);
+    this.p2pkhAddress = new P2pkhAddress(config[purpose].legacy.keysConfig, mnemonic);
+    this.p2wpkhInP2shAddress = new P2wpkhInP2shAddress(config[purpose].segWit.keysConfig, mnemonic);
+    this.p2wpkhAddress = new P2wpkhAddress(config[purpose].nativeSegWit.keysConfig, mnemonic);
+    this.taprootAddress = new TaprootAddress(config[purpose].taproot.keysConfig, mnemonic);
   }
 
   public getAddressData(
@@ -33,16 +28,16 @@ class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
     base58RootKey: string
   ) {
     switch (addressType) {
-      case "btcLegacy": {
+      case "legacy": {
         return this.p2pkhAddress.getData(derivationPath, base58RootKey);
       }
-      case "btcSegWit": {
+      case "segWit": {
         return this.p2wpkhInP2shAddress.getData(derivationPath, base58RootKey);
       }
-      case "btcNativeSegWit": {
+      case "nativeSegWit": {
         return this.p2wpkhAddress.getData(derivationPath, base58RootKey);
       }
-      case "btcTaproot": {
+      case "taproot": {
         return this.taprootAddress.getData(derivationPath, base58RootKey);
       }
     }
@@ -55,20 +50,20 @@ class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
     base58RootKey: string
   ) {
     switch (addressType) {
-      case "btcLegacy": {
+      case "legacy": {
         return this.p2pkhAddress.importByPrivateKey(derivationPath, privateKey, base58RootKey);
       }
-      case "btcSegWit": {
+      case "segWit": {
         return this.p2wpkhInP2shAddress.importByPrivateKey(
           derivationPath,
           privateKey,
           base58RootKey
         );
       }
-      case "btcNativeSegWit": {
+      case "nativeSegWit": {
         return this.p2wpkhAddress.importByPrivateKey(derivationPath, privateKey, base58RootKey);
       }
-      case "btcTaproot": {
+      case "taproot": {
         return this.taprootAddress.importByPrivateKey(derivationPath, privateKey, base58RootKey);
       }
     }
