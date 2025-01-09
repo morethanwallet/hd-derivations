@@ -12,7 +12,7 @@ import { type Mnemonic } from "@/mnemonic/index.js";
 import {
   type AddressType,
   type AbstractAddress,
-  type AddressData,
+  type DerivedItem,
   type KeysConfig,
   type KeyPair,
 } from "@/address/index.js";
@@ -26,7 +26,7 @@ class BnbAddress extends Keys implements AbstractAddress<typeof AddressType.BNB>
 
   public getData({
     derivationPath,
-  }: Parameters<AbstractAddress<typeof AddressType.BNB>["getData"]>[0]): AddressData<
+  }: Parameters<AbstractAddress<typeof AddressType.BNB>["getData"]>[0]): DerivedItem<
     typeof AddressType.BNB
   > {
     const node = this.rootKey.derivePath(derivationPath);
@@ -45,7 +45,7 @@ class BnbAddress extends Keys implements AbstractAddress<typeof AddressType.BNB>
   public importByPrivateKey({
     derivationPath,
     privateKey,
-  }: Parameters<AbstractAddress<typeof AddressType.BNB>["importByPrivateKey"]>[0]): AddressData<
+  }: Parameters<AbstractAddress<typeof AddressType.BNB>["importByPrivateKey"]>[0]): DerivedItem<
     typeof AddressType.BNB
   > {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);

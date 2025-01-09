@@ -12,13 +12,13 @@ import {
 } from "@/families/cardano/index.js";
 import {
   type BaseAddressKeyPair as CardanoBaseAddressKeyPair,
-  type BaseAddressData as CardanoBaseAddressData,
+  type DerivedBaseItem as CardanoDerivedBaseItem,
 } from "@/address/cardano/index.js";
 import { type NetworkPurpose as XrpNetworkPurpose, type XrpAddress } from "@/families/xrp/index.js";
 
-type AddressData<Address extends ValueOf<typeof AddressType>> =
+type DerivedItem<Address extends ValueOf<typeof AddressType>> =
   Address extends typeof AddressType.ADA_BASE
-    ? CardanoBaseAddressData
+    ? CardanoDerivedBaseItem
     : {
         path: string;
         address: string;
@@ -42,7 +42,7 @@ type GetDataParameters<Address extends ValueOf<typeof AddressType>> = {
 
 type GetData<Address extends ValueOf<typeof AddressType>> = (
   parameters: GetDataParameters<Address>
-) => AddressData<Address>;
+) => DerivedItem<Address>;
 
 type ImportByPrivateKeyParameters<Address extends ValueOf<typeof AddressType>> = {
   derivationPath: string;
@@ -56,11 +56,11 @@ type ImportByPrivateKeyParameters<Address extends ValueOf<typeof AddressType>> =
 
 type ImportByPrivateKey<Address extends ValueOf<typeof AddressType>> = (
   parameters: ImportByPrivateKeyParameters<Address>
-) => AddressData<Address>;
+) => DerivedItem<Address>;
 
 type AbstractAddress<Address extends ValueOf<typeof AddressType>> = {
   getData: GetData<Address>;
   importByPrivateKey: ImportByPrivateKey<Address>;
 };
 
-export { type AddressData, type AbstractAddress };
+export { type DerivedItem, type AbstractAddress };

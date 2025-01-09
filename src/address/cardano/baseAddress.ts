@@ -13,7 +13,7 @@ import { Change } from "./enums/index.js";
 import { EnterpriseAddress } from "./enterpriseAddress.js";
 import { RewardAddress } from "./rewardAddress.js";
 import { type NetworkPurpose } from "@/families/cardano/index.js";
-import { type AddressData, type AbstractAddress, type AddressType } from "@/address/index.js";
+import { type DerivedItem, type AbstractAddress, type AddressType } from "@/address/index.js";
 
 class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA_BASE> {
   private enterpriseAddress: EnterpriseAddress;
@@ -29,27 +29,27 @@ class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA
   public getData({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.ADA_BASE>["getData"]>[0]): AddressData<
+  }: Parameters<AbstractAddress<typeof AddressType.ADA_BASE>["getData"]>[0]): DerivedItem<
     typeof AddressType.ADA_BASE
   > {
-    const enterpriseAddressData = this.enterpriseAddress.getData({
+    const derivedEnterpriseItem = this.enterpriseAddress.getData({
       derivationPath,
       networkPurpose,
     });
 
-    const rewardAddressData = this.rewardAddress.getData({ derivationPath, networkPurpose });
-    const enterpriseCredential = getCredential(PublicKey.from_hex(enterpriseAddressData.publicKey));
-    const stakingCredential = getCredential(PublicKey.from_hex(rewardAddressData.publicKey));
-    const address = this.getAddress(enterpriseCredential, stakingCredential, networkPurpose);
+    const derivedRewardItem = this.rewardAddress.getData({ derivationPath, networkPurpose });
+    const enterpriseCredential = getCredential(PublicKey.from_hex(derivedEnterpriseItem.publicKey));
+    const rewardCredential = getCredential(PublicKey.from_hex(derivedRewardItem.publicKey));
+    const address = this.getAddress(enterpriseCredential, rewardCredential, networkPurpose);
 
     return {
       address,
-      enterprisePath: enterpriseAddressData.path,
-      enterprisePrivateKey: enterpriseAddressData.privateKey,
-      enterprisePublicKey: enterpriseAddressData.publicKey,
-      rewardPath: rewardAddressData.path,
-      rewardPrivateKey: rewardAddressData.privateKey,
-      rewardPublicKey: rewardAddressData.publicKey,
+      enterprisePath: derivedEnterpriseItem.path,
+      enterprisePrivateKey: derivedEnterpriseItem.privateKey,
+      enterprisePublicKey: derivedEnterpriseItem.publicKey,
+      rewardPath: derivedRewardItem.path,
+      rewardPrivateKey: derivedRewardItem.privateKey,
+      rewardPublicKey: derivedRewardItem.publicKey,
       mnemonic: this.mnemonic.getMnemonic(),
     };
   }
@@ -61,7 +61,7 @@ class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA
     networkPurpose,
   }: Parameters<
     AbstractAddress<typeof AddressType.ADA_BASE>["importByPrivateKey"]
-  >[0]): AddressData<typeof AddressType.ADA_BASE> {
+  >[0]): DerivedItem<typeof AddressType.ADA_BASE> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -102,7 +102,7 @@ class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA
     enterpriseCredential: Credential,
     rewardCredential: Credential,
     networkPurpose: NetworkPurpose
-  ): AddressData<typeof AddressType.ADA_BASE>["address"] {
+  ): DerivedItem<typeof AddressType.ADA_BASE>["address"] {
     const address = LibraryBaseAddress.new(
       getNetworkId(networkPurpose),
       enterpriseCredential,

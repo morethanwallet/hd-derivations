@@ -3,7 +3,7 @@ import { Keys } from "./keys/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { ExceptionMessage, AddressError } from "../exceptions/index.js";
-import { type AddressData, type KeyPair, type KeysConfig } from "../types/index.js";
+import { type DerivedItem, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
@@ -18,7 +18,7 @@ class P2wshAddress extends Keys implements AbstractAddress<typeof AddressType.BT
     super(keysConfig, mnemonic);
   }
 
-  public getData(derivationPath: string): AddressData {
+  public getData(derivationPath: string): DerivedItem {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
     const address = this.getAddress(node.publicKey);
@@ -32,7 +32,7 @@ class P2wshAddress extends Keys implements AbstractAddress<typeof AddressType.BT
     };
   }
 
-  public importByPrivateKey(derivationPath: string, privateKey: string): AddressData {
+  public importByPrivateKey(derivationPath: string, privateKey: string): DerivedItem {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {

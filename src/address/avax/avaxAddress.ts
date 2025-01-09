@@ -3,7 +3,7 @@ import { crypto } from "bitcoinjs-lib";
 import { toUint8Array } from "@/helpers/index.js";
 import {
   type AbstractAddress,
-  type AddressData,
+  type DerivedItem,
   type KeyPair,
   type KeysConfig,
 } from "@/address/index.js";
@@ -38,7 +38,7 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVA
     derivationPath,
     networkType,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.AVAX>["getData"]>[0]): AddressData<
+  }: Parameters<AbstractAddress<typeof AddressType.AVAX>["getData"]>[0]): DerivedItem<
     typeof AddressType.AVAX
   > {
     const node = this.rootKey.derivePath(derivationPath);
@@ -59,7 +59,7 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVA
     privateKey,
     networkType,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.AVAX>["importByPrivateKey"]>[0]): AddressData<
+  }: Parameters<AbstractAddress<typeof AddressType.AVAX>["importByPrivateKey"]>[0]): DerivedItem<
     typeof AddressType.AVAX
   > {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);

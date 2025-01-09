@@ -8,7 +8,7 @@ import {
   stripHexPrefix,
 } from "ethereumjs-util";
 import { Keys } from "./keys/index.js";
-import { type AddressData, type KeysConfig, type KeyPair } from "../types/index.js";
+import { type DerivedItem, type KeysConfig, type KeyPair } from "../types/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
@@ -25,7 +25,7 @@ class EvmAddress extends Keys implements AbstractAddress<typeof AddressType.EVM>
     super(keysConfig, mnemonic);
   }
 
-  public getData(derivationPath: string): AddressData {
+  public getData(derivationPath: string): DerivedItem {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(publicKey);
@@ -42,7 +42,7 @@ class EvmAddress extends Keys implements AbstractAddress<typeof AddressType.EVM>
   public importByPrivateKey(
     derivationPath: string,
     privateKey: KeyPair["privateKey"]
-  ): AddressData {
+  ): DerivedItem {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {

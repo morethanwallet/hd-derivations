@@ -14,7 +14,7 @@ import {
   getNetworkId,
   updateDerivationPathChange,
 } from "./helpers/index.js";
-import { type AddressType, type AbstractAddress, type AddressData } from "@/address/index.js";
+import { type AddressType, type AbstractAddress, type DerivedItem } from "@/address/index.js";
 import { Change } from "./enums/index.js";
 import { type NetworkPurpose } from "@/families/cardano/index.js";
 
@@ -26,7 +26,7 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
   public getData({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.ADA_ENTERPRISE>["getData"]>[0]): AddressData<
+  }: Parameters<AbstractAddress<typeof AddressType.ADA_ENTERPRISE>["getData"]>[0]): DerivedItem<
     typeof AddressType.ADA_ENTERPRISE
   > {
     const rootKey = this.getRootKey();
@@ -52,7 +52,7 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
     networkPurpose,
   }: Parameters<
     AbstractAddress<typeof AddressType.ADA_ENTERPRISE>["importByPrivateKey"]
-  >[0]): AddressData<typeof AddressType.ADA_ENTERPRISE> {
+  >[0]): DerivedItem<typeof AddressType.ADA_ENTERPRISE> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -82,7 +82,7 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
   private getAddress(
     credential: Credential,
     networkPurpose: NetworkPurpose
-  ): AddressData<typeof AddressType.ADA_ENTERPRISE>["address"] {
+  ): DerivedItem<typeof AddressType.ADA_ENTERPRISE>["address"] {
     const address = LibraryEnterpriseAddress.new(getNetworkId(networkPurpose), credential);
 
     return address.to_address().to_bech32();

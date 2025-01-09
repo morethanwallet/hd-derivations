@@ -12,7 +12,7 @@ import { type Mnemonic } from "@/mnemonic/index.js";
 import {
   type AbstractAddress,
   AddressType,
-  type AddressData,
+  type DerivedItem,
   type KeyPair,
   type KeysConfig,
 } from "@/address/index.js";
@@ -28,7 +28,7 @@ class XrpAddress extends Keys implements AbstractAddress<TXrpAddress> {
     addressType,
     networkPurpose,
     destinationTag,
-  }: Parameters<AbstractAddress<TXrpAddress>["getData"]>[0]): AddressData<TXrpAddress> {
+  }: Parameters<AbstractAddress<TXrpAddress>["getData"]>[0]): DerivedItem<TXrpAddress> {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const wallet = this.getWallet(privateKey, publicKey);
@@ -49,7 +49,7 @@ class XrpAddress extends Keys implements AbstractAddress<TXrpAddress> {
     addressType,
     networkPurpose,
     destinationTag,
-  }: Parameters<AbstractAddress<TXrpAddress>["importByPrivateKey"]>[0]): AddressData<TXrpAddress> {
+  }: Parameters<AbstractAddress<TXrpAddress>["importByPrivateKey"]>[0]): DerivedItem<TXrpAddress> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {

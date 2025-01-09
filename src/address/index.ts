@@ -1,7 +1,7 @@
 export {
   type KeysConfig,
   type KeyPair,
-  type AddressData,
+  type DerivedItem,
   type AbstractAddress,
 } from "./types/index.js";
 export {

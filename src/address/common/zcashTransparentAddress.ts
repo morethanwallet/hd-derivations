@@ -2,7 +2,7 @@ import { Keys } from "./keys/index.js";
 import bs58check from "bs58check";
 import { hash160 } from "bitcoinjs-lib/src/crypto";
 import { toHexFromBytes, toUint8Array } from "@/helpers/index.js";
-import { type KeysConfig, type KeyPair, type AddressData } from "../types/index.js";
+import { type KeysConfig, type KeyPair, type DerivedItem } from "../types/index.js";
 import { AddressError, ExceptionMessage } from "../exceptions/index.js";
 import {
   appendAddressToDerivationPath,
@@ -45,7 +45,7 @@ class ZcashTransparentAddress
     super(keysConfig, mnemonic);
   }
 
-  public getData(derivationPath: string): AddressData {
+  public getData(derivationPath: string): DerivedItem {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
     const address = this.getAddress(node.publicKey);
@@ -59,7 +59,7 @@ class ZcashTransparentAddress
     };
   }
   // TODO: Replace all private/public-key parameter types with KeyPair["private/public-Key"]
-  public importByPrivateKey(derivationPath: string, privateKey: string): AddressData {
+  public importByPrivateKey(derivationPath: string, privateKey: string): DerivedItem {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {

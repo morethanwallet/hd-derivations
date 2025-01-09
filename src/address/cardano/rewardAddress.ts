@@ -14,7 +14,7 @@ import {
   getNetworkId,
   updateDerivationPathChange,
 } from "./helpers/index.js";
-import { type AddressType, type AbstractAddress, type AddressData } from "@/address/index.js";
+import { type AddressType, type AbstractAddress, type DerivedItem } from "@/address/index.js";
 import { Change } from "./enums/index.js";
 import { type NetworkPurpose } from "@/families/cardano/index.js";
 
@@ -26,7 +26,7 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressType.A
   public getData({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.ADA_REWARD>["getData"]>[0]): AddressData<
+  }: Parameters<AbstractAddress<typeof AddressType.ADA_REWARD>["getData"]>[0]): DerivedItem<
     typeof AddressType.ADA_REWARD
   > {
     const rootKey = this.getRootKey();
@@ -52,7 +52,7 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressType.A
     networkPurpose,
   }: Parameters<
     AbstractAddress<typeof AddressType.ADA_REWARD>["importByPrivateKey"]
-  >[0]): AddressData<typeof AddressType.ADA_REWARD> {
+  >[0]): DerivedItem<typeof AddressType.ADA_REWARD> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -82,7 +82,7 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressType.A
   private getAddress(
     credential: Credential,
     networkPurpose: NetworkPurpose
-  ): AddressData<typeof AddressType.ADA_REWARD>["address"] {
+  ): DerivedItem<typeof AddressType.ADA_REWARD>["address"] {
     const address = LibraryRewardAddress.new(getNetworkId(networkPurpose), credential);
 
     return address.to_address().to_bech32();
