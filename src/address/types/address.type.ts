@@ -16,8 +16,8 @@ import {
 } from "@/address/cardano/index.js";
 import { type NetworkPurpose as XrpNetworkPurpose, type XrpAddress } from "@/families/xrp/index.js";
 
-type DerivedItem<Address extends ValueOf<typeof AddressType>> =
-  Address extends typeof AddressType.ADA_BASE
+type DerivedItem<TAddress extends ValueOf<typeof AddressType>> =
+  TAddress extends typeof AddressType.ADA_BASE
     ? CardanoDerivedBaseItem
     : {
         path: string;
@@ -25,42 +25,42 @@ type DerivedItem<Address extends ValueOf<typeof AddressType>> =
         mnemonic: string;
       } & KeyPair;
 
-type AddressSpecificParameters<Address extends ValueOf<typeof AddressType>> =
-  Address extends BitcoinCoreAddress
+type AddressSpecificParameters<TAddress extends ValueOf<typeof AddressType>> =
+  TAddress extends BitcoinCoreAddress
     ? { base58RootKey: string }
-    : Address extends typeof AddressType.AVAX
+    : TAddress extends typeof AddressType.AVAX
     ? { networkType: AvaxNetworkType; networkPurpose: AvaxNetworkPurpose }
-    : Address extends CardanoAddress
+    : TAddress extends CardanoAddress
     ? { networkPurpose: CardanoNetworkPurpose }
-    : Address extends XrpAddress
+    : TAddress extends XrpAddress
     ? { addressType: XrpAddress; networkPurpose: XrpNetworkPurpose; destinationTag?: number }
     : Record<string, unknown>;
 
-type GetDataParameters<Address extends ValueOf<typeof AddressType>> = {
+type GetDataParameters<TAddress extends ValueOf<typeof AddressType>> = {
   derivationPath: string;
-} & AddressSpecificParameters<Address>;
+} & AddressSpecificParameters<TAddress>;
 
-type GetData<Address extends ValueOf<typeof AddressType>> = (
-  parameters: GetDataParameters<Address>
-) => DerivedItem<Address>;
+type GetData<TAddress extends ValueOf<typeof AddressType>> = (
+  parameters: GetDataParameters<TAddress>
+) => DerivedItem<TAddress>;
 
-type ImportByPrivateKeyParameters<Address extends ValueOf<typeof AddressType>> = {
+type ImportByPrivateKeyParameters<TAddress extends ValueOf<typeof AddressType>> = {
   derivationPath: string;
-} & (Address extends typeof AddressType.ADA_BASE
+} & (TAddress extends typeof AddressType.ADA_BASE
   ? {
       enterprisePrivateKey: CardanoBaseAddressKeyPair["enterprisePrivateKey"];
       rewardPrivateKey: CardanoBaseAddressKeyPair["rewardPrivateKey"];
     }
   : { privateKey: KeyPair["privateKey"] }) &
-  AddressSpecificParameters<Address>;
+  AddressSpecificParameters<TAddress>;
 
-type ImportByPrivateKey<Address extends ValueOf<typeof AddressType>> = (
-  parameters: ImportByPrivateKeyParameters<Address>
-) => DerivedItem<Address>;
+type ImportByPrivateKey<TAddress extends ValueOf<typeof AddressType>> = (
+  parameters: ImportByPrivateKeyParameters<TAddress>
+) => DerivedItem<TAddress>;
 
-type AbstractAddress<Address extends ValueOf<typeof AddressType>> = {
-  getData: GetData<Address>;
-  importByPrivateKey: ImportByPrivateKey<Address>;
+type AbstractAddress<TAddress extends ValueOf<typeof AddressType>> = {
+  getData: GetData<TAddress>;
+  importByPrivateKey: ImportByPrivateKey<TAddress>;
 };
 
 export { type DerivedItem, type AbstractAddress };
