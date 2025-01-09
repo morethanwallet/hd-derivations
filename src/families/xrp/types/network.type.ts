@@ -1,10 +1,10 @@
 import { type AbstractAddress } from "@/address/index.js";
 import { type NetworkPurpose as CommonNetworkPurpose } from "@/families/index.js";
-import { type XrpAddress } from "./address.type.js";
+import { type XrpAddressList } from "./address.type.js";
 
 type NetworkPurpose = Exclude<CommonNetworkPurpose, "regtest">;
 
-type XrpAbstractAddress = AbstractAddress<XrpAddress>;
+type XrpAbstractAddress = AbstractAddress<XrpAddressList>;
 
 type GetDerivedItemParameters = Omit<Parameters<XrpAbstractAddress["derive"]>[0], "networkPurpose">;
 

@@ -1,6 +1,6 @@
 export { type AbstractNetwork } from "./network.type.js";
 export {
-  type BitcoinAddress,
-  type BitcoinCoreAddress,
-  type MultiBitHdAddress,
+  type BitcoinAddressList,
+  type BitcoinCoreAddressList,
+  type MultiBitHdAddressList,
 } from "./address.type.js";

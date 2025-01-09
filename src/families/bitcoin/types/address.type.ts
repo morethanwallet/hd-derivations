@@ -1,16 +1,16 @@
 import { type AddressList } from "@/address/index.js";
 
-type MultiBitHdAddress = typeof AddressList.BTC_LEGACY;
+type MultiBitHdAddressList = typeof AddressList.BTC_LEGACY;
 
-type BitcoinCoreAddress =
+type BitcoinCoreAddressList =
   | typeof AddressList.BTC_LEGACY
   | typeof AddressList.BTC_SEG_WIT
   | typeof AddressList.BTC_NATIVE_SEG_WIT
   | typeof AddressList.BTC_TAPROOT;
 
-type BitcoinAddress =
+type BitcoinAddressList =
   | typeof AddressList.BTC_P2WSH
   | typeof AddressList.BTC_P2WSH_IN_P2SH
-  | BitcoinCoreAddress;
+  | BitcoinCoreAddressList;
 
-export { type MultiBitHdAddress, type BitcoinCoreAddress, type BitcoinAddress };
+export { type MultiBitHdAddressList, type BitcoinCoreAddressList, type BitcoinAddressList };

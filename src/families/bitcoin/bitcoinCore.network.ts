@@ -5,7 +5,7 @@ import {
   TaprootAddress,
 } from "@/address/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { BitcoinCoreAddress, type AbstractNetwork } from "./types/index.js";
+import { BitcoinCoreAddressList, type AbstractNetwork } from "./types/index.js";
 import { type NetworkPurpose } from "@/families/index.js";
 import { config } from "./config/index.js";
 
@@ -22,7 +22,11 @@ class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
     this.taprootAddress = new TaprootAddress(config[purpose].taproot.keysConfig, mnemonic);
   }
 
-  public derive(derivationPath: string, addressType: BitcoinCoreAddress, base58RootKey: string) {
+  public derive(
+    derivationPath: string,
+    addressType: BitcoinCoreAddressList,
+    base58RootKey: string
+  ) {
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.derive(derivationPath, base58RootKey);
@@ -42,7 +46,7 @@ class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
   public importByPrivateKey(
     derivationPath: string,
     privateKey: string,
-    addressType: BitcoinCoreAddress,
+    addressType: BitcoinCoreAddressList,
     base58RootKey: string
   ) {
     switch (addressType) {

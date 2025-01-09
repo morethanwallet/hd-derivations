@@ -7,7 +7,7 @@ import {
   P2wshInP2shAddress,
 } from "@/address/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type BitcoinAddress, type AbstractNetwork } from "./types/index.js";
+import { type BitcoinAddressList, type AbstractNetwork } from "./types/index.js";
 import { type NetworkPurpose } from "@/families/index.js";
 import { config } from "./config/index.js";
 
@@ -32,7 +32,7 @@ class Bitcoin implements AbstractNetwork<"bitcoin"> {
     );
   }
 
-  public derive(derivationPath: string, addressType: BitcoinAddress) {
+  public derive(derivationPath: string, addressType: BitcoinAddressList) {
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.derive(derivationPath);
@@ -58,7 +58,7 @@ class Bitcoin implements AbstractNetwork<"bitcoin"> {
   public importByPrivateKey(
     derivationPath: string,
     privateKey: string,
-    addressType: BitcoinAddress
+    addressType: BitcoinAddressList
   ) {
     switch (addressType) {
       case "legacy": {

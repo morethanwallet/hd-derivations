@@ -1,5 +1,5 @@
 import { type NetworkPurpose as CommonNetworkPurpose } from "@/families/index.js";
-import { type CardanoAddress } from "./address.type.js";
+import { type CardanoAddressList } from "./address.type.js";
 import { type DerivedItem, type AddressList } from "@/address/index.js";
 
 type NetworkPurpose =
@@ -10,11 +10,11 @@ type NetworkPurpose =
 type GetDerivedItem =
   | ((
       derivationPath: string,
-      addressType: Exclude<CardanoAddress, typeof AddressList.ADA_BASE>
+      addressType: Exclude<CardanoAddressList, typeof AddressList.ADA_BASE>
     ) => DerivedItem<typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD>)
   | ((
       derivationPath: string,
-      addressType: Extract<CardanoAddress, typeof AddressList.ADA_BASE>
+      addressType: Extract<CardanoAddressList, typeof AddressList.ADA_BASE>
     ) => DerivedItem<typeof AddressList.ADA_BASE>);
 
 type ImportByPrivateKey =
@@ -23,13 +23,13 @@ type ImportByPrivateKey =
       privateKey: DerivedItem<
         typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD
       >["privateKey"],
-      addressType: Exclude<CardanoAddress, typeof AddressList.ADA_BASE>,
+      addressType: Exclude<CardanoAddressList, typeof AddressList.ADA_BASE>,
       rewardPrivateKey?: DerivedItem<typeof AddressList.ADA_BASE>["rewardPrivateKey"]
     ) => DerivedItem<typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD>)
   | ((
       derivationPath: string,
       enterprisePrivateKey: DerivedItem<typeof AddressList.ADA_BASE>["enterprisePrivateKey"],
-      addressType: Exclude<CardanoAddress, typeof AddressList.ADA_BASE>,
+      addressType: Exclude<CardanoAddressList, typeof AddressList.ADA_BASE>,
       rewardPrivateKey?: DerivedItem<typeof AddressList.ADA_BASE>["rewardPrivateKey"]
     ) => DerivedItem<typeof AddressList.ADA_BASE>);
 

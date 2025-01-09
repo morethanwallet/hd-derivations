@@ -16,9 +16,9 @@ import {
   type KeyPair,
   type KeysConfig,
 } from "@/address/index.js";
-import { type NetworkPurpose, type XrpAddress as TXrpAddress } from "@/families/xrp/index.js";
+import { type NetworkPurpose, type XrpAddressList } from "@/families/xrp/index.js";
 
-class XrpAddress extends Keys implements AbstractAddress<TXrpAddress> {
+class XrpAddress extends Keys implements AbstractAddress<XrpAddressList> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
@@ -28,7 +28,7 @@ class XrpAddress extends Keys implements AbstractAddress<TXrpAddress> {
     addressType,
     networkPurpose,
     destinationTag,
-  }: Parameters<AbstractAddress<TXrpAddress>["derive"]>[0]): DerivedItem<TXrpAddress> {
+  }: Parameters<AbstractAddress<XrpAddressList>["derive"]>[0]): DerivedItem<XrpAddressList> {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const wallet = this.getWallet(privateKey, publicKey);
@@ -49,7 +49,9 @@ class XrpAddress extends Keys implements AbstractAddress<TXrpAddress> {
     addressType,
     networkPurpose,
     destinationTag,
-  }: Parameters<AbstractAddress<TXrpAddress>["importByPrivateKey"]>[0]): DerivedItem<TXrpAddress> {
+  }: Parameters<
+    AbstractAddress<XrpAddressList>["importByPrivateKey"]
+  >[0]): DerivedItem<XrpAddressList> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -92,7 +94,7 @@ class XrpAddress extends Keys implements AbstractAddress<TXrpAddress> {
 
   private getAddress(
     wallet: Wallet,
-    addressType: TXrpAddress,
+    addressType: XrpAddressList,
     networkPurpose: NetworkPurpose,
     destinationTag?: number
   ): string {
