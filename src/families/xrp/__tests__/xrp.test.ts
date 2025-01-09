@@ -2,6 +2,7 @@ import { Mnemonic } from "@/mnemonic/index.js";
 import { describe, it, expect } from "vitest";
 import { Xrp } from "../xrp.network.js";
 import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
+import { AddressType } from "@/address/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 
@@ -76,7 +77,7 @@ describe("Xrp", () => {
       it("Generates correct base address data", () => {
         const addressData = xrpMainnet.getAddressData({
           derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.base.path,
-          addressType: "base",
+          addressType: AddressType.XRP_BASE,
         });
 
         expect(MOCK_MAINNET_ADDRESS_DATA.native.base).toEqual(addressData);
@@ -85,7 +86,7 @@ describe("Xrp", () => {
       it("Generates correct X address data", () => {
         const addressData = xrpMainnet.getAddressData({
           derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.x.path,
-          addressType: "x",
+          addressType: AddressType.XRP_X,
         });
 
         expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(addressData);
@@ -98,7 +99,7 @@ describe("Xrp", () => {
           const addressData = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.base.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.native.base.privateKey,
-            addressType: "base",
+            addressType: AddressType.XRP_BASE,
           });
 
           expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.base);
@@ -108,7 +109,7 @@ describe("Xrp", () => {
           const addressData = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.x.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.native.x.privateKey,
-            addressType: "x",
+            addressType: AddressType.XRP_X,
           });
 
           expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.x);
@@ -120,7 +121,7 @@ describe("Xrp", () => {
           const addressData = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.nonNative.base.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.nonNative.base.privateKey,
-            addressType: "base",
+            addressType: AddressType.XRP_BASE,
           });
 
           expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.base);
@@ -130,7 +131,7 @@ describe("Xrp", () => {
           const addressData = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.nonNative.x.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.nonNative.x.privateKey,
-            addressType: "x",
+            addressType: AddressType.XRP_X,
           });
 
           expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.x);
@@ -144,7 +145,7 @@ describe("Xrp", () => {
       it("Generates correct X address data", () => {
         const addressData = xrpTestnet.getAddressData({
           derivationPath: MOCK_TESTNET_ADDRESS_DATA.native.x.path,
-          addressType: "x",
+          addressType: AddressType.XRP_X,
         });
 
         expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(addressData);
@@ -157,7 +158,7 @@ describe("Xrp", () => {
           const addressData = xrpTestnet.importByPrivateKey({
             derivationPath: MOCK_TESTNET_ADDRESS_DATA.native.x.path,
             privateKey: MOCK_TESTNET_ADDRESS_DATA.native.x.privateKey,
-            addressType: "x",
+            addressType: AddressType.XRP_X,
           });
 
           expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.native.x);
@@ -169,7 +170,7 @@ describe("Xrp", () => {
           const addressData = xrpTestnet.importByPrivateKey({
             derivationPath: MOCK_TESTNET_ADDRESS_DATA.nonNative.x.path,
             privateKey: MOCK_TESTNET_ADDRESS_DATA.nonNative.x.privateKey,
-            addressType: "x",
+            addressType: AddressType.XRP_X,
           });
 
           expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative.x);

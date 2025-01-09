@@ -10,5 +10,5 @@ export {
   Solana,
   Xrp,
   Zcash,
-} from "@/network/index.js";
+} from "@/families/index.js";
 export { Mnemonic } from "@/mnemonic/index.js";

@@ -1,6 +1,5 @@
 import { ExceptionMessage } from "../exceptions/index.js";
 import { toUint8Array } from "@/helpers/index.js";
-import { type AddressData, type KeyPair, type KeysConfig } from "../types/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
@@ -10,9 +9,16 @@ import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.j
 import { Wallet } from "xrpl";
 import { Keys } from "../common/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractAddress, type AddressType } from "./types/index.js";
+import {
+  type AbstractAddress,
+  AddressType,
+  type AddressData,
+  type KeyPair,
+  type KeysConfig,
+} from "@/address/index.js";
+import { type NetworkPurpose, type XrpAddress as TXrpAddress } from "@/families/xrp/index.js";
 
-class XrpAddress extends Keys implements AbstractAddress {
+class XrpAddress extends Keys implements AbstractAddress<TXrpAddress> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
@@ -20,13 +26,13 @@ class XrpAddress extends Keys implements AbstractAddress {
   public getData({
     derivationPath,
     addressType,
-    isTestnet,
+    networkPurpose,
     destinationTag,
-  }: Parameters<AbstractAddress["getData"]>[0]): AddressData {
+  }: Parameters<AbstractAddress<TXrpAddress>["getData"]>[0]): AddressData<TXrpAddress> {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const wallet = this.getWallet(privateKey, publicKey);
-    const address = this.getAddress(wallet, addressType, isTestnet, destinationTag);
+    const address = this.getAddress(wallet, addressType, networkPurpose, destinationTag);
 
     return {
       privateKey,
@@ -41,9 +47,9 @@ class XrpAddress extends Keys implements AbstractAddress {
     derivationPath,
     privateKey,
     addressType,
-    isTestnet,
+    networkPurpose,
     destinationTag,
-  }: Parameters<AbstractAddress["importByPrivateKey"]>[0]): AddressData {
+  }: Parameters<AbstractAddress<TXrpAddress>["importByPrivateKey"]>[0]): AddressData<TXrpAddress> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -53,10 +59,10 @@ class XrpAddress extends Keys implements AbstractAddress {
       );
 
       const data = this.getData({
-        addressType,
-        isTestnet,
-        destinationTag,
         derivationPath: incrementedDerivationPath,
+        addressType,
+        networkPurpose,
+        destinationTag,
       });
 
       if (data.privateKey === privateKey) return data;
@@ -65,7 +71,7 @@ class XrpAddress extends Keys implements AbstractAddress {
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);
     const wallet = this.getWallet(privateKey, publicKey);
-    const address = this.getAddress(wallet, addressType, isTestnet, destinationTag);
+    const address = this.getAddress(wallet, addressType, networkPurpose, destinationTag);
 
     return {
       privateKey,
@@ -86,11 +92,13 @@ class XrpAddress extends Keys implements AbstractAddress {
 
   private getAddress(
     wallet: Wallet,
-    addressType: AddressType,
-    isTestnet: boolean,
+    addressType: TXrpAddress,
+    networkPurpose: NetworkPurpose,
     destinationTag?: number
   ): string {
-    return addressType === "base"
+    const isTestnet = networkPurpose === "testnet";
+
+    return addressType === AddressType.XRP_BASE
       ? wallet.classicAddress
       : wallet.getXAddress(destinationTag, isTestnet);
   }

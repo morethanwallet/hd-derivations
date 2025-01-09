@@ -14,6 +14,7 @@ import {
   type BaseAddressKeyPair as CardanoBaseAddressKeyPair,
   type BaseAddressData as CardanoBaseAddressData,
 } from "@/address/cardano/index.js";
+import { type NetworkPurpose as XrpNetworkPurpose, type XrpAddress } from "@/families/xrp/index.js";
 
 type AddressData<Address extends ValueOf<typeof AddressType>> =
   Address extends typeof AddressType.ADA_BASE
@@ -31,6 +32,8 @@ type AddressSpecificParameters<Address extends ValueOf<typeof AddressType>> =
     ? { networkType: AvaxNetworkType; networkPurpose: AvaxNetworkPurpose }
     : Address extends CardanoAddress
     ? { networkPurpose: CardanoNetworkPurpose }
+    : Address extends XrpAddress
+    ? { addressType: XrpAddress; networkPurpose: XrpNetworkPurpose; destinationTag?: number }
     : Record<string, never>;
 
 type GetDataParameters<Address extends ValueOf<typeof AddressType>> = {

@@ -21,7 +21,7 @@ class Xrp implements AbstractNetwork {
       derivationPath,
       addressType,
       destinationTag,
-      isTestnet: this.purpose === "testnet",
+      networkPurpose: this.purpose,
     });
   }
 
@@ -36,7 +36,7 @@ class Xrp implements AbstractNetwork {
       privateKey,
       addressType,
       destinationTag,
-      isTestnet: this.purpose === "testnet",
+      networkPurpose: this.purpose,
     });
   }
 }
