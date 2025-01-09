@@ -7,7 +7,7 @@ import {
 import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AbstractAddress, type AddressData } from "./types/index.js";
+import { type AddressData } from "./types/index.js";
 import {
   getAccount,
   getAddressValue,
@@ -15,11 +15,11 @@ import {
   getNetworkId,
   updateDerivationPathChange,
 } from "./helpers/index.js";
-import { type KeyPair } from "../index.js";
+import { type AddressType, type AbstractAddress, type KeyPair } from "@/address/index.js";
 import { Change } from "./enums/index.js";
 import { type NetworkPurpose } from "@/families/cardano/index.js";
 
-class EnterpriseAddress extends Keys implements AbstractAddress<"enterprise"> {
+class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA_ENTERPRISE> {
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
   }
@@ -27,7 +27,7 @@ class EnterpriseAddress extends Keys implements AbstractAddress<"enterprise"> {
   public getData(
     derivationPath: string,
     networkPurpose: NetworkPurpose
-  ): AddressData<"enterprise"> {
+  ): AddressData<typeof AddressType.ADA_ENTERPRISE> {
     const rootKey = this.getRootKey();
     const account = getAccount(rootKey, derivationPath);
     const addressValue = getAddressValue(derivationPath);
@@ -49,7 +49,7 @@ class EnterpriseAddress extends Keys implements AbstractAddress<"enterprise"> {
     derivationPath: string,
     privateKey: KeyPair["privateKey"],
     networkPurpose: NetworkPurpose
-  ): AddressData<"enterprise"> {
+  ): AddressData<typeof AddressType.ADA_ENTERPRISE> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -79,7 +79,7 @@ class EnterpriseAddress extends Keys implements AbstractAddress<"enterprise"> {
   private getAddress(
     credential: Credential,
     networkPurpose: NetworkPurpose
-  ): AddressData<"enterprise">["address"] {
+  ): AddressData<typeof AddressType.ADA_ENTERPRISE>["address"] {
     const address = LibraryEnterpriseAddress.new(getNetworkId(networkPurpose), credential);
 
     return address.to_address().to_bech32();

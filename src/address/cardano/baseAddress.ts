@@ -8,14 +8,15 @@ import {
 import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { BaseAddressKeyPair, type AbstractAddress, type AddressData } from "./types/index.js";
+import { type BaseAddressKeyPair, type AddressData } from "./types/index.js";
 import { getCredential, getNetworkId, updateDerivationPathChange } from "./helpers/index.js";
 import { Change } from "./enums/index.js";
 import { EnterpriseAddress } from "./enterpriseAddress.js";
 import { RewardAddress } from "./rewardAddress.js";
 import { type NetworkPurpose } from "@/families/cardano/index.js";
+import { type AbstractAddress, type AddressType } from "@/address/index.js";
 
-class BaseAddress extends Keys implements AbstractAddress<"base"> {
+class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA_BASE> {
   private enterpriseAddress: EnterpriseAddress;
   private rewardAddress: RewardAddress;
 
@@ -26,7 +27,10 @@ class BaseAddress extends Keys implements AbstractAddress<"base"> {
     this.rewardAddress = new RewardAddress(mnemonic);
   }
 
-  public getData(derivationPath: string, networkPurpose: NetworkPurpose): AddressData<"base"> {
+  public getData(
+    derivationPath: string,
+    networkPurpose: NetworkPurpose
+  ): AddressData<typeof AddressType.ADA_BASE> {
     const enterpriseAddressData = this.enterpriseAddress.getData(derivationPath, networkPurpose);
     const rewardAddressData = this.rewardAddress.getData(derivationPath, networkPurpose);
     const enterpriseCredential = getCredential(PublicKey.from_hex(enterpriseAddressData.publicKey));
@@ -50,7 +54,7 @@ class BaseAddress extends Keys implements AbstractAddress<"base"> {
     enterprisePrivateKey: BaseAddressKeyPair["enterprisePrivateKey"],
     rewardPrivateKey: BaseAddressKeyPair["rewardPrivateKey"],
     networkPurpose: NetworkPurpose
-  ): AddressData<"base"> {
+  ): AddressData<typeof AddressType.ADA_BASE> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -91,7 +95,7 @@ class BaseAddress extends Keys implements AbstractAddress<"base"> {
     enterpriseCredential: Credential,
     rewardCredential: Credential,
     networkPurpose: NetworkPurpose
-  ): AddressData<"base">["address"] {
+  ): AddressData<typeof AddressType.ADA_BASE>["address"] {
     const address = LibraryBaseAddress.new(
       getNetworkId(networkPurpose),
       enterpriseCredential,

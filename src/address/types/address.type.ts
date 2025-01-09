@@ -6,6 +6,11 @@ import {
   type NetworkPurpose as AvaxNetworkPurpose,
   type NetworkType as AvaxNetworkType,
 } from "@/families/avax/index.js";
+import { type CardanoAddress } from "@/families/cardano/index.js";
+import {
+  type ImportByPrivateKey as CardanoImportByPrivateKey,
+  type GetData as CardanoGetData,
+} from "@/address/cardano/index.js";
 
 type AddressData = {
   path: string;
@@ -21,6 +26,8 @@ type GetData<Address extends ValueOf<typeof AddressType>> = Address extends Bitc
       networkType: AvaxNetworkType,
       networkPurpose: AvaxNetworkPurpose
     ) => AddressData
+  : Address extends CardanoAddress
+  ? CardanoGetData<Address>
   : (derivationPath: string) => AddressData;
 
 type ImportByPrivateKey<Address extends ValueOf<typeof AddressType>> =
@@ -37,6 +44,8 @@ type ImportByPrivateKey<Address extends ValueOf<typeof AddressType>> =
         networkType: AvaxNetworkType,
         networkPurpose: AvaxNetworkPurpose
       ) => AddressData
+    : Address extends CardanoAddress
+    ? CardanoImportByPrivateKey<Address>
     : (derivationPath: string, privateKey: KeyPair["privateKey"]) => AddressData;
 
 type AbstractAddress<Address extends ValueOf<typeof AddressType>> = {
