@@ -7,14 +7,14 @@ const AddressType = {
   BTC_NATIVE_SEG_WIT: "nativeSegWit",
   BTC_TAPROOT: "taproot",
   BCH_CASH_ADDR: "cashAddr",
-  ADA_BASE: "base",
+  ADA_BASE: "adaBase",
   ADA_REWARD: "reward",
   ADA_ENTERPRISE: "enterprise",
   BNB: "bnb",
   EVM: "evm",
   ZEC_TRANSPARENT: "transparent",
   SOL: "sol",
-  XRP_BASE: "base",
+  XRP_BASE: "xrpBase",
   XRP_X: "x",
 } as const;
 
