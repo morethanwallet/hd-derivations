@@ -1,3 +1,3 @@
-type AddressType = "legacy" | "cashAddr";
+type AddressList = "legacy" | "cashAddr";
 
-export { type AddressType };
+export { type AddressList };

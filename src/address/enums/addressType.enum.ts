@@ -1,4 +1,4 @@
-const AddressType = {
+const AddressList = {
   AVAX: "avax",
   BTC_LEGACY: "legacy",
   BTC_SEG_WIT: "segWit",
@@ -18,4 +18,4 @@ const AddressType = {
   XRP_X: "x",
 } as const;
 
-export { AddressType };
+export { AddressList };

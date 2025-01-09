@@ -1,1 +1,1 @@
-export { AddressType } from "./addressType.enum.js";
+export { AddressList } from "./addressType.enum.js";

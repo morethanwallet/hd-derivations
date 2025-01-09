@@ -13,9 +13,9 @@ import { Change } from "./enums/index.js";
 import { EnterpriseAddress } from "./enterpriseAddress.js";
 import { RewardAddress } from "./rewardAddress.js";
 import { type NetworkPurpose } from "@/families/cardano/index.js";
-import { type DerivedItem, type AbstractAddress, type AddressType } from "@/address/index.js";
+import { type DerivedItem, type AbstractAddress, type AddressList } from "@/address/index.js";
 
-class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA_BASE> {
+class BaseAddress extends Keys implements AbstractAddress<typeof AddressList.ADA_BASE> {
   private enterpriseAddress: EnterpriseAddress;
   private rewardAddress: RewardAddress;
 
@@ -29,8 +29,8 @@ class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA
   public derive({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.ADA_BASE>["derive"]>[0]): DerivedItem<
-    typeof AddressType.ADA_BASE
+  }: Parameters<AbstractAddress<typeof AddressList.ADA_BASE>["derive"]>[0]): DerivedItem<
+    typeof AddressList.ADA_BASE
   > {
     const derivedEnterpriseItem = this.enterpriseAddress.derive({
       derivationPath,
@@ -60,8 +60,8 @@ class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA
     rewardPrivateKey,
     networkPurpose,
   }: Parameters<
-    AbstractAddress<typeof AddressType.ADA_BASE>["importByPrivateKey"]
-  >[0]): DerivedItem<typeof AddressType.ADA_BASE> {
+    AbstractAddress<typeof AddressList.ADA_BASE>["importByPrivateKey"]
+  >[0]): DerivedItem<typeof AddressList.ADA_BASE> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -102,7 +102,7 @@ class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA
     enterpriseCredential: Credential,
     rewardCredential: Credential,
     networkPurpose: NetworkPurpose
-  ): DerivedItem<typeof AddressType.ADA_BASE>["address"] {
+  ): DerivedItem<typeof AddressList.ADA_BASE>["address"] {
     const address = LibraryBaseAddress.new(
       getNetworkId(networkPurpose),
       enterpriseCredential,

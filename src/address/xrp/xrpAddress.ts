@@ -11,7 +11,7 @@ import { Keys } from "../common/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import {
   type AbstractAddress,
-  AddressType,
+  AddressList,
   type DerivedItem,
   type KeyPair,
   type KeysConfig,
@@ -98,7 +98,7 @@ class XrpAddress extends Keys implements AbstractAddress<TXrpAddress> {
   ): string {
     const isTestnet = networkPurpose === "testnet";
 
-    return addressType === AddressType.XRP_BASE
+    return addressType === AddressList.XRP_BASE
       ? wallet.classicAddress
       : wallet.getXAddress(destinationTag, isTestnet);
   }

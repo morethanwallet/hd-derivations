@@ -1,10 +1,10 @@
 import { type KeysConfig } from "@/address/index.js";
-import { type AddressType } from "@/address/zcash/index.js";
+import { type AddressList } from "@/address/zcash/index.js";
 import { type NetworkPurpose } from "@/families/index.js";
 
 type Config = {
   [networkPurpose in NetworkPurpose]: {
-    [address in AddressType]: {
+    [address in AddressList]: {
       keysConfig: KeysConfig;
     };
   };

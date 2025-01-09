@@ -1,6 +1,6 @@
 import {
   type DerivedItem,
-  AddressType,
+  AddressList,
   BaseAddress,
   EnterpriseAddress,
   RewardAddress,
@@ -25,21 +25,21 @@ class Cardano implements AbstractNetwork {
 
   public derive(
     derivationPath: string,
-    addressType: Exclude<CardanoAddress, typeof AddressType.ADA_BASE>
-  ): DerivedItem<typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD>;
+    addressType: Exclude<CardanoAddress, typeof AddressList.ADA_BASE>
+  ): DerivedItem<typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD>;
   public derive(
     derivationPath: string,
-    addressType: Extract<CardanoAddress, typeof AddressType.ADA_BASE>
-  ): DerivedItem<typeof AddressType.ADA_BASE>;
+    addressType: Extract<CardanoAddress, typeof AddressList.ADA_BASE>
+  ): DerivedItem<typeof AddressList.ADA_BASE>;
   public derive(derivationPath: string, addressType: CardanoAddress): DerivedItem<CardanoAddress> {
     switch (addressType) {
-      case AddressType.ADA_REWARD: {
+      case AddressList.ADA_REWARD: {
         return this.rewardAddress.derive({ derivationPath, networkPurpose: this.purpose });
       }
-      case AddressType.ADA_ENTERPRISE: {
+      case AddressList.ADA_ENTERPRISE: {
         return this.enterpriseAddress.derive({ derivationPath, networkPurpose: this.purpose });
       }
-      case AddressType.ADA_BASE: {
+      case AddressList.ADA_BASE: {
         return this.baseAddress.derive({ derivationPath, networkPurpose: this.purpose });
       }
     }
@@ -48,41 +48,41 @@ class Cardano implements AbstractNetwork {
   public importByPrivateKey(
     derivationPath: string,
     privateKey: DerivedItem<
-      typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD
+      typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD
     >["privateKey"],
-    addressType: Exclude<CardanoAddress, typeof AddressType.ADA_BASE>,
-    rewardPrivateKey?: DerivedItem<typeof AddressType.ADA_BASE>["rewardPrivateKey"]
-  ): DerivedItem<typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD>;
+    addressType: Exclude<CardanoAddress, typeof AddressList.ADA_BASE>,
+    rewardPrivateKey?: DerivedItem<typeof AddressList.ADA_BASE>["rewardPrivateKey"]
+  ): DerivedItem<typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD>;
   public importByPrivateKey(
     derivationPath: string,
-    enterprisePrivateKey: DerivedItem<typeof AddressType.ADA_BASE>["enterprisePrivateKey"],
-    addressType: Extract<CardanoAddress, typeof AddressType.ADA_BASE>,
-    rewardPrivateKey?: DerivedItem<typeof AddressType.ADA_BASE>["rewardPrivateKey"]
-  ): DerivedItem<typeof AddressType.ADA_BASE>;
+    enterprisePrivateKey: DerivedItem<typeof AddressList.ADA_BASE>["enterprisePrivateKey"],
+    addressType: Extract<CardanoAddress, typeof AddressList.ADA_BASE>,
+    rewardPrivateKey?: DerivedItem<typeof AddressList.ADA_BASE>["rewardPrivateKey"]
+  ): DerivedItem<typeof AddressList.ADA_BASE>;
   public importByPrivateKey(
     derivationPath: string,
     privateKey:
-      | DerivedItem<typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD>["privateKey"]
-      | DerivedItem<typeof AddressType.ADA_BASE>["enterprisePrivateKey"],
+      | DerivedItem<typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD>["privateKey"]
+      | DerivedItem<typeof AddressList.ADA_BASE>["enterprisePrivateKey"],
     addressType: CardanoAddress,
-    rewardPrivateKey?: DerivedItem<typeof AddressType.ADA_BASE>["rewardPrivateKey"]
+    rewardPrivateKey?: DerivedItem<typeof AddressList.ADA_BASE>["rewardPrivateKey"]
   ): DerivedItem<CardanoAddress> {
     switch (addressType) {
-      case AddressType.ADA_REWARD: {
+      case AddressList.ADA_REWARD: {
         return this.rewardAddress.importByPrivateKey({
           derivationPath,
           privateKey,
           networkPurpose: this.purpose,
         });
       }
-      case AddressType.ADA_ENTERPRISE: {
+      case AddressList.ADA_ENTERPRISE: {
         return this.enterpriseAddress.importByPrivateKey({
           derivationPath,
           privateKey,
           networkPurpose: this.purpose,
         });
       }
-      case AddressType.ADA_BASE: {
+      case AddressList.ADA_BASE: {
         assert(rewardPrivateKey, NetworkError, ExceptionMessage.CARDANO_REWARD_KEY_IS_REQUIRED);
 
         return this.baseAddress.importByPrivateKey({

@@ -1,3 +1,3 @@
-type AddressType = "legacy";
+type AddressList = "legacy";
 
-export { type AddressType };
+export { type AddressList };

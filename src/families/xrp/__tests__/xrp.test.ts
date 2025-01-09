@@ -2,7 +2,7 @@ import { Mnemonic } from "@/mnemonic/index.js";
 import { describe, it, expect } from "vitest";
 import { Xrp } from "../xrp.network.js";
 import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
-import { AddressType } from "@/address/index.js";
+import { AddressList } from "@/address/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 
@@ -77,7 +77,7 @@ describe("Xrp", () => {
       it("Derives correct base item", () => {
         const derivedItem = xrpMainnet.derive({
           derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.base.path,
-          addressType: AddressType.XRP_BASE,
+          addressType: AddressList.XRP_BASE,
         });
 
         expect(MOCK_MAINNET_ADDRESS_DATA.native.base).toEqual(derivedItem);
@@ -86,7 +86,7 @@ describe("Xrp", () => {
       it("Derives correct X item", () => {
         const derivedItem = xrpMainnet.derive({
           derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.x.path,
-          addressType: AddressType.XRP_X,
+          addressType: AddressList.XRP_X,
         });
 
         expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(derivedItem);
@@ -99,7 +99,7 @@ describe("Xrp", () => {
           const credential = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.base.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.native.base.privateKey,
-            addressType: AddressType.XRP_BASE,
+            addressType: AddressList.XRP_BASE,
           });
 
           expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.base);
@@ -109,7 +109,7 @@ describe("Xrp", () => {
           const credential = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.x.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.native.x.privateKey,
-            addressType: AddressType.XRP_X,
+            addressType: AddressList.XRP_X,
           });
 
           expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.x);
@@ -121,7 +121,7 @@ describe("Xrp", () => {
           const credential = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.nonNative.base.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.nonNative.base.privateKey,
-            addressType: AddressType.XRP_BASE,
+            addressType: AddressList.XRP_BASE,
           });
 
           expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.base);
@@ -131,7 +131,7 @@ describe("Xrp", () => {
           const credential = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.nonNative.x.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.nonNative.x.privateKey,
-            addressType: AddressType.XRP_X,
+            addressType: AddressList.XRP_X,
           });
 
           expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.x);
@@ -145,7 +145,7 @@ describe("Xrp", () => {
       it("Derives correct X item", () => {
         const derivedItem = xrpTestnet.derive({
           derivationPath: MOCK_TESTNET_ADDRESS_DATA.native.x.path,
-          addressType: AddressType.XRP_X,
+          addressType: AddressList.XRP_X,
         });
 
         expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(derivedItem);
@@ -158,7 +158,7 @@ describe("Xrp", () => {
           const credential = xrpTestnet.importByPrivateKey({
             derivationPath: MOCK_TESTNET_ADDRESS_DATA.native.x.path,
             privateKey: MOCK_TESTNET_ADDRESS_DATA.native.x.privateKey,
-            addressType: AddressType.XRP_X,
+            addressType: AddressList.XRP_X,
           });
 
           expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.native.x);
@@ -170,7 +170,7 @@ describe("Xrp", () => {
           const credential = xrpTestnet.importByPrivateKey({
             derivationPath: MOCK_TESTNET_ADDRESS_DATA.nonNative.x.path,
             privateKey: MOCK_TESTNET_ADDRESS_DATA.nonNative.x.privateKey,
-            addressType: AddressType.XRP_X,
+            addressType: AddressList.XRP_X,
           });
 
           expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative.x);

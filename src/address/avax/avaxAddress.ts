@@ -17,7 +17,7 @@ import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.j
 import { Keys } from "../common/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type NetworkType, type NetworkPurpose } from "@/families/avax/index.js";
-import { type AddressType } from "../index.js";
+import { type AddressList } from "../index.js";
 
 const Prefix: Record<NetworkType, string> = {
   X: "X-",
@@ -29,7 +29,7 @@ const Hrp: Record<Uppercase<NetworkPurpose>, string> = {
   TESTNET: "fuji",
 } as const;
 
-class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVAX> {
+class AvaxAddress extends Keys implements AbstractAddress<typeof AddressList.AVAX> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
@@ -38,8 +38,8 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVA
     derivationPath,
     networkType,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.AVAX>["derive"]>[0]): DerivedItem<
-    typeof AddressType.AVAX
+  }: Parameters<AbstractAddress<typeof AddressList.AVAX>["derive"]>[0]): DerivedItem<
+    typeof AddressList.AVAX
   > {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
@@ -59,8 +59,8 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVA
     privateKey,
     networkType,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.AVAX>["importByPrivateKey"]>[0]): DerivedItem<
-    typeof AddressType.AVAX
+  }: Parameters<AbstractAddress<typeof AddressList.AVAX>["importByPrivateKey"]>[0]): DerivedItem<
+    typeof AddressList.AVAX
   > {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 

@@ -14,11 +14,11 @@ import {
   getNetworkId,
   updateDerivationPathChange,
 } from "./helpers/index.js";
-import { type AddressType, type AbstractAddress, type DerivedItem } from "@/address/index.js";
+import { type AddressList, type AbstractAddress, type DerivedItem } from "@/address/index.js";
 import { Change } from "./enums/index.js";
 import { type NetworkPurpose } from "@/families/cardano/index.js";
 
-class RewardAddress extends Keys implements AbstractAddress<typeof AddressType.ADA_REWARD> {
+class RewardAddress extends Keys implements AbstractAddress<typeof AddressList.ADA_REWARD> {
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
   }
@@ -26,8 +26,8 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressType.A
   public derive({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.ADA_REWARD>["derive"]>[0]): DerivedItem<
-    typeof AddressType.ADA_REWARD
+  }: Parameters<AbstractAddress<typeof AddressList.ADA_REWARD>["derive"]>[0]): DerivedItem<
+    typeof AddressList.ADA_REWARD
   > {
     const rootKey = this.getRootKey();
     const account = getAccount(rootKey, derivationPath);
@@ -51,8 +51,8 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressType.A
     privateKey,
     networkPurpose,
   }: Parameters<
-    AbstractAddress<typeof AddressType.ADA_REWARD>["importByPrivateKey"]
-  >[0]): DerivedItem<typeof AddressType.ADA_REWARD> {
+    AbstractAddress<typeof AddressList.ADA_REWARD>["importByPrivateKey"]
+  >[0]): DerivedItem<typeof AddressList.ADA_REWARD> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -82,7 +82,7 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressType.A
   private getAddress(
     credential: Credential,
     networkPurpose: NetworkPurpose
-  ): DerivedItem<typeof AddressType.ADA_REWARD>["address"] {
+  ): DerivedItem<typeof AddressList.ADA_REWARD>["address"] {
     const address = LibraryRewardAddress.new(getNetworkId(networkPurpose), credential);
 
     return address.to_address().to_bech32();

@@ -10,14 +10,14 @@ import {
 } from "../helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressType, type AbstractAddress } from "@/address/index.js";
+import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 
 const PUBLIC_KEY_PREFIX_END_INDEX = 1;
 const X_ONLY_PUBLIC_KEY_LENGTH = 32;
 const X_Y_PUBLIC_KEY_LENGTH = 33;
 
-class TaprootAddress extends Keys implements AbstractAddress<typeof AddressType.BTC_TAPROOT> {
+class TaprootAddress extends Keys implements AbstractAddress<typeof AddressList.BTC_TAPROOT> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }

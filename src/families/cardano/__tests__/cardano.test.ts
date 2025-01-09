@@ -2,7 +2,7 @@ import { Mnemonic } from "@/mnemonic/index.js";
 import { describe, it, expect } from "vitest";
 import { Cardano } from "../cardano.network.js";
 import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
-import { AddressType } from "@/address/index.js";
+import { AddressList } from "@/address/index.js";
 
 const MNEMONIC =
   "relax grief spatial deer glass fish column rifle square license dry jealous water spoon salon";
@@ -168,7 +168,7 @@ describe("Cardano", () => {
       it("Derives correct enterprise item", () => {
         const derivedItem = cardanoMainnet.derive(
           MOCK_MAINNET_ADDRESS_DATA.native.enterprise.path,
-          AddressType.ADA_ENTERPRISE
+          AddressList.ADA_ENTERPRISE
         );
 
         expect(MOCK_MAINNET_ADDRESS_DATA.native.enterprise).toEqual(derivedItem);
@@ -177,7 +177,7 @@ describe("Cardano", () => {
       it("Derives correct reward item", () => {
         const derivedItem = cardanoMainnet.derive(
           MOCK_MAINNET_ADDRESS_DATA.native.reward.path,
-          AddressType.ADA_REWARD
+          AddressList.ADA_REWARD
         );
 
         expect(MOCK_MAINNET_ADDRESS_DATA.native.reward).toEqual(derivedItem);
@@ -186,7 +186,7 @@ describe("Cardano", () => {
       it("Derives correct base item", () => {
         const derivedItem = cardanoMainnet.derive(
           MOCK_MAINNET_ADDRESS_DATA.native.base.enterprisePath,
-          AddressType.ADA_BASE
+          AddressList.ADA_BASE
         );
 
         expect(MOCK_MAINNET_ADDRESS_DATA.native.base).toEqual(derivedItem);
@@ -199,7 +199,7 @@ describe("Cardano", () => {
           const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.enterprise.path,
             MOCK_MAINNET_ADDRESS_DATA.native.enterprise.privateKey,
-            AddressType.ADA_ENTERPRISE
+            AddressList.ADA_ENTERPRISE
           );
 
           expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.enterprise);
@@ -209,7 +209,7 @@ describe("Cardano", () => {
           const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.reward.path,
             MOCK_MAINNET_ADDRESS_DATA.native.reward.privateKey,
-            AddressType.ADA_REWARD
+            AddressList.ADA_REWARD
           );
 
           expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.reward);
@@ -219,7 +219,7 @@ describe("Cardano", () => {
           const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.base.enterprisePath,
             MOCK_MAINNET_ADDRESS_DATA.native.base.enterprisePrivateKey,
-            AddressType.ADA_BASE,
+            AddressList.ADA_BASE,
             MOCK_MAINNET_ADDRESS_DATA.native.base.rewardPrivateKey
           );
 
@@ -231,7 +231,7 @@ describe("Cardano", () => {
           const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.enterprise.path,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.enterprise.privateKey,
-            AddressType.ADA_ENTERPRISE
+            AddressList.ADA_ENTERPRISE
           );
 
           expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.enterprise);
@@ -241,7 +241,7 @@ describe("Cardano", () => {
           const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.reward.path,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.reward.privateKey,
-            AddressType.ADA_REWARD
+            AddressList.ADA_REWARD
           );
 
           expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.reward);
@@ -251,7 +251,7 @@ describe("Cardano", () => {
           const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.base.enterprisePath,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.base.enterprisePrivateKey,
-            AddressType.ADA_BASE,
+            AddressList.ADA_BASE,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.base.rewardPrivateKey
           );
 
@@ -266,7 +266,7 @@ describe("Cardano", () => {
       it("Derives correct enterprise item", () => {
         const derivedItem = cardanoTestnetPreview.derive(
           MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise.path,
-          AddressType.ADA_ENTERPRISE
+          AddressList.ADA_ENTERPRISE
         );
 
         expect(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise).toEqual(derivedItem);
@@ -275,7 +275,7 @@ describe("Cardano", () => {
       it("Derives correct reward item", () => {
         const derivedItem = cardanoTestnetPreview.derive(
           MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward.path,
-          AddressType.ADA_REWARD
+          AddressList.ADA_REWARD
         );
 
         expect(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward).toEqual(derivedItem);
@@ -284,7 +284,7 @@ describe("Cardano", () => {
       it("Derives correct base item", () => {
         const derivedItem = cardanoTestnetPreview.derive(
           MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base.enterprisePath,
-          AddressType.ADA_BASE
+          AddressList.ADA_BASE
         );
 
         expect(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base).toEqual(derivedItem);
@@ -297,7 +297,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise.path,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise.privateKey,
-            AddressType.ADA_ENTERPRISE
+            AddressList.ADA_ENTERPRISE
           );
 
           expect(credential).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise);
@@ -307,7 +307,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward.path,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward.privateKey,
-            AddressType.ADA_REWARD
+            AddressList.ADA_REWARD
           );
 
           expect(credential).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward);
@@ -317,7 +317,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base.enterprisePath,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base.enterprisePrivateKey,
-            AddressType.ADA_BASE,
+            AddressList.ADA_BASE,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base.rewardPrivateKey
           );
 
@@ -330,7 +330,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.enterprise.path,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.enterprise.privateKey,
-            AddressType.ADA_ENTERPRISE
+            AddressList.ADA_ENTERPRISE
           );
 
           expect(credential).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.enterprise);
@@ -340,7 +340,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.reward.path,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.reward.privateKey,
-            AddressType.ADA_REWARD
+            AddressList.ADA_REWARD
           );
 
           expect(credential).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.reward);
@@ -350,7 +350,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.base.enterprisePath,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.base.enterprisePrivateKey,
-            AddressType.ADA_BASE,
+            AddressList.ADA_BASE,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.base.rewardPrivateKey
           );
 
@@ -365,7 +365,7 @@ describe("Cardano", () => {
       it("Derives correct enterprise item", () => {
         const derivedItem = cardanoTestnetPreprod.derive(
           MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise.path,
-          AddressType.ADA_ENTERPRISE
+          AddressList.ADA_ENTERPRISE
         );
 
         expect(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise).toEqual(derivedItem);
@@ -374,7 +374,7 @@ describe("Cardano", () => {
       it("Derives correct reward item", () => {
         const derivedItem = cardanoTestnetPreprod.derive(
           MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward.path,
-          AddressType.ADA_REWARD
+          AddressList.ADA_REWARD
         );
 
         expect(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward).toEqual(derivedItem);
@@ -383,7 +383,7 @@ describe("Cardano", () => {
       it("Derives correct base item", () => {
         const derivedItem = cardanoTestnetPreprod.derive(
           MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base.enterprisePath,
-          AddressType.ADA_BASE
+          AddressList.ADA_BASE
         );
 
         expect(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base).toEqual(derivedItem);
@@ -396,7 +396,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise.path,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise.privateKey,
-            AddressType.ADA_ENTERPRISE
+            AddressList.ADA_ENTERPRISE
           );
 
           expect(credential).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise);
@@ -406,7 +406,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward.path,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward.privateKey,
-            AddressType.ADA_REWARD
+            AddressList.ADA_REWARD
           );
 
           expect(credential).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward);
@@ -416,7 +416,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base.enterprisePath,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base.enterprisePrivateKey,
-            AddressType.ADA_BASE,
+            AddressList.ADA_BASE,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base.rewardPrivateKey
           );
 
@@ -429,7 +429,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.enterprise.path,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.enterprise.privateKey,
-            AddressType.ADA_ENTERPRISE
+            AddressList.ADA_ENTERPRISE
           );
 
           expect(credential).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.enterprise);
@@ -439,7 +439,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.reward.path,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.reward.privateKey,
-            AddressType.ADA_REWARD
+            AddressList.ADA_REWARD
           );
 
           expect(credential).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.reward);
@@ -449,7 +449,7 @@ describe("Cardano", () => {
           const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.base.enterprisePath,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.base.enterprisePrivateKey,
-            AddressType.ADA_BASE,
+            AddressList.ADA_BASE,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.base.rewardPrivateKey
           );
 

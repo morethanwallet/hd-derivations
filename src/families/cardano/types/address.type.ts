@@ -1,8 +1,8 @@
-import { type AddressType } from "@/address/enums/index.js";
+import { type AddressList } from "@/address/enums/index.js";
 
 type CardanoAddress =
-  | typeof AddressType.ADA_BASE
-  | typeof AddressType.ADA_ENTERPRISE
-  | typeof AddressType.ADA_REWARD;
+  | typeof AddressList.ADA_BASE
+  | typeof AddressList.ADA_ENTERPRISE
+  | typeof AddressList.ADA_REWARD;
 
 export { type CardanoAddress };

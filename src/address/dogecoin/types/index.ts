@@ -1,1 +1,1 @@
-export { type AddressType } from "./addressType.type.js";
+export { type AddressList } from "./addressType.type.js";

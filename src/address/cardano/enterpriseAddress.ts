@@ -14,11 +14,11 @@ import {
   getNetworkId,
   updateDerivationPathChange,
 } from "./helpers/index.js";
-import { type AddressType, type AbstractAddress, type DerivedItem } from "@/address/index.js";
+import { type AddressList, type AbstractAddress, type DerivedItem } from "@/address/index.js";
 import { Change } from "./enums/index.js";
 import { type NetworkPurpose } from "@/families/cardano/index.js";
 
-class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA_ENTERPRISE> {
+class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressList.ADA_ENTERPRISE> {
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
   }
@@ -26,8 +26,8 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
   public derive({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.ADA_ENTERPRISE>["derive"]>[0]): DerivedItem<
-    typeof AddressType.ADA_ENTERPRISE
+  }: Parameters<AbstractAddress<typeof AddressList.ADA_ENTERPRISE>["derive"]>[0]): DerivedItem<
+    typeof AddressList.ADA_ENTERPRISE
   > {
     const rootKey = this.getRootKey();
     const account = getAccount(rootKey, derivationPath);
@@ -51,8 +51,8 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
     privateKey,
     networkPurpose,
   }: Parameters<
-    AbstractAddress<typeof AddressType.ADA_ENTERPRISE>["importByPrivateKey"]
-  >[0]): DerivedItem<typeof AddressType.ADA_ENTERPRISE> {
+    AbstractAddress<typeof AddressList.ADA_ENTERPRISE>["importByPrivateKey"]
+  >[0]): DerivedItem<typeof AddressList.ADA_ENTERPRISE> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -82,7 +82,7 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
   private getAddress(
     credential: Credential,
     networkPurpose: NetworkPurpose
-  ): DerivedItem<typeof AddressType.ADA_ENTERPRISE>["address"] {
+  ): DerivedItem<typeof AddressList.ADA_ENTERPRISE>["address"] {
     const address = LibraryEnterpriseAddress.new(getNetworkId(networkPurpose), credential);
 
     return address.to_address().to_bech32();

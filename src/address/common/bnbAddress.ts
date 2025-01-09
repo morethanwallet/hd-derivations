@@ -10,7 +10,7 @@ import { ExceptionMessage, AddressError } from "../exceptions/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import {
-  type AddressType,
+  type AddressList,
   type AbstractAddress,
   type DerivedItem,
   type KeysConfig,
@@ -19,15 +19,15 @@ import {
 
 const HRP = "bnb";
 
-class BnbAddress extends Keys implements AbstractAddress<typeof AddressType.BNB> {
+class BnbAddress extends Keys implements AbstractAddress<typeof AddressList.BNB> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
 
   public derive({
     derivationPath,
-  }: Parameters<AbstractAddress<typeof AddressType.BNB>["derive"]>[0]): DerivedItem<
-    typeof AddressType.BNB
+  }: Parameters<AbstractAddress<typeof AddressList.BNB>["derive"]>[0]): DerivedItem<
+    typeof AddressList.BNB
   > {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
@@ -45,8 +45,8 @@ class BnbAddress extends Keys implements AbstractAddress<typeof AddressType.BNB>
   public importByPrivateKey({
     derivationPath,
     privateKey,
-  }: Parameters<AbstractAddress<typeof AddressType.BNB>["importByPrivateKey"]>[0]): DerivedItem<
-    typeof AddressType.BNB
+  }: Parameters<AbstractAddress<typeof AddressList.BNB>["importByPrivateKey"]>[0]): DerivedItem<
+    typeof AddressList.BNB
   > {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 

@@ -1,16 +1,16 @@
-import { type AddressType } from "@/address/index.js";
+import { type AddressList } from "@/address/index.js";
 
-type MultiBitHdAddress = typeof AddressType.BTC_LEGACY;
+type MultiBitHdAddress = typeof AddressList.BTC_LEGACY;
 
 type BitcoinCoreAddress =
-  | typeof AddressType.BTC_LEGACY
-  | typeof AddressType.BTC_SEG_WIT
-  | typeof AddressType.BTC_NATIVE_SEG_WIT
-  | typeof AddressType.BTC_TAPROOT;
+  | typeof AddressList.BTC_LEGACY
+  | typeof AddressList.BTC_SEG_WIT
+  | typeof AddressList.BTC_NATIVE_SEG_WIT
+  | typeof AddressList.BTC_TAPROOT;
 
 type BitcoinAddress =
-  | typeof AddressType.BTC_P2WSH
-  | typeof AddressType.BTC_P2WSH_IN_P2SH
+  | typeof AddressList.BTC_P2WSH
+  | typeof AddressList.BTC_P2WSH_IN_P2SH
   | BitcoinCoreAddress;
 
 export { type MultiBitHdAddress, type BitcoinCoreAddress, type BitcoinAddress };

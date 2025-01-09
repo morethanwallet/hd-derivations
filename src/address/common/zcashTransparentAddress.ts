@@ -11,7 +11,7 @@ import {
 } from "../helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressType, type AbstractAddress } from "@/address/index.js";
+import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 import { ecPair } from "@/ecc/index.js";
 import { networks } from "bitcoinjs-lib";
@@ -39,7 +39,7 @@ function splitPrefixIntoBytesArray(prefix: number): Uint8Array {
 
 class ZcashTransparentAddress
   extends Keys
-  implements AbstractAddress<typeof AddressType.ZEC_TRANSPARENT>
+  implements AbstractAddress<typeof AddressList.ZEC_TRANSPARENT>
 {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);

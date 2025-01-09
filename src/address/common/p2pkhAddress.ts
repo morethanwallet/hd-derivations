@@ -10,10 +10,10 @@ import {
   removeDerivationPathAddress,
 } from "../helpers/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressType, type AbstractAddress } from "@/address/index.js";
+import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 
-class P2pkhAddress extends Keys implements AbstractAddress<typeof AddressType.BTC_LEGACY> {
+class P2pkhAddress extends Keys implements AbstractAddress<typeof AddressList.BTC_LEGACY> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }

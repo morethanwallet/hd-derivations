@@ -1,3 +1,3 @@
-type AddressType = "transparent";
+type AddressList = "transparent";
 
-export { type AddressType };
+export { type AddressList };

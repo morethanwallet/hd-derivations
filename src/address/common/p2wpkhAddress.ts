@@ -10,10 +10,10 @@ import {
 } from "../helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressType, type AbstractAddress } from "@/address/index.js";
+import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 
-class P2wpkhAddress extends Keys implements AbstractAddress<typeof AddressType.BTC_NATIVE_SEG_WIT> {
+class P2wpkhAddress extends Keys implements AbstractAddress<typeof AddressList.BTC_NATIVE_SEG_WIT> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
