@@ -4,13 +4,18 @@ import {
   getPublicKeyFromPrivateKey,
   getAddressFromPrivateKey,
 } from "@binance-chain/javascript-sdk/lib/crypto";
-import { type AddressData, type KeysConfig, type KeyPair } from "../types/index.js";
 import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
 import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage, AddressError } from "../exceptions/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressType, type AbstractAddress } from "@/address/index.js";
+import {
+  type AddressType,
+  type AbstractAddress,
+  type AddressData,
+  type KeysConfig,
+  type KeyPair,
+} from "@/address/index.js";
 
 const HRP = "bnb";
 
@@ -19,7 +24,11 @@ class BnbAddress extends Keys implements AbstractAddress<typeof AddressType.BNB>
     super(keysConfig, mnemonic);
   }
 
-  public getData(derivationPath: string): AddressData {
+  public getData({
+    derivationPath,
+  }: Parameters<AbstractAddress<typeof AddressType.BNB>["getData"]>[0]): AddressData<
+    typeof AddressType.BNB
+  > {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(privateKey);
@@ -33,10 +42,12 @@ class BnbAddress extends Keys implements AbstractAddress<typeof AddressType.BNB>
     };
   }
 
-  public importByPrivateKey(
-    derivationPath: string,
-    privateKey: KeyPair["privateKey"]
-  ): AddressData {
+  public importByPrivateKey({
+    derivationPath,
+    privateKey,
+  }: Parameters<AbstractAddress<typeof AddressType.BNB>["importByPrivateKey"]>[0]): AddressData<
+    typeof AddressType.BNB
+  > {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -45,7 +56,7 @@ class BnbAddress extends Keys implements AbstractAddress<typeof AddressType.BNB>
         i
       );
 
-      const data = this.getData(incrementedDerivationPath);
+      const data = this.getData({ derivationPath: incrementedDerivationPath });
 
       if (data.privateKey === privateKey) return data;
     }

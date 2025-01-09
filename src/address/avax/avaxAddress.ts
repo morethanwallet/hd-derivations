@@ -6,7 +6,7 @@ import {
   type AddressData,
   type KeyPair,
   type KeysConfig,
-} from "../types/index.js";
+} from "@/address/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
 import {
   appendAddressToDerivationPath,
@@ -34,11 +34,13 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVA
     super(keysConfig, mnemonic);
   }
 
-  public getData(
-    derivationPath: string,
-    networkType: NetworkType,
-    networkPurpose: NetworkPurpose
-  ): AddressData {
+  public getData({
+    derivationPath,
+    networkType,
+    networkPurpose,
+  }: Parameters<AbstractAddress<typeof AddressType.AVAX>["getData"]>[0]): AddressData<
+    typeof AddressType.AVAX
+  > {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(node.publicKey, networkType, networkPurpose);
@@ -52,12 +54,14 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVA
     };
   }
 
-  public importByPrivateKey(
-    derivationPath: string,
-    privateKey: KeyPair["privateKey"],
-    networkType: NetworkType,
-    networkPurpose: NetworkPurpose
-  ): AddressData {
+  public importByPrivateKey({
+    derivationPath,
+    privateKey,
+    networkType,
+    networkPurpose,
+  }: Parameters<AbstractAddress<typeof AddressType.AVAX>["importByPrivateKey"]>[0]): AddressData<
+    typeof AddressType.AVAX
+  > {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -66,7 +70,11 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVA
         i
       );
 
-      const data = this.getData(incrementedDerivationPath, networkType, networkPurpose);
+      const data = this.getData({
+        networkType,
+        networkPurpose,
+        derivationPath: incrementedDerivationPath,
+      });
 
       if (data.privateKey === privateKey) return data;
     }
