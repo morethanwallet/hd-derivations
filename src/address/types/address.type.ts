@@ -34,7 +34,7 @@ type AddressSpecificParameters<Address extends ValueOf<typeof AddressType>> =
     ? { networkPurpose: CardanoNetworkPurpose }
     : Address extends XrpAddress
     ? { addressType: XrpAddress; networkPurpose: XrpNetworkPurpose; destinationTag?: number }
-    : Record<string, never>;
+    : Record<string, unknown>;
 
 type GetDataParameters<Address extends ValueOf<typeof AddressType>> = {
   derivationPath: string;
