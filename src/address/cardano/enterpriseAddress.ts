@@ -7,7 +7,6 @@ import {
 import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressData } from "./types/index.js";
 import {
   getAccount,
   getAddressValue,
@@ -15,7 +14,7 @@ import {
   getNetworkId,
   updateDerivationPathChange,
 } from "./helpers/index.js";
-import { type AddressType, type AbstractAddress, type KeyPair } from "@/address/index.js";
+import { type AddressType, type AbstractAddress, type AddressData } from "@/address/index.js";
 import { Change } from "./enums/index.js";
 import { type NetworkPurpose } from "@/families/cardano/index.js";
 
@@ -24,10 +23,12 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
     super(mnemonic);
   }
 
-  public getData(
-    derivationPath: string,
-    networkPurpose: NetworkPurpose
-  ): AddressData<typeof AddressType.ADA_ENTERPRISE> {
+  public getData({
+    derivationPath,
+    networkPurpose,
+  }: Parameters<AbstractAddress<typeof AddressType.ADA_ENTERPRISE>["getData"]>[0]): AddressData<
+    typeof AddressType.ADA_ENTERPRISE
+  > {
     const rootKey = this.getRootKey();
     const account = getAccount(rootKey, derivationPath);
     const addressValue = getAddressValue(derivationPath);
@@ -45,11 +46,13 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
     };
   }
 
-  public importByPrivateKey(
-    derivationPath: string,
-    privateKey: KeyPair["privateKey"],
-    networkPurpose: NetworkPurpose
-  ): AddressData<typeof AddressType.ADA_ENTERPRISE> {
+  public importByPrivateKey({
+    derivationPath,
+    privateKey,
+    networkPurpose,
+  }: Parameters<
+    AbstractAddress<typeof AddressType.ADA_ENTERPRISE>["importByPrivateKey"]
+  >[0]): AddressData<typeof AddressType.ADA_ENTERPRISE> {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -58,7 +61,7 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
         i
       );
 
-      const data = this.getData(incrementedDerivationPath, networkPurpose);
+      const data = this.getData({ networkPurpose, derivationPath: incrementedDerivationPath });
 
       if (data.privateKey === privateKey) return data;
     }

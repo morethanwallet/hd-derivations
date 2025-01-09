@@ -6,47 +6,54 @@ import {
   type NetworkPurpose as AvaxNetworkPurpose,
   type NetworkType as AvaxNetworkType,
 } from "@/families/avax/index.js";
-import { type CardanoAddress } from "@/families/cardano/index.js";
 import {
-  type ImportByPrivateKey as CardanoImportByPrivateKey,
-  type GetData as CardanoGetData,
+  type NetworkPurpose as CardanoNetworkPurpose,
+  type CardanoAddress,
+} from "@/families/cardano/index.js";
+import {
+  type BaseAddressKeyPair as CardanoBaseAddressKeyPair,
+  type BaseAddressData as CardanoBaseAddressData,
 } from "@/address/cardano/index.js";
 
-type AddressData = {
-  path: string;
-  address: string;
-  mnemonic: string;
-} & KeyPair;
+type AddressData<Address extends ValueOf<typeof AddressType>> =
+  Address extends typeof AddressType.ADA_BASE
+    ? CardanoBaseAddressData
+    : {
+        path: string;
+        address: string;
+        mnemonic: string;
+      } & KeyPair;
 
-type GetData<Address extends ValueOf<typeof AddressType>> = Address extends BitcoinCoreAddress
-  ? (derivationPath: string, base58RootKey: string) => AddressData
-  : Address extends typeof AddressType.AVAX
-  ? (
-      derivationPath: string,
-      networkType: AvaxNetworkType,
-      networkPurpose: AvaxNetworkPurpose
-    ) => AddressData
-  : Address extends CardanoAddress
-  ? CardanoGetData<Address>
-  : (derivationPath: string) => AddressData;
-
-type ImportByPrivateKey<Address extends ValueOf<typeof AddressType>> =
+type AddressSpecificParameters<Address extends ValueOf<typeof AddressType>> =
   Address extends BitcoinCoreAddress
-    ? (
-        derivationPath: string,
-        privateKey: KeyPair["privateKey"],
-        base58RootKey: string
-      ) => AddressData
+    ? { base58RootKey: string }
     : Address extends typeof AddressType.AVAX
-    ? (
-        derivationPath: string,
-        privateKey: KeyPair["privateKey"],
-        networkType: AvaxNetworkType,
-        networkPurpose: AvaxNetworkPurpose
-      ) => AddressData
+    ? { networkType: AvaxNetworkType; networkPurpose: AvaxNetworkPurpose }
     : Address extends CardanoAddress
-    ? CardanoImportByPrivateKey<Address>
-    : (derivationPath: string, privateKey: KeyPair["privateKey"]) => AddressData;
+    ? { networkPurpose: CardanoNetworkPurpose }
+    : Record<string, never>;
+
+type GetDataParameters<Address extends ValueOf<typeof AddressType>> = {
+  derivationPath: string;
+} & AddressSpecificParameters<Address>;
+
+type GetData<Address extends ValueOf<typeof AddressType>> = (
+  parameters: GetDataParameters<Address>
+) => AddressData<Address>;
+
+type ImportByPrivateKeyParameters<Address extends ValueOf<typeof AddressType>> = {
+  derivationPath: string;
+} & (Address extends typeof AddressType.ADA_BASE
+  ? {
+      enterprisePrivateKey: CardanoBaseAddressKeyPair["enterprisePrivateKey"];
+      rewardPrivateKey: CardanoBaseAddressKeyPair["rewardPrivateKey"];
+    }
+  : { privateKey: KeyPair["privateKey"] }) &
+  AddressSpecificParameters<Address>;
+
+type ImportByPrivateKey<Address extends ValueOf<typeof AddressType>> = (
+  parameters: ImportByPrivateKeyParameters<Address>
+) => AddressData<Address>;
 
 type AbstractAddress<Address extends ValueOf<typeof AddressType>> = {
   getData: GetData<Address>;

@@ -1,7 +1,12 @@
-import { AddressType, BaseAddress, EnterpriseAddress, RewardAddress } from "@/address/index.js";
+import {
+  type AddressData,
+  AddressType,
+  BaseAddress,
+  EnterpriseAddress,
+  RewardAddress,
+} from "@/address/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type NetworkPurpose, type AbstractNetwork, type CardanoAddress } from "./types/index.js";
-import { type AddressData } from "@/address/cardano/index.js";
 import { assert } from "@/helpers/assert.helper.js";
 import { ExceptionMessage, NetworkError } from "../exceptions/index.js";
 
@@ -32,13 +37,13 @@ class Cardano implements AbstractNetwork {
   ): AddressData<CardanoAddress> {
     switch (addressType) {
       case AddressType.ADA_REWARD: {
-        return this.rewardAddress.getData(derivationPath, this.purpose);
+        return this.rewardAddress.getData({ derivationPath, networkPurpose: this.purpose });
       }
       case AddressType.ADA_ENTERPRISE: {
-        return this.enterpriseAddress.getData(derivationPath, this.purpose);
+        return this.enterpriseAddress.getData({ derivationPath, networkPurpose: this.purpose });
       }
       case AddressType.ADA_BASE: {
-        return this.baseAddress.getData(derivationPath, this.purpose);
+        return this.baseAddress.getData({ derivationPath, networkPurpose: this.purpose });
       }
     }
   }
@@ -67,20 +72,28 @@ class Cardano implements AbstractNetwork {
   ): AddressData<CardanoAddress> {
     switch (addressType) {
       case AddressType.ADA_REWARD: {
-        return this.rewardAddress.importByPrivateKey(derivationPath, privateKey, this.purpose);
+        return this.rewardAddress.importByPrivateKey({
+          derivationPath,
+          privateKey,
+          networkPurpose: this.purpose,
+        });
       }
       case AddressType.ADA_ENTERPRISE: {
-        return this.enterpriseAddress.importByPrivateKey(derivationPath, privateKey, this.purpose);
+        return this.enterpriseAddress.importByPrivateKey({
+          derivationPath,
+          privateKey,
+          networkPurpose: this.purpose,
+        });
       }
       case AddressType.ADA_BASE: {
         assert(rewardPrivateKey, NetworkError, ExceptionMessage.CARDANO_REWARD_KEY_IS_REQUIRED);
 
-        return this.baseAddress.importByPrivateKey(
+        return this.baseAddress.importByPrivateKey({
           derivationPath,
-          privateKey,
           rewardPrivateKey,
-          this.purpose
-        );
+          enterprisePrivateKey: privateKey,
+          networkPurpose: this.purpose,
+        });
       }
     }
   }

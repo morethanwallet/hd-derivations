@@ -1,2 +1,2 @@
 export { XrpAddress } from "./xrpAddress.js";
-export { type AddressType, type AbstractAddress } from "./types/index.js";
+export { type AbstractAddress } from "./types/index.js";
