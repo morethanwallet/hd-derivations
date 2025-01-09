@@ -11,7 +11,7 @@ class Evm implements AbstractNetwork {
   }
 
   public derive(derivationPath: string) {
-    return this.evmAddress.getData(derivationPath);
+    return this.evmAddress.derive(derivationPath);
   }
 
   public importByPrivateKey(derivationPath: string, privateKey: KeyPair["privateKey"]) {

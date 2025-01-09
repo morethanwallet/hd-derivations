@@ -24,9 +24,9 @@ class BnbAddress extends Keys implements AbstractAddress<typeof AddressType.BNB>
     super(keysConfig, mnemonic);
   }
 
-  public getData({
+  public derive({
     derivationPath,
-  }: Parameters<AbstractAddress<typeof AddressType.BNB>["getData"]>[0]): DerivedItem<
+  }: Parameters<AbstractAddress<typeof AddressType.BNB>["derive"]>[0]): DerivedItem<
     typeof AddressType.BNB
   > {
     const node = this.rootKey.derivePath(derivationPath);
@@ -56,7 +56,7 @@ class BnbAddress extends Keys implements AbstractAddress<typeof AddressType.BNB>
         i
       );
 
-      const data = this.getData({ derivationPath: incrementedDerivationPath });
+      const data = this.derive({ derivationPath: incrementedDerivationPath });
 
       if (data.privateKey === privateKey) return data;
     }

@@ -35,22 +35,22 @@ class Bitcoin implements AbstractNetwork<"bitcoin"> {
   public derive(derivationPath: string, addressType: BitcoinAddress) {
     switch (addressType) {
       case "legacy": {
-        return this.p2pkhAddress.getData(derivationPath);
+        return this.p2pkhAddress.derive(derivationPath);
       }
       case "segWit": {
-        return this.p2wpkhInP2shAddress.getData(derivationPath);
+        return this.p2wpkhInP2shAddress.derive(derivationPath);
       }
       case "nativeSegWit": {
-        return this.p2wpkhAddress.getData(derivationPath);
+        return this.p2wpkhAddress.derive(derivationPath);
       }
       case "taproot": {
-        return this.taprootAddress.getData(derivationPath);
+        return this.taprootAddress.derive(derivationPath);
       }
       case "p2wsh": {
-        return this.p2wshAddress.getData(derivationPath);
+        return this.p2wshAddress.derive(derivationPath);
       }
       case "p2wshInP2sh": {
-        return this.p2wshInP2shAddress.getData(derivationPath);
+        return this.p2wshInP2shAddress.derive(derivationPath);
       }
     }
   }

@@ -25,7 +25,7 @@ class CashAddrAddress extends Keys implements AbstractAddress<typeof AddressType
     super(keysConfig, mnemonic);
   }
 
-  public getData(derivationPath: string): DerivedItem {
+  public derive(derivationPath: string): DerivedItem {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
     const address = this.getAddress(node.publicKey);
@@ -48,7 +48,7 @@ class CashAddrAddress extends Keys implements AbstractAddress<typeof AddressType
         i
       );
 
-      const data = this.getData(incrementedDerivationPath);
+      const data = this.derive(incrementedDerivationPath);
 
       if (data.privateKey === privateKey) return data;
     }

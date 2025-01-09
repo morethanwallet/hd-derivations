@@ -34,13 +34,13 @@ class Cardano implements AbstractNetwork {
   public derive(derivationPath: string, addressType: CardanoAddress): DerivedItem<CardanoAddress> {
     switch (addressType) {
       case AddressType.ADA_REWARD: {
-        return this.rewardAddress.getData({ derivationPath, networkPurpose: this.purpose });
+        return this.rewardAddress.derive({ derivationPath, networkPurpose: this.purpose });
       }
       case AddressType.ADA_ENTERPRISE: {
-        return this.enterpriseAddress.getData({ derivationPath, networkPurpose: this.purpose });
+        return this.enterpriseAddress.derive({ derivationPath, networkPurpose: this.purpose });
       }
       case AddressType.ADA_BASE: {
-        return this.baseAddress.getData({ derivationPath, networkPurpose: this.purpose });
+        return this.baseAddress.derive({ derivationPath, networkPurpose: this.purpose });
       }
     }
   }

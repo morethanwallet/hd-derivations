@@ -12,7 +12,7 @@ class MultiBitHd implements AbstractNetwork<"multiBitHd"> {
   }
 
   public derive(derivationPath: string) {
-    return this.p2pkhAddress.getData(derivationPath);
+    return this.p2pkhAddress.derive(derivationPath);
   }
 
   public importByPrivateKey(derivationPath: string, privateKey: string) {

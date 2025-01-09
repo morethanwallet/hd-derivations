@@ -23,12 +23,12 @@ class XrpAddress extends Keys implements AbstractAddress<TXrpAddress> {
     super(keysConfig, mnemonic);
   }
 
-  public getData({
+  public derive({
     derivationPath,
     addressType,
     networkPurpose,
     destinationTag,
-  }: Parameters<AbstractAddress<TXrpAddress>["getData"]>[0]): DerivedItem<TXrpAddress> {
+  }: Parameters<AbstractAddress<TXrpAddress>["derive"]>[0]): DerivedItem<TXrpAddress> {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const wallet = this.getWallet(privateKey, publicKey);
@@ -58,7 +58,7 @@ class XrpAddress extends Keys implements AbstractAddress<TXrpAddress> {
         i
       );
 
-      const data = this.getData({
+      const data = this.derive({
         derivationPath: incrementedDerivationPath,
         addressType,
         networkPurpose,

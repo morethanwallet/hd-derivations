@@ -22,7 +22,7 @@ class TaprootAddress extends Keys implements AbstractAddress<typeof AddressType.
     super(keysConfig, mnemonic);
   }
 
-  public getData(derivationPath: string, base58RootKey?: string): DerivedItem {
+  public derive(derivationPath: string, base58RootKey?: string): DerivedItem {
     const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.rootKey;
     const node = rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
@@ -50,7 +50,7 @@ class TaprootAddress extends Keys implements AbstractAddress<typeof AddressType.
         i
       );
 
-      const data = this.getData(incrementedDerivationPath, base58RootKey);
+      const data = this.derive(incrementedDerivationPath, base58RootKey);
 
       if (data.privateKey === privateKey) return data;
     }

@@ -25,16 +25,16 @@ class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
   public derive(derivationPath: string, addressType: BitcoinCoreAddress, base58RootKey: string) {
     switch (addressType) {
       case "legacy": {
-        return this.p2pkhAddress.getData(derivationPath, base58RootKey);
+        return this.p2pkhAddress.derive(derivationPath, base58RootKey);
       }
       case "segWit": {
-        return this.p2wpkhInP2shAddress.getData(derivationPath, base58RootKey);
+        return this.p2wpkhInP2shAddress.derive(derivationPath, base58RootKey);
       }
       case "nativeSegWit": {
-        return this.p2wpkhAddress.getData(derivationPath, base58RootKey);
+        return this.p2wpkhAddress.derive(derivationPath, base58RootKey);
       }
       case "taproot": {
-        return this.taprootAddress.getData(derivationPath, base58RootKey);
+        return this.taprootAddress.derive(derivationPath, base58RootKey);
       }
     }
   }

@@ -25,7 +25,7 @@ class EvmAddress extends Keys implements AbstractAddress<typeof AddressType.EVM>
     super(keysConfig, mnemonic);
   }
 
-  public getData(derivationPath: string): DerivedItem {
+  public derive(derivationPath: string): DerivedItem {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const address = this.getAddress(publicKey);
@@ -51,7 +51,7 @@ class EvmAddress extends Keys implements AbstractAddress<typeof AddressType.EVM>
         i
       );
 
-      const data = this.getData(incrementedDerivationPath);
+      const data = this.derive(incrementedDerivationPath);
 
       if (data.privateKey === privateKey) return data;
     }

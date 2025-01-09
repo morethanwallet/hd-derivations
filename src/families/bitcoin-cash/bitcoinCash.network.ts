@@ -17,10 +17,10 @@ class BitcoinCash implements AbstractNetwork {
   public derive(derivationPath: string, addressType: AddressType) {
     switch (addressType) {
       case "legacy": {
-        return this.p2pkhAddress.getData(derivationPath);
+        return this.p2pkhAddress.derive(derivationPath);
       }
       case "cashAddr": {
-        return this.cashAddrAddress.getData(derivationPath);
+        return this.cashAddrAddress.derive(derivationPath);
       }
     }
   }

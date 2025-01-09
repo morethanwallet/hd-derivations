@@ -6,10 +6,7 @@ type NetworkPurpose = Exclude<CommonNetworkPurpose, "regtest">;
 
 type XrpAbstractAddress = AbstractAddress<XrpAddress>;
 
-type GetDerivedItemParameters = Omit<
-  Parameters<XrpAbstractAddress["getData"]>[0],
-  "networkPurpose"
->;
+type GetDerivedItemParameters = Omit<Parameters<XrpAbstractAddress["derive"]>[0], "networkPurpose">;
 
 type ImportByPrivateKeyParameters = Omit<
   Parameters<XrpAbstractAddress["importByPrivateKey"]>[0],
@@ -17,7 +14,7 @@ type ImportByPrivateKeyParameters = Omit<
 >;
 
 type AbstractNetwork = {
-  derive: (parameters: GetDerivedItemParameters) => ReturnType<XrpAbstractAddress["getData"]>;
+  derive: (parameters: GetDerivedItemParameters) => ReturnType<XrpAbstractAddress["derive"]>;
   importByPrivateKey: (
     parameters: ImportByPrivateKeyParameters
   ) => ReturnType<XrpAbstractAddress["importByPrivateKey"]>;

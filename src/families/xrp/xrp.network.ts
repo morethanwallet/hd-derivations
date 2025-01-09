@@ -17,7 +17,7 @@ class Xrp implements AbstractNetwork {
     derivationPath,
     destinationTag,
   }: Parameters<AbstractNetwork["derive"]>[0]) {
-    return this.xrpAddress.getData({
+    return this.xrpAddress.derive({
       derivationPath,
       addressType,
       destinationTag,

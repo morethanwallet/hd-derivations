@@ -12,7 +12,7 @@ class SolanaAddress extends Keys implements AbstractAddress<typeof AddressType.S
     super(mnemonic);
   }
 
-  public getData(derivationPath: string): DerivedItem {
+  public derive(derivationPath: string): DerivedItem {
     const { privateKey, publicKey } = this.getKeyPair(derivationPath);
 
     return {
@@ -30,7 +30,7 @@ class SolanaAddress extends Keys implements AbstractAddress<typeof AddressType.S
   ): DerivedItem {
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
       const incrementedDerivationPath = appendAddressToDerivationPath(derivationPath, i);
-      const data = this.getData(incrementedDerivationPath);
+      const data = this.derive(incrementedDerivationPath);
 
       if (data.privateKey === privateKey) return data;
     }

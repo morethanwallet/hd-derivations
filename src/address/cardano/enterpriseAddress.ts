@@ -23,10 +23,10 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
     super(mnemonic);
   }
 
-  public getData({
+  public derive({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.ADA_ENTERPRISE>["getData"]>[0]): DerivedItem<
+  }: Parameters<AbstractAddress<typeof AddressType.ADA_ENTERPRISE>["derive"]>[0]): DerivedItem<
     typeof AddressType.ADA_ENTERPRISE
   > {
     const rootKey = this.getRootKey();
@@ -61,7 +61,7 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressTy
         i
       );
 
-      const data = this.getData({ networkPurpose, derivationPath: incrementedDerivationPath });
+      const data = this.derive({ networkPurpose, derivationPath: incrementedDerivationPath });
 
       if (data.privateKey === privateKey) return data;
     }

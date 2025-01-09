@@ -26,18 +26,18 @@ class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA
     this.rewardAddress = new RewardAddress(mnemonic);
   }
 
-  public getData({
+  public derive({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.ADA_BASE>["getData"]>[0]): DerivedItem<
+  }: Parameters<AbstractAddress<typeof AddressType.ADA_BASE>["derive"]>[0]): DerivedItem<
     typeof AddressType.ADA_BASE
   > {
-    const derivedEnterpriseItem = this.enterpriseAddress.getData({
+    const derivedEnterpriseItem = this.enterpriseAddress.derive({
       derivationPath,
       networkPurpose,
     });
 
-    const derivedRewardItem = this.rewardAddress.getData({ derivationPath, networkPurpose });
+    const derivedRewardItem = this.rewardAddress.derive({ derivationPath, networkPurpose });
     const enterpriseCredential = getCredential(PublicKey.from_hex(derivedEnterpriseItem.publicKey));
     const rewardCredential = getCredential(PublicKey.from_hex(derivedRewardItem.publicKey));
     const address = this.getAddress(enterpriseCredential, rewardCredential, networkPurpose);
@@ -70,7 +70,7 @@ class BaseAddress extends Keys implements AbstractAddress<typeof AddressType.ADA
         i
       );
 
-      const data = this.getData({ networkPurpose, derivationPath: incrementedDerivationPath });
+      const data = this.derive({ networkPurpose, derivationPath: incrementedDerivationPath });
 
       if (
         data.enterprisePrivateKey === enterprisePrivateKey &&

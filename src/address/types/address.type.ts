@@ -36,12 +36,12 @@ type AddressSpecificParameters<TAddress extends ValueOf<typeof AddressType>> =
     ? { addressType: XrpAddress; networkPurpose: XrpNetworkPurpose; destinationTag?: number }
     : Record<string, unknown>;
 
-type GetDataParameters<TAddress extends ValueOf<typeof AddressType>> = {
+type GetDerivedItemParameters<TAddress extends ValueOf<typeof AddressType>> = {
   derivationPath: string;
 } & AddressSpecificParameters<TAddress>;
 
-type GetData<TAddress extends ValueOf<typeof AddressType>> = (
-  parameters: GetDataParameters<TAddress>
+type GetDerivedItem<TAddress extends ValueOf<typeof AddressType>> = (
+  parameters: GetDerivedItemParameters<TAddress>
 ) => DerivedItem<TAddress>;
 
 type ImportByPrivateKeyParameters<TAddress extends ValueOf<typeof AddressType>> = {
@@ -59,7 +59,7 @@ type ImportByPrivateKey<TAddress extends ValueOf<typeof AddressType>> = (
 ) => DerivedItem<TAddress>;
 
 type AbstractAddress<TAddress extends ValueOf<typeof AddressType>> = {
-  getData: GetData<TAddress>;
+  derive: GetDerivedItem<TAddress>;
   importByPrivateKey: ImportByPrivateKey<TAddress>;
 };
 

@@ -34,11 +34,11 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVA
     super(keysConfig, mnemonic);
   }
 
-  public getData({
+  public derive({
     derivationPath,
     networkType,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.AVAX>["getData"]>[0]): DerivedItem<
+  }: Parameters<AbstractAddress<typeof AddressType.AVAX>["derive"]>[0]): DerivedItem<
     typeof AddressType.AVAX
   > {
     const node = this.rootKey.derivePath(derivationPath);
@@ -70,7 +70,7 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressType.AVA
         i
       );
 
-      const data = this.getData({
+      const data = this.derive({
         networkType,
         networkPurpose,
         derivationPath: incrementedDerivationPath,

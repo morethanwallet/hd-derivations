@@ -23,10 +23,10 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressType.A
     super(mnemonic);
   }
 
-  public getData({
+  public derive({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressType.ADA_REWARD>["getData"]>[0]): DerivedItem<
+  }: Parameters<AbstractAddress<typeof AddressType.ADA_REWARD>["derive"]>[0]): DerivedItem<
     typeof AddressType.ADA_REWARD
   > {
     const rootKey = this.getRootKey();
@@ -61,7 +61,7 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressType.A
         i
       );
 
-      const data = this.getData({ networkPurpose, derivationPath: incrementedDerivationPath });
+      const data = this.derive({ networkPurpose, derivationPath: incrementedDerivationPath });
 
       if (data.privateKey === privateKey) return data;
     }

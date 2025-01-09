@@ -10,7 +10,7 @@ class Solana implements AbstractNetwork {
   }
 
   public derive(derivationPath: string) {
-    return this.solanaAddress.getData(derivationPath);
+    return this.solanaAddress.derive(derivationPath);
   }
 
   public importByPrivateKey(derivationPath: string, privateKey: KeyPair["privateKey"]) {
