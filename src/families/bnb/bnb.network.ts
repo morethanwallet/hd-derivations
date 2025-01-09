@@ -10,8 +10,8 @@ class Bnb implements AbstractNetwork {
     this.bnbAddress = new BnbAddress(config.keysConfig, mnemonic);
   }
 
-  public getAddressData(derivationPath: string) {
-    return this.bnbAddress.getData(derivationPath);
+  public derive(derivationPath: string) {
+    return this.bnbAddress.derive(derivationPath);
   }
 
   public importByPrivateKey(derivationPath: string, privateKey: KeyPair["privateKey"]) {

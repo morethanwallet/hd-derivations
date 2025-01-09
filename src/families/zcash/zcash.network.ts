@@ -14,7 +14,7 @@ class Zcash implements AbstractNetwork {
     );
   }
 
-  public getAddressData(derivationPath: string) {
+  public derive(derivationPath: string) {
     return this.transparentAddress.getData(derivationPath);
   }
 

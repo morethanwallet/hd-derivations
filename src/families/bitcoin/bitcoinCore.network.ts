@@ -22,11 +22,7 @@ class BitcoinCore implements AbstractNetwork<"bitcoinCore"> {
     this.taprootAddress = new TaprootAddress(config[purpose].taproot.keysConfig, mnemonic);
   }
 
-  public getAddressData(
-    derivationPath: string,
-    addressType: BitcoinCoreAddress,
-    base58RootKey: string
-  ) {
+  public derive(derivationPath: string, addressType: BitcoinCoreAddress, base58RootKey: string) {
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.getData(derivationPath, base58RootKey);

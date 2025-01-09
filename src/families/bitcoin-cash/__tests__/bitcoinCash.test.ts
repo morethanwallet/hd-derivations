@@ -118,204 +118,204 @@ beforeEach(() => {
 
 describe("Bitcoin Cash", () => {
   describe("mainnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct legacy address data", () => {
-        const addressData = bitcoinCashMainnet.getAddressData(
+    describe("derive", () => {
+      it("Derives correct legacy item", () => {
+        const derivedItem = bitcoinCashMainnet.derive(
           MOCK_MAINNET_ADDRESS_DATA.native.legacy.path,
           "legacy"
         );
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.legacy).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native.legacy).toEqual(derivedItem);
       });
 
-      it("Generates correct cashAddr address data", () => {
-        const addressData = bitcoinCashMainnet.getAddressData(
+      it("Derives correct cashAddr item", () => {
+        const derivedItem = bitcoinCashMainnet.derive(
           MOCK_MAINNET_ADDRESS_DATA.native.cashAddr.path,
           "cashAddr"
         );
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.cashAddr).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native.cashAddr).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct legacy address data", () => {
-          const addressData = bitcoinCashMainnet.importByPrivateKey(
+        it("Imports correct legacy item", () => {
+          const credential = bitcoinCashMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.legacy.path,
             MOCK_MAINNET_ADDRESS_DATA.native.legacy.privateKey,
             "legacy"
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.legacy);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.legacy);
         });
 
-        it("Imports correct cashAddr address data", () => {
-          const addressData = bitcoinCashMainnet.importByPrivateKey(
+        it("Imports correct cashAddr item", () => {
+          const credential = bitcoinCashMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.cashAddr.path,
             MOCK_MAINNET_ADDRESS_DATA.native.cashAddr.privateKey,
             "cashAddr"
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.cashAddr);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.cashAddr);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct legacy address data", () => {
-          const addressData = bitcoinCashMainnet.importByPrivateKey(
+        it("Imports correct legacy item", () => {
+          const credential = bitcoinCashMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.legacy.path,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.legacy.privateKey,
             "legacy"
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.legacy);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.legacy);
         });
 
-        it("Imports correct cashAddr address data", () => {
-          const addressData = bitcoinCashMainnet.importByPrivateKey(
+        it("Imports correct cashAddr item", () => {
+          const credential = bitcoinCashMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.cashAddr.path,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.cashAddr.privateKey,
             "cashAddr"
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.cashAddr);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.cashAddr);
         });
       });
     });
   });
 
   describe("testnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct legacy address data", () => {
-        const addressData = bitcoinCashTestnet.getAddressData(
+    describe("derive", () => {
+      it("Derives correct legacy item", () => {
+        const derivedItem = bitcoinCashTestnet.derive(
           MOCK_TESTNET_ADDRESS_DATA.native.legacy.path,
           "legacy"
         );
 
-        expect(MOCK_TESTNET_ADDRESS_DATA.native.legacy).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.native.legacy).toEqual(derivedItem);
       });
 
-      it("Generates correct cashAddr address data", () => {
-        const addressData = bitcoinCashTestnet.getAddressData(
+      it("Derives correct cashAddr item", () => {
+        const derivedItem = bitcoinCashTestnet.derive(
           MOCK_TESTNET_ADDRESS_DATA.native.cashAddr.path,
           "cashAddr"
         );
 
-        expect(MOCK_TESTNET_ADDRESS_DATA.native.cashAddr).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.native.cashAddr).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct legacy address data", () => {
-          const addressData = bitcoinCashTestnet.importByPrivateKey(
+        it("Imports correct legacy item", () => {
+          const credential = bitcoinCashTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.native.legacy.path,
             MOCK_TESTNET_ADDRESS_DATA.native.legacy.privateKey,
             "legacy"
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.native.legacy);
+          expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.native.legacy);
         });
 
-        it("Imports correct cashAddr address data", () => {
-          const addressData = bitcoinCashTestnet.importByPrivateKey(
+        it("Imports correct cashAddr item", () => {
+          const credential = bitcoinCashTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.native.cashAddr.path,
             MOCK_TESTNET_ADDRESS_DATA.native.cashAddr.privateKey,
             "cashAddr"
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.native.cashAddr);
+          expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.native.cashAddr);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct legacy address data", () => {
-          const addressData = bitcoinCashTestnet.importByPrivateKey(
+        it("Imports correct legacy item", () => {
+          const credential = bitcoinCashTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.nonNative.legacy.path,
             MOCK_TESTNET_ADDRESS_DATA.nonNative.legacy.privateKey,
             "legacy"
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative.legacy);
+          expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative.legacy);
         });
 
-        it("Imports correct cashAddr address data", () => {
-          const addressData = bitcoinCashTestnet.importByPrivateKey(
+        it("Imports correct cashAddr item", () => {
+          const credential = bitcoinCashTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.nonNative.cashAddr.path,
             MOCK_TESTNET_ADDRESS_DATA.nonNative.cashAddr.privateKey,
             "cashAddr"
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative.cashAddr);
+          expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative.cashAddr);
         });
       });
     });
   });
 
   describe("regtest", () => {
-    describe("getAddressData", () => {
-      it("Generates correct legacy address data", () => {
-        const addressData = bitcoinCashRegtest.getAddressData(
+    describe("derive", () => {
+      it("Derives correct legacy item", () => {
+        const derivedItem = bitcoinCashRegtest.derive(
           MOCK_REGTEST_ADDRESS_DATA.native.legacy.path,
           "legacy"
         );
 
-        expect(MOCK_REGTEST_ADDRESS_DATA.native.legacy).toEqual(addressData);
+        expect(MOCK_REGTEST_ADDRESS_DATA.native.legacy).toEqual(derivedItem);
       });
 
-      it("Generates correct cashAddr address data", () => {
-        const addressData = bitcoinCashRegtest.getAddressData(
+      it("Derives correct cashAddr item", () => {
+        const derivedItem = bitcoinCashRegtest.derive(
           MOCK_REGTEST_ADDRESS_DATA.native.cashAddr.path,
           "cashAddr"
         );
 
-        expect(MOCK_REGTEST_ADDRESS_DATA.native.cashAddr).toEqual(addressData);
+        expect(MOCK_REGTEST_ADDRESS_DATA.native.cashAddr).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct legacy address data", () => {
-          const addressData = bitcoinCashRegtest.importByPrivateKey(
+        it("Imports correct legacy item", () => {
+          const credential = bitcoinCashRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.native.legacy.path,
             MOCK_REGTEST_ADDRESS_DATA.native.legacy.privateKey,
             "legacy"
           );
 
-          expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.native.legacy);
+          expect(credential).toEqual(MOCK_REGTEST_ADDRESS_DATA.native.legacy);
         });
 
-        it("Imports correct cashAddr address data", () => {
-          const addressData = bitcoinCashRegtest.importByPrivateKey(
+        it("Imports correct cashAddr item", () => {
+          const credential = bitcoinCashRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.native.cashAddr.path,
             MOCK_REGTEST_ADDRESS_DATA.native.cashAddr.privateKey,
             "cashAddr"
           );
 
-          expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.native.cashAddr);
+          expect(credential).toEqual(MOCK_REGTEST_ADDRESS_DATA.native.cashAddr);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct legacy address data", () => {
-          const addressData = bitcoinCashRegtest.importByPrivateKey(
+        it("Imports correct legacy item", () => {
+          const credential = bitcoinCashRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.nonNative.legacy.path,
             MOCK_REGTEST_ADDRESS_DATA.nonNative.legacy.privateKey,
             "legacy"
           );
 
-          expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative.legacy);
+          expect(credential).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative.legacy);
         });
 
-        it("Imports correct cashAddr address data", () => {
-          const addressData = bitcoinCashRegtest.importByPrivateKey(
+        it("Imports correct cashAddr item", () => {
+          const credential = bitcoinCashRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.nonNative.cashAddr.path,
             MOCK_REGTEST_ADDRESS_DATA.nonNative.cashAddr.privateKey,
             "cashAddr"
           );
 
-          expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative.cashAddr);
+          expect(credential).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative.cashAddr);
         });
       });
     });

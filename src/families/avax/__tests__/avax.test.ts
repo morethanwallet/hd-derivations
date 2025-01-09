@@ -80,136 +80,124 @@ beforeEach(() => {
 
 describe("Avax", () => {
   describe("mainnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct Avax-X address data", () => {
-        const addressData = avaxMainnet.getAddressData(
-          MOCK_MAINNET_ADDRESS_DATA.native.x.path,
-          "X"
-        );
+    describe("derive", () => {
+      it("Derives correct Avax-X item", () => {
+        const derivedItem = avaxMainnet.derive(MOCK_MAINNET_ADDRESS_DATA.native.x.path, "X");
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(derivedItem);
       });
 
-      it("Generates correct Avax-P address data", () => {
-        const addressData = avaxMainnet.getAddressData(
-          MOCK_MAINNET_ADDRESS_DATA.native.p.path,
-          "P"
-        );
+      it("Derives correct Avax-P item", () => {
+        const derivedItem = avaxMainnet.derive(MOCK_MAINNET_ADDRESS_DATA.native.p.path, "P");
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.p).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native.p).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct Avax-X address data", () => {
-          const avaxXAddressData = avaxMainnet.importByPrivateKey(
+        it("Imports correct Avax-X item", () => {
+          const credential = avaxMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.x.path,
             MOCK_MAINNET_ADDRESS_DATA.native.x.privateKey,
             "X"
           );
 
-          expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(avaxXAddressData);
+          expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(credential);
         });
 
-        it("Imports correct Avax-P address data", () => {
-          const avaxXAddressData = avaxMainnet.importByPrivateKey(
+        it("Imports correct Avax-P item", () => {
+          const credential = avaxMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.p.path,
             MOCK_MAINNET_ADDRESS_DATA.native.p.privateKey,
             "P"
           );
 
-          expect(MOCK_MAINNET_ADDRESS_DATA.native.p).toEqual(avaxXAddressData);
+          expect(MOCK_MAINNET_ADDRESS_DATA.native.p).toEqual(credential);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct Avax-X address data", () => {
-          const avaxXAddressData = avaxMainnet.importByPrivateKey(
+        it("Imports correct Avax-X item", () => {
+          const credential = avaxMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.x.path,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.x.privateKey,
             "X"
           );
 
-          expect(MOCK_MAINNET_ADDRESS_DATA.nonNative.x).toEqual(avaxXAddressData);
+          expect(MOCK_MAINNET_ADDRESS_DATA.nonNative.x).toEqual(credential);
         });
 
-        it("Imports correct Avax-P address data", () => {
-          const avaxXAddressData = avaxMainnet.importByPrivateKey(
+        it("Imports correct Avax-P item", () => {
+          const credential = avaxMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.p.path,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.p.privateKey,
             "P"
           );
 
-          expect(MOCK_MAINNET_ADDRESS_DATA.nonNative.p).toEqual(avaxXAddressData);
+          expect(MOCK_MAINNET_ADDRESS_DATA.nonNative.p).toEqual(credential);
         });
       });
     });
   });
 
   describe("testnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct Avax-X address data", () => {
-        const addressData = avaxTestnet.getAddressData(
-          MOCK_TESTNET_ADDRESS_DATA.native.x.path,
-          "X"
-        );
+    describe("derive", () => {
+      it("Derives correct Avax-X item", () => {
+        const derivedItem = avaxTestnet.derive(MOCK_TESTNET_ADDRESS_DATA.native.x.path, "X");
 
-        expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(derivedItem);
       });
 
-      it("Generates correct Avax-P address data", () => {
-        const addressData = avaxTestnet.getAddressData(
-          MOCK_TESTNET_ADDRESS_DATA.native.p.path,
-          "P"
-        );
+      it("Derives correct Avax-P item", () => {
+        const derivedItem = avaxTestnet.derive(MOCK_TESTNET_ADDRESS_DATA.native.p.path, "P");
 
-        expect(MOCK_TESTNET_ADDRESS_DATA.native.p).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.native.p).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct Avax-X address data", () => {
-          const avaxXAddressData = avaxTestnet.importByPrivateKey(
+        it("Imports correct Avax-X item", () => {
+          const credential = avaxTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.native.x.path,
             MOCK_TESTNET_ADDRESS_DATA.native.x.privateKey,
             "X"
           );
 
-          expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(avaxXAddressData);
+          expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(credential);
         });
 
-        it("Imports correct Avax-P address data", () => {
-          const avaxXAddressData = avaxTestnet.importByPrivateKey(
+        it("Imports correct Avax-P item", () => {
+          const credential = avaxTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.native.p.path,
             MOCK_TESTNET_ADDRESS_DATA.native.p.privateKey,
             "P"
           );
 
-          expect(MOCK_TESTNET_ADDRESS_DATA.native.p).toEqual(avaxXAddressData);
+          expect(MOCK_TESTNET_ADDRESS_DATA.native.p).toEqual(credential);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct Avax-X address data", () => {
-          const avaxXAddressData = avaxTestnet.importByPrivateKey(
+        it("Imports correct Avax-X item", () => {
+          const credential = avaxTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.nonNative.x.path,
             MOCK_TESTNET_ADDRESS_DATA.nonNative.x.privateKey,
             "X"
           );
 
-          expect(MOCK_TESTNET_ADDRESS_DATA.nonNative.x).toEqual(avaxXAddressData);
+          expect(MOCK_TESTNET_ADDRESS_DATA.nonNative.x).toEqual(credential);
         });
 
-        it("Imports correct Avax-P address data", () => {
-          const avaxXAddressData = avaxTestnet.importByPrivateKey(
+        it("Imports correct Avax-P item", () => {
+          const credential = avaxTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.nonNative.p.path,
             MOCK_TESTNET_ADDRESS_DATA.nonNative.p.privateKey,
             "P"
           );
 
-          expect(MOCK_TESTNET_ADDRESS_DATA.nonNative.p).toEqual(avaxXAddressData);
+          expect(MOCK_TESTNET_ADDRESS_DATA.nonNative.p).toEqual(credential);
         });
       });
     });

@@ -10,7 +10,7 @@ class Evm implements AbstractNetwork {
     this.evmAddress = new EvmAddress(config.keysConfig, mnemonic);
   }
 
-  public getAddressData(derivationPath: string) {
+  public derive(derivationPath: string) {
     return this.evmAddress.getData(derivationPath);
   }
 

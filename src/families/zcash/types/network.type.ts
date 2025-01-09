@@ -1,8 +1,8 @@
-import { type AddressData } from "@/address/index.js";
+import { type DerivedItem } from "@/address/index.js";
 
 type AbstractNetwork = {
-  getAddressData: (derivationPath: string) => AddressData;
-  importByPrivateKey: (derivationPath: string, privateKey: string) => AddressData;
+  derive: (derivationPath: string) => DerivedItem;
+  importByPrivateKey: (derivationPath: string, privateKey: string) => DerivedItem;
 };
 
 export { type AbstractNetwork };

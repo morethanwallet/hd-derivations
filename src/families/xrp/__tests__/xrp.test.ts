@@ -73,107 +73,107 @@ beforeEach(() => {
 
 describe("Xrp", () => {
   describe("mainnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct base address data", () => {
-        const addressData = xrpMainnet.getAddressData({
+    describe("derive", () => {
+      it("Derives correct base item", () => {
+        const derivedItem = xrpMainnet.derive({
           derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.base.path,
           addressType: AddressType.XRP_BASE,
         });
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.base).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native.base).toEqual(derivedItem);
       });
 
-      it("Generates correct X address data", () => {
-        const addressData = xrpMainnet.getAddressData({
+      it("Derives correct X item", () => {
+        const derivedItem = xrpMainnet.derive({
           derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.x.path,
           addressType: AddressType.XRP_X,
         });
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct base address data", () => {
-          const addressData = xrpMainnet.importByPrivateKey({
+        it("Imports correct base item", () => {
+          const credential = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.base.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.native.base.privateKey,
             addressType: AddressType.XRP_BASE,
           });
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.base);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.base);
         });
 
-        it("Imports correct X address data", () => {
-          const addressData = xrpMainnet.importByPrivateKey({
+        it("Imports correct X item", () => {
+          const credential = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.native.x.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.native.x.privateKey,
             addressType: AddressType.XRP_X,
           });
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.x);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.x);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct base address data", () => {
-          const addressData = xrpMainnet.importByPrivateKey({
+        it("Imports correct base item", () => {
+          const credential = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.nonNative.base.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.nonNative.base.privateKey,
             addressType: AddressType.XRP_BASE,
           });
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.base);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.base);
         });
 
-        it("Imports correct X address data", () => {
-          const addressData = xrpMainnet.importByPrivateKey({
+        it("Imports correct X item", () => {
+          const credential = xrpMainnet.importByPrivateKey({
             derivationPath: MOCK_MAINNET_ADDRESS_DATA.nonNative.x.path,
             privateKey: MOCK_MAINNET_ADDRESS_DATA.nonNative.x.privateKey,
             addressType: AddressType.XRP_X,
           });
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.x);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.x);
         });
       });
     });
   });
 
   describe("testnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct X address data", () => {
-        const addressData = xrpTestnet.getAddressData({
+    describe("derive", () => {
+      it("Derives correct X item", () => {
+        const derivedItem = xrpTestnet.derive({
           derivationPath: MOCK_TESTNET_ADDRESS_DATA.native.x.path,
           addressType: AddressType.XRP_X,
         });
 
-        expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(addressData);
+        expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct X address data", () => {
-          const addressData = xrpTestnet.importByPrivateKey({
+        it("Imports correct X item", () => {
+          const credential = xrpTestnet.importByPrivateKey({
             derivationPath: MOCK_TESTNET_ADDRESS_DATA.native.x.path,
             privateKey: MOCK_TESTNET_ADDRESS_DATA.native.x.privateKey,
             addressType: AddressType.XRP_X,
           });
 
-          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.native.x);
+          expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.native.x);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct X address data", () => {
-          const addressData = xrpTestnet.importByPrivateKey({
+        it("Imports correct X item", () => {
+          const credential = xrpTestnet.importByPrivateKey({
             derivationPath: MOCK_TESTNET_ADDRESS_DATA.nonNative.x.path,
             privateKey: MOCK_TESTNET_ADDRESS_DATA.nonNative.x.privateKey,
             addressType: AddressType.XRP_X,
           });
 
-          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative.x);
+          expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative.x);
         });
       });
     });

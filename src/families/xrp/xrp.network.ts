@@ -12,11 +12,11 @@ class Xrp implements AbstractNetwork {
     this.xrpAddress = new XrpAddress(config.keysConfig, mnemonic);
   }
 
-  public getAddressData({
+  public derive({
     addressType,
     derivationPath,
     destinationTag,
-  }: Parameters<AbstractNetwork["getAddressData"]>[0]) {
+  }: Parameters<AbstractNetwork["derive"]>[0]) {
     return this.xrpAddress.getData({
       derivationPath,
       addressType,

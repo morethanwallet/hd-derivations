@@ -6,7 +6,7 @@ type NetworkType = "X" | "P";
 type NetworkPurpose = Exclude<CommonNetworkPurpose, "regtest">;
 
 type AbstractNetwork = {
-  getAddressData: AbstractAddress<typeof AddressType.AVAX>["getData"];
+  derive: AbstractAddress<typeof AddressType.AVAX>["getData"];
   importByPrivateKey: AbstractAddress<typeof AddressType.AVAX>["importByPrivateKey"];
 };
 

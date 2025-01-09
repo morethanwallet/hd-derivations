@@ -1,5 +1,5 @@
 import {
-  type AddressData,
+  type DerivedItem,
   AddressType,
   BaseAddress,
   EnterpriseAddress,
@@ -23,18 +23,15 @@ class Cardano implements AbstractNetwork {
     this.rewardAddress = new RewardAddress(mnemonic);
   }
 
-  public getAddressData(
+  public derive(
     derivationPath: string,
     addressType: Exclude<CardanoAddress, typeof AddressType.ADA_BASE>
-  ): AddressData<typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD>;
-  public getAddressData(
+  ): DerivedItem<typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD>;
+  public derive(
     derivationPath: string,
     addressType: Extract<CardanoAddress, typeof AddressType.ADA_BASE>
-  ): AddressData<typeof AddressType.ADA_BASE>;
-  public getAddressData(
-    derivationPath: string,
-    addressType: CardanoAddress
-  ): AddressData<CardanoAddress> {
+  ): DerivedItem<typeof AddressType.ADA_BASE>;
+  public derive(derivationPath: string, addressType: CardanoAddress): DerivedItem<CardanoAddress> {
     switch (addressType) {
       case AddressType.ADA_REWARD: {
         return this.rewardAddress.getData({ derivationPath, networkPurpose: this.purpose });
@@ -50,26 +47,26 @@ class Cardano implements AbstractNetwork {
 
   public importByPrivateKey(
     derivationPath: string,
-    privateKey: AddressData<
+    privateKey: DerivedItem<
       typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD
     >["privateKey"],
     addressType: Exclude<CardanoAddress, typeof AddressType.ADA_BASE>,
-    rewardPrivateKey?: AddressData<typeof AddressType.ADA_BASE>["rewardPrivateKey"]
-  ): AddressData<typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD>;
+    rewardPrivateKey?: DerivedItem<typeof AddressType.ADA_BASE>["rewardPrivateKey"]
+  ): DerivedItem<typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD>;
   public importByPrivateKey(
     derivationPath: string,
-    enterprisePrivateKey: AddressData<typeof AddressType.ADA_BASE>["enterprisePrivateKey"],
+    enterprisePrivateKey: DerivedItem<typeof AddressType.ADA_BASE>["enterprisePrivateKey"],
     addressType: Extract<CardanoAddress, typeof AddressType.ADA_BASE>,
-    rewardPrivateKey?: AddressData<typeof AddressType.ADA_BASE>["rewardPrivateKey"]
-  ): AddressData<typeof AddressType.ADA_BASE>;
+    rewardPrivateKey?: DerivedItem<typeof AddressType.ADA_BASE>["rewardPrivateKey"]
+  ): DerivedItem<typeof AddressType.ADA_BASE>;
   public importByPrivateKey(
     derivationPath: string,
     privateKey:
-      | AddressData<typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD>["privateKey"]
-      | AddressData<typeof AddressType.ADA_BASE>["enterprisePrivateKey"],
+      | DerivedItem<typeof AddressType.ADA_ENTERPRISE | typeof AddressType.ADA_REWARD>["privateKey"]
+      | DerivedItem<typeof AddressType.ADA_BASE>["enterprisePrivateKey"],
     addressType: CardanoAddress,
-    rewardPrivateKey?: AddressData<typeof AddressType.ADA_BASE>["rewardPrivateKey"]
-  ): AddressData<CardanoAddress> {
+    rewardPrivateKey?: DerivedItem<typeof AddressType.ADA_BASE>["rewardPrivateKey"]
+  ): DerivedItem<CardanoAddress> {
     switch (addressType) {
       case AddressType.ADA_REWARD: {
         return this.rewardAddress.importByPrivateKey({

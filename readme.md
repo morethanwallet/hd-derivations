@@ -52,7 +52,7 @@ const dogecoin = new Dogecoin(mnemonic, "mainnet");```
 - Get data using a mnemonic:
 
 ```js
-const data = dogecoin.getAddressData("m/44'/144'/0'/0/0");
+const data = dogecoin.derive("m/44'/144'/0'/0/0");
 ```
 
 - Get data using a private key:

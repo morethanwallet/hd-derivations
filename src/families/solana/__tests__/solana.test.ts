@@ -35,33 +35,33 @@ beforeEach(() => {
 });
 
 describe("Solana", () => {
-  describe("getAddressData", () => {
-    it("Generates correct address data", () => {
-      const addressData = solana.getAddressData(MOCK_ADDRESS_DATA.native.path);
-      expect(MOCK_ADDRESS_DATA.native).toEqual(addressData);
+  describe("derive", () => {
+    it("Derives correct item", () => {
+      const derivedItem = solana.derive(MOCK_ADDRESS_DATA.native.path);
+      expect(MOCK_ADDRESS_DATA.native).toEqual(derivedItem);
     });
   });
 
   describe("importByPrivateKey", () => {
     describe("Import from a native mnemonic", () => {
-      it("Imports correct address data", () => {
-        const addressData = solana.importByPrivateKey(
+      it("Imports correct item", () => {
+        const credential = solana.importByPrivateKey(
           MOCK_ADDRESS_DATA.native.path,
           MOCK_ADDRESS_DATA.native.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_ADDRESS_DATA.native);
+        expect(credential).toEqual(MOCK_ADDRESS_DATA.native);
       });
     });
 
     describe("Import from a non-native mnemonic", () => {
-      it("Imports correct address data", () => {
-        const addressData = solana.importByPrivateKey(
+      it("Imports correct item", () => {
+        const credential = solana.importByPrivateKey(
           MOCK_ADDRESS_DATA.nonNative.path,
           MOCK_ADDRESS_DATA.nonNative.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_ADDRESS_DATA.nonNative);
+        expect(credential).toEqual(MOCK_ADDRESS_DATA.nonNative);
       });
     });
   });

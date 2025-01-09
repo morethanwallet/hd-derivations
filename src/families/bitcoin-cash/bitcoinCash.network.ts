@@ -14,7 +14,7 @@ class BitcoinCash implements AbstractNetwork {
     this.p2pkhAddress = new P2pkhAddress(config[purpose].legacy.keysConfig, mnemonic);
   }
 
-  public getAddressData(derivationPath: string, addressType: AddressType) {
+  public derive(derivationPath: string, addressType: AddressType) {
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.getData(derivationPath);

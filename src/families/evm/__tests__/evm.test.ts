@@ -84,106 +84,106 @@ beforeEach(() => {
 });
 
 describe("Evm", () => {
-  describe("getAddressData", () => {
-    it("Generates correct Ethereum compatible address data", () => {
-      const addressData = evm.getAddressData(MOCK_ADDRESS_DATA.native.ethCompatible.path);
+  describe("derive", () => {
+    it("Derives correct Ethereum compatible item", () => {
+      const derivedItem = evm.derive(MOCK_ADDRESS_DATA.native.ethCompatible.path);
 
-      expect(addressData).toEqual(MOCK_ADDRESS_DATA.native.ethCompatible);
+      expect(derivedItem).toEqual(MOCK_ADDRESS_DATA.native.ethCompatible);
     });
 
-    it("Generates correct Coinomi-ETH address data", () => {
-      const addressData = evm.getAddressData(MOCK_ADDRESS_DATA.native.coinomiEth.path);
+    it("Derives correct Coinomi-ETH item", () => {
+      const derivedItem = evm.derive(MOCK_ADDRESS_DATA.native.coinomiEth.path);
 
-      expect(addressData).toEqual(MOCK_ADDRESS_DATA.native.coinomiEth);
+      expect(derivedItem).toEqual(MOCK_ADDRESS_DATA.native.coinomiEth);
     });
 
-    it("Generates correct ETC address data", () => {
-      const addressData = evm.getAddressData(MOCK_ADDRESS_DATA.native.etc.path);
+    it("Derives correct ETC item", () => {
+      const derivedItem = evm.derive(MOCK_ADDRESS_DATA.native.etc.path);
 
-      expect(addressData).toEqual(MOCK_ADDRESS_DATA.native.etc);
+      expect(derivedItem).toEqual(MOCK_ADDRESS_DATA.native.etc);
     });
 
-    it("Generates correct Coinomi-ETC address data", () => {
-      const addressData = evm.getAddressData(MOCK_ADDRESS_DATA.native.coinomiEtc.path);
+    it("Derives correct Coinomi-ETC item", () => {
+      const derivedItem = evm.derive(MOCK_ADDRESS_DATA.native.coinomiEtc.path);
 
-      expect(addressData).toEqual(MOCK_ADDRESS_DATA.native.coinomiEtc);
+      expect(derivedItem).toEqual(MOCK_ADDRESS_DATA.native.coinomiEtc);
     });
   });
 
   describe("importByPrivateKey", () => {
     describe("Import from a native mnemonic", () => {
-      it("Imports correct Ethereum compatible address data", () => {
-        const addressData = evm.importByPrivateKey(
+      it("Imports correct Ethereum compatible item", () => {
+        const credential = evm.importByPrivateKey(
           MOCK_ADDRESS_DATA.native.ethCompatible.path,
           MOCK_ADDRESS_DATA.native.ethCompatible.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_ADDRESS_DATA.native.ethCompatible);
+        expect(credential).toEqual(MOCK_ADDRESS_DATA.native.ethCompatible);
       });
 
-      it("Imports correct Coinomi-ETH address data", () => {
-        const addressData = evm.importByPrivateKey(
+      it("Imports correct Coinomi-ETH item", () => {
+        const credential = evm.importByPrivateKey(
           MOCK_ADDRESS_DATA.native.coinomiEth.path,
           MOCK_ADDRESS_DATA.native.coinomiEth.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_ADDRESS_DATA.native.coinomiEth);
+        expect(credential).toEqual(MOCK_ADDRESS_DATA.native.coinomiEth);
       });
 
-      it("Imports correct ETC address data", () => {
-        const addressData = evm.importByPrivateKey(
+      it("Imports correct ETC item", () => {
+        const credential = evm.importByPrivateKey(
           MOCK_ADDRESS_DATA.native.etc.path,
           MOCK_ADDRESS_DATA.native.etc.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_ADDRESS_DATA.native.etc);
+        expect(credential).toEqual(MOCK_ADDRESS_DATA.native.etc);
       });
 
-      it("Imports correct Coinomi-ETC address data", () => {
-        const addressData = evm.importByPrivateKey(
+      it("Imports correct Coinomi-ETC item", () => {
+        const credential = evm.importByPrivateKey(
           MOCK_ADDRESS_DATA.native.coinomiEtc.path,
           MOCK_ADDRESS_DATA.native.coinomiEtc.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_ADDRESS_DATA.native.coinomiEtc);
+        expect(credential).toEqual(MOCK_ADDRESS_DATA.native.coinomiEtc);
       });
     });
 
     describe("Import from a non-native mnemonic", () => {
-      it("Imports correct Ethereum compatible address data", () => {
-        const addressData = evm.importByPrivateKey(
+      it("Imports correct Ethereum compatible item", () => {
+        const credential = evm.importByPrivateKey(
           MOCK_ADDRESS_DATA.nonNative.ethCompatible.path,
           MOCK_ADDRESS_DATA.nonNative.ethCompatible.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_ADDRESS_DATA.nonNative.ethCompatible);
+        expect(credential).toEqual(MOCK_ADDRESS_DATA.nonNative.ethCompatible);
       });
 
-      it("Imports correct Coinomi-ETH address data", () => {
-        const addressData = evm.importByPrivateKey(
+      it("Imports correct Coinomi-ETH item", () => {
+        const credential = evm.importByPrivateKey(
           MOCK_ADDRESS_DATA.nonNative.coinomiEth.path,
           MOCK_ADDRESS_DATA.nonNative.coinomiEth.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_ADDRESS_DATA.nonNative.coinomiEth);
+        expect(credential).toEqual(MOCK_ADDRESS_DATA.nonNative.coinomiEth);
       });
 
-      it("Imports correct ETC address data", () => {
-        const addressData = evm.importByPrivateKey(
+      it("Imports correct ETC item", () => {
+        const credential = evm.importByPrivateKey(
           MOCK_ADDRESS_DATA.nonNative.etc.path,
           MOCK_ADDRESS_DATA.nonNative.etc.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_ADDRESS_DATA.nonNative.etc);
+        expect(credential).toEqual(MOCK_ADDRESS_DATA.nonNative.etc);
       });
 
-      it("Imports correct Coinomi-ETC address data", () => {
-        const addressData = evm.importByPrivateKey(
+      it("Imports correct Coinomi-ETC item", () => {
+        const credential = evm.importByPrivateKey(
           MOCK_ADDRESS_DATA.nonNative.coinomiEtc.path,
           MOCK_ADDRESS_DATA.nonNative.coinomiEtc.privateKey
         );
 
-        expect(addressData).toEqual(MOCK_ADDRESS_DATA.nonNative.coinomiEtc);
+        expect(credential).toEqual(MOCK_ADDRESS_DATA.nonNative.coinomiEtc);
       });
     });
   });

@@ -12,8 +12,8 @@ class Avax implements AbstractNetwork {
     this.avaxAddress = new AvaxAddress(config.keysConfig, mnemonic);
   }
 
-  public getAddressData(derivationPath: string, networkType: NetworkType) {
-    return this.avaxAddress.getData(derivationPath, networkType, this.purpose);
+  public derive(derivationPath: string, networkType: NetworkType) {
+    return this.avaxAddress.derive(derivationPath, networkType, this.purpose);
   }
 
   public importByPrivateKey(

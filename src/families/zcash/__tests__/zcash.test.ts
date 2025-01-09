@@ -60,102 +60,102 @@ beforeEach(() => {
 
 describe("Zcash", () => {
   describe("mainnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct transparent address data", () => {
-        const addressData = zcashMainnet.getAddressData(MOCK_MAINNET_ADDRESS_DATA.native.path);
+    describe("derive", () => {
+      it("Derives correct transparent item", () => {
+        const derivedItem = zcashMainnet.derive(MOCK_MAINNET_ADDRESS_DATA.native.path);
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct transparent address data", () => {
-          const addressData = zcashMainnet.importByPrivateKey(
+        it("Imports correct transparent item", () => {
+          const credential = zcashMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.path,
             MOCK_MAINNET_ADDRESS_DATA.native.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct transparent address data", () => {
-          const addressData = zcashMainnet.importByPrivateKey(
+        it("Imports correct transparent item", () => {
+          const credential = zcashMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.path,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative);
         });
       });
     });
   });
 
   describe("testnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct transparent address data", () => {
-        const addressData = zcashTestnet.getAddressData(MOCK_TESTNET_ADDRESS_DATA.native.path);
+    describe("derive", () => {
+      it("Derives correct transparent item", () => {
+        const derivedItem = zcashTestnet.derive(MOCK_TESTNET_ADDRESS_DATA.native.path);
 
-        expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.native);
+        expect(derivedItem).toEqual(MOCK_TESTNET_ADDRESS_DATA.native);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct transparent address data", () => {
-          const addressData = zcashTestnet.importByPrivateKey(
+        it("Imports correct transparent item", () => {
+          const credential = zcashTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.native.path,
             MOCK_TESTNET_ADDRESS_DATA.native.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.native);
+          expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.native);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct transparent address data", () => {
-          const addressData = zcashTestnet.importByPrivateKey(
+        it("Imports correct transparent item", () => {
+          const credential = zcashTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.nonNative.path,
             MOCK_TESTNET_ADDRESS_DATA.nonNative.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative);
+          expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative);
         });
       });
     });
   });
 
   describe("regtest", () => {
-    describe("getAddressData", () => {
-      it("Generates correct transparent address data", () => {
-        const addressData = zcashRegtest.getAddressData(MOCK_REGTEST_ADDRESS_DATA.native.path);
+    describe("derive", () => {
+      it("Derives correct transparent item", () => {
+        const derivedItem = zcashRegtest.derive(MOCK_REGTEST_ADDRESS_DATA.native.path);
 
-        expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.native);
+        expect(derivedItem).toEqual(MOCK_REGTEST_ADDRESS_DATA.native);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct transparent address data", () => {
-          const addressData = zcashRegtest.importByPrivateKey(
+        it("Imports correct transparent item", () => {
+          const credential = zcashRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.native.path,
             MOCK_REGTEST_ADDRESS_DATA.native.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.native);
+          expect(credential).toEqual(MOCK_REGTEST_ADDRESS_DATA.native);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct transparent address data", () => {
-          const addressData = zcashRegtest.importByPrivateKey(
+        it("Imports correct transparent item", () => {
+          const credential = zcashRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.nonNative.path,
             MOCK_REGTEST_ADDRESS_DATA.nonNative.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative);
+          expect(credential).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative);
         });
       });
     });

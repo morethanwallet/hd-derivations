@@ -164,296 +164,296 @@ beforeEach(() => {
 
 describe("Cardano", () => {
   describe("mainnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct enterprise address data", () => {
-        const addressData = cardanoMainnet.getAddressData(
+    describe("derive", () => {
+      it("Derives correct enterprise item", () => {
+        const derivedItem = cardanoMainnet.derive(
           MOCK_MAINNET_ADDRESS_DATA.native.enterprise.path,
           AddressType.ADA_ENTERPRISE
         );
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.enterprise).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native.enterprise).toEqual(derivedItem);
       });
 
-      it("Generates correct reward address data", () => {
-        const addressData = cardanoMainnet.getAddressData(
+      it("Derives correct reward item", () => {
+        const derivedItem = cardanoMainnet.derive(
           MOCK_MAINNET_ADDRESS_DATA.native.reward.path,
           AddressType.ADA_REWARD
         );
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.reward).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native.reward).toEqual(derivedItem);
       });
 
-      it("Generates correct base address data", () => {
-        const addressData = cardanoMainnet.getAddressData(
+      it("Derives correct base item", () => {
+        const derivedItem = cardanoMainnet.derive(
           MOCK_MAINNET_ADDRESS_DATA.native.base.enterprisePath,
           AddressType.ADA_BASE
         );
 
-        expect(MOCK_MAINNET_ADDRESS_DATA.native.base).toEqual(addressData);
+        expect(MOCK_MAINNET_ADDRESS_DATA.native.base).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct enterprise address data", () => {
-          const addressData = cardanoMainnet.importByPrivateKey(
+        it("Imports correct enterprise item", () => {
+          const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.enterprise.path,
             MOCK_MAINNET_ADDRESS_DATA.native.enterprise.privateKey,
             AddressType.ADA_ENTERPRISE
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.enterprise);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.enterprise);
         });
 
-        it("Imports correct reward address data", () => {
-          const addressData = cardanoMainnet.importByPrivateKey(
+        it("Imports correct reward item", () => {
+          const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.reward.path,
             MOCK_MAINNET_ADDRESS_DATA.native.reward.privateKey,
             AddressType.ADA_REWARD
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.reward);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.reward);
         });
 
-        it("Imports correct base address data", () => {
-          const addressData = cardanoMainnet.importByPrivateKey(
+        it("Imports correct base item", () => {
+          const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.base.enterprisePath,
             MOCK_MAINNET_ADDRESS_DATA.native.base.enterprisePrivateKey,
             AddressType.ADA_BASE,
             MOCK_MAINNET_ADDRESS_DATA.native.base.rewardPrivateKey
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.base);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native.base);
         });
       });
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct enterprise address data", () => {
-          const addressData = cardanoMainnet.importByPrivateKey(
+        it("Imports correct enterprise item", () => {
+          const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.enterprise.path,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.enterprise.privateKey,
             AddressType.ADA_ENTERPRISE
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.enterprise);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.enterprise);
         });
 
-        it("Imports correct reward address data", () => {
-          const addressData = cardanoMainnet.importByPrivateKey(
+        it("Imports correct reward item", () => {
+          const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.reward.path,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.reward.privateKey,
             AddressType.ADA_REWARD
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.reward);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.reward);
         });
 
-        it("Imports correct base address data", () => {
-          const addressData = cardanoMainnet.importByPrivateKey(
+        it("Imports correct base item", () => {
+          const credential = cardanoMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.base.enterprisePath,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.base.enterprisePrivateKey,
             AddressType.ADA_BASE,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.base.rewardPrivateKey
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.base);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative.base);
         });
       });
     });
   });
 
   describe("testnet preview", () => {
-    describe("getAddressData", () => {
-      it("Generates correct enterprise address data", () => {
-        const addressData = cardanoTestnetPreview.getAddressData(
+    describe("derive", () => {
+      it("Derives correct enterprise item", () => {
+        const derivedItem = cardanoTestnetPreview.derive(
           MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise.path,
           AddressType.ADA_ENTERPRISE
         );
 
-        expect(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise).toEqual(addressData);
+        expect(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise).toEqual(derivedItem);
       });
 
-      it("Generates correct reward address data", () => {
-        const addressData = cardanoTestnetPreview.getAddressData(
+      it("Derives correct reward item", () => {
+        const derivedItem = cardanoTestnetPreview.derive(
           MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward.path,
           AddressType.ADA_REWARD
         );
 
-        expect(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward).toEqual(addressData);
+        expect(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward).toEqual(derivedItem);
       });
 
-      it("Generates correct base address data", () => {
-        const addressData = cardanoTestnetPreview.getAddressData(
+      it("Derives correct base item", () => {
+        const derivedItem = cardanoTestnetPreview.derive(
           MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base.enterprisePath,
           AddressType.ADA_BASE
         );
 
-        expect(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base).toEqual(addressData);
+        expect(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct enterprise address data", () => {
-          const addressData = cardanoTestnetPreview.importByPrivateKey(
+        it("Imports correct enterprise item", () => {
+          const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise.path,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise.privateKey,
             AddressType.ADA_ENTERPRISE
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise);
+          expect(credential).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.enterprise);
         });
 
-        it("Imports correct reward address data", () => {
-          const addressData = cardanoTestnetPreview.importByPrivateKey(
+        it("Imports correct reward item", () => {
+          const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward.path,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward.privateKey,
             AddressType.ADA_REWARD
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward);
+          expect(credential).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.reward);
         });
 
-        it("Imports correct base address data", () => {
-          const addressData = cardanoTestnetPreview.importByPrivateKey(
+        it("Imports correct base item", () => {
+          const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base.enterprisePath,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base.enterprisePrivateKey,
             AddressType.ADA_BASE,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base.rewardPrivateKey
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base);
+          expect(credential).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.native.base);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct enterprise address data", () => {
-          const addressData = cardanoTestnetPreview.importByPrivateKey(
+        it("Imports correct enterprise item", () => {
+          const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.enterprise.path,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.enterprise.privateKey,
             AddressType.ADA_ENTERPRISE
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.enterprise);
+          expect(credential).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.enterprise);
         });
 
-        it("Imports correct reward address data", () => {
-          const addressData = cardanoTestnetPreview.importByPrivateKey(
+        it("Imports correct reward item", () => {
+          const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.reward.path,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.reward.privateKey,
             AddressType.ADA_REWARD
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.reward);
+          expect(credential).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.reward);
         });
 
-        it("Imports correct base address data", () => {
-          const addressData = cardanoTestnetPreview.importByPrivateKey(
+        it("Imports correct base item", () => {
+          const credential = cardanoTestnetPreview.importByPrivateKey(
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.base.enterprisePath,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.base.enterprisePrivateKey,
             AddressType.ADA_BASE,
             MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.base.rewardPrivateKey
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.base);
+          expect(credential).toEqual(MOCK_TESTNET_PREVIEW_ADDRESS_DATA.nonNative.base);
         });
       });
     });
   });
 
-  describe("testnet preprod", () => {
-    describe("getAddressData", () => {
-      it("Generates correct enterprise address data", () => {
-        const addressData = cardanoTestnetPreprod.getAddressData(
+  describe("testnet preprod", (derivedItem) => {
+    describe("derive", () => {
+      it("Derives correct enterprise item", () => {
+        const derivedItem = cardanoTestnetPreprod.derive(
           MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise.path,
           AddressType.ADA_ENTERPRISE
         );
 
-        expect(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise).toEqual(addressData);
+        expect(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise).toEqual(derivedItem);
       });
 
-      it("Generates correct reward address data", () => {
-        const addressData = cardanoTestnetPreprod.getAddressData(
+      it("Derives correct reward item", () => {
+        const derivedItem = cardanoTestnetPreprod.derive(
           MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward.path,
           AddressType.ADA_REWARD
         );
 
-        expect(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward).toEqual(addressData);
+        expect(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward).toEqual(derivedItem);
       });
 
-      it("Generates correct base address data", () => {
-        const addressData = cardanoTestnetPreprod.getAddressData(
+      it("Derives correct base item", () => {
+        const derivedItem = cardanoTestnetPreprod.derive(
           MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base.enterprisePath,
           AddressType.ADA_BASE
         );
 
-        expect(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base).toEqual(addressData);
+        expect(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base).toEqual(derivedItem);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct enterprise address data", () => {
-          const addressData = cardanoTestnetPreprod.importByPrivateKey(
+        it("Imports correct enterprise item", () => {
+          const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise.path,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise.privateKey,
             AddressType.ADA_ENTERPRISE
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise);
+          expect(credential).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.enterprise);
         });
 
-        it("Imports correct reward address data", () => {
-          const addressData = cardanoTestnetPreprod.importByPrivateKey(
+        it("Imports correct reward item", () => {
+          const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward.path,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward.privateKey,
             AddressType.ADA_REWARD
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward);
+          expect(credential).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.reward);
         });
 
-        it("Imports correct base address data", () => {
-          const addressData = cardanoTestnetPreprod.importByPrivateKey(
+        it("Imports correct base item", () => {
+          const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base.enterprisePath,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base.enterprisePrivateKey,
             AddressType.ADA_BASE,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base.rewardPrivateKey
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base);
+          expect(credential).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.native.base);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct enterprise address data", () => {
-          const addressData = cardanoTestnetPreprod.importByPrivateKey(
+        it("Imports correct enterprise item", () => {
+          const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.enterprise.path,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.enterprise.privateKey,
             AddressType.ADA_ENTERPRISE
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.enterprise);
+          expect(credential).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.enterprise);
         });
 
-        it("Imports correct reward address data", () => {
-          const addressData = cardanoTestnetPreprod.importByPrivateKey(
+        it("Imports correct reward item", () => {
+          const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.reward.path,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.reward.privateKey,
             AddressType.ADA_REWARD
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.reward);
+          expect(credential).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.reward);
         });
 
-        it("Imports correct base address data", () => {
-          const addressData = cardanoTestnetPreprod.importByPrivateKey(
+        it("Imports correct base item", () => {
+          const credential = cardanoTestnetPreprod.importByPrivateKey(
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.base.enterprisePath,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.base.enterprisePrivateKey,
             AddressType.ADA_BASE,
             MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.base.rewardPrivateKey
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.base);
+          expect(credential).toEqual(MOCK_TESTNET_PREPROD_ADDRESS_DATA.nonNative.base);
         });
       });
     });

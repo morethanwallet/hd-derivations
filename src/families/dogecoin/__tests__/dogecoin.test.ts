@@ -68,101 +68,101 @@ beforeEach(() => {
 
 describe("Dogecoin", () => {
   describe("mainnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct address data", () => {
-        const addressData = dogecoinMainnet.getAddressData(MOCK_MAINNET_ADDRESS_DATA.native.path);
+    describe("derive", () => {
+      it("Derives correct item", () => {
+        const derivedItem = dogecoinMainnet.derive(MOCK_MAINNET_ADDRESS_DATA.native.path);
 
-        expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native);
+        expect(derivedItem).toEqual(MOCK_MAINNET_ADDRESS_DATA.native);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct address data", () => {
-          const addressData = dogecoinMainnet.importByPrivateKey(
+        it("Imports correct item", () => {
+          const credential = dogecoinMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.native.path,
             MOCK_MAINNET_ADDRESS_DATA.native.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.native);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.native);
         });
       });
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct address data", () => {
-          const addressData = dogecoinMainnet.importByPrivateKey(
+        it("Imports correct item", () => {
+          const credential = dogecoinMainnet.importByPrivateKey(
             MOCK_MAINNET_ADDRESS_DATA.nonNative.path,
             MOCK_MAINNET_ADDRESS_DATA.nonNative.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative);
+          expect(credential).toEqual(MOCK_MAINNET_ADDRESS_DATA.nonNative);
         });
       });
     });
   });
 
   describe("testnet", () => {
-    describe("getAddressData", () => {
-      it("Generates correct address data", () => {
-        const addressData = dogecoinTestnet.getAddressData(MOCK_TESTNET_ADDRESS_DATA.native.path);
+    describe("derive", () => {
+      it("Derives correct item", () => {
+        const derivedItem = dogecoinTestnet.derive(MOCK_TESTNET_ADDRESS_DATA.native.path);
 
-        expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.native);
+        expect(derivedItem).toEqual(MOCK_TESTNET_ADDRESS_DATA.native);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct address data", () => {
-          const addressData = dogecoinTestnet.importByPrivateKey(
+        it("Imports correct item", () => {
+          const credential = dogecoinTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.native.path,
             MOCK_TESTNET_ADDRESS_DATA.native.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.native);
+          expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.native);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct address data", () => {
-          const addressData = dogecoinTestnet.importByPrivateKey(
+        it("Imports correct item", () => {
+          const credential = dogecoinTestnet.importByPrivateKey(
             MOCK_TESTNET_ADDRESS_DATA.nonNative.path,
             MOCK_TESTNET_ADDRESS_DATA.nonNative.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative);
+          expect(credential).toEqual(MOCK_TESTNET_ADDRESS_DATA.nonNative);
         });
       });
     });
   });
 
   describe("regtest", () => {
-    describe("getAddressData", () => {
-      it("Generates correct address data", () => {
-        const addressData = dogecoinRegtest.getAddressData(MOCK_REGTEST_ADDRESS_DATA.native.path);
+    describe("derive", () => {
+      it("Derives correct item", () => {
+        const derivedItem = dogecoinRegtest.derive(MOCK_REGTEST_ADDRESS_DATA.native.path);
 
-        expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.native);
+        expect(derivedItem).toEqual(MOCK_REGTEST_ADDRESS_DATA.native);
       });
     });
 
     describe("importByPrivateKey", () => {
       describe("Import from a native mnemonic", () => {
-        it("Imports correct address data", () => {
-          const addressData = dogecoinRegtest.importByPrivateKey(
+        it("Imports correct item", () => {
+          const credential = dogecoinRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.native.path,
             MOCK_REGTEST_ADDRESS_DATA.native.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.native);
+          expect(credential).toEqual(MOCK_REGTEST_ADDRESS_DATA.native);
         });
       });
 
       describe("Import from a non-native mnemonic", () => {
-        it("Imports correct address data", () => {
-          const addressData = dogecoinRegtest.importByPrivateKey(
+        it("Imports correct item", () => {
+          const credential = dogecoinRegtest.importByPrivateKey(
             MOCK_REGTEST_ADDRESS_DATA.nonNative.path,
             MOCK_REGTEST_ADDRESS_DATA.nonNative.privateKey
           );
 
-          expect(addressData).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative);
+          expect(credential).toEqual(MOCK_REGTEST_ADDRESS_DATA.nonNative);
         });
       });
     });

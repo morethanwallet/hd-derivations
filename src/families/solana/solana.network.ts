@@ -9,7 +9,7 @@ class Solana implements AbstractNetwork {
     this.solanaAddress = new SolanaAddress(mnemonic);
   }
 
-  public getAddressData(derivationPath: string) {
+  public derive(derivationPath: string) {
     return this.solanaAddress.getData(derivationPath);
   }
 

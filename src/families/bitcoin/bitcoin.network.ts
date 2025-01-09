@@ -32,7 +32,7 @@ class Bitcoin implements AbstractNetwork<"bitcoin"> {
     );
   }
 
-  public getAddressData(derivationPath: string, addressType: BitcoinAddress) {
+  public derive(derivationPath: string, addressType: BitcoinAddress) {
     switch (addressType) {
       case "legacy": {
         return this.p2pkhAddress.getData(derivationPath);

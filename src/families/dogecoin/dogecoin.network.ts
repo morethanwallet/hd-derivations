@@ -11,7 +11,7 @@ class Dogecoin implements AbstractNetwork {
     this.p2pkhAddress = new P2pkhAddress(config[purpose].legacy.keysConfig, mnemonic);
   }
 
-  public getAddressData(derivationPath: string) {
+  public derive(derivationPath: string) {
     return this.p2pkhAddress.getData(derivationPath);
   }
 
