@@ -1,5 +1,5 @@
 import { type BitcoinCoreAddressUnion } from "@/families/bitcoin/index.js";
-import { type AddressList } from "../enums/index.js";
+import { type DerivationType } from "../enums/index.js";
 import {
   type NetworkPurposeUnion as AvaxNetworkPurposeUnion,
   type NetworkTypeUnion as AvaxNetworkTypeUnion,
@@ -25,14 +25,14 @@ import {
 type Credential = DerivedItemAddress & DerivationKeyPair;
 
 type DerivedItem<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends typeof AddressList.ADA_BASE
+  TDerivationType extends typeof DerivationType.ADA_BASE
     ? CardanoDerivedBaseItem
     : { derivationPath: string } & Credential;
 
 type CommonInconsistentDerivationParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends BitcoinCoreAddressUnion
     ? { base58RootKey: string }
-    : TDerivationType extends typeof AddressList.AVAX
+    : TDerivationType extends typeof DerivationType.AVAX
     ? { networkType: AvaxNetworkTypeUnion; networkPurpose: AvaxNetworkPurposeUnion }
     : TDerivationType extends CardanoAddressUnion
     ? { networkPurpose: CardanoNetworkPurposeUnion }
@@ -50,7 +50,7 @@ type DeriveFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
 
 type ImportByPrivateKeyParameters<TDerivationType extends DerivationTypeUnion> = {
   derivationPath: string;
-} & (TDerivationType extends typeof AddressList.ADA_BASE
+} & (TDerivationType extends typeof DerivationType.ADA_BASE
   ? {
       enterprisePrivateKey: CardanoBaseAddressKeyPair["enterprisePrivateKey"];
       rewardPrivateKey: CardanoBaseAddressKeyPair["rewardPrivateKey"];
