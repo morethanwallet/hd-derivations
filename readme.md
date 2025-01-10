@@ -31,8 +31,9 @@ This folder is responsible for mnemonic related operations.
 ## Simple Start
 
 1. `npm install` at the root
-2. `npm run start` to execute a script
-3. `npm run test` to run tests
+2. `npx simple-git-hooks` at the root
+3. `npm run start` to execute a script
+4. `npm run test` to run tests
 
 ### Usage
 
