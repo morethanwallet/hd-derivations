@@ -1,2 +1,2 @@
-export { type KeyPair, type KeysConfig } from "./keys.type.js";
 export { type DerivedItem, type AbstractAddress } from "./address.type.js";
+export { type DerivationKeyPair } from "./derivationKeyPair.type.js";
