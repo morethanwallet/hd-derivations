@@ -1,9 +1,10 @@
+import { type DerivedItemAddress } from "@/address/types/index.js";
 import { type BaseDerivationKeyPair } from "./index.js";
 
 type DerivedBaseItem = {
-  address: string;
   enterpriseDerivationPath: string;
   rewardDerivationPath: string;
-} & BaseDerivationKeyPair;
+} & BaseDerivationKeyPair &
+  DerivedItemAddress;
 
 export { type DerivedBaseItem };
