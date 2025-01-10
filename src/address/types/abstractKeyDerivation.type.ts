@@ -8,10 +8,7 @@ import {
   type NetworkPurposeUnion as CardanoNetworkPurposeUnion,
   type CardanoAddressUnion,
 } from "@/families/cardano/index.js";
-import {
-  type BaseDerivationKeyPair as CardanoBaseAddressKeyPair,
-  type DerivedBaseItem as CardanoDerivedBaseItem,
-} from "@/address/cardano/types/index.js";
+import { type BaseDerivationKeyPair as CardanoBaseAddressKeyPair } from "@/address/cardano/types/index.js";
 import {
   type NetworkPurpose as XrpNetworkPurpose,
   type XrpAddressList,
@@ -20,14 +17,10 @@ import {
   type DerivedItemAddress,
   type DerivationKeyPair,
   type DerivationTypeUnion,
+  DerivedItem,
 } from "./index.js";
 
 type Credential = DerivedItemAddress & DerivationKeyPair;
-
-type DerivedItem<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends typeof DerivationType.ADA_BASE
-    ? CardanoDerivedBaseItem
-    : { derivationPath: string } & Credential;
 
 type CommonInconsistentDerivationParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends BitcoinCoreAddressUnion
