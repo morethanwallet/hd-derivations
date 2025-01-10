@@ -16,7 +16,7 @@ export {
   P2wpkhInP2shAddress,
   P2wshInP2shAddress,
 } from "./common/index.js";
-export { XrpAddressList } from "./xrp/index.js";
+export { XrpAddress } from "./xrp/index.js";
 export { AvaxAddress } from "./avax/index.js";
 export { SolanaAddress } from "./solana/index.js";
 export { BaseAddress, EnterpriseAddress, RewardAddress } from "./cardano/index.js";
