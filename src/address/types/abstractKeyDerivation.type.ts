@@ -13,14 +13,7 @@ import {
   type NetworkPurpose as XrpNetworkPurpose,
   type XrpAddressList,
 } from "@/families/xrp/index.js";
-import {
-  type DerivedItemAddress,
-  type DerivationKeyPair,
-  type DerivationTypeUnion,
-  DerivedItem,
-} from "./index.js";
-
-type Credential = DerivedItemAddress & DerivationKeyPair;
+import { type DerivationKeyPair, type DerivationTypeUnion, type DerivedItem } from "./index.js";
 
 type CommonInconsistentDerivationParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends BitcoinCoreAddressUnion
