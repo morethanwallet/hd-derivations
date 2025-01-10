@@ -1,6 +1,5 @@
 import { type BitcoinCoreAddressUnion } from "@/families/bitcoin/index.js";
 import { type AddressList } from "../enums/index.js";
-import { type ValueOf } from "ts-essentials";
 import {
   type NetworkPurposeUnion as AvaxNetworkPurposeUnion,
   type NetworkTypeUnion as AvaxNetworkTypeUnion,
@@ -17,9 +16,11 @@ import {
   type NetworkPurpose as XrpNetworkPurpose,
   type XrpAddressList,
 } from "@/families/xrp/index.js";
-import { type DerivedItemAddress, type DerivationKeyPair } from "./index.js";
-
-type DerivationTypeUnion = ValueOf<typeof AddressList>;
+import {
+  type DerivedItemAddress,
+  type DerivationKeyPair,
+  type DerivationTypeUnion,
+} from "./index.js";
 
 type Credential = DerivedItemAddress & DerivationKeyPair;
 
