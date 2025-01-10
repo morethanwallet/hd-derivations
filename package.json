@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "tsx src/index.ts",
-    "test": "vitest --coverage"
+    "test": "vitest --coverage",
+    "build:graph": "npx madge src/ --ts-config ./tsconfig.json --extensions ts,tsx --image graph.svg"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run build:graph"
   },
   "keywords": [],
   "author": "",
