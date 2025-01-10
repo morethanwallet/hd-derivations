@@ -1,70 +1,69 @@
-import { type BitcoinCoreAddressList } from "@/families/bitcoin/index.js";
+import { type BitcoinCoreAddressUnion } from "@/families/bitcoin/index.js";
 import { type AddressList } from "../enums/index.js";
-import { type KeyPair } from "./index.js";
 import { type ValueOf } from "ts-essentials";
 import {
-  type NetworkPurpose as AvaxNetworkPurpose,
-  type NetworkType as AvaxNetworkType,
+  type NetworkPurposeUnion as AvaxNetworkPurposeUnion,
+  type NetworkTypeUnion as AvaxNetworkTypeUnion,
 } from "@/families/avax/index.js";
 import {
-  type NetworkPurpose as CardanoNetworkPurpose,
-  type CardanoAddressList,
+  type NetworkPurposeUnion as CardanoNetworkPurposeUnion,
+  type CardanoAddressUnion,
 } from "@/families/cardano/index.js";
 import {
-  type BaseAddressKeyPair as CardanoBaseAddressKeyPair,
+  type BaseDerivationKeyPair as CardanoBaseAddressKeyPair,
   type DerivedBaseItem as CardanoDerivedBaseItem,
-} from "@/address/cardano/index.js";
+} from "@/address/cardano/types/index.js";
 import {
   type NetworkPurpose as XrpNetworkPurpose,
   type XrpAddressList,
 } from "@/families/xrp/index.js";
+import { type DerivedItemAddress, type DerivationKeyPair } from "./index.js";
 
-type AddressUnion = ValueOf<typeof AddressList>;
+type DerivationTypeUnion = ValueOf<typeof AddressList>;
 
-type DerivedItem<TAddress extends AddressUnion> = TAddress extends typeof AddressList.ADA_BASE
-  ? CardanoDerivedBaseItem
-  : {
-      path: string;
-      address: string;
-      mnemonic: string;
-    } & KeyPair;
+type Credential = DerivedItemAddress & DerivationKeyPair;
 
-type AddressSpecificParameters<TAddress extends AddressUnion> =
-  TAddress extends BitcoinCoreAddressList
+type DerivedItem<TDerivationType extends DerivationTypeUnion> =
+  TDerivationType extends typeof AddressList.ADA_BASE
+    ? CardanoDerivedBaseItem
+    : { derivationPath: string } & Credential;
+
+type CommonInconsistentDerivationParameters<TDerivationType extends DerivationTypeUnion> =
+  TDerivationType extends BitcoinCoreAddressUnion
     ? { base58RootKey: string }
-    : TAddress extends typeof AddressList.AVAX
-    ? { networkType: AvaxNetworkType; networkPurpose: AvaxNetworkPurpose }
-    : TAddress extends CardanoAddressList
-    ? { networkPurpose: CardanoNetworkPurpose }
-    : TAddress extends XrpAddressList
+    : TDerivationType extends typeof AddressList.AVAX
+    ? { networkType: AvaxNetworkTypeUnion; networkPurpose: AvaxNetworkPurposeUnion }
+    : TDerivationType extends CardanoAddressUnion
+    ? { networkPurpose: CardanoNetworkPurposeUnion }
+    : TDerivationType extends XrpAddressList
     ? { addressType: XrpAddressList; networkPurpose: XrpNetworkPurpose; destinationTag?: number }
     : Record<string, unknown>;
 
-type GetDerivedItemParameters<TAddress extends AddressUnion> = {
+type DeriveFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> = {
   derivationPath: string;
-} & AddressSpecificParameters<TAddress>;
+} & CommonInconsistentDerivationParameters<TDerivationType>;
 
-type GetDerivedItem<TAddress extends AddressUnion> = (
-  parameters: GetDerivedItemParameters<TAddress>
-) => DerivedItem<TAddress>;
+type DeriveFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
+  parameters: DeriveFromMnemonicParameters<TDerivationType>
+) => DerivedItem<TDerivationType>;
 
-type ImportByPrivateKeyParameters<TAddress extends AddressUnion> = {
+type ImportByPrivateKeyParameters<TDerivationType extends DerivationTypeUnion> = {
   derivationPath: string;
-} & (TAddress extends typeof AddressList.ADA_BASE
+} & (TDerivationType extends typeof AddressList.ADA_BASE
   ? {
       enterprisePrivateKey: CardanoBaseAddressKeyPair["enterprisePrivateKey"];
       rewardPrivateKey: CardanoBaseAddressKeyPair["rewardPrivateKey"];
     }
-  : { privateKey: KeyPair["privateKey"] }) &
-  AddressSpecificParameters<TAddress>;
+  : { privateKey: DerivationKeyPair["privateKey"] }) &
+  CommonInconsistentDerivationParameters<TDerivationType>;
 
-type ImportByPrivateKey<TAddress extends AddressUnion> = (
-  parameters: ImportByPrivateKeyParameters<TAddress>
-) => DerivedItem<TAddress>;
+type ImportByPrivateKey<TDerivationType extends DerivationTypeUnion> = (
+  parameters: ImportByPrivateKeyParameters<TDerivationType>
+) => DerivedItem<TDerivationType>;
 
-type AbstractAddress<TAddress extends AddressUnion> = {
-  derive: GetDerivedItem<TAddress>;
-  importByPrivateKey: ImportByPrivateKey<TAddress>;
+type AbstractKeyDerivation<TDerivationType extends DerivationTypeUnion> = {
+  derive: DeriveFromMnemonic<TDerivationType>;
+  importByPrivateKey: ImportByPrivateKey<TDerivationType>;
 };
 
-export { type DerivedItem, type AbstractAddress };
+export { type DerivedItem, type AbstractKeyDerivation };
