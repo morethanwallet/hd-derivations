@@ -1,4 +1,4 @@
-export { type NetworkPurpose } from "./types/index.js";
+export { type NetworkPurposeUnion } from "./types/index.js";
 export { Bitcoin, BitcoinCore, MultiBitHd } from "./bitcoin/index.js";
 export { Dogecoin } from "./dogecoin/index.js";
 export { Zcash } from "./zcash/index.js";

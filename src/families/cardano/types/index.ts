@@ -1,2 +1,2 @@
-export { type AbstractNetwork, type NetworkPurpose } from "./network.type.js";
-export { type CardanoAddressList } from "./address.type.js";
+export { type AbstractNetwork, type NetworkPurposeUnion } from "./network.type.js";
+export { type CardanoAddressUnion } from "./address.type.js";

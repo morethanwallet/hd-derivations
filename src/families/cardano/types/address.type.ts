@@ -1,8 +1,8 @@
 import { type AddressList } from "@/address/enums/index.js";
 
-type CardanoAddressList =
+type CardanoAddressUnion =
   | typeof AddressList.ADA_BASE
   | typeof AddressList.ADA_ENTERPRISE
   | typeof AddressList.ADA_REWARD;
 
-export { type CardanoAddressList };
+export { type CardanoAddressUnion };
