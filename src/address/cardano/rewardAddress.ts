@@ -1,11 +1,10 @@
-import { Keys } from "./keys/index.js";
 import {
   Credential,
   PrivateKey,
   RewardAddress as LibraryRewardAddress,
 } from "@emurgo/cardano-serialization-lib-nodejs";
 import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
+import { SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import {
   getAccount,
@@ -14,20 +13,31 @@ import {
   getNetworkId,
   updateDerivationPathChange,
 } from "./helpers/index.js";
-import { type AddressList, type AbstractAddress, type DerivedItem } from "@/address/index.js";
 import { Change } from "./enums/index.js";
-import { type NetworkPurpose } from "@/families/cardano/index.js";
+import { Keys } from "@/keys/cardano/index.js";
+import {
+  type AbstractKeyDerivation,
+  type DerivedCredential,
+  type DerivedItem,
+  type DeriveFromMnemonicParameters,
+  type ImportByPrivateKeyParameters,
+} from "../types/index.js";
+import { type DerivationType } from "../enums/index.js";
+import { type NetworkPurposeUnion } from "@/families/cardano/types/index.js";
 
-class RewardAddress extends Keys implements AbstractAddress<typeof AddressList.ADA_REWARD> {
+class RewardAddress
+  extends Keys
+  implements AbstractKeyDerivation<typeof DerivationType.ADA_REWARD>
+{
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
   }
 
-  public derive({
+  public deriveFromMnemonic({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressList.ADA_REWARD>["derive"]>[0]): DerivedItem<
-    typeof AddressList.ADA_REWARD
+  }: DeriveFromMnemonicParameters<typeof DerivationType.ADA_REWARD>): DerivedItem<
+    typeof DerivationType.ADA_REWARD
   > {
     const rootKey = this.getRootKey();
     const account = getAccount(rootKey, derivationPath);
@@ -39,10 +49,9 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressList.A
 
     return {
       address,
-      path: updateDerivationPathChange(derivationPath, Change.CHIMERIC),
+      derivationPath: updateDerivationPathChange(derivationPath, Change.CHIMERIC),
       privateKey: privateKey.to_hex(),
       publicKey: publicKey.to_hex(),
-      mnemonic: this.mnemonic.getMnemonic(),
     };
   }
 
@@ -50,9 +59,9 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressList.A
     derivationPath,
     privateKey,
     networkPurpose,
-  }: Parameters<
-    AbstractAddress<typeof AddressList.ADA_REWARD>["importByPrivateKey"]
-  >[0]): DerivedItem<typeof AddressList.ADA_REWARD> {
+  }: ImportByPrivateKeyParameters<typeof DerivationType.ADA_REWARD>): DerivedCredential<
+    typeof DerivationType.ADA_REWARD
+  > {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -61,7 +70,10 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressList.A
         i
       );
 
-      const data = this.derive({ networkPurpose, derivationPath: incrementedDerivationPath });
+      const data = this.deriveFromMnemonic({
+        networkPurpose,
+        derivationPath: incrementedDerivationPath,
+      });
 
       if (data.privateKey === privateKey) return data;
     }
@@ -74,15 +86,13 @@ class RewardAddress extends Keys implements AbstractAddress<typeof AddressList.A
       address,
       privateKey,
       publicKey: rawPublicKey.to_hex(),
-      path: updateDerivationPathChange(derivationPath, Change.CHIMERIC),
-      mnemonic: EMPTY_MNEMONIC,
     };
   }
 
   private getAddress(
     credential: Credential,
-    networkPurpose: NetworkPurpose
-  ): DerivedItem<typeof AddressList.ADA_REWARD>["address"] {
+    networkPurpose: NetworkPurposeUnion
+  ): DerivedItem<typeof DerivationType.ADA_REWARD>["address"] {
     const address = LibraryRewardAddress.new(getNetworkId(networkPurpose), credential);
 
     return address.to_address().to_bech32();

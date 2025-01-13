@@ -36,22 +36,25 @@ class BaseAddress extends Keys implements AbstractKeyDerivation<typeof Derivatio
   }: DeriveFromMnemonicParameters<typeof DerivationType.ADA_BASE>): DerivedItem<
     typeof DerivationType.ADA_BASE
   > {
-    const derivedEnterpriseItem = this.enterpriseAddress.derive({
+    const derivedEnterpriseItem = this.enterpriseAddress.deriveFromMnemonic({
       derivationPath,
       networkPurpose,
     });
 
-    const derivedRewardItem = this.rewardAddress.derive({ derivationPath, networkPurpose });
+    const derivedRewardItem = this.rewardAddress.deriveFromMnemonic({
+      derivationPath,
+      networkPurpose,
+    });
     const enterpriseCredential = getCredential(PublicKey.from_hex(derivedEnterpriseItem.publicKey));
     const rewardCredential = getCredential(PublicKey.from_hex(derivedRewardItem.publicKey));
     const address = this.getAddress(enterpriseCredential, rewardCredential, networkPurpose);
 
     return {
       address,
-      enterpriseDerivationPath: derivedEnterpriseItem.path,
+      enterpriseDerivationPath: derivedEnterpriseItem.derivationPath,
       enterprisePrivateKey: derivedEnterpriseItem.privateKey,
       enterprisePublicKey: derivedEnterpriseItem.publicKey,
-      rewardDerivationPath: derivedRewardItem.path,
+      rewardDerivationPath: derivedRewardItem.derivationPath,
       rewardPrivateKey: derivedRewardItem.privateKey,
       rewardPublicKey: derivedRewardItem.publicKey,
     };
