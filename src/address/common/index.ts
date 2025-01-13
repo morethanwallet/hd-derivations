@@ -1,4 +1,3 @@
-export { BnbAddress } from "../bnbAddress.js";
 export { EvmAddress } from "./evmAddress.js";
 export { P2pkhAddress } from "./p2pkhAddress.js";
 export { P2wpkhAddress } from "./p2wpkhAddress.js";

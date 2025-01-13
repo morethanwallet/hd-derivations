@@ -20,7 +20,7 @@ import { KeysConfig } from "@/keys/types/index.js";
 
 const HRP = "bnb";
 
-class BnbAddress extends Keys implements AbstractKeyDerivation<typeof DerivationType.BNB> {
+class BnbKeyDerivation extends Keys implements AbstractKeyDerivation<typeof DerivationType.BNB> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
@@ -85,4 +85,4 @@ class BnbAddress extends Keys implements AbstractKeyDerivation<typeof Derivation
   }
 }
 
-export { BnbAddress };
+export { BnbKeyDerivation };
