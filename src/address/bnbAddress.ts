@@ -4,7 +4,7 @@ import {
   getAddressFromPrivateKey,
 } from "@binance-chain/javascript-sdk/lib/crypto";
 import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
-import { ExceptionMessage, AddressError } from "../exceptions/index.js";
+import { ExceptionMessage, AddressError } from "./exceptions/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { Keys } from "@/keys/bip32/index.js";
 import {
@@ -14,8 +14,8 @@ import {
   DerivedKeyPair,
   DeriveFromMnemonicParameters,
   ImportByPrivateKeyParameters,
-} from "../types/index.js";
-import { DerivationType } from "../enums/derivationType.enum.js";
+} from "./types/index.js";
+import { DerivationType } from "./enums/derivationType.enum.js";
 import { KeysConfig } from "@/keys/types/index.js";
 
 const HRP = "bnb";
