@@ -4,16 +4,16 @@ import { getKeyPairFromEc } from "./helpers/index.js";
 import { Wallet } from "xrpl";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import {
-  AbstractKeyDerivation,
-  DerivedCredential,
-  DerivedItem,
-  DerivedKeyPair,
-  DeriveFromMnemonicParameters,
-  ImportByPrivateKeyParameters,
+  type AbstractKeyDerivation,
+  type DerivedCredential,
+  type DerivedItem,
+  type DerivedKeyPair,
+  type DeriveFromMnemonicParameters,
+  type ImportByPrivateKeyParameters,
 } from "./types/index.js";
 import { Keys } from "@/keys/bip32/index.js";
-import { AddressUnion, NetworkPurposeUnion } from "@/families/xrp/types/index.js";
-import { KeysConfig } from "@/keys/types/index.js";
+import { type AddressUnion, type NetworkPurposeUnion } from "@/families/xrp/types/index.js";
+import { type KeysConfig } from "@/keys/types/index.js";
 import { DerivationType } from "./enums/index.js";
 
 class XrpKeyDerivation extends Keys implements AbstractKeyDerivation<AddressUnion> {
