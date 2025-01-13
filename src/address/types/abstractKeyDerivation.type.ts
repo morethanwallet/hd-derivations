@@ -6,7 +6,7 @@ import {
 } from "@/families/avax/index.js";
 import {
   type NetworkPurposeUnion as CardanoNetworkPurposeUnion,
-  type CardanoAddressUnion,
+  type AddressUnion as CardanoAddressUnion,
 } from "@/families/cardano/index.js";
 import { type BaseDerivationKeyPair as CardanoBaseAddressKeyPair } from "@/address/cardano/types/index.js";
 import {
