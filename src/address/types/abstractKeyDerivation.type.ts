@@ -8,10 +8,10 @@ import {
   type NetworkPurposeUnion as CardanoNetworkPurposeUnion,
   type AddressUnion as CardanoAddressUnion,
 } from "@/families/cardano/index.js";
-import { type BaseDerivationKeyPair as CardanoBaseAddressKeyPair } from "@/address/cardano/types/index.js";
+import { type BaseDerivationKeyPair as CardanoBaseDerivationKeyPair } from "@/address/cardano/types/index.js";
 import {
   type NetworkPurpose as XrpNetworkPurpose,
-  type XrpAddressList,
+  type AddressUnion as XrpAddressUnion,
 } from "@/families/xrp/index.js";
 import { type DerivationKeyPair, type DerivationTypeUnion, type DerivedItem } from "./index.js";
 
@@ -22,8 +22,8 @@ type CommonInconsistentDerivationParameters<TDerivationType extends DerivationTy
     ? { networkType: AvaxNetworkTypeUnion; networkPurpose: AvaxNetworkPurposeUnion }
     : TDerivationType extends CardanoAddressUnion
     ? { networkPurpose: CardanoNetworkPurposeUnion }
-    : TDerivationType extends XrpAddressList
-    ? { addressType: XrpAddressList; networkPurpose: XrpNetworkPurpose; destinationTag?: number }
+    : TDerivationType extends XrpAddressUnion
+    ? { addressType: XrpAddressUnion; networkPurpose: XrpNetworkPurpose; destinationTag?: number }
     : Record<string, unknown>;
 
 type DeriveFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> = {
@@ -38,8 +38,8 @@ type ImportByPrivateKeyParameters<TDerivationType extends DerivationTypeUnion> =
   derivationPath: string;
 } & (TDerivationType extends typeof DerivationType.ADA_BASE
   ? {
-      enterprisePrivateKey: CardanoBaseAddressKeyPair["enterprisePrivateKey"];
-      rewardPrivateKey: CardanoBaseAddressKeyPair["rewardPrivateKey"];
+      enterprisePrivateKey: CardanoBaseDerivationKeyPair["enterprisePrivateKey"];
+      rewardPrivateKey: CardanoBaseDerivationKeyPair["rewardPrivateKey"];
     }
   : { privateKey: DerivationKeyPair["privateKey"] }) &
   CommonInconsistentDerivationParameters<TDerivationType>;

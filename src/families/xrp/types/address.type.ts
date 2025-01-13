@@ -1,5 +1,5 @@
-import { type AddressList } from "@/address/index.js";
+import { type DerivationType } from "@/address/enums/index.js";
 
-type XrpAddressList = typeof AddressList.XRP_BASE | typeof AddressList.XRP_X;
+type AddressUnion = typeof DerivationType.XRP_BASE | typeof DerivationType.XRP_X;
 
-export { type XrpAddressList };
+export { type AddressUnion };
