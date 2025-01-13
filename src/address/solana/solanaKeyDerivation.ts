@@ -1,4 +1,3 @@
-import { Keys } from "./keys/index.js";
 import base58 from "bs58";
 import { type DerivedItem, type KeyPair } from "../types/index.js";
 import { Keypair } from "@solana/web3.js";
@@ -6,6 +5,7 @@ import { appendAddressToDerivationPath } from "./helpers/index.js";
 import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AddressList, type AbstractAddress } from "@/address/index.js";
+import { Keys } from "@/keys/solana/index.js";
 
 class SolanaKeyDerivation extends Keys implements AbstractAddress<typeof AddressList.SOL> {
   public constructor(mnemonic: Mnemonic) {
