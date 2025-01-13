@@ -1,31 +1,40 @@
-import { Keys } from "./keys/index.js";
 import { payments } from "bitcoinjs-lib";
 import { toCashAddress } from "bchaddrjs";
 import { ExceptionMessage, AddressError } from "../exceptions/index.js";
-import { type DerivedItem, type KeyPair, type KeysConfig } from "../types/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
-import {
-  appendAddressToDerivationPath,
-  getKeyPairFromEc,
-  removeDerivationPathAddress,
-} from "../helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
+import { getKeyPairFromEc } from "../helpers/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 import { config } from "@/families/bitcoin-cash/index.js";
+import {
+  AbstractKeyDerivation,
+  DerivedCredential,
+  DerivedItem,
+  DerivedKeyPair,
+  DeriveFromMnemonicParameters,
+  ImportByPrivateKeyParameters,
+} from "../types/index.js";
+import { DerivationType } from "../enums/index.js";
+import { KeysConfig } from "@/keys/types/index.js";
+import { Keys } from "@/keys/bip32/index.js";
 
 const REGTEST_PREFIX = "bchreg";
 const HRP_DELIMITER = ":";
 const ADDRESS_INDEX = 1;
 
-// TODO: Move this class to bitcoin-cash folder
-class CashAddrAddress extends Keys implements AbstractAddress<typeof AddressList.BCH_CASH_ADDR> {
+class CashAddrAddress
+  extends Keys
+  implements AbstractKeyDerivation<typeof DerivationType.BCH_CASH_ADDR>
+{
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
 
-  public derive(derivationPath: string): DerivedItem {
+  public deriveFromMnemonic({
+    derivationPath,
+  }: DeriveFromMnemonicParameters<typeof DerivationType.BCH_CASH_ADDR>): DerivedItem<
+    typeof DerivationType.BCH_CASH_ADDR
+  > {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
     const address = this.getAddress(node.publicKey);
@@ -34,24 +43,27 @@ class CashAddrAddress extends Keys implements AbstractAddress<typeof AddressList
       privateKey,
       publicKey,
       address,
-      path: derivationPath,
-      mnemonic: this.mnemonic.getMnemonic(),
+      derivationPath,
     };
   }
 
-  public importByPrivateKey(derivationPath: string, privateKey: string): DerivedItem {
-    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
+  public importByPrivateKey({
+    privateKey,
+  }: ImportByPrivateKeyParameters<typeof DerivationType.BCH_CASH_ADDR>): DerivedCredential<
+    typeof DerivationType.BCH_CASH_ADDR
+  > {
+    // const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const incrementedDerivationPath = appendAddressToDerivationPath(
-        derivationPathWithoutAddress,
-        i
-      );
+    // for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+    //   const incrementedDerivationPath = appendAddressToDerivationPath(
+    //     derivationPathWithoutAddress,
+    //     i
+    //   );
 
-      const data = this.derive(incrementedDerivationPath);
+    //   const data = this.deriveFromMnemonic(incrementedDerivationPath);
 
-      if (data.privateKey === privateKey) return data;
-    }
+    //   if (data.privateKey === privateKey) return data;
+    // }
 
     const { publicKey } = this.getKeyPair(privateKey);
     const address = this.getAddress(toUint8Array(Buffer.from(publicKey, "hex")));
@@ -60,8 +72,6 @@ class CashAddrAddress extends Keys implements AbstractAddress<typeof AddressList
       privateKey,
       publicKey,
       address,
-      mnemonic: EMPTY_MNEMONIC,
-      path: derivationPath,
     };
   }
 
@@ -81,7 +91,7 @@ class CashAddrAddress extends Keys implements AbstractAddress<typeof AddressList
     return formattedAddress;
   }
 
-  private getKeyPair(source: BIP32Interface | string): KeyPair {
+  private getKeyPair(source: BIP32Interface | string): DerivedKeyPair {
     return getKeyPairFromEc(
       ExceptionMessage.CASH_ADDR_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
