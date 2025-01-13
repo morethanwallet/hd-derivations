@@ -1,6 +1,5 @@
 export {
   BnbAddress,
-  CashAddrAddress,
   EvmAddress,
   P2pkhAddress,
   P2wpkhAddress,
@@ -11,6 +10,11 @@ export {
   P2wshInP2shAddress,
 } from "./common/index.js";
 export { XrpAddress } from "./xrp/index.js";
-export { AvaxAddress } from "./avax/index.js";
 export { SolanaAddress } from "./solana/index.js";
-export { BaseAddress, EnterpriseAddress, RewardAddress } from "./cardano/index.js";
+export { AvaxKeyDerivation } from "./avaxKeyDerivation.js";
+export { CashAddrKeyDerivation } from "./cashAddrKeyDerivation.js";
+export {
+  BaseKeyDerivation,
+  EnterpriseKeyDerivation,
+  RewardKeyDerivation,
+} from "./cardano/index.js";

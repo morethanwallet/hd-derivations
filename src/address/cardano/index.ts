@@ -1,3 +1,3 @@
-export { BaseAddress } from "./baseAddress.js";
-export { EnterpriseAddress } from "./enterpriseAddress.js";
-export { RewardAddress } from "./rewardAddress.js";
+export { BaseKeyDerivation } from "./baseKeyDerivation.js";
+export { EnterpriseKeyDerivation } from "./enterpriseKeyDerivation.js";
+export { RewardKeyDerivation } from "./rewardKeyDerivation.js";

@@ -32,7 +32,7 @@ const Hrp: Record<Uppercase<NetworkPurposeUnion>, string> = {
   TESTNET: "fuji",
 } as const;
 
-class AvaxAddress extends Keys implements AbstractKeyDerivation<typeof DerivationType.AVAX> {
+class AvaxKeyDerivation extends Keys implements AbstractKeyDerivation<typeof DerivationType.AVAX> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
@@ -119,4 +119,4 @@ class AvaxAddress extends Keys implements AbstractKeyDerivation<typeof Derivatio
   }
 }
 
-export { AvaxAddress };
+export { AvaxKeyDerivation };

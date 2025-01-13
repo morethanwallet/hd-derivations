@@ -1,7 +1,7 @@
 import {
   Credential,
   PrivateKey,
-  EnterpriseAddress as LibraryEnterpriseAddress,
+  EnterpriseAddress,
 } from "@emurgo/cardano-serialization-lib-nodejs";
 import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
 import { SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
@@ -25,7 +25,7 @@ import { type DerivationType } from "../enums/index.js";
 import { Keys } from "@/keys/cardano/index.js";
 import { type NetworkPurposeUnion } from "@/families/cardano/types/index.js";
 
-class EnterpriseAddress
+class EnterpriseKeyDerivation
   extends Keys
   implements AbstractKeyDerivation<typeof DerivationType.ADA_ENTERPRISE>
 {
@@ -93,10 +93,10 @@ class EnterpriseAddress
     credential: Credential,
     networkPurpose: NetworkPurposeUnion
   ): DerivedItem<typeof DerivationType.ADA_ENTERPRISE>["address"] {
-    const address = LibraryEnterpriseAddress.new(getNetworkId(networkPurpose), credential);
+    const address = EnterpriseAddress.new(getNetworkId(networkPurpose), credential);
 
     return address.to_address().to_bech32();
   }
 }
 
-export { EnterpriseAddress };
+export { EnterpriseKeyDerivation };

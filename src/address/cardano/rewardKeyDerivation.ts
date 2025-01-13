@@ -1,8 +1,4 @@
-import {
-  Credential,
-  PrivateKey,
-  RewardAddress as LibraryRewardAddress,
-} from "@emurgo/cardano-serialization-lib-nodejs";
+import { Credential, PrivateKey, RewardAddress } from "@emurgo/cardano-serialization-lib-nodejs";
 import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
 import { SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
@@ -25,7 +21,7 @@ import {
 import { type DerivationType } from "../enums/index.js";
 import { type NetworkPurposeUnion } from "@/families/cardano/types/index.js";
 
-class RewardAddress
+class RewardKeyDerivation
   extends Keys
   implements AbstractKeyDerivation<typeof DerivationType.ADA_REWARD>
 {
@@ -93,10 +89,10 @@ class RewardAddress
     credential: Credential,
     networkPurpose: NetworkPurposeUnion
   ): DerivedItem<typeof DerivationType.ADA_REWARD>["address"] {
-    const address = LibraryRewardAddress.new(getNetworkId(networkPurpose), credential);
+    const address = RewardAddress.new(getNetworkId(networkPurpose), credential);
 
     return address.to_address().to_bech32();
   }
 }
 
-export { RewardAddress };
+export { RewardKeyDerivation };

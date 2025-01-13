@@ -22,7 +22,7 @@ const REGTEST_PREFIX = "bchreg";
 const HRP_DELIMITER = ":";
 const ADDRESS_INDEX = 1;
 
-class CashAddrAddress
+class CashAddrKeyDerivation
   extends Keys
   implements AbstractKeyDerivation<typeof DerivationType.BCH_CASH_ADDR>
 {
@@ -100,4 +100,4 @@ class CashAddrAddress
   }
 }
 
-export { CashAddrAddress };
+export { CashAddrKeyDerivation };

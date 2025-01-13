@@ -1,14 +1,14 @@
 import {
   Credential,
   PrivateKey,
-  BaseAddress as LibraryBaseAddress,
+  BaseAddress,
   PublicKey,
 } from "@emurgo/cardano-serialization-lib-nodejs";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { getCredential, getNetworkId } from "./helpers/index.js";
-import { EnterpriseAddress } from "./enterpriseAddress.js";
-import { RewardAddress } from "./rewardAddress.js";
-import { type NetworkPurposeUnion } from "@/families/cardano/index.js";
+import { EnterpriseKeyDerivation } from "./enterpriseKeyDerivation.js";
+import { RewardKeyDerivation } from "./rewardKeyDerivation.js";
+import { type NetworkPurposeUnion } from "@/families/cardano/types/index.js";
 import { type DerivationType } from "@/address/enums/index.js";
 import {
   type DerivedItem,
@@ -19,15 +19,18 @@ import {
 } from "../types/index.js";
 import { Keys } from "@/keys/cardano/index.js";
 
-class BaseAddress extends Keys implements AbstractKeyDerivation<typeof DerivationType.ADA_BASE> {
-  private enterpriseAddress: EnterpriseAddress;
-  private rewardAddress: RewardAddress;
+class BaseKeyDerivation
+  extends Keys
+  implements AbstractKeyDerivation<typeof DerivationType.ADA_BASE>
+{
+  private enterpriseAddress: EnterpriseKeyDerivation;
+  private rewardAddress: RewardKeyDerivation;
 
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
 
-    this.enterpriseAddress = new EnterpriseAddress(mnemonic);
-    this.rewardAddress = new RewardAddress(mnemonic);
+    this.enterpriseAddress = new EnterpriseKeyDerivation(mnemonic);
+    this.rewardAddress = new RewardKeyDerivation(mnemonic);
   }
 
   public deriveFromMnemonic({
@@ -109,7 +112,7 @@ class BaseAddress extends Keys implements AbstractKeyDerivation<typeof Derivatio
     rewardCredential: Credential,
     networkPurpose: NetworkPurposeUnion
   ): DerivedItem<typeof DerivationType.ADA_BASE>["address"] {
-    const address = LibraryBaseAddress.new(
+    const address = BaseAddress.new(
       getNetworkId(networkPurpose),
       enterpriseCredential,
       rewardCredential
@@ -119,4 +122,4 @@ class BaseAddress extends Keys implements AbstractKeyDerivation<typeof Derivatio
   }
 }
 
-export { BaseAddress };
+export { BaseKeyDerivation };
