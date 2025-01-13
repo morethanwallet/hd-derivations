@@ -1,4 +1,4 @@
-import { type KeysConfig } from "@/address/index.js";
+import { type KeysConfig } from "@/keyDerivation/index.js";
 import { type AddressList } from "@/address/dogecoin/index.js";
 import { type NetworkPurpose } from "@/families/index.js";
 

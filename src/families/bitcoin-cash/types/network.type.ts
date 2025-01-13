@@ -1,4 +1,4 @@
-import { type DerivedItem } from "@/address/types/index.js";
+import { type DerivedItem } from "@/keyDerivation/types/index.js";
 import { type AddressUnion } from "./address.type.js";
 
 type AbstractNetwork = {

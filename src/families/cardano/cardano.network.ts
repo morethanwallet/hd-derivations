@@ -4,7 +4,7 @@ import {
   BaseAddress,
   EnterpriseAddress,
   RewardAddress,
-} from "@/address/index.js";
+} from "@/keyDerivation/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import {
   type NetworkPurpose,

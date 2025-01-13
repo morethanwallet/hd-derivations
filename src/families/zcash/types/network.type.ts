@@ -1,4 +1,4 @@
-import { type DerivedItem } from "@/address/index.js";
+import { type DerivedItem } from "@/keyDerivation/index.js";
 
 type AbstractNetwork = {
   derive: (derivationPath: string) => DerivedItem;

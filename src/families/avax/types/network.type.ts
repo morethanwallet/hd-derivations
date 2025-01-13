@@ -1,4 +1,4 @@
-import { type AbstractAddress, type AddressList } from "@/address/index.js";
+import { type AbstractAddress, type AddressList } from "@/keyDerivation/index.js";
 import { type NetworkPurposeUnion as CommonNetworkPurposeUnion } from "@/families/index.js";
 
 type NetworkTypeUnion = "X" | "P";

@@ -1,4 +1,4 @@
-import { type AbstractAddress } from "@/address/index.js";
+import { type AbstractAddress } from "@/keyDerivation/index.js";
 
 type NetworkPurposeUnion = "mainnet" | "testnet" | "regtest";
 

@@ -1,4 +1,4 @@
-import { type KeysConfig, type KeyPair } from "@/address/index.js";
+import { type KeysConfig, type KeyPair } from "@/keyDerivation/index.js";
 import { ecPair, type ECPairInterface } from "@/ecc/index.js";
 import { AddressError } from "../exceptions/index.js";
 import { assert, toHexFromBytes } from "@/helpers/index.js";

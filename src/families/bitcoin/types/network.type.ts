@@ -1,4 +1,4 @@
-import { type DerivedItem } from "@/address/index.js";
+import { type DerivedItem } from "@/keyDerivation/index.js";
 import { type AbstractNetwork as CommonAbstractNetwork } from "@/families/types/index.js";
 import { type BitcoinAddressList, type BitcoinCoreAddressList } from "./address.type.js";
 

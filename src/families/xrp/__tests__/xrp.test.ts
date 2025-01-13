@@ -1,8 +1,8 @@
 import { Mnemonic } from "@/mnemonic/index.js";
 import { describe, it, expect } from "vitest";
 import { Xrp } from "../xrp.network.js";
-import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
-import { AddressList } from "@/address/index.js";
+import { EMPTY_MNEMONIC } from "@/keyDerivation/constants/index.js";
+import { AddressList } from "@/keyDerivation/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 

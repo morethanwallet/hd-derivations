@@ -5,7 +5,7 @@ import {
   TaprootAddress,
   P2wshAddress,
   P2wshInP2shAddress,
-} from "@/address/index.js";
+} from "@/keyDerivation/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type BitcoinAddressList, type AbstractNetwork } from "./types/index.js";
 import { type NetworkPurpose } from "@/families/index.js";

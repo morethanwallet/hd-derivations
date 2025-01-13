@@ -1,7 +1,7 @@
 import { Mnemonic } from "@/mnemonic/index.js";
 import { describe, it, expect } from "vitest";
 import { Solana } from "../solana.network.js";
-import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
+import { EMPTY_MNEMONIC } from "@/keyDerivation/constants/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 

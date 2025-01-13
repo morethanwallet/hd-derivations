@@ -1,7 +1,7 @@
 import { Mnemonic } from "@/mnemonic/index.js";
 import { MultiBitHd } from "../index.js";
 import { describe, it, expect } from "vitest";
-import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
+import { EMPTY_MNEMONIC } from "@/keyDerivation/constants/index.js";
 
 const MNEMONIC = "wheel buffalo audit boost fetch science rib erosion spoon soldier glance okay";
 

@@ -1,4 +1,4 @@
-import { XrpAddress } from "@/address/index.js";
+import { XrpAddress } from "@/keyDerivation/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type NetworkPurpose, type AbstractNetwork } from "./types/index.js";
 import { config } from "./config/index.js";

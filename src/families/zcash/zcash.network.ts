@@ -1,4 +1,4 @@
-import { ZcashTransparentAddress } from "@/address/index.js";
+import { ZcashTransparentAddress } from "@/keyDerivation/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AbstractNetwork } from "./types/index.js";
 import { type NetworkPurpose } from "@/families/index.js";

@@ -3,7 +3,7 @@ import {
   P2wpkhInP2shAddress,
   P2wpkhAddress,
   TaprootAddress,
-} from "@/address/index.js";
+} from "@/keyDerivation/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { BitcoinCoreAddressList, type AbstractNetwork } from "./types/index.js";
 import { type NetworkPurpose } from "@/families/index.js";

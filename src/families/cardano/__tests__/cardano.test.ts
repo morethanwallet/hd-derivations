@@ -1,8 +1,8 @@
 import { Mnemonic } from "@/mnemonic/index.js";
 import { describe, it, expect } from "vitest";
 import { Cardano } from "../cardano.network.js";
-import { EMPTY_MNEMONIC } from "@/address/constants/index.js";
-import { AddressList } from "@/address/index.js";
+import { EMPTY_MNEMONIC } from "@/keyDerivation/constants/index.js";
+import { AddressList } from "@/keyDerivation/index.js";
 
 const MNEMONIC =
   "relax grief spatial deer glass fish column rifle square license dry jealous water spoon salon";

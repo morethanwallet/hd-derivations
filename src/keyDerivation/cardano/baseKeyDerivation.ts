@@ -9,7 +9,7 @@ import { getCredential, getNetworkId } from "./helpers/index.js";
 import { EnterpriseKeyDerivation } from "./enterpriseKeyDerivation.js";
 import { RewardKeyDerivation } from "./rewardKeyDerivation.js";
 import { type NetworkPurposeUnion } from "@/families/cardano/types/index.js";
-import { type DerivationType } from "@/address/enums/index.js";
+import { type DerivationType } from "@/keyDerivation/enums/index.js";
 import {
   type DerivedItem,
   type AbstractKeyDerivation,

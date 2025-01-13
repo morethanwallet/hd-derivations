@@ -1,5 +1,5 @@
 import { type DerivationType } from "../enums/index.js";
-import { type DerivedBaseKeyPair as CardanoDerivedBaseKeyPair } from "@/address/cardano/types/index.js";
+import { type DerivedBaseKeyPair as CardanoDerivedBaseKeyPair } from "@/keyDerivation/cardano/types/index.js";
 import { type DerivationTypeUnion } from "./derivationTypeUnion.type.js";
 import { type DerivedKeyPair } from "./derivedKeyPair.type.js";
 import { type CommonInconsistentDerivationParameters } from "./commonInconsistentDerivationParameters.type.js";

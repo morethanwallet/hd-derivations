@@ -1,4 +1,4 @@
-import { type KeyPair, AvaxAddress } from "@/address/index.js";
+import { type KeyPair, AvaxAddress } from "@/keyDerivation/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type NetworkType, type AbstractNetwork, type NetworkPurpose } from "./types/index.js";
 import { config } from "./config/index.js";

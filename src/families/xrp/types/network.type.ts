@@ -1,4 +1,4 @@
-import { type AbstractKeyDerivation } from "@/address/types/index.js";
+import { type AbstractKeyDerivation } from "@/keyDerivation/types/index.js";
 import { type AddressUnion } from "./address.type.js";
 import { type NetworkPurposeUnion as CommonNetworkPurposeUnion } from "@/families/types/index.js";
 
