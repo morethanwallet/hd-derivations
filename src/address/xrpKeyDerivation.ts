@@ -1,34 +1,32 @@
 import { ExceptionMessage } from "./exceptions/index.js";
 import { toUint8Array } from "@/helpers/index.js";
-import {
-  appendAddressToDerivationPath,
-  getKeyPairFromEc,
-  removeDerivationPathAddress,
-} from "./helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "./constants/index.js";
+import { getKeyPairFromEc } from "./helpers/index.js";
 import { Wallet } from "xrpl";
-import { Keys } from "../common/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import {
-  type AbstractAddress,
-  DerivationType,
-  type DerivedItem,
-  type KeyPair,
-  type KeysConfig,
-} from "@/address/index.js";
-import { type NetworkPurpose, type AddressUnion } from "@/families/xrp/index.js";
+  AbstractKeyDerivation,
+  DerivedCredential,
+  DerivedItem,
+  DerivedKeyPair,
+  DeriveFromMnemonicParameters,
+  ImportByPrivateKeyParameters,
+} from "./types/index.js";
+import { Keys } from "@/keys/bip32/index.js";
+import { AddressUnion, NetworkPurposeUnion } from "@/families/xrp/types/index.js";
+import { KeysConfig } from "@/keys/types/index.js";
+import { DerivationType } from "./enums/index.js";
 
-class XrpKeyDerivation extends Keys implements AbstractAddress<AddressUnion> {
+class XrpKeyDerivation extends Keys implements AbstractKeyDerivation<AddressUnion> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
 
-  public derive({
+  public deriveFromMnemonic({
     derivationPath,
     addressType,
     networkPurpose,
     destinationTag,
-  }: Parameters<AbstractAddress<AddressUnion>["derive"]>[0]): DerivedItem<AddressUnion> {
+  }: DeriveFromMnemonicParameters<AddressUnion>): DerivedItem<AddressUnion> {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
     const wallet = this.getWallet(privateKey, publicKey);
@@ -38,37 +36,33 @@ class XrpKeyDerivation extends Keys implements AbstractAddress<AddressUnion> {
       privateKey,
       publicKey,
       address,
-      path: derivationPath,
-      mnemonic: this.mnemonic.getMnemonic(),
+      derivationPath,
     };
   }
 
   public importByPrivateKey({
-    derivationPath,
     privateKey,
     addressType,
     networkPurpose,
     destinationTag,
-  }: Parameters<
-    AbstractAddress<AddressUnion>["importByPrivateKey"]
-  >[0]): DerivedItem<AddressUnion> {
-    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
+  }: ImportByPrivateKeyParameters<AddressUnion>): DerivedCredential<AddressUnion> {
+    // const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const incrementedDerivationPath = appendAddressToDerivationPath(
-        derivationPathWithoutAddress,
-        i
-      );
+    // for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+    //   const incrementedDerivationPath = appendAddressToDerivationPath(
+    //     derivationPathWithoutAddress,
+    //     i
+    //   );
 
-      const data = this.derive({
-        derivationPath: incrementedDerivationPath,
-        addressType,
-        networkPurpose,
-        destinationTag,
-      });
+    //   const data = this.derive({
+    //     derivationPath: incrementedDerivationPath,
+    //     addressType,
+    //     networkPurpose,
+    //     destinationTag,
+    //   });
 
-      if (data.privateKey === privateKey) return data;
-    }
+    //   if (data.privateKey === privateKey) return data;
+    // }
 
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);
@@ -79,12 +73,10 @@ class XrpKeyDerivation extends Keys implements AbstractAddress<AddressUnion> {
       privateKey,
       publicKey,
       address,
-      mnemonic: EMPTY_MNEMONIC,
-      path: derivationPath,
     };
   }
 
-  private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
+  private getKeyPair(rawPrivateKey?: Uint8Array): DerivedKeyPair {
     return getKeyPairFromEc(
       ExceptionMessage.XRP_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
@@ -95,7 +87,7 @@ class XrpKeyDerivation extends Keys implements AbstractAddress<AddressUnion> {
   private getAddress(
     wallet: Wallet,
     addressType: AddressUnion,
-    networkPurpose: NetworkPurpose,
+    networkPurpose: NetworkPurposeUnion,
     destinationTag?: number
   ): string {
     const isTestnet = networkPurpose === "testnet";
@@ -105,7 +97,10 @@ class XrpKeyDerivation extends Keys implements AbstractAddress<AddressUnion> {
       : wallet.getXAddress(destinationTag, isTestnet);
   }
 
-  private getWallet(privateKey: KeyPair["privateKey"], publicKey: KeyPair["publicKey"]): Wallet {
+  private getWallet(
+    privateKey: DerivedKeyPair["privateKey"],
+    publicKey: DerivedKeyPair["publicKey"]
+  ): Wallet {
     return new Wallet(publicKey, privateKey);
   }
 }
