@@ -1,3 +1,3 @@
-type NetworksTypesUnion = "avax" | "bnb";
+type NetworksTypesUnion = "avax" | "bnb" | "evm";
 
 export { type NetworksTypesUnion };
