@@ -1,28 +1,29 @@
 import { payments } from "bitcoinjs-lib";
 import { Keys } from "./keys/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
-import { ExceptionMessage, AddressError } from "../exceptions/index.js";
-import { type DerivedItem, type KeyPair, type KeysConfig } from "../types/index.js";
+import { ExceptionMessage, AddressError } from "./exceptions/index.js";
+import { type DerivedItem, type KeyPair, type KeysConfig } from "./types/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
   removeDerivationPathAddress,
-} from "../helpers/index.js";
+} from "./helpers/index.js";
+import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "./constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 
-class P2wshInP2shDerivation
+class P2wpkhInP2shKeyDerivation
   extends Keys
-  implements AbstractAddress<typeof AddressList.BTC_P2WSH_IN_P2SH>
+  implements AbstractAddress<typeof AddressList.BTC_SEG_WIT>
 {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
 
-  public derive(derivationPath: string): DerivedItem {
-    const node = this.rootKey.derivePath(derivationPath);
+  public derive(derivationPath: string, base58RootKey?: string): DerivedItem {
+    const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.rootKey;
+    const node = rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
     const address = this.getAddress(node.publicKey);
 
@@ -31,11 +32,15 @@ class P2wshInP2shDerivation
       publicKey,
       address,
       path: derivationPath,
-      mnemonic: this.mnemonic.getMnemonic(),
+      mnemonic: base58RootKey ? EMPTY_MNEMONIC : this.mnemonic.getMnemonic(),
     };
   }
 
-  public importByPrivateKey(derivationPath: string, privateKey: string): DerivedItem {
+  public importByPrivateKey(
+    derivationPath: string,
+    privateKey: string,
+    base58RootKey?: string
+  ): DerivedItem {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -44,7 +49,7 @@ class P2wshInP2shDerivation
         i
       );
 
-      const data = this.derive(incrementedDerivationPath);
+      const data = this.derive(incrementedDerivationPath, base58RootKey);
 
       if (data.privateKey === privateKey) return data;
     }
@@ -62,33 +67,20 @@ class P2wshInP2shDerivation
   }
 
   private getAddress(publicKey: Uint8Array): string {
-    const requiredSignatures = 1;
-
-    const p2wshRedeem = payments.p2ms({
-      m: requiredSignatures,
-      pubkeys: [publicKey],
-      network: this.keysConfig,
-    });
-
-    const p2shRedeem = payments.p2wsh({ redeem: p2wshRedeem, network: this.keysConfig });
-
-    const { address } = payments.p2sh({
-      redeem: p2shRedeem,
-      network: this.keysConfig,
-    });
-
-    assert(address, AddressError, ExceptionMessage.P2WSH_IN_P2SH_ADDRESS_GENERATION_FAILED);
+    const redeem = payments.p2wpkh({ pubkey: publicKey, network: this.keysConfig });
+    const { address } = payments.p2sh({ redeem, network: this.keysConfig });
+    assert(address, AddressError, ExceptionMessage.P2WPKH_IN_P2SH_ADDRESS_GENERATION_FAILED);
 
     return address;
   }
 
   private getKeyPair(source: BIP32Interface | string): KeyPair {
     return getKeyPairFromEc(
-      ExceptionMessage.P2WSH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED,
+      ExceptionMessage.P2WPKH_IN_P2SH_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
       source
     );
   }
 }
 
-export { P2wshInP2shDerivation };
+export { P2wpkhInP2shKeyDerivation };

@@ -2,14 +2,14 @@ import { Keys } from "./keys/index.js";
 import bs58check from "bs58check";
 import { hash160 } from "bitcoinjs-lib/src/crypto";
 import { toHexFromBytes, toUint8Array } from "@/helpers/index.js";
-import { type KeysConfig, type KeyPair, type DerivedItem } from "../types/index.js";
-import { AddressError, ExceptionMessage } from "../exceptions/index.js";
+import { type KeysConfig, type KeyPair, type DerivedItem } from "./types/index.js";
+import { AddressError, ExceptionMessage } from "./exceptions/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
   removeDerivationPathAddress,
-} from "../helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
+} from "./helpers/index.js";
+import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "./constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
@@ -36,7 +36,7 @@ function splitPrefixIntoBytesArray(prefix: number): Uint8Array {
   return toUint8Array(Buffer.from([firstByte, secondByte]));
 }
 
-class ZcashTransparentDerivation
+class ZcashTransparentKeyDerivation
   extends Keys
   implements AbstractAddress<typeof AddressList.ZEC_TRANSPARENT>
 {
@@ -129,4 +129,4 @@ class ZcashTransparentDerivation
   }
 }
 
-export { ZcashTransparentDerivation };
+export { ZcashTransparentKeyDerivation };

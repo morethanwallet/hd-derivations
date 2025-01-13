@@ -1,19 +1,19 @@
 import { payments } from "bitcoinjs-lib";
 import { Keys } from "./keys/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
-import { ExceptionMessage, AddressError } from "../exceptions/index.js";
-import { type DerivedItem, type KeyPair, type KeysConfig } from "../types/index.js";
+import { ExceptionMessage, AddressError } from "./exceptions/index.js";
+import { type DerivedItem, type KeyPair, type KeysConfig } from "./types/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
   removeDerivationPathAddress,
-} from "../helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
+} from "./helpers/index.js";
+import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "./constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 
-class P2wpkhDerivation
+class P2wpkhKeyDerivation
   extends Keys
   implements AbstractAddress<typeof AddressList.BTC_NATIVE_SEG_WIT>
 {
@@ -82,4 +82,4 @@ class P2wpkhDerivation
   }
 }
 
-export { P2wpkhDerivation };
+export { P2wpkhKeyDerivation };

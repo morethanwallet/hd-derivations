@@ -1,19 +1,23 @@
 import { payments } from "bitcoinjs-lib";
 import { Keys } from "./keys/index.js";
-import { assert, toUint8Array } from "@/helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
-import { ExceptionMessage, AddressError } from "../exceptions/index.js";
-import { type DerivedItem, type KeyPair, type KeysConfig } from "../types/index.js";
+import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
+import { ExceptionMessage, AddressError } from "./exceptions/index.js";
+import { type DerivedItem, type KeyPair, type KeysConfig } from "./types/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
   removeDerivationPathAddress,
-} from "../helpers/index.js";
+} from "./helpers/index.js";
+import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "./constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 
-class P2pkhDerivation extends Keys implements AbstractAddress<typeof AddressList.BTC_LEGACY> {
+const PUBLIC_KEY_PREFIX_END_INDEX = 1;
+const X_ONLY_PUBLIC_KEY_LENGTH = 32;
+const X_Y_PUBLIC_KEY_LENGTH = 33;
+
+class TaprootKeyDerivation extends Keys implements AbstractAddress<typeof AddressList.BTC_TAPROOT> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
@@ -64,19 +68,32 @@ class P2pkhDerivation extends Keys implements AbstractAddress<typeof AddressList
   }
 
   private getAddress(publicKey: Uint8Array): string {
-    const { address } = payments.p2pkh({ network: this.keysConfig, pubkey: publicKey });
-    assert(address, AddressError, ExceptionMessage.P2PKH_ADDRESS_GENERATION_FAILED);
+    const xOnlyPublicKey = this.toXOnlyPublicKey(publicKey);
+    const { address } = payments.p2tr({ internalPubkey: xOnlyPublicKey, network: this.keysConfig });
+    assert(address, AddressError, ExceptionMessage.TAPROOT_ADDRESS_GENERATION_FAILED);
 
     return address;
   }
 
   private getKeyPair(source: BIP32Interface | string): KeyPair {
-    return getKeyPairFromEc(
-      ExceptionMessage.P2PKH_PRIVATE_KEY_GENERATION_FAILED,
+    const keyPair = getKeyPairFromEc(
+      ExceptionMessage.TAPROOT_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
       source
     );
+
+    const publicKey = toHexFromBytes(
+      this.toXOnlyPublicKey(toUint8Array(Buffer.from(keyPair.publicKey, "hex")))
+    );
+
+    return { privateKey: keyPair.privateKey, publicKey };
+  }
+
+  private toXOnlyPublicKey(publicKey: Uint8Array): Uint8Array {
+    return publicKey.length === X_ONLY_PUBLIC_KEY_LENGTH
+      ? publicKey
+      : publicKey.slice(PUBLIC_KEY_PREFIX_END_INDEX, X_Y_PUBLIC_KEY_LENGTH);
   }
 }
 
-export { P2pkhDerivation };
+export { TaprootKeyDerivation };

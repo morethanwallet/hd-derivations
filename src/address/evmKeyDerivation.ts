@@ -8,15 +8,15 @@ import {
   stripHexPrefix,
 } from "ethereumjs-util";
 import { Keys } from "./keys/index.js";
-import { type DerivedItem, type KeysConfig, type KeyPair } from "../types/index.js";
+import { type DerivedItem, type KeysConfig, type KeyPair } from "./types/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
   removeDerivationPathAddress,
-} from "../helpers/index.js";
+} from "./helpers/index.js";
 import { toUint8Array } from "@/helpers/index.js";
-import { ExceptionMessage } from "../exceptions/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
+import { ExceptionMessage } from "./exceptions/index.js";
+import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "./constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AddressList, type AbstractAddress } from "@/address/index.js";
 
