@@ -1,4 +1,7 @@
-export { type NetworkPurposeUnion } from "./networkPurposeUnion.type.js";
+export {
+  type NetworkPurposeUnion,
+  type AvaxNetworkPurposeUnion,
+} from "./networkPurposeUnion.type.js";
 export { type AbstractNetwork } from "./abstractNetwork.type.js";
 export {
   type DeriveItemFromMnemonic,

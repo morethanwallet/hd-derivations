@@ -1,6 +1,6 @@
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { config } from "./config/index.js";
-import { NetworkPurposeUnion, NetworkTypeUnion } from "./types/index.js";
+import { type NetworkTypeUnion } from "./types/index.js";
 import { Keys } from "@/keys/bip32/index.js";
 import { toUint8Array } from "@/helpers/index.js";
 import { getKeyPairFromEc } from "@/keyDerivation/helpers/index.js";
@@ -12,11 +12,12 @@ import {
   type DerivedItem,
   type GetCredentialFromPrivateKeyParameters,
   type AbstractNetwork,
+  type AvaxNetworkPurposeUnion,
 } from "../types/index.js";
 import { type DeriveItemFromMnemonicParameters } from "../types/index.js";
 import { type DerivedKeyPair } from "../types/index.js";
 
-const Hrp: Record<Uppercase<NetworkPurposeUnion>, string> = {
+const Hrp: Record<Uppercase<AvaxNetworkPurposeUnion>, string> = {
   MAINNET: "avax",
   TESTNET: "fuji",
 } as const;
@@ -27,9 +28,9 @@ const Prefix: Record<NetworkTypeUnion, string> = {
 } as const;
 
 class Avax extends Keys implements AbstractNetwork<"avax"> {
-  private purpose: NetworkPurposeUnion;
+  private purpose: AvaxNetworkPurposeUnion;
 
-  public constructor(mnemonic: Mnemonic, purpose: NetworkPurposeUnion) {
+  public constructor(mnemonic: Mnemonic, purpose: AvaxNetworkPurposeUnion) {
     super(config.keysConfig, mnemonic);
 
     this.purpose = purpose;
