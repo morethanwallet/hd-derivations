@@ -1,39 +1,48 @@
 import base58 from "bs58";
-import { type DerivedItem, type KeyPair } from "../types/index.js";
 import { Keypair } from "@solana/web3.js";
-import { appendAddressToDerivationPath } from "./helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { Keys } from "@/keys/solana/index.js";
+import {
+  DerivedCredential,
+  DerivedItem,
+  DerivedKeyPair,
+  DeriveFromMnemonicParameters,
+  ImportByPrivateKeyParameters,
+  type AbstractKeyDerivation,
+} from "../types/index.js";
+import { type DerivationType } from "../enums/index.js";
 
-class SolanaKeyDerivation extends Keys implements AbstractAddress<typeof AddressList.SOL> {
+class SolanaKeyDerivation extends Keys implements AbstractKeyDerivation<typeof DerivationType.SOL> {
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
   }
 
-  public derive(derivationPath: string): DerivedItem {
+  public deriveFromMnemonic({
+    derivationPath,
+  }: DeriveFromMnemonicParameters<typeof DerivationType.SOL>): DerivedItem<
+    typeof DerivationType.SOL
+  > {
     const { privateKey, publicKey } = this.getKeyPair(derivationPath);
 
     return {
       privateKey,
       publicKey,
-      path: derivationPath,
+      derivationPath,
       address: publicKey,
-      mnemonic: this.mnemonic.getMnemonic(),
     };
   }
 
-  public importByPrivateKey(
-    derivationPath: string,
-    privateKey: KeyPair["privateKey"]
-  ): DerivedItem {
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const incrementedDerivationPath = appendAddressToDerivationPath(derivationPath, i);
-      const data = this.derive(incrementedDerivationPath);
+  public importByPrivateKey({
+    privateKey,
+  }: ImportByPrivateKeyParameters<typeof DerivationType.SOL>): DerivedCredential<
+    typeof DerivationType.SOL
+  > {
+    // for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+    //   const incrementedDerivationPath = appendAddressToDerivationPath(derivationPath, i);
+    //   const data = this.derive(incrementedDerivationPath);
 
-      if (data.privateKey === privateKey) return data;
-    }
+    //   if (data.privateKey === privateKey) return data;
+    // }
 
     const keyPair = Keypair.fromSecretKey(base58.decode(privateKey));
     const publicKey = this.getPublicKey(keyPair);
@@ -42,12 +51,10 @@ class SolanaKeyDerivation extends Keys implements AbstractAddress<typeof Address
       privateKey,
       publicKey,
       address: publicKey,
-      path: derivationPath,
-      mnemonic: EMPTY_MNEMONIC,
     };
   }
 
-  private getKeyPair(derivationPath: string): KeyPair {
+  private getKeyPair(derivationPath: string): DerivedKeyPair {
     const rootKey = this.getRootKey();
     const keyPair = Keypair.fromSeed(rootKey.derive(derivationPath).privateKey);
     const publicKey = this.getPublicKey(keyPair);
