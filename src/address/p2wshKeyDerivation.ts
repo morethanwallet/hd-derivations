@@ -1,24 +1,34 @@
 import { payments } from "bitcoinjs-lib";
-import { Keys } from "./keys/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "./constants/index.js";
 import { ExceptionMessage, AddressError } from "./exceptions/index.js";
-import { type DerivedItem, type KeyPair, type KeysConfig } from "./types/index.js";
-import {
-  appendAddressToDerivationPath,
-  getKeyPairFromEc,
-  removeDerivationPathAddress,
-} from "./helpers/index.js";
+import { getKeyPairFromEc } from "./helpers/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
+import {
+  type AbstractKeyDerivation,
+  type DerivedCredential,
+  type DerivedItem,
+  type DerivedKeyPair,
+  type DeriveFromMnemonicParameters,
+  type ImportByPrivateKeyParameters,
+} from "./types/index.js";
+import { type DerivationType } from "./enums/index.js";
+import { Keys } from "@/keys/bip32/index.js";
+import { type KeysConfig } from "@/keys/types/index.js";
 
-class P2wshKeyDerivation extends Keys implements AbstractAddress<typeof AddressList.BTC_P2WSH> {
+class P2wshKeyDerivation
+  extends Keys
+  implements AbstractKeyDerivation<typeof DerivationType.BTC_P2WSH>
+{
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
 
-  public derive(derivationPath: string): DerivedItem {
+  public deriveFromMnemonic({
+    derivationPath,
+  }: DeriveFromMnemonicParameters<typeof DerivationType.BTC_P2WSH>): DerivedItem<
+    typeof DerivationType.BTC_P2WSH
+  > {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
     const address = this.getAddress(node.publicKey);
@@ -27,24 +37,27 @@ class P2wshKeyDerivation extends Keys implements AbstractAddress<typeof AddressL
       privateKey,
       publicKey,
       address,
-      path: derivationPath,
-      mnemonic: this.mnemonic.getMnemonic(),
+      derivationPath,
     };
   }
 
-  public importByPrivateKey(derivationPath: string, privateKey: string): DerivedItem {
-    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
+  public importByPrivateKey({
+    privateKey,
+  }: ImportByPrivateKeyParameters<typeof DerivationType.BTC_P2WSH>): DerivedCredential<
+    typeof DerivationType.BTC_P2WSH
+  > {
+    // const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const incrementedDerivationPath = appendAddressToDerivationPath(
-        derivationPathWithoutAddress,
-        i
-      );
+    // for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+    //   const incrementedDerivationPath = appendAddressToDerivationPath(
+    //     derivationPathWithoutAddress,
+    //     i
+    //   );
 
-      const data = this.derive(incrementedDerivationPath);
+    //   const data = this.derive(incrementedDerivationPath);
 
-      if (data.privateKey === privateKey) return data;
-    }
+    //   if (data.privateKey === privateKey) return data;
+    // }
 
     const { publicKey } = this.getKeyPair(privateKey);
     const address = this.getAddress(toUint8Array(Buffer.from(publicKey, "hex")));
@@ -53,8 +66,6 @@ class P2wshKeyDerivation extends Keys implements AbstractAddress<typeof AddressL
       privateKey,
       publicKey,
       address,
-      mnemonic: EMPTY_MNEMONIC,
-      path: derivationPath,
     };
   }
 
@@ -73,7 +84,7 @@ class P2wshKeyDerivation extends Keys implements AbstractAddress<typeof AddressL
     return address;
   }
 
-  private getKeyPair(source: BIP32Interface | string): KeyPair {
+  private getKeyPair(source: BIP32Interface | string): DerivedKeyPair {
     return getKeyPairFromEc(
       ExceptionMessage.P2WSH_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
