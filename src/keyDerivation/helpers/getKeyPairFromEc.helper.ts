@@ -1,14 +1,15 @@
-import { type KeysConfig, type KeyPair } from "@/keyDerivation/index.js";
 import { ecPair, type ECPairInterface } from "@/ecc/index.js";
 import { AddressError } from "../exceptions/index.js";
 import { assert, toHexFromBytes } from "@/helpers/index.js";
 import { type BIP32Interface } from "bip32";
+import { type KeysConfig } from "@/keys/types/index.js";
+import { type DerivedKeyPair } from "../types/index.js";
 
 function getKeyPairFromEc(
   errorMessage: string,
   keysConfig: KeysConfig,
   source?: Uint8Array | string | BIP32Interface
-): KeyPair {
+): DerivedKeyPair {
   assert(source, AddressError, errorMessage);
 
   if (ArrayBuffer.isView(source)) {
