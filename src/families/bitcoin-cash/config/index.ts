@@ -1,11 +1,11 @@
-import { type KeysConfig } from "@/address/index.js";
-import { type AddressList } from "@/address/bitcoin-cash/index.js";
-import { type NetworkPurpose } from "@/families/index.js";
+import { type NetworkPurposeUnion } from "@/families/types/index.js";
+import { type KeysConfig } from "@/keys/types/index.js";
 import { networks } from "bitcoinjs-lib";
+import { AddressUnion } from "../types/index.js";
 
 type Config = {
-  [networkPurpose in NetworkPurpose]: {
-    [address in AddressList]: {
+  [networkPurpose in NetworkPurposeUnion]: {
+    [address in AddressUnion]: {
       keysConfig: KeysConfig;
     };
   };

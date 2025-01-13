@@ -1,4 +1,4 @@
-import { type DerivationType } from "@/address/index.js";
+import { type DerivationType } from "@/address/enums/index.js";
 
 type MultiBitHdAddressUnion = typeof DerivationType.BTC_LEGACY;
 
