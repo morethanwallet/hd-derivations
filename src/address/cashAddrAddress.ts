@@ -1,8 +1,8 @@
 import { payments } from "bitcoinjs-lib";
 import { toCashAddress } from "bchaddrjs";
-import { ExceptionMessage, AddressError } from "../exceptions/index.js";
+import { ExceptionMessage, AddressError } from "./exceptions/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
-import { getKeyPairFromEc } from "../helpers/index.js";
+import { getKeyPairFromEc } from "./helpers/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type BIP32Interface } from "bip32";
 import { config } from "@/families/bitcoin-cash/index.js";
@@ -13,8 +13,8 @@ import {
   DerivedKeyPair,
   DeriveFromMnemonicParameters,
   ImportByPrivateKeyParameters,
-} from "../types/index.js";
-import { DerivationType } from "../enums/index.js";
+} from "./types/index.js";
+import { DerivationType } from "./enums/index.js";
 import { KeysConfig } from "@/keys/types/index.js";
 import { Keys } from "@/keys/bip32/index.js";
 
