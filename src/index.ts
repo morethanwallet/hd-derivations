@@ -11,4 +11,3 @@ export {
   Xrp,
   Zcash,
 } from "@/families/index.js";
-export { Mnemonic } from "@/mnemonic/index.js";

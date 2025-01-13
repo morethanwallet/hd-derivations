@@ -1,1 +1,2 @@
-export { type AbstractNetwork, type NetworkTypeUnion, type NetworkPurposeUnion } from "./network.type.js";
+export { type NetworkPurposeUnion } from "./networkPurposeUnion.type.js";
+export { type NetworkTypeUnion } from "./networkTypeUnion.type.js";
