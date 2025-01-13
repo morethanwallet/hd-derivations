@@ -1,1 +1,1 @@
-export { SolanaAddress } from "./solanaKeyDerivation.js";
+export { SolanaKeyDerivation } from "./solanaKeyDerivation.js";

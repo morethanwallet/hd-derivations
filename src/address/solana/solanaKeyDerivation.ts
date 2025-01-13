@@ -7,7 +7,7 @@ import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.j
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AddressList, type AbstractAddress } from "@/address/index.js";
 
-class SolanaDerivation extends Keys implements AbstractAddress<typeof AddressList.SOL> {
+class SolanaKeyDerivation extends Keys implements AbstractAddress<typeof AddressList.SOL> {
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
   }
@@ -61,4 +61,4 @@ class SolanaDerivation extends Keys implements AbstractAddress<typeof AddressLis
   }
 }
 
-export { SolanaDerivation };
+export { SolanaKeyDerivation };
