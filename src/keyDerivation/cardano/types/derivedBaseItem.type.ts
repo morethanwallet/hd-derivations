@@ -1,5 +1,5 @@
 import { type DerivedItemAddress } from "@/keyDerivation/types/index.js";
-import { type DerivedBaseKeyPair } from "./index.js";
+import { type DerivedBaseKeyPair } from "./derivedBaseKeyPair.type.js";
 
 type DerivedBaseItem = {
   enterpriseDerivationPath: string;
