@@ -1,4 +1,4 @@
-import { type KeysConfig } from "@/keyDerivation/index.js";
+import { type KeysConfig } from "@/keys/types/index.js";
 import { networks } from "bitcoinjs-lib";
 
 type Config = {
