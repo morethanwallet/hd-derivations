@@ -18,7 +18,7 @@ import {
 } from "@/address/index.js";
 import { type NetworkPurpose, type AddressUnion } from "@/families/xrp/index.js";
 
-class XrpAddress extends Keys implements AbstractAddress<AddressUnion> {
+class XrpDerivation extends Keys implements AbstractAddress<AddressUnion> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
@@ -110,4 +110,4 @@ class XrpAddress extends Keys implements AbstractAddress<AddressUnion> {
   }
 }
 
-export { XrpAddress };
+export { XrpDerivation };

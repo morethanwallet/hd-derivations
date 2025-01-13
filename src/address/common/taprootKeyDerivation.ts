@@ -17,7 +17,7 @@ const PUBLIC_KEY_PREFIX_END_INDEX = 1;
 const X_ONLY_PUBLIC_KEY_LENGTH = 32;
 const X_Y_PUBLIC_KEY_LENGTH = 33;
 
-class TaprootAddress extends Keys implements AbstractAddress<typeof AddressList.BTC_TAPROOT> {
+class TaprootDerivation extends Keys implements AbstractAddress<typeof AddressList.BTC_TAPROOT> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
@@ -96,4 +96,4 @@ class TaprootAddress extends Keys implements AbstractAddress<typeof AddressList.
   }
 }
 
-export { TaprootAddress };
+export { TaprootDerivation };

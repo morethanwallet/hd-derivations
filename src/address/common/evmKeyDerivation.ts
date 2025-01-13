@@ -20,7 +20,7 @@ import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.j
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AddressList, type AbstractAddress } from "@/address/index.js";
 
-class EvmAddress extends Keys implements AbstractAddress<typeof AddressList.EVM> {
+class EvmKeyDerivation extends Keys implements AbstractAddress<typeof AddressList.EVM> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
@@ -106,4 +106,4 @@ class EvmAddress extends Keys implements AbstractAddress<typeof AddressList.EVM>
   }
 }
 
-export { EvmAddress };
+export { EvmKeyDerivation };

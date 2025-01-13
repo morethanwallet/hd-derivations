@@ -13,7 +13,7 @@ import { type Mnemonic } from "@/mnemonic/index.js";
 import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 
-class P2wshAddress extends Keys implements AbstractAddress<typeof AddressList.BTC_P2WSH> {
+class P2wshDerivation extends Keys implements AbstractAddress<typeof AddressList.BTC_P2WSH> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
@@ -82,4 +82,4 @@ class P2wshAddress extends Keys implements AbstractAddress<typeof AddressList.BT
   }
 }
 
-export { P2wshAddress };
+export { P2wshDerivation };

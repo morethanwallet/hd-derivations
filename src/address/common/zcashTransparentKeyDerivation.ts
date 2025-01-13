@@ -16,7 +16,6 @@ import { type BIP32Interface } from "bip32";
 import { ecPair } from "@/ecc/index.js";
 import { networks } from "bitcoinjs-lib";
 
-// TODO: Move this class to the zcash folder
 const HEXADECIMAL_SYSTEM_IDENTIFIER = 16;
 
 function splitPrefixIntoBytesArray(prefix: number): Uint8Array {
@@ -37,7 +36,7 @@ function splitPrefixIntoBytesArray(prefix: number): Uint8Array {
   return toUint8Array(Buffer.from([firstByte, secondByte]));
 }
 
-class ZcashTransparentAddress
+class ZcashTransparentDerivation
   extends Keys
   implements AbstractAddress<typeof AddressList.ZEC_TRANSPARENT>
 {
@@ -130,4 +129,4 @@ class ZcashTransparentAddress
   }
 }
 
-export { ZcashTransparentAddress };
+export { ZcashTransparentDerivation };
