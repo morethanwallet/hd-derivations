@@ -1,20 +1,23 @@
-import { Keys } from "./keys/index.js";
 import bs58check from "bs58check";
 import { hash160 } from "bitcoinjs-lib/src/crypto";
 import { toHexFromBytes, toUint8Array } from "@/helpers/index.js";
-import { type KeysConfig, type KeyPair, type DerivedItem } from "./types/index.js";
 import { AddressError, ExceptionMessage } from "./exceptions/index.js";
-import {
-  appendAddressToDerivationPath,
-  getKeyPairFromEc,
-  removeDerivationPathAddress,
-} from "./helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "./constants/index.js";
+import { getKeyPairFromEc } from "./helpers/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
 import { ecPair } from "@/ecc/index.js";
 import { networks } from "bitcoinjs-lib";
+import {
+  type AbstractKeyDerivation,
+  type DerivedCredential,
+  type DerivedItem,
+  type DerivedKeyPair,
+  type DeriveFromMnemonicParameters,
+  type ImportByPrivateKeyParameters,
+} from "./types/index.js";
+import { Keys } from "@/keys/bip32/index.js";
+import { type DerivationType } from "./enums/index.js";
+import { type KeysConfig } from "@/keys/types/index.js";
 
 const HEXADECIMAL_SYSTEM_IDENTIFIER = 16;
 
@@ -38,13 +41,17 @@ function splitPrefixIntoBytesArray(prefix: number): Uint8Array {
 
 class ZcashTransparentKeyDerivation
   extends Keys
-  implements AbstractAddress<typeof AddressList.ZEC_TRANSPARENT>
+  implements AbstractKeyDerivation<typeof DerivationType.ZEC_TRANSPARENT>
 {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
 
-  public derive(derivationPath: string): DerivedItem {
+  public deriveFromMnemonic({
+    derivationPath,
+  }: DeriveFromMnemonicParameters<typeof DerivationType.ZEC_TRANSPARENT>): DerivedItem<
+    typeof DerivationType.ZEC_TRANSPARENT
+  > {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
     const address = this.getAddress(node.publicKey);
@@ -53,24 +60,27 @@ class ZcashTransparentKeyDerivation
       privateKey,
       publicKey,
       address,
-      path: derivationPath,
-      mnemonic: this.mnemonic.getMnemonic(),
+      derivationPath,
     };
   }
-  // TODO: Replace all private/public-key parameter types with KeyPair["private/public-Key"]
-  public importByPrivateKey(derivationPath: string, privateKey: string): DerivedItem {
-    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const incrementedDerivationPath = appendAddressToDerivationPath(
-        derivationPathWithoutAddress,
-        i
-      );
+  public importByPrivateKey({
+    privateKey,
+  }: ImportByPrivateKeyParameters<typeof DerivationType.ZEC_TRANSPARENT>): DerivedCredential<
+    typeof DerivationType.ZEC_TRANSPARENT
+  > {
+    // const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-      const data = this.derive(incrementedDerivationPath);
+    // for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+    //   const incrementedDerivationPath = appendAddressToDerivationPath(
+    //     derivationPathWithoutAddress,
+    //     i
+    //   );
 
-      if (data.privateKey === privateKey) return data;
-    }
+    //   const data = this.derive(incrementedDerivationPath);
+
+    //   if (data.privateKey === privateKey) return data;
+    // }
 
     const { publicKey } = this.getKeyPair(privateKey);
     const address = this.getAddress(toUint8Array(Buffer.from(publicKey, "hex")));
@@ -79,8 +89,6 @@ class ZcashTransparentKeyDerivation
       privateKey,
       publicKey,
       address,
-      mnemonic: EMPTY_MNEMONIC,
-      path: derivationPath,
     };
   }
 
@@ -92,7 +100,7 @@ class ZcashTransparentKeyDerivation
     return bs58check.encode(addressBytes);
   }
 
-  private getKeyPair(source: BIP32Interface | string): KeyPair {
+  private getKeyPair(source: BIP32Interface | string): DerivedKeyPair {
     if (typeof source === "string") {
       const decoded = bs58check.decode(source);
       const networkPrefixIndex = 0;
