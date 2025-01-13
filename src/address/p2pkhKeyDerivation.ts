@@ -44,9 +44,7 @@ class P2pkhKeyDerivation
   }
 
   public importByPrivateKey({
-    derivationPath,
     privateKey,
-    base58RootKey,
   }: ImportByPrivateKeyParameters<typeof DerivationType.BTC_LEGACY>): DerivedCredential<
     typeof DerivationType.BTC_LEGACY
   > {

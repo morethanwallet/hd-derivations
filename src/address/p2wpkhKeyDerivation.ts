@@ -5,6 +5,7 @@ import { getKeyPairFromEc } from "./helpers/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type BIP32Interface } from "bip32";
 import {
+  type DerivedKeyPair,
   type AbstractKeyDerivation,
   type DerivedCredential,
   type DerivedItem,
@@ -43,9 +44,7 @@ class P2wpkhKeyDerivation
   }
 
   public importByPrivateKey({
-    derivationPath,
     privateKey,
-    base58RootKey,
   }: ImportByPrivateKeyParameters<typeof DerivationType.BTC_NATIVE_SEG_WIT>): DerivedCredential<
     typeof DerivationType.BTC_NATIVE_SEG_WIT
   > {
@@ -79,7 +78,7 @@ class P2wpkhKeyDerivation
     return address;
   }
 
-  private getKeyPair(source: BIP32Interface | string): KeyPair {
+  private getKeyPair(source: BIP32Interface | string): DerivedKeyPair {
     return getKeyPairFromEc(
       ExceptionMessage.P2WPKH_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,

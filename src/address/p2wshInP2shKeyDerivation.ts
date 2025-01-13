@@ -42,7 +42,6 @@ class P2wshInP2shKeyDerivation
   }
 
   public importByPrivateKey({
-    derivationPath,
     privateKey,
   }: ImportByPrivateKeyParameters<typeof DerivationType.BTC_P2WSH_IN_P2SH>): DerivedCredential<
     typeof DerivationType.BTC_P2WSH_IN_P2SH
