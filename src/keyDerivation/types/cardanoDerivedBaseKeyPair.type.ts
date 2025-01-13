@@ -1,8 +1,8 @@
-type CardanoDerivedBaseKeyPair = {
-  enterprisePrivateKey: string;
-  enterprisePublicKey: string;
-  rewardPrivateKey: string;
-  rewardPublicKey: string;
-};
+// type CardanoDerivedBaseKeyPair = {
+//   enterprisePrivateKey: string;
+//   enterprisePublicKey: string;
+//   rewardPrivateKey: string;
+//   rewardPublicKey: string;
+// };
 
-export { type CardanoDerivedBaseKeyPair };
+// export { type CardanoDerivedBaseKeyPair };

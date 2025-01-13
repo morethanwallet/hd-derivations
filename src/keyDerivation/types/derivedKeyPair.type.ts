@@ -1,6 +1,6 @@
-type DerivedKeyPair = {
-  publicKey: string;
-  privateKey: string;
-};
+// type DerivedKeyPair = {
+//   publicKey: string;
+//   privateKey: string;
+// };
 
-export { type DerivedKeyPair };
+// export { type DerivedKeyPair };
