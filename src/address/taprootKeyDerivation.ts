@@ -1,28 +1,39 @@
 import { payments } from "bitcoinjs-lib";
-import { Keys } from "./keys/index.js";
 import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
 import { ExceptionMessage, AddressError } from "./exceptions/index.js";
-import { type DerivedItem, type KeyPair, type KeysConfig } from "./types/index.js";
-import {
-  appendAddressToDerivationPath,
-  getKeyPairFromEc,
-  removeDerivationPathAddress,
-} from "./helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "./constants/index.js";
+import { getKeyPairFromEc } from "./helpers/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type AddressList, type AbstractAddress } from "@/address/index.js";
 import { type BIP32Interface } from "bip32";
+import {
+  type AbstractKeyDerivation,
+  type DerivedCredential,
+  type DerivedItem,
+  type DerivedKeyPair,
+  type DeriveFromMnemonicParameters,
+  type ImportByPrivateKeyParameters,
+} from "./types/index.js";
+import { type DerivationType } from "./enums/index.js";
+import { Keys } from "@/keys/bip32/index.js";
+import { type KeysConfig } from "@/keys/types/index.js";
 
 const PUBLIC_KEY_PREFIX_END_INDEX = 1;
 const X_ONLY_PUBLIC_KEY_LENGTH = 32;
 const X_Y_PUBLIC_KEY_LENGTH = 33;
 
-class TaprootKeyDerivation extends Keys implements AbstractAddress<typeof AddressList.BTC_TAPROOT> {
+class TaprootKeyDerivation
+  extends Keys
+  implements AbstractKeyDerivation<typeof DerivationType.BTC_TAPROOT>
+{
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
 
-  public derive(derivationPath: string, base58RootKey?: string): DerivedItem {
+  public deriveFromMnemonic({
+    derivationPath,
+    base58RootKey,
+  }: DeriveFromMnemonicParameters<typeof DerivationType.BTC_TAPROOT>): DerivedItem<
+    typeof DerivationType.BTC_TAPROOT
+  > {
     const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.rootKey;
     const node = rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
@@ -32,28 +43,27 @@ class TaprootKeyDerivation extends Keys implements AbstractAddress<typeof Addres
       privateKey,
       publicKey,
       address,
-      path: derivationPath,
-      mnemonic: base58RootKey ? EMPTY_MNEMONIC : this.mnemonic.getMnemonic(),
+      derivationPath,
     };
   }
 
-  public importByPrivateKey(
-    derivationPath: string,
-    privateKey: string,
-    base58RootKey?: string
-  ): DerivedItem {
-    const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
+  public importByPrivateKey({
+    privateKey,
+  }: ImportByPrivateKeyParameters<typeof DerivationType.BTC_TAPROOT>): DerivedCredential<
+    typeof DerivationType.BTC_TAPROOT
+  > {
+    // const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
-    for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-      const incrementedDerivationPath = appendAddressToDerivationPath(
-        derivationPathWithoutAddress,
-        i
-      );
+    // for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
+    //   const incrementedDerivationPath = appendAddressToDerivationPath(
+    //     derivationPathWithoutAddress,
+    //     i
+    //   );
 
-      const data = this.derive(incrementedDerivationPath, base58RootKey);
+    //   const data = this.derive(incrementedDerivationPath, base58RootKey);
 
-      if (data.privateKey === privateKey) return data;
-    }
+    //   if (data.privateKey === privateKey) return data;
+    // }
 
     const { publicKey } = this.getKeyPair(privateKey);
     const address = this.getAddress(toUint8Array(Buffer.from(publicKey, "hex")));
@@ -62,8 +72,6 @@ class TaprootKeyDerivation extends Keys implements AbstractAddress<typeof Addres
       privateKey,
       publicKey,
       address,
-      mnemonic: EMPTY_MNEMONIC,
-      path: derivationPath,
     };
   }
 
@@ -75,7 +83,7 @@ class TaprootKeyDerivation extends Keys implements AbstractAddress<typeof Addres
     return address;
   }
 
-  private getKeyPair(source: BIP32Interface | string): KeyPair {
+  private getKeyPair(source: BIP32Interface | string): DerivedKeyPair {
     const keyPair = getKeyPairFromEc(
       ExceptionMessage.TAPROOT_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
