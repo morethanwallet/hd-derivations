@@ -1,7 +1,7 @@
-import { type NetworkPurposeUnion as CommonNetworkPurposeUnion } from "@/families/index.js";
 import { type AddressUnion } from "./address.type.js";
 import { type DerivedItem } from "@/address/types/index.js";
 import { type DerivationType } from "@/address/enums/index.js";
+import { type NetworkPurposeUnion as CommonNetworkPurposeUnion } from "@/families/types/index.js";
 
 type NetworkPurposeUnion =
   | Extract<CommonNetworkPurposeUnion, "mainnet">

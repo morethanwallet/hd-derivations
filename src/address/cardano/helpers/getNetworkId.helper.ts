@@ -1,7 +1,7 @@
-import { type NetworkPurpose } from "@/families/cardano/index.js";
+import { type NetworkPurposeUnion } from "@/families/cardano/types/index.js";
 import { NetworkInfo } from "@emurgo/cardano-serialization-lib-nodejs";
 
-function getNetworkId(networkPurpose: NetworkPurpose): number {
+function getNetworkId(networkPurpose: NetworkPurposeUnion): number {
   switch (networkPurpose) {
     case "mainnet": {
       return NetworkInfo.mainnet().network_id();
