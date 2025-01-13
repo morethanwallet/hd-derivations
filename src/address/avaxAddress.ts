@@ -1,13 +1,13 @@
 import { utils } from "@avalabs/avalanchejs";
 import { crypto } from "bitcoinjs-lib";
 import { toUint8Array } from "@/helpers/index.js";
-import { ExceptionMessage } from "../exceptions/index.js";
+import { ExceptionMessage } from "./exceptions/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
   removeDerivationPathAddress,
-} from "../helpers/index.js";
-import { SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
+} from "./helpers/index.js";
+import { SEARCH_FROM_MNEMONIC_LIMIT } from "./constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { type NetworkPurposeUnion, type NetworkTypeUnion } from "@/families/avax/types/index.js";
 import {
@@ -17,8 +17,8 @@ import {
   type DeriveFromMnemonicParameters,
   type ImportByPrivateKeyParameters,
   type AbstractKeyDerivation,
-} from "../types/index.js";
-import { type DerivationType } from "../enums/index.js";
+} from "./types/index.js";
+import { type DerivationType } from "./enums/index.js";
 import { type KeysConfig } from "@/keys/types/index.js";
 import { Keys } from "@/keys/bip32/index.js";
 
