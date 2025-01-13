@@ -1,45 +1,48 @@
 import { utils } from "@avalabs/avalanchejs";
 import { crypto } from "bitcoinjs-lib";
 import { toUint8Array } from "@/helpers/index.js";
-import {
-  type AbstractAddress,
-  type DerivedItem,
-  type KeyPair,
-  type KeysConfig,
-} from "@/address/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
 import {
   appendAddressToDerivationPath,
   getKeyPairFromEc,
   removeDerivationPathAddress,
 } from "../helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
-import { Keys } from "../common/index.js";
+import { SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
-import { type NetworkType, type NetworkPurpose } from "@/families/avax/index.js";
-import { type AddressList } from "../index.js";
+import { type NetworkPurposeUnion, type NetworkTypeUnion } from "@/families/avax/types/index.js";
+import {
+  type DerivedKeyPair,
+  type DerivedCredential,
+  type DerivedItem,
+  type DeriveFromMnemonicParameters,
+  type ImportByPrivateKeyParameters,
+  type AbstractKeyDerivation,
+} from "../types/index.js";
+import { type DerivationType } from "../enums/index.js";
+import { type KeysConfig } from "@/keys/types/index.js";
+import { Keys } from "@/keys/bip32/index.js";
 
-const Prefix: Record<NetworkType, string> = {
+const Prefix: Record<NetworkTypeUnion, string> = {
   X: "X-",
   P: "P-",
 } as const;
 
-const Hrp: Record<Uppercase<NetworkPurpose>, string> = {
+const Hrp: Record<Uppercase<NetworkPurposeUnion>, string> = {
   MAINNET: "avax",
   TESTNET: "fuji",
 } as const;
 
-class AvaxAddress extends Keys implements AbstractAddress<typeof AddressList.AVAX> {
+class AvaxAddress extends Keys implements AbstractKeyDerivation<typeof DerivationType.AVAX> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     super(keysConfig, mnemonic);
   }
 
-  public derive({
+  public deriveFromMnemonic({
     derivationPath,
     networkType,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressList.AVAX>["derive"]>[0]): DerivedItem<
-    typeof AddressList.AVAX
+  }: DeriveFromMnemonicParameters<typeof DerivationType.AVAX>): DerivedItem<
+    typeof DerivationType.AVAX
   > {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
@@ -49,8 +52,7 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressList.AVA
       privateKey,
       publicKey,
       address,
-      path: derivationPath,
-      mnemonic: this.mnemonic.getMnemonic(),
+      derivationPath,
     };
   }
 
@@ -59,8 +61,8 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressList.AVA
     privateKey,
     networkType,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressList.AVAX>["importByPrivateKey"]>[0]): DerivedItem<
-    typeof AddressList.AVAX
+  }: ImportByPrivateKeyParameters<typeof DerivationType.AVAX>): DerivedCredential<
+    typeof DerivationType.AVAX
   > {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
@@ -70,7 +72,7 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressList.AVA
         i
       );
 
-      const data = this.derive({
+      const data = this.deriveFromMnemonic({
         networkType,
         networkPurpose,
         derivationPath: incrementedDerivationPath,
@@ -92,15 +94,13 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressList.AVA
       privateKey,
       publicKey,
       address,
-      mnemonic: EMPTY_MNEMONIC,
-      path: derivationPath,
     };
   }
 
   private getAddress(
     publicKey: Uint8Array,
-    networkType: NetworkType,
-    networkPurpose: NetworkPurpose
+    networkType: NetworkTypeUnion,
+    networkPurpose: NetworkPurposeUnion
   ): string {
     const address: string = utils.formatBech32(
       networkPurpose === "mainnet" ? Hrp.MAINNET : Hrp.TESTNET,
@@ -110,7 +110,7 @@ class AvaxAddress extends Keys implements AbstractAddress<typeof AddressList.AVA
     return Prefix[networkType].concat(address);
   }
 
-  private getKeyPair(rawPrivateKey?: Uint8Array): KeyPair {
+  private getKeyPair(rawPrivateKey?: Uint8Array): DerivedKeyPair {
     return getKeyPairFromEc(
       ExceptionMessage.AVAX_PRIVATE_KEY_GENERATION_FAILED,
       this.keysConfig,
