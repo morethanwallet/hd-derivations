@@ -1,1 +1,1 @@
-export { XrpAddress } from "./xrpAddress.js";
+export { XrpAddress } from "./xrpKeyDerivation.js";
