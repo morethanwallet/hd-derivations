@@ -1,11 +1,10 @@
-import { Keys } from "./keys/index.js";
 import {
   Credential,
   PrivateKey,
   EnterpriseAddress as LibraryEnterpriseAddress,
 } from "@emurgo/cardano-serialization-lib-nodejs";
 import { appendAddressToDerivationPath, removeDerivationPathAddress } from "../helpers/index.js";
-import { EMPTY_MNEMONIC, SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
+import { SEARCH_FROM_MNEMONIC_LIMIT } from "../constants/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import {
   getAccount,
@@ -14,20 +13,31 @@ import {
   getNetworkId,
   updateDerivationPathChange,
 } from "./helpers/index.js";
-import { type AddressList, type AbstractAddress, type DerivedItem } from "@/address/index.js";
 import { Change } from "./enums/index.js";
-import { type NetworkPurpose } from "@/families/cardano/index.js";
+import {
+  type DerivedItem,
+  type AbstractKeyDerivation,
+  type DeriveFromMnemonicParameters,
+  type ImportByPrivateKeyParameters,
+  type DerivedCredential,
+} from "../types/index.js";
+import { type DerivationType } from "../enums/index.js";
+import { Keys } from "@/keys/cardano/index.js";
+import { type NetworkPurposeUnion } from "@/families/cardano/types/index.js";
 
-class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressList.ADA_ENTERPRISE> {
+class EnterpriseAddress
+  extends Keys
+  implements AbstractKeyDerivation<typeof DerivationType.ADA_ENTERPRISE>
+{
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
   }
 
-  public derive({
+  public deriveFromMnemonic({
     derivationPath,
     networkPurpose,
-  }: Parameters<AbstractAddress<typeof AddressList.ADA_ENTERPRISE>["derive"]>[0]): DerivedItem<
-    typeof AddressList.ADA_ENTERPRISE
+  }: DeriveFromMnemonicParameters<typeof DerivationType.ADA_ENTERPRISE>): DerivedItem<
+    typeof DerivationType.ADA_ENTERPRISE
   > {
     const rootKey = this.getRootKey();
     const account = getAccount(rootKey, derivationPath);
@@ -39,10 +49,9 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressLi
 
     return {
       address,
-      path: updateDerivationPathChange(derivationPath, Change.EXTERNAL),
+      derivationPath: updateDerivationPathChange(derivationPath, Change.EXTERNAL),
       privateKey: privateKey.to_hex(),
       publicKey: publicKey.to_hex(),
-      mnemonic: this.mnemonic.getMnemonic(),
     };
   }
 
@@ -50,9 +59,9 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressLi
     derivationPath,
     privateKey,
     networkPurpose,
-  }: Parameters<
-    AbstractAddress<typeof AddressList.ADA_ENTERPRISE>["importByPrivateKey"]
-  >[0]): DerivedItem<typeof AddressList.ADA_ENTERPRISE> {
+  }: ImportByPrivateKeyParameters<typeof DerivationType.ADA_ENTERPRISE>): DerivedCredential<
+    typeof DerivationType.ADA_ENTERPRISE
+  > {
     const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -61,7 +70,10 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressLi
         i
       );
 
-      const data = this.derive({ networkPurpose, derivationPath: incrementedDerivationPath });
+      const data = this.deriveFromMnemonic({
+        networkPurpose,
+        derivationPath: incrementedDerivationPath,
+      });
 
       if (data.privateKey === privateKey) return data;
     }
@@ -74,15 +86,13 @@ class EnterpriseAddress extends Keys implements AbstractAddress<typeof AddressLi
       address,
       privateKey,
       publicKey: rawPublicKey.to_hex(),
-      path: updateDerivationPathChange(derivationPath, Change.EXTERNAL),
-      mnemonic: EMPTY_MNEMONIC,
     };
   }
 
   private getAddress(
     credential: Credential,
-    networkPurpose: NetworkPurpose
-  ): DerivedItem<typeof AddressList.ADA_ENTERPRISE>["address"] {
+    networkPurpose: NetworkPurposeUnion
+  ): DerivedItem<typeof DerivationType.ADA_ENTERPRISE>["address"] {
     const address = LibraryEnterpriseAddress.new(getNetworkId(networkPurpose), credential);
 
     return address.to_address().to_bech32();
