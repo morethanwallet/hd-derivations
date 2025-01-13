@@ -1,5 +1,5 @@
 import { type BIP32API, BIP32Factory, type BIP32Interface } from "bip32";
-import { type KeysConfig } from "@/keyDerivation/index.js";
+import { type KeysConfig } from "../types/index.js";
 import { toUint8Array } from "@/helpers/index.js";
 import { ecc } from "@/ecc/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";

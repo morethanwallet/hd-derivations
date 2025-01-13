@@ -13,3 +13,4 @@ export {
   type ImportByPrivateKey,
   type ImportByPrivateKeyParameters,
 } from "./importByPrivateKey.type.js";
+export { type CardanoDerivedBaseKeyPair } from "./cardanoDerivedBaseKeyPair.type.js";
