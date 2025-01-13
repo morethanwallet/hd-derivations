@@ -20,4 +20,4 @@ export { XrpAddress } from "./xrp/index.js";
 export { AvaxAddress } from "./avax/index.js";
 export { SolanaAddress } from "./solana/index.js";
 export { BaseAddress, EnterpriseAddress, RewardAddress } from "./cardano/index.js";
-export { AddressList } from "./enums/index.js";
+export { DerivationType } from "./enums/index.js";

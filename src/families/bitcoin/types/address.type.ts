@@ -1,16 +1,16 @@
-import { type AddressList } from "@/address/index.js";
+import { type DerivationType } from "@/address/index.js";
 
-type MultiBitHdAddressUnion = typeof AddressList.BTC_LEGACY;
+type MultiBitHdAddressUnion = typeof DerivationType.BTC_LEGACY;
 
 type BitcoinCoreAddressUnion =
-  | typeof AddressList.BTC_LEGACY
-  | typeof AddressList.BTC_SEG_WIT
-  | typeof AddressList.BTC_NATIVE_SEG_WIT
-  | typeof AddressList.BTC_TAPROOT;
+  | typeof DerivationType.BTC_LEGACY
+  | typeof DerivationType.BTC_SEG_WIT
+  | typeof DerivationType.BTC_NATIVE_SEG_WIT
+  | typeof DerivationType.BTC_TAPROOT;
 
 type BitcoinAddressUnion =
-  | typeof AddressList.BTC_P2WSH
-  | typeof AddressList.BTC_P2WSH_IN_P2SH
+  | typeof DerivationType.BTC_P2WSH
+  | typeof DerivationType.BTC_P2WSH_IN_P2SH
   | BitcoinCoreAddressUnion;
 
 export { type MultiBitHdAddressUnion, type BitcoinCoreAddressUnion, type BitcoinAddressUnion };
