@@ -1,5 +1,5 @@
 // export { XrpKeyDerivation } from "./xrpKeyDerivation.js";
-export { SolanaKeyDerivation } from "./solana/index.js";
+// export { SolanaKeyDerivation } from "./solana/index.js";
 // export { AvaxKeyDerivation } from "./avaxKeyDerivation.js";
 export { CashAddrKeyDerivation } from "./cashAddrKeyDerivation.js";
 // export { BnbKeyDerivation } from "./bnbKeyDerivation.js";
