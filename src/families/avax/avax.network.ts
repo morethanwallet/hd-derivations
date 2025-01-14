@@ -1,9 +1,7 @@
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { config } from "./config/index.js";
-import { type NetworkTypeUnion } from "./types/index.js";
 import { Keys } from "@/keys/bip32/index.js";
 import { toUint8Array } from "@/helpers/index.js";
-import { getKeyPairFromEc } from "@/keyDerivation/helpers/index.js";
 import { crypto } from "bitcoinjs-lib";
 import { utils } from "@avalabs/avalanchejs";
 import { ExceptionMessage } from "@/keyDerivation/exceptions/index.js";
@@ -12,25 +10,27 @@ import {
   type DerivedItem,
   type GetCredentialFromPrivateKeyParameters,
   type AbstractNetwork,
-  type AvaxNetworkPurposeUnion,
+  type CommonNetworkPurposeUnion,
+  type AvaxAddressUnion,
 } from "../types/index.js";
 import { type DeriveItemFromMnemonicParameters } from "../types/index.js";
 import { type DerivedKeyPair } from "../types/index.js";
+import { getKeyPairFromEc } from "../helpers/index.js";
 
-const Hrp: Record<Uppercase<AvaxNetworkPurposeUnion>, string> = {
+const Hrp: Record<Uppercase<CommonNetworkPurposeUnion>, string> = {
   MAINNET: "avax",
   TESTNET: "fuji",
 } as const;
 
-const Prefix: Record<NetworkTypeUnion, string> = {
-  X: "X-",
-  P: "P-",
-} as const;
+const addressTypeToPrefix: Record<AvaxAddressUnion, string> = {
+  x: "X-",
+  p: "P-",
+};
 
 class Avax extends Keys implements AbstractNetwork<"avax"> {
-  private purpose: AvaxNetworkPurposeUnion;
+  private purpose: CommonNetworkPurposeUnion;
 
-  public constructor(mnemonic: Mnemonic, purpose: AvaxNetworkPurposeUnion) {
+  public constructor(mnemonic: Mnemonic, purpose: CommonNetworkPurposeUnion) {
     super(config.keysConfig, mnemonic);
 
     this.purpose = purpose;
@@ -68,13 +68,13 @@ class Avax extends Keys implements AbstractNetwork<"avax"> {
     };
   }
 
-  private getAddress(publicKey: Uint8Array, networkType: NetworkTypeUnion): string {
+  private getAddress(publicKey: Uint8Array, addressType: AvaxAddressUnion): string {
     const address: string = utils.formatBech32(
       this.purpose === "mainnet" ? Hrp.MAINNET : Hrp.TESTNET,
       crypto.hash160(publicKey)
     );
 
-    return Prefix[networkType].concat(address);
+    return addressTypeToPrefix[addressType].concat(address);
   }
 
   private getKeyPair(rawPrivateKey?: Uint8Array): DerivedKeyPair {

@@ -1,5 +1,3 @@
-type NetworkPurposeUnion = "mainnet" | "testnet" | "regtest";
+type CommonNetworkPurposeUnion = "mainnet" | "testnet";
 
-type AvaxNetworkPurposeUnion = Exclude<NetworkPurposeUnion, "regtest">;
-
-export { type NetworkPurposeUnion, type AvaxNetworkPurposeUnion };
+export { type CommonNetworkPurposeUnion };
