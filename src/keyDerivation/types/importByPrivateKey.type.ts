@@ -1,21 +1,17 @@
-// import { type DerivationType } from "../enums/index.js";
-// import { type CardanoDerivedBaseKeyPair } from "./cardanoDerivedBaseKeyPair.type.js";
-// import { type DerivationTypeUnion } from "./derivationTypeUnion.type.js";
-// import { type DerivedKeyPair } from "./derivedKeyPair.type.js";
-// import { type CommonInconsistentDerivationParameters } from "./commonInconsistentDerivationParameters.type.js";
-// import { type DerivedCredential } from "./derivedCredential.type.js";
+import { type CardanoBaseKeyPair, type CommonKeyPair, type KeyPair } from "./keyPair.type.js";
+import { type DerivationTypeUnion } from "@/types/index.js";
+import { type DerivationType } from "@/enums/index.js";
 
 type ImportByPrivateKeyParameters<TDerivationType extends DerivationTypeUnion> =
-  (TDerivationType extends typeof DerivationType.ADA_BASE
+  TDerivationType extends typeof DerivationType.ADA_BASE
     ? {
-        enterprisePrivateKey: CardanoDerivedBaseKeyPair["enterprisePrivateKey"];
-        rewardPrivateKey: CardanoDerivedBaseKeyPair["rewardPrivateKey"];
+        enterprisePrivateKey: CardanoBaseKeyPair["enterprisePrivateKey"];
+        rewardPrivateKey: CardanoBaseKeyPair["rewardPrivateKey"];
       }
-    : { privateKey: DerivedKeyPair["privateKey"] }) &
-    CommonInconsistentDerivationParameters<TDerivationType>;
+    : { privateKey: CommonKeyPair["privateKey"] };
 
 type ImportByPrivateKey<TDerivationType extends DerivationTypeUnion> = (
   parameters: ImportByPrivateKeyParameters<TDerivationType>
-) => DerivedCredential<TDerivationType>;
+) => KeyPair<TDerivationType>;
 
-// export { type ImportByPrivateKey, type ImportByPrivateKeyParameters };
+export { type ImportByPrivateKey, type ImportByPrivateKeyParameters };

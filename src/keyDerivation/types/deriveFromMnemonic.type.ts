@@ -1,13 +1,14 @@
-// import { type CommonInconsistentDerivationParameters } from "./commonInconsistentDerivationParameters.type.js";
-// import { type DerivationTypeUnion } from "./derivationTypeUnion.type.js";
-// import { type DerivedItem } from "./derivedItem.type.js";
+import { type KeyPair } from "./keyPair.type.js";
+import { type BitcoinCoreDerivationTypeUnion, type DerivationTypeUnion } from "@/types/index.js";
 
 type DeriveFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> = {
   derivationPath: string;
-} & CommonInconsistentDerivationParameters<TDerivationType>;
+} & (TDerivationType extends BitcoinCoreDerivationTypeUnion
+  ? { bip32RootKey: string }
+  : Record<string, unknown>);
 
 type DeriveFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveFromMnemonicParameters<TDerivationType>
-) => DerivedItem<TDerivationType>;
+) => KeyPair<TDerivationType>;
 
-// export { type DeriveFromMnemonic, type DeriveFromMnemonicParameters };
+export { type DeriveFromMnemonic, type DeriveFromMnemonicParameters };
