@@ -1,3 +1,5 @@
+type XrpAddressUnion = "base" | "x";
+
 type AvaxAddressUnion = "x" | "p";
 
-export { type AvaxAddressUnion };
+export { type XrpAddressUnion, type AvaxAddressUnion };

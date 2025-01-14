@@ -11,4 +11,4 @@ export {
 export { type DerivedItem } from "./derivedItem.type.js";
 export { type DerivedCredential } from "./derivedCredential.type.js";
 export { type DerivedKeyPair } from "./derivedKeyPair.type.js";
-export { type AvaxAddressUnion } from "./addressUnion.type.js";
+export { type XrpAddressUnion, type AvaxAddressUnion } from "./addressUnion.type.js";
