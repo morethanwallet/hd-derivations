@@ -16,7 +16,7 @@ type DerivationTypeMap = {
   transparent: "transparent";
   sol: "sol";
   xrpBase: "xrpBase";
-  x: "xrpX";
+  xrpX: "xrpX";
 };
 
 export { type DerivationTypeMap };
