@@ -9,7 +9,8 @@ import { Keys } from "@/keys/bip32/index.js";
 import { type BIP32Interface } from "bip32";
 import { getKeyPairFromEc } from "@/keyDerivation/helpers/index.js";
 import { toUint8Array } from "@/helpers/index.js";
-
+// User pass a network type
+// 
 class Bip44KeyDerivation extends Keys implements AbstractKeyDerivation<Bip44DerivationTypeUnion> {
   public deriveFromMnemonic({
     derivationPath,
