@@ -1,5 +1,4 @@
-import { type DerivationType } from "@/enums/index.js";
-import { type DerivationTypeUnion } from "@/types/index.js";
+import { type DerivationTypeMap, type DerivationTypeUnion } from "@/types/index.js";
 
 type CommonKeyPair = {
   publicKey: string;
@@ -14,6 +13,6 @@ type CardanoBaseKeyPair = {
 };
 
 type KeyPair<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends typeof DerivationType.ADA_BASE ? CardanoBaseKeyPair : CommonKeyPair;
+  TDerivationType extends DerivationTypeMap["adaBase"] ? CardanoBaseKeyPair : CommonKeyPair;
 
 export { type KeyPair, type CommonKeyPair, type CardanoBaseKeyPair };

@@ -1,14 +1,10 @@
 import { type ValueOf } from "ts-essentials";
-import { type DerivationType } from "../enums/index.js";
+import { type DerivationTypeMap } from "./derivationTypeMap.type.js";
 
-type DerivationTypeList = typeof DerivationType;
+type DerivationTypeUnion = ValueOf<DerivationTypeMap>;
 
-type DerivationTypeUnion = ValueOf<DerivationTypeList>;
+type XrpDerivationTypeUnion = DerivationTypeMap["x"] | DerivationTypeMap["xrpBase"];
 
-type BitcoinCoreDerivationTypeUnion =
-  | DerivationTypeList["LEGACY"]
-  | DerivationTypeList["SEG_WIT"]
-  | DerivationTypeList["NATIVE_SEG_WIT"]
-  | DerivationTypeList["TAPROOT"];
+type AvaxDerivationTypeUnion = DerivationTypeMap["avaxX"] | DerivationTypeMap["avaxP"];
 
-export { type DerivationTypeUnion, type BitcoinCoreDerivationTypeUnion };
+export { type DerivationTypeUnion, type XrpDerivationTypeUnion, type AvaxDerivationTypeUnion };
