@@ -10,4 +10,4 @@ export {
   type ImportByPrivateKey,
   type ImportByPrivateKeyParameters,
 } from "./importByPrivateKey.type.js";
-export { type Bip44DerivationTypeUnion } from "./bip44DerivationTypeUnion.type.js";
+export { type CommonBipDerivationTypeUnion } from "./bip44DerivationTypeUnion.type.js";

@@ -1,6 +1,6 @@
 import { type DerivationTypeMap } from "@/types/index.js";
 
-type Bip44DerivationTypeUnion =
+type CommonBipDerivationTypeUnion =
   | DerivationTypeMap["legacy"]
   | DerivationTypeMap["segWit"]
   | DerivationTypeMap["nativeSegWit"]
@@ -13,4 +13,4 @@ type Bip44DerivationTypeUnion =
   | DerivationTypeMap["xrpBase"]
   | DerivationTypeMap["xrpX"];
 
-export { type Bip44DerivationTypeUnion };
+export { type CommonBipDerivationTypeUnion };

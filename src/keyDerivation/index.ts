@@ -5,7 +5,7 @@ export {
   EnterpriseKeyDerivation,
   RewardKeyDerivation,
 } from "./cardano/index.js";
-export { Bip44KeyDerivation } from "./bip44KeyDerivation.js";
+export { CommonBipKeyDerivation } from "./commonBipKeyDerivation.js";
 export { EvmKeyDerivation } from "./evmKeyDerivation.js";
 export { SolanaKeyDerivation } from "./solana/solanaKeyDerivation.js";
-export { TransparentKeyDerivation } from "./transparentKeyDerivation.js";
+export { TransparentKeyDerivation } from "./zcash/index.js";

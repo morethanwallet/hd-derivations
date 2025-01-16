@@ -1,6 +1,5 @@
 import base58 from "bs58";
 import { Keypair } from "@solana/web3.js";
-import { type Mnemonic } from "@/mnemonic/index.js";
 import { Keys } from "@/keys/solana/index.js";
 import {
   AbstractKeyDerivation,
@@ -10,10 +9,6 @@ import {
 } from "@/keyDerivation/types/index.js";
 
 class SolanaKeyDerivation extends Keys implements AbstractKeyDerivation<"sol"> {
-  public constructor(mnemonic: Mnemonic) {
-    super(mnemonic);
-  }
-
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"sol">): CommonKeyPair {
