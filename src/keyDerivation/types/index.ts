@@ -1,7 +1,5 @@
 export { type AbstractKeyDerivation } from "./abstractKeyDerivation.type.js";
-export { type KeyPair, type CommonKeyPair, type CardanoBaseKeyPair } from "./keyPair.type.js";
-// export { type DerivationTypeUnion } from "./derivationTypeUnion.type.js";
-// export { type DerivedCredential } from "./derivedCredential.type.js";
+export { type CommonKeyPair, type CardanoBaseKeyPair } from "./keyPair.type.js";
 export {
   type DeriveFromMnemonic,
   type DeriveFromMnemonicParameters,

@@ -1,3 +1,5 @@
 type CommonNetworkPurposeUnion = "mainnet" | "testnet";
 
-export { type CommonNetworkPurposeUnion };
+type CommonNetworkPurposeRegTestExtendedUnion = CommonNetworkPurposeUnion | "regtest";
+
+export { type CommonNetworkPurposeUnion, type CommonNetworkPurposeRegTestExtendedUnion };
