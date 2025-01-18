@@ -1,5 +1,7 @@
 export {
   type DerivationTypeUnion,
+  type BtcDerivationTypeUnion,
+  type AdaDerivationTypeUnion,
   type XrpDerivationTypeUnion,
   type AvaxDerivationTypeUnion,
 } from "./derivationTypeUnion.type.js";

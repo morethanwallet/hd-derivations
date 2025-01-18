@@ -8,7 +8,7 @@ class Keys {
   private bip32: BIP32API;
   protected rootKey: BIP32Interface;
   protected mnemonic: Mnemonic;
-  protected keysConfig: KeysConfig;
+  public keysConfig: KeysConfig;
 
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
     this.bip32 = BIP32Factory(ecc);

@@ -1,13 +1,22 @@
+import { type DerivationTypeUnion, type DerivedItem } from "@/types/index.js";
 import { type CommonInconsistentDerivationParameters } from "./commonInconsistentDerivationParameters.type.js";
-import { type DerivedItem } from "./derivedItem.type.js";
-import { type NetworksTypesUnion } from "./networksTypeUnion.type.js";
+import { type CommonInconsistentParametersDerivationType } from "./commonInconsistentParametersDerivationType.type.js";
 
-type DeriveItemFromMnemonicParameters<TNetworkType extends NetworksTypesUnion> = {
+type DeriveItemFromMnemonicInnerHandlerParameters<TDerivationType extends DerivationTypeUnion> = {
   derivationPath: string;
-} & CommonInconsistentDerivationParameters<TNetworkType>;
+} & CommonInconsistentDerivationParameters<TDerivationType>;
 
-type DeriveItemFromMnemonic<TNetworkType extends NetworksTypesUnion> = (
-  parameters: DeriveItemFromMnemonicParameters<TNetworkType>
-) => DerivedItem<TNetworkType>;
+type DeriveItemFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
+  DeriveItemFromMnemonicInnerHandlerParameters<TDerivationType> &
+    CommonInconsistentDerivationParameters<TDerivationType> &
+    CommonInconsistentParametersDerivationType<TDerivationType>;
 
-export { type DeriveItemFromMnemonic, type DeriveItemFromMnemonicParameters };
+type DeriveItemFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
+  parameters: DeriveItemFromMnemonicParameters<TDerivationType>
+) => DerivedItem<TDerivationType>;
+
+export {
+  type DeriveItemFromMnemonic,
+  type DeriveItemFromMnemonicParameters,
+  type DeriveItemFromMnemonicInnerHandlerParameters,
+};

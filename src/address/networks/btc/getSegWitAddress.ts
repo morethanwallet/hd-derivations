@@ -1,11 +1,16 @@
 import { AddressError, ExceptionMessage } from "@/address/exceptions/index.js";
 import { type Address } from "@/address/types/index.js";
-import { assert } from "@/helpers/index.js";
+import { assert, toUint8Array } from "@/helpers/index.js";
+import { type CommonKeyPair } from "@/keyDerivation/types/index.js";
 import { type KeysConfig } from "@/keys/types/index.js";
 import { payments } from "bitcoinjs-lib";
 
-function getSegWitAddress(publicKey: Uint8Array, keysConfig: KeysConfig): Address["address"] {
-  const redeem = payments.p2wpkh({ pubkey: publicKey, network: keysConfig });
+function getSegWitAddress(
+  publicKey: CommonKeyPair["publicKey"],
+  keysConfig: KeysConfig
+): Address["address"] {
+  const rawPublicKey = toUint8Array(Buffer.from(publicKey, "hex"));
+  const redeem = payments.p2wpkh({ pubkey: rawPublicKey, network: keysConfig });
   const { address } = payments.p2sh({ redeem, network: keysConfig });
   assert(address, AddressError, ExceptionMessage.ADDRESS_GENERATION_FAILED);
 

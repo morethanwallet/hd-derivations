@@ -1,10 +1,10 @@
-import { type NetworksTypesUnion } from "./networksTypeUnion.type.js";
 import { type XrpAddressUnion, type AvaxAddressUnion } from "./addressUnion.type.js";
+import { type DerivationTypeUnion } from "@/types/index.js";
 
-type CommonInconsistentDerivationParameters<TNetworkType extends NetworksTypesUnion> =
-  TNetworkType extends "avax"
+type CommonInconsistentDerivationParameters<TDerivationType extends DerivationTypeUnion> =
+  TDerivationType extends "avax"
     ? { networkType: AvaxAddressUnion }
-    : TNetworkType extends "xrp"
+    : TDerivationType extends "xrp"
     ? {
         addressType: XrpAddressUnion;
         destinationTag?: number;

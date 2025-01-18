@@ -1,10 +1,11 @@
 import { BaseAddress, PublicKey } from "@emurgo/cardano-serialization-lib-nodejs";
 import { getCredential } from "./helpers/index.js";
 import { type Address } from "@/address/types/index.js";
+import { type CardanoBaseKeyPair } from "@/keyDerivation/types/keyPair.type.js";
 
 function getBaseAddress(
-  enterprisePublicKey: string,
-  rewardPublicKey: string,
+  enterprisePublicKey: CardanoBaseKeyPair["enterprisePublicKey"],
+  rewardPublicKey: CardanoBaseKeyPair["rewardPublicKey"],
   networkId: number
 ): Address["address"] {
   const enterpriseCredential = getCredential(PublicKey.from_hex(enterprisePublicKey));

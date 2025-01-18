@@ -1,1 +1,1 @@
-export { getKeyPairFromEc } from "./getKeyPairFromEc.helper.js";
+export { findCustomConfig } from "./findCustomConfig.helper.js";

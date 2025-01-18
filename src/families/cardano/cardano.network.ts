@@ -1,105 +1,85 @@
 import {
-  type DerivedItem,
-  AddressList,
-  BaseAddress,
-  EnterpriseAddress,
-  RewardAddress,
+  BaseKeyDerivation,
+  EnterpriseKeyDerivation,
+  RewardKeyDerivation,
 } from "@/keyDerivation/index.js";
-import { type Mnemonic } from "@/mnemonic/index.js";
 import {
-  type NetworkPurpose,
+  type DeriveItemFromMnemonicParameters,
   type AbstractNetwork,
-  type CardanoAddressList,
-} from "./types/index.js";
-import { assert } from "@/helpers/assert.helper.js";
-import { ExceptionMessage, NetworkError } from "../exceptions/index.js";
+  type GetCredentialFromPrivateKeyInnerHandlerParameters,
+  type ConstructorParameters,
+} from "../types/index.js";
+import { DerivedCredential, type AdaDerivationTypeUnion, type DerivedItem } from "@/types/index.js";
+import {
+  getBaseItemHandlers,
+  getEnterpriseItemHandlers,
+  getNetworkId,
+  getRewardItemHandlers,
+} from "./helpers/index.js";
+import { ExceptionMessage } from "../exceptions/index.js";
+import { type Handlers } from "./types/index.js";
 
-class Cardano implements AbstractNetwork {
-  private purpose: NetworkPurpose;
-  private baseAddress: BaseAddress;
-  private enterpriseAddress: EnterpriseAddress;
-  private rewardAddress: RewardAddress;
+class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
+  public handlers: Partial<Handlers>;
 
-  public constructor(mnemonic: Mnemonic, purpose: NetworkPurpose) {
-    this.purpose = purpose;
-    this.baseAddress = new BaseAddress(mnemonic);
-    this.enterpriseAddress = new EnterpriseAddress(mnemonic);
-    this.rewardAddress = new RewardAddress(mnemonic);
+  public constructor({
+    mnemonic,
+    networkPurpose,
+    derivationConfigs,
+  }: ConstructorParameters<AdaDerivationTypeUnion>) {
+    const networkId = getNetworkId(networkPurpose);
+
+    const keysDerivationHandlers = {
+      enterprise: getEnterpriseItemHandlers(new EnterpriseKeyDerivation(mnemonic), networkId),
+      reward: getRewardItemHandlers(new RewardKeyDerivation(mnemonic), networkId),
+      adaBase: getBaseItemHandlers(new BaseKeyDerivation(mnemonic), networkId),
+    };
+
+    this.handlers = Object.fromEntries(
+      derivationConfigs.map(({ derivationType }) => {
+        return [derivationType, keysDerivationHandlers[derivationType]];
+      })
+    );
   }
 
-  public derive(
-    derivationPath: string,
-    addressType: Exclude<CardanoAddressList, typeof AddressList.ADA_BASE>
-  ): DerivedItem<typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD>;
-  public derive(
-    derivationPath: string,
-    addressType: Extract<CardanoAddressList, typeof AddressList.ADA_BASE>
-  ): DerivedItem<typeof AddressList.ADA_BASE>;
-  public derive(
-    derivationPath: string,
-    addressType: CardanoAddressList
-  ): DerivedItem<CardanoAddressList> {
-    switch (addressType) {
-      case AddressList.ADA_REWARD: {
-        return this.rewardAddress.derive({ derivationPath, networkPurpose: this.purpose });
-      }
-      case AddressList.ADA_ENTERPRISE: {
-        return this.enterpriseAddress.derive({ derivationPath, networkPurpose: this.purpose });
-      }
-      case AddressList.ADA_BASE: {
-        return this.baseAddress.derive({ derivationPath, networkPurpose: this.purpose });
-      }
-    }
+  public deriveItemFromMnemonic({
+    derivationType,
+    derivationPath,
+  }: DeriveItemFromMnemonicParameters<AdaDerivationTypeUnion>): DerivedItem<AdaDerivationTypeUnion> {
+    const derivationHandler = this.handlers[derivationType];
+
+    if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+
+    return derivationHandler.deriveItemFromMnemonic({ derivationPath });
   }
 
-  public importByPrivateKey(
-    derivationPath: string,
-    privateKey: DerivedItem<
-      typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD
-    >["privateKey"],
-    addressType: Exclude<CardanoAddressList, typeof AddressList.ADA_BASE>,
-    rewardPrivateKey?: DerivedItem<typeof AddressList.ADA_BASE>["rewardPrivateKey"]
-  ): DerivedItem<typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD>;
-  public importByPrivateKey(
-    derivationPath: string,
-    enterprisePrivateKey: DerivedItem<typeof AddressList.ADA_BASE>["enterprisePrivateKey"],
-    addressType: Extract<CardanoAddressList, typeof AddressList.ADA_BASE>,
-    rewardPrivateKey?: DerivedItem<typeof AddressList.ADA_BASE>["rewardPrivateKey"]
-  ): DerivedItem<typeof AddressList.ADA_BASE>;
-  public importByPrivateKey(
-    derivationPath: string,
-    privateKey:
-      | DerivedItem<typeof AddressList.ADA_ENTERPRISE | typeof AddressList.ADA_REWARD>["privateKey"]
-      | DerivedItem<typeof AddressList.ADA_BASE>["enterprisePrivateKey"],
-    addressType: CardanoAddressList,
-    rewardPrivateKey?: DerivedItem<typeof AddressList.ADA_BASE>["rewardPrivateKey"]
-  ): DerivedItem<CardanoAddressList> {
-    switch (addressType) {
-      case AddressList.ADA_REWARD: {
-        return this.rewardAddress.importByPrivateKey({
-          derivationPath,
-          privateKey,
-          networkPurpose: this.purpose,
-        });
-      }
-      case AddressList.ADA_ENTERPRISE: {
-        return this.enterpriseAddress.importByPrivateKey({
-          derivationPath,
-          privateKey,
-          networkPurpose: this.purpose,
-        });
-      }
-      case AddressList.ADA_BASE: {
-        assert(rewardPrivateKey, NetworkError, ExceptionMessage.CARDANO_REWARD_KEY_IS_REQUIRED);
+  // public getCredentialFromPrivateKey({
+  //   derivationType,
+  //   ...parameters
+  // }: GetCredentialFromPrivateKeyParameters<AdaDerivationTypeUnion>): DerivedCredential<AdaDerivationTypeUnion> {
+  //   const derivationHandler = this.handlers[derivationType];
 
-        return this.baseAddress.importByPrivateKey({
-          derivationPath,
-          rewardPrivateKey,
-          enterprisePrivateKey: privateKey,
-          networkPurpose: this.purpose,
-        });
-      }
-    }
+  //   if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+
+  //   if (derivationType === "adaBase") {
+  //     return derivationHandler.getCredentialFromPrivateKey(
+  //       parameters as GetCredentialFromPrivateKeyParameters<"adaBase">
+  //     );
+  //   }
+  // }
+
+  public getCredentialFromPrivateKey<C extends AdaDerivationTypeUnion>({
+    derivationType,
+    ...parameters
+  }: {
+    derivationType: C;
+  } & GetCredentialFromPrivateKeyInnerHandlerParameters<C>): DerivedCredential<AdaDerivationTypeUnion> {
+    const derivationHandler = this.handlers[derivationType];
+    console.log(this.handlers);
+    if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+
+    // TODO: Fix this assertion
+    return derivationHandler.getCredentialFromPrivateKey(parameters as any);
   }
 }
 

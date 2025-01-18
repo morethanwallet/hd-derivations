@@ -1,12 +1,12 @@
-import { type CommonNetworkPurposeRegTestExtendedUnion } from "@/families/types/index.js";
+import { type CommonNetworkPurposeRegTestExtendedUnion } from "@/types/network/index.js";
 import { networks } from "bitcoinjs-lib";
 
 function getCommonLegacyKeysConfig(networkPurpose: CommonNetworkPurposeRegTestExtendedUnion) {
   return networkPurpose === "mainnet"
-    ? networks.bitcoin
+    ? { keysConfig: networks.bitcoin }
     : networkPurpose === "testnet"
-    ? networks.testnet
-    : networks.regtest;
+    ? { keysConfig: networks.testnet }
+    : { keysConfig: networks.regtest };
 }
 
 export { getCommonLegacyKeysConfig };

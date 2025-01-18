@@ -1,10 +1,10 @@
+import { type DerivationTypeUnion } from "@/types/index.js";
 import { type DeriveItemFromMnemonic } from "./deriveItemFromMnemonic.type.js";
 import { type GetCredentialFromPrivateKey } from "./getCredentialFromPrivateKey.type.js";
-import { type NetworksTypesUnion } from "./networksTypeUnion.type.js";
 
-type AbstractNetwork<TNetworkType extends NetworksTypesUnion> = {
-  deriveItemFromMnemonic: DeriveItemFromMnemonic<TNetworkType>;
-  getCredentialFromPrivateKey: GetCredentialFromPrivateKey<TNetworkType>;
+type AbstractNetwork<TDerivationType extends DerivationTypeUnion> = {
+  deriveItemFromMnemonic: DeriveItemFromMnemonic<TDerivationType>;
+  getCredentialFromPrivateKey: GetCredentialFromPrivateKey<TDerivationType>;
 };
 
 export { type AbstractNetwork };
