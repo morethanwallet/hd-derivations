@@ -1,11 +1,11 @@
-export { TaprootKeyDerivation } from "./taprootKeyDerivation.js";
-export { BnbKeyDerivation } from "./bnbKeyDerivation.js";
+export { TaprootKeyDerivation } from "./networks/btc/taprootKeyDerivation.js";
+export { BnbKeyDerivation } from "./networks/bnb/bnbKeyDerivation.js";
 export {
   BaseKeyDerivation,
   EnterpriseKeyDerivation,
   RewardKeyDerivation,
-} from "./cardano/index.js";
-export { CommonBipKeyDerivation } from "./commonBipKeyDerivation.js";
-export { EvmKeyDerivation } from "./evmKeyDerivation.js";
-export { SolanaKeyDerivation } from "./solana/solanaKeyDerivation.js";
-export { TransparentKeyDerivation } from "./zcash/index.js";
+} from "./networks/cardano/index.js";
+export { CommonBipKeyDerivation } from "./networks/common/commonBipKeyDerivation.js";
+export { EvmKeyDerivation } from "./networks/evm/evmKeyDerivation.js";
+export { SolanaKeyDerivation } from "./networks/solana/solanaKeyDerivation.js";
+export { TransparentKeyDerivation } from "./networks/zcash/index.js";
