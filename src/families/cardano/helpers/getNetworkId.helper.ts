@@ -1,4 +1,4 @@
-import { type AdaNetworkPurposeUnion } from "@/families/types/index.js";
+import { type AdaNetworkPurposeUnion } from "@/types/network/index.js";
 import { NetworkInfo } from "@emurgo/cardano-serialization-lib-nodejs";
 
 function getNetworkId(networkPurpose: AdaNetworkPurposeUnion): number {

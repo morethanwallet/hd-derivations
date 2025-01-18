@@ -20,7 +20,8 @@ type GetCredentialFromPrivateKeyParametersKeys<TDerivationType extends Derivatio
 
 type GetCredentialFromPrivateKeyInnerHandlerParameters<
   TDerivationType extends DerivationTypeUnion
-> = GetCredentialFromPrivateKeyParametersKeys<TDerivationType>;
+> = GetCredentialFromPrivateKeyParametersKeys<TDerivationType> &
+  CommonInconsistentDerivationParameters<TDerivationType>;
 
 type GetCredentialFromPrivateKeyParameters<TDerivationType extends DerivationTypeUnion> =
   GetCredentialFromPrivateKeyInnerHandlerParameters<TDerivationType> &

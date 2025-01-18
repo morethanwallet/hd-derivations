@@ -24,7 +24,7 @@ import { type Handlers } from "./types/index.js";
 import { findCustomConfig } from "../helpers/index.js";
 
 class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
-  public handlers: Partial<Handlers>;
+  public handlers: NonNullable<Partial<Handlers>>;
 
   public constructor({
     derivationConfigs,
@@ -88,9 +88,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
     base58RootKey,
     derivationPath,
   }: DeriveItemFromMnemonicParameters<BtcDerivationTypeUnion>): DerivedItem<BtcDerivationTypeUnion> {
-    const derivationHandler = this.handlers[derivationType];
-
-    if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    const derivationHandler = this.getDerivationHandler(derivationType);
 
     return derivationHandler.deriveItemFromMnemonic({ base58RootKey, derivationPath });
   }
@@ -99,11 +97,19 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
     derivationType,
     privateKey,
   }: GetCredentialFromPrivateKeyParameters<BtcDerivationTypeUnion>): DerivedCredential<BtcDerivationTypeUnion> {
+    const derivationHandler = this.getDerivationHandler(derivationType);
+
+    return derivationHandler.getCredentialFromPrivateKey({ privateKey });
+  }
+
+  private getDerivationHandler(
+    derivationType: BtcDerivationTypeUnion
+  ): Handlers[BtcDerivationTypeUnion] | never {
     const derivationHandler = this.handlers[derivationType];
 
     if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
-    return derivationHandler.getCredentialFromPrivateKey({ privateKey });
+    return derivationHandler;
   }
 }
 

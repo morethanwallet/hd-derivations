@@ -3,25 +3,34 @@ import { Cardano } from "./cardano/cardano.network.js";
 import { Mnemonic } from "@/mnemonic/index.js";
 import { ExceptionMessage } from "./exceptions/index.js";
 import {
+  type CommonNetworkPurposeUnion,
   type AdaNetworkPurposeUnion,
   type CommonNetworkPurposeRegTestExtendedUnion,
   type NetworkTypeUnion,
 } from "@/types/network/index.js";
-import { type AdaDerivationConfigs, type BtcDerivationConfigs } from "@/types/config/index.js";
+import {
+  type AvaxDerivationConfigs,
+  type AdaDerivationConfigs,
+  type BtcDerivationConfigs,
+} from "@/types/config/index.js";
+import { Avax } from "./avax/avax.network.js";
 
 type NetworkTypeToAvailableDerivationConfigsMap = {
   btc: BtcDerivationConfigs;
   ada: AdaDerivationConfigs;
+  avax: AvaxDerivationConfigs;
 };
 
 type NetworkTypeToNetworkPurpose = {
   btc: CommonNetworkPurposeRegTestExtendedUnion;
   ada: AdaNetworkPurposeUnion;
+  avax: CommonNetworkPurposeUnion;
 };
 
 type Network = {
   btc: InstanceType<typeof Bitcoin>;
   ada: InstanceType<typeof Cardano>;
+  avax: InstanceType<typeof Avax>;
 };
 
 class NetworkFacade<T extends NetworkTypeUnion> {
@@ -57,6 +66,15 @@ class NetworkFacade<T extends NetworkTypeUnion> {
             mnemonic: mnemonicInstance,
             networkPurpose: networkPurpose as AdaNetworkPurposeUnion,
             derivationConfigs: derivationConfigs as AdaDerivationConfigs,
+          }) as Network[T];
+        }
+        break;
+      case "avax":
+        {
+          this.network = new Avax({
+            mnemonic: mnemonicInstance,
+            networkPurpose: networkPurpose as CommonNetworkPurposeUnion,
+            derivationConfigs: derivationConfigs as AvaxDerivationConfigs,
           }) as Network[T];
         }
         break;

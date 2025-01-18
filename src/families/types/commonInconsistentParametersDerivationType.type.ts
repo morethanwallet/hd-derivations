@@ -1,4 +1,5 @@
 import {
+  type AvaxDerivationTypeUnion,
   type AdaDerivationTypeUnion,
   type BtcDerivationTypeUnion,
   type DerivationTypeUnion,
@@ -9,6 +10,8 @@ type CommonInconsistentParametersDerivationType<TDerivationType extends Derivati
     ? { derivationType: BtcDerivationTypeUnion }
     : TDerivationType extends AdaDerivationTypeUnion
     ? { derivationType: AdaDerivationTypeUnion }
+    : TDerivationType extends AvaxDerivationTypeUnion
+    ? { isMainnet: boolean; derivationType: AvaxDerivationTypeUnion }
     : Record<string, unknown>;
 
 export { type CommonInconsistentParametersDerivationType };

@@ -1,88 +1,83 @@
-import { type Mnemonic } from "@/mnemonic/index.js";
-import { config } from "./config/index.js";
-import { Keys } from "@/keys/bip32/index.js";
-import { toUint8Array } from "@/helpers/index.js";
-import { crypto } from "bitcoinjs-lib";
-import { utils } from "@avalabs/avalanchejs";
-import { ExceptionMessage } from "@/keyDerivation/exceptions/index.js";
 import {
+  type AbstractNetwork,
+  type DeriveItemFromMnemonicParameters,
+  type ConstructorParameters,
+  type GetCredentialFromPrivateKeyParameters,
+} from "../types/index.js";
+import {
+  type AvaxDerivationTypeUnion,
   type DerivedCredential,
   type DerivedItem,
-  type GetCredentialFromPrivateKeyParameters,
-  type AbstractNetwork,
-  type CommonNetworkPurposeUnion,
-  type AvaxAddressUnion,
-} from "../types/index.js";
-import { type DeriveItemFromMnemonicParameters } from "../types/index.js";
-import { type DerivedKeyPair } from "../types/index.js";
-import { getKeyPairFromEc } from "../helpers/index.js";
+} from "@/types/index.js";
+import { type Handlers } from "./types/index.js";
+import { getAvaxItemHandlers } from "./helpers/getItemHandlers.helper.js";
+import { CommonBipKeyDerivation } from "@/keyDerivation/index.js";
+import { findCustomConfig } from "../helpers/index.js";
+import { avaxConfig } from "@/config/index.js";
+import { ExceptionMessage } from "../exceptions/index.js";
 
-const Hrp: Record<Uppercase<CommonNetworkPurposeUnion>, string> = {
-  MAINNET: "avax",
-  TESTNET: "fuji",
-} as const;
+class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
+  public handlers: Partial<Handlers>;
 
-const addressTypeToPrefix: Record<AvaxAddressUnion, string> = {
-  x: "X-",
-  p: "P-",
-};
+  public constructor({
+    derivationConfigs,
+    mnemonic,
+    networkPurpose,
+  }: ConstructorParameters<AvaxDerivationTypeUnion>) {
+    const keysDerivationHandlers = {
+      avaxX: getAvaxItemHandlers(
+        new CommonBipKeyDerivation(
+          findCustomConfig("p2wshInP2sh", derivationConfigs) ??
+            avaxConfig[networkPurpose].avax.keysConfig,
+          mnemonic
+        ),
+        "avaxX"
+      ),
+      avaxP: getAvaxItemHandlers(
+        new CommonBipKeyDerivation(
+          findCustomConfig("p2wshInP2sh", derivationConfigs) ??
+            avaxConfig[networkPurpose].avax.keysConfig,
+          mnemonic
+        ),
+        "avaxP"
+      ),
+    };
 
-class Avax extends Keys implements AbstractNetwork<"avax"> {
-  private purpose: CommonNetworkPurposeUnion;
-
-  public constructor(mnemonic: Mnemonic, purpose: CommonNetworkPurposeUnion) {
-    super(config.keysConfig, mnemonic);
-
-    this.purpose = purpose;
+    this.handlers = Object.fromEntries(
+      derivationConfigs.map(({ derivationType }) => {
+        return [derivationType, keysDerivationHandlers[derivationType]];
+      })
+    );
   }
 
   public deriveItemFromMnemonic({
     derivationPath,
-    networkType,
-  }: DeriveItemFromMnemonicParameters<"avax">): DerivedItem<"avax"> {
-    const node = this.rootKey.derivePath(derivationPath);
-    const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
-    const address = this.getAddress(node.publicKey, networkType);
+    derivationType,
+    isMainnet,
+  }: DeriveItemFromMnemonicParameters<AvaxDerivationTypeUnion>): DerivedItem<AvaxDerivationTypeUnion> {
+    const derivationHandler = this.getDerivationHandler(derivationType);
 
-    return {
-      privateKey,
-      publicKey,
-      address,
-      derivationPath,
-    };
+    return derivationHandler.deriveItemFromMnemonic({ derivationPath, isMainnet });
   }
 
   public getCredentialFromPrivateKey({
+    derivationType,
+    isMainnet,
     privateKey,
-    networkType,
-  }: GetCredentialFromPrivateKeyParameters<"avax">): DerivedCredential<"avax"> {
-    const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
-    const { publicKey } = this.getKeyPair(rawPrivateKey);
+  }: GetCredentialFromPrivateKeyParameters<AvaxDerivationTypeUnion>): DerivedCredential<AvaxDerivationTypeUnion> {
+    const derivationHandler = this.getDerivationHandler(derivationType);
 
-    const address = this.getAddress(toUint8Array(Buffer.from(publicKey, "hex")), networkType);
-
-    return {
-      privateKey,
-      publicKey,
-      address,
-    };
+    return derivationHandler.getCredentialFromPrivateKey({ privateKey, isMainnet });
   }
 
-  private getAddress(publicKey: Uint8Array, addressType: AvaxAddressUnion): string {
-    const address: string = utils.formatBech32(
-      this.purpose === "mainnet" ? Hrp.MAINNET : Hrp.TESTNET,
-      crypto.hash160(publicKey)
-    );
+  private getDerivationHandler(
+    derivationType: AvaxDerivationTypeUnion
+  ): Handlers[AvaxDerivationTypeUnion] | never {
+    const derivationHandler = this.handlers[derivationType];
 
-    return addressTypeToPrefix[addressType].concat(address);
-  }
+    if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
-  private getKeyPair(rawPrivateKey?: Uint8Array): DerivedKeyPair {
-    return getKeyPairFromEc(
-      ExceptionMessage.AVAX_PRIVATE_KEY_GENERATION_FAILED,
-      this.keysConfig,
-      rawPrivateKey
-    );
+    return derivationHandler;
   }
 }
 

@@ -20,7 +20,7 @@ import { ExceptionMessage } from "../exceptions/index.js";
 import { type Handlers } from "./types/index.js";
 
 class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
-  public handlers: Partial<Handlers>;
+  public handlers: NonNullable<Partial<Handlers>>;
 
   public constructor({
     mnemonic,
@@ -46,9 +46,7 @@ class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
     derivationType,
     derivationPath,
   }: DeriveItemFromMnemonicParameters<AdaDerivationTypeUnion>): DerivedItem<AdaDerivationTypeUnion> {
-    const derivationHandler = this.handlers[derivationType];
-
-    if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    const derivationHandler = this.getDerivationHandler(derivationType);
 
     return derivationHandler.deriveItemFromMnemonic({ derivationPath });
   }
@@ -74,12 +72,20 @@ class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
   }: {
     derivationType: C;
   } & GetCredentialFromPrivateKeyInnerHandlerParameters<C>): DerivedCredential<AdaDerivationTypeUnion> {
-    const derivationHandler = this.handlers[derivationType];
-    console.log(this.handlers);
-    if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    const derivationHandler = this.getDerivationHandler(derivationType);
 
     // TODO: Fix this assertion
     return derivationHandler.getCredentialFromPrivateKey(parameters as any);
+  }
+
+  private getDerivationHandler(
+    derivationType: AdaDerivationTypeUnion
+  ): Handlers[AdaDerivationTypeUnion] | never {
+    const derivationHandler = this.handlers[derivationType];
+
+    if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+
+    return derivationHandler;
   }
 }
 

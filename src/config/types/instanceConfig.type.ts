@@ -1,6 +1,11 @@
 import { type MnemonicProperty } from "@/mnemonic/types/index.js";
-import { type AdaDerivationConfigs, type BtcDerivationConfigs } from "@/types/config/index.js";
 import {
+  type AvaxDerivationConfigs,
+  type AdaDerivationConfigs,
+  type BtcDerivationConfigs,
+} from "@/types/config/index.js";
+import {
+  type CommonNetworkPurposeUnion,
   type AdaNetworkPurposeUnion,
   type CommonNetworkPurposeRegTestExtendedUnion,
   type NetworkTypeMap,
@@ -18,4 +23,10 @@ type AdaInstanceConfig = {
   derivationConfigs: AdaDerivationConfigs;
 } & MnemonicProperty;
 
-export { type BtcInstanceConfig, AdaInstanceConfig };
+type AvaxInstanceConfig = {
+  network: NetworkTypeMap["avax"];
+  networkPurpose: CommonNetworkPurposeUnion;
+  derivationConfigs: AvaxDerivationConfigs;
+} & MnemonicProperty;
+
+export { type BtcInstanceConfig, AdaInstanceConfig, type AvaxInstanceConfig };

@@ -1,4 +1,4 @@
-export { Bitcoin, BitcoinCore, MultiBitHd } from "./bitcoin/index.js";
+export { Bitcoin } from "./bitcoin/index.js";
 export { Dogecoin } from "./dogecoin/index.js";
 export { Zcash } from "./zcash/index.js";
 export { BitcoinCash } from "./bitcoin-cash/index.js";

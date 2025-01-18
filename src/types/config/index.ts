@@ -1,1 +1,5 @@
-export { type BtcDerivationConfigs, type AdaDerivationConfigs } from "./derivationConfigs.type.js";
+export {
+  type BtcDerivationConfigs,
+  type AdaDerivationConfigs,
+  type AvaxDerivationConfigs,
+} from "./derivationConfigs.type.js";

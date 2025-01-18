@@ -1,1 +1,5 @@
-export { type BtcInstanceConfig, type AdaInstanceConfig } from "./instanceConfig.type.js";
+export {
+  type BtcInstanceConfig,
+  type AdaInstanceConfig,
+  type AvaxInstanceConfig,
+} from "./instanceConfig.type.js";
