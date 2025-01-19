@@ -8,6 +8,7 @@ import {
   type AbstractNetwork,
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
   type ConstructorParameters,
+  DeriveItemsBatchFromMnemonicParameters,
 } from "../types/index.js";
 import { DerivedCredential, type AdaDerivationTypeUnion, type DerivedItem } from "@/types/index.js";
 import {
@@ -30,9 +31,18 @@ class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
     const networkId = getNetworkId(networkPurpose);
 
     const keysDerivationHandlers = {
-      enterprise: getEnterpriseItemHandlers(new EnterpriseKeyDerivation(mnemonic), networkId),
-      reward: getRewardItemHandlers(new RewardKeyDerivation(mnemonic), networkId),
-      adaBase: getBaseItemHandlers(new BaseKeyDerivation(mnemonic), networkId),
+      enterprise: getEnterpriseItemHandlers({
+        networkId,
+        keysDerivationInstance: new EnterpriseKeyDerivation(mnemonic),
+      }),
+      reward: getRewardItemHandlers({
+        networkId,
+        keysDerivationInstance: new RewardKeyDerivation(mnemonic),
+      }),
+      adaBase: getBaseItemHandlers({
+        networkId,
+        keysDerivationInstance: new BaseKeyDerivation(mnemonic),
+      }),
     };
 
     this.handlers = Object.fromEntries(
@@ -46,21 +56,21 @@ class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
     derivationType,
     derivationPath,
   }: DeriveItemFromMnemonicParameters<AdaDerivationTypeUnion>): DerivedItem<AdaDerivationTypeUnion> {
-    const derivationHandler = this.getDerivationHandler(derivationType);
+    const derivationHandlers = this.getDerivationHandlers(derivationType);
 
-    return derivationHandler.deriveItemFromMnemonic({ derivationPath });
+    return derivationHandlers.deriveItemFromMnemonic({ derivationPath });
   }
 
   // public getCredentialFromPrivateKey({
   //   derivationType,
   //   ...parameters
   // }: GetCredentialFromPrivateKeyParameters<AdaDerivationTypeUnion>): DerivedCredential<AdaDerivationTypeUnion> {
-  //   const derivationHandler = this.handlers[derivationType];
+  //   const derivationHandlers = this.handlers[derivationType];
 
   //   if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
   //   if (derivationType === "adaBase") {
-  //     return derivationHandler.getCredentialFromPrivateKey(
+  //     return derivationHandlers.getCredentialFromPrivateKey(
   //       parameters as GetCredentialFromPrivateKeyParameters<"adaBase">
   //     );
   //   }
@@ -69,23 +79,32 @@ class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
   public getCredentialFromPrivateKey<C extends AdaDerivationTypeUnion>({
     derivationType,
     ...parameters
-  }: {
+  }: GetCredentialFromPrivateKeyInnerHandlerParameters<C> & {
     derivationType: C;
-  } & GetCredentialFromPrivateKeyInnerHandlerParameters<C>): DerivedCredential<AdaDerivationTypeUnion> {
-    const derivationHandler = this.getDerivationHandler(derivationType);
+  }): DerivedCredential<AdaDerivationTypeUnion> {
+    const derivationHandlers = this.getDerivationHandlers(derivationType);
 
-    // TODO: Fix this assertion
-    return derivationHandler.getCredentialFromPrivateKey(parameters as any);
+    // TODO: Fix assertions
+    return derivationHandlers.getCredentialFromPrivateKey(parameters as any);
   }
 
-  private getDerivationHandler(
+  public deriveItemsBatchFromMnemonic({
+    derivationType,
+    ...parameters
+  }: DeriveItemsBatchFromMnemonicParameters<AdaDerivationTypeUnion>) {
+    const derivationHandlers = this.getDerivationHandlers(derivationType);
+
+    return (derivationHandlers as any).deriveItemsBatchFromMnemonic(parameters);
+  }
+
+  private getDerivationHandlers(
     derivationType: AdaDerivationTypeUnion
   ): Handlers[AdaDerivationTypeUnion] | never {
-    const derivationHandler = this.handlers[derivationType];
+    const derivationHandlers = this.handlers[derivationType];
 
-    if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
-    return derivationHandler;
+    return derivationHandlers;
   }
 }
 

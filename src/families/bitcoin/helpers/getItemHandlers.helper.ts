@@ -6,16 +6,15 @@ import {
   getSegWitAddress,
   getTaprootAddress,
 } from "@/address/networks/index.js";
+import { deriveItemsBatchFromMnemonic } from "@/families/helpers/index.js";
 import {
+  type GetItemHandlerParameters,
   type DeriveItemFromMnemonicInnerHandlerParameters,
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
 } from "@/families/types/index.js";
-import { type TaprootKeyDerivation, type CommonBipKeyDerivation } from "@/keyDerivation/index.js";
 import { type DerivedItem } from "@/types/index.js";
 
-function getLegacyItemHandlers(
-  keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation>
-) {
+function getLegacyItemHandlers({ keysDerivationInstance }: GetItemHandlerParameters<"legacy">) {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"legacy">
@@ -33,12 +32,11 @@ function getLegacyItemHandlers(
 
       return { ...keys, address };
     },
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"legacy">,
   };
 }
 
-function getSegWitItemHandlers(
-  keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation>
-) {
+function getSegWitItemHandlers({ keysDerivationInstance }: GetItemHandlerParameters<"segWit">) {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"segWit">
@@ -56,12 +54,13 @@ function getSegWitItemHandlers(
 
       return { ...keys, address };
     },
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"segWit">,
   };
 }
 
-function getNativeSegWitItemHandlers(
-  keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation>
-) {
+function getNativeSegWitItemHandlers({
+  keysDerivationInstance,
+}: GetItemHandlerParameters<"nativeSegWit">) {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"nativeSegWit">
@@ -79,10 +78,11 @@ function getNativeSegWitItemHandlers(
 
       return { ...keys, address };
     },
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"nativeSegWit">,
   };
 }
 
-function getTaprootItemHandlers(keysDerivationInstance: InstanceType<typeof TaprootKeyDerivation>) {
+function getTaprootItemHandlers({ keysDerivationInstance }: GetItemHandlerParameters<"taproot">) {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"taproot">
@@ -100,10 +100,11 @@ function getTaprootItemHandlers(keysDerivationInstance: InstanceType<typeof Tapr
 
       return { ...keys, address };
     },
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"taproot">,
   };
 }
 
-function getP2wshItemHandlers(keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation>) {
+function getP2wshItemHandlers({ keysDerivationInstance }: GetItemHandlerParameters<"p2wsh">) {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"p2wsh">
@@ -121,12 +122,13 @@ function getP2wshItemHandlers(keysDerivationInstance: InstanceType<typeof Common
 
       return { ...keys, address };
     },
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"p2wsh">,
   };
 }
 
-function getP2wshInP2shItemHandlers(
-  keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation>
-) {
+function getP2wshInP2shItemHandlers({
+  keysDerivationInstance,
+}: GetItemHandlerParameters<"p2wshInP2sh">) {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"p2wshInP2sh">
@@ -144,6 +146,7 @@ function getP2wshInP2shItemHandlers(
 
       return { ...keys, address };
     },
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"p2wshInP2sh">,
   };
 }
 

@@ -3,6 +3,7 @@ import {
   type DeriveItemFromMnemonicParameters,
   type ConstructorParameters,
   type GetCredentialFromPrivateKeyParameters,
+  DeriveItemsBatchFromMnemonicParameters,
 } from "../types/index.js";
 import {
   type AvaxDerivationTypeUnion,
@@ -24,23 +25,27 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
     mnemonic,
     networkPurpose,
   }: ConstructorParameters<AvaxDerivationTypeUnion>) {
+    const isMainnet = networkPurpose === "mainnet";
+
     const keysDerivationHandlers = {
-      avaxX: getAvaxItemHandlers(
-        new CommonBipKeyDerivation(
+      avaxX: getAvaxItemHandlers({
+        isMainnet,
+        derivationType: "avaxX",
+        keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("p2wshInP2sh", derivationConfigs) ??
             avaxConfig[networkPurpose].avax.keysConfig,
           mnemonic
         ),
-        "avaxX"
-      ),
-      avaxP: getAvaxItemHandlers(
-        new CommonBipKeyDerivation(
+      }),
+      avaxP: getAvaxItemHandlers({
+        isMainnet,
+        derivationType: "avaxP",
+        keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("p2wshInP2sh", derivationConfigs) ??
             avaxConfig[networkPurpose].avax.keysConfig,
           mnemonic
         ),
-        "avaxP"
-      ),
+      }),
     };
 
     this.handlers = Object.fromEntries(
@@ -53,31 +58,38 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
   public deriveItemFromMnemonic({
     derivationPath,
     derivationType,
-    isMainnet,
   }: DeriveItemFromMnemonicParameters<AvaxDerivationTypeUnion>): DerivedItem<AvaxDerivationTypeUnion> {
-    const derivationHandler = this.getDerivationHandler(derivationType);
+    const derivationHandlers = this.getDerivationHandlers(derivationType);
 
-    return derivationHandler.deriveItemFromMnemonic({ derivationPath, isMainnet });
+    return derivationHandlers.deriveItemFromMnemonic({ derivationPath });
   }
 
   public getCredentialFromPrivateKey({
     derivationType,
-    isMainnet,
     privateKey,
   }: GetCredentialFromPrivateKeyParameters<AvaxDerivationTypeUnion>): DerivedCredential<AvaxDerivationTypeUnion> {
-    const derivationHandler = this.getDerivationHandler(derivationType);
+    const derivationHandlers = this.getDerivationHandlers(derivationType);
 
-    return derivationHandler.getCredentialFromPrivateKey({ privateKey, isMainnet });
+    return derivationHandlers.getCredentialFromPrivateKey({ privateKey });
   }
 
-  private getDerivationHandler(
+  public deriveItemsBatchFromMnemonic({
+    derivationType,
+    ...parameters
+  }: DeriveItemsBatchFromMnemonicParameters<AvaxDerivationTypeUnion>) {
+    const derivationHandlers = this.getDerivationHandlers(derivationType);
+
+    return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
+  }
+
+  private getDerivationHandlers(
     derivationType: AvaxDerivationTypeUnion
   ): Handlers[AvaxDerivationTypeUnion] | never {
-    const derivationHandler = this.handlers[derivationType];
+    const derivationHandlers = this.handlers[derivationType];
 
-    if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
-    return derivationHandler;
+    return derivationHandlers;
   }
 }
 

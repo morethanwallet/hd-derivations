@@ -10,5 +10,11 @@ export {
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
 } from "./getCredentialFromPrivateKey.type.js";
 export { type XrpAddressUnion } from "./addressUnion.type.js";
-export { type CommonInconsistentParametersDerivationType } from "./commonInconsistentParametersDerivationType.type.js";
+export { type CommonInconsistentOuterHandlerDerivationParameters } from "./commonInconsistentOuterHandlerDerivationParameters.type.js";
 export { type ConstructorParameters } from "./constructorParameters.type.js";
+export { type GetItemHandlerParameters } from "./getItemHandlerParameters.type.js";
+export {
+  type DeriveItemsBatchFromMnemonic,
+  type DeriveItemsBatchFromMnemonicParameters,
+  type DeriveItemsBatchFromMnemonicInnerHandlerParameters,
+} from "./deriveItemsBatchFromMnemonic.type.js";

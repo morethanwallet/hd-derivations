@@ -3,21 +3,18 @@ import {
   getEnterpriseAddress,
   getRewardAddress,
 } from "@/address/networks/index.js";
+import { deriveItemsBatchFromMnemonic } from "@/families/helpers/index.js";
 import {
+  type GetItemHandlerParameters,
   type DeriveItemFromMnemonicInnerHandlerParameters,
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
 } from "@/families/types/index.js";
-import {
-  type RewardKeyDerivation,
-  type BaseKeyDerivation,
-  type EnterpriseKeyDerivation,
-} from "@/keyDerivation/index.js";
 import { type DerivedItem } from "@/types/index.js";
 
-function getEnterpriseItemHandlers(
-  keysDerivationInstance: InstanceType<typeof EnterpriseKeyDerivation>,
-  networkId: number
-) {
+function getEnterpriseItemHandlers({
+  keysDerivationInstance,
+  networkId,
+}: GetItemHandlerParameters<"enterprise">) {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"enterprise">
@@ -35,13 +32,14 @@ function getEnterpriseItemHandlers(
 
       return { ...keys, address };
     },
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"enterprise">,
   };
 }
 
-function getRewardItemHandlers(
-  keysDerivationInstance: InstanceType<typeof RewardKeyDerivation>,
-  networkId: number
-) {
+function getRewardItemHandlers({
+  keysDerivationInstance,
+  networkId,
+}: GetItemHandlerParameters<"reward">) {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"reward">
@@ -59,13 +57,14 @@ function getRewardItemHandlers(
 
       return { ...keys, address };
     },
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"reward">,
   };
 }
 
-function getBaseItemHandlers(
-  keysDerivationInstance: InstanceType<typeof BaseKeyDerivation>,
-  networkId: number
-) {
+function getBaseItemHandlers({
+  keysDerivationInstance,
+  networkId,
+}: GetItemHandlerParameters<"adaBase">) {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"adaBase">
@@ -83,6 +82,7 @@ function getBaseItemHandlers(
 
       return { ...keys, address };
     },
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaBase">,
   };
 }
 

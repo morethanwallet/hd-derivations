@@ -7,3 +7,4 @@ export { getDerivationPathSegmentsArray } from "./getDerivationPathSegmentsArray
 export { checkIfSegmentHardened } from "./checkIfSegmentHardened.helper.js";
 export { toXOnlyPublicKey } from "./toXOnlyPublicKey.helper.js";
 export { checkAndRemoveEvmPublicKeyHexPrefix } from "./checkAndRemoveEvmPublicKeyHexPrefix.helper.js";
+export { appendAddressToDerivationPath } from "./appendAddressToDerivationPath.helper.js";

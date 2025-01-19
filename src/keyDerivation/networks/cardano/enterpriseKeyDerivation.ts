@@ -7,7 +7,7 @@ import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
   type ImportByPrivateKeyParameters,
-} from "../types/index.js";
+} from "../../types/index.js";
 import { Keys } from "@/keys/cardano/index.js";
 
 class EnterpriseKeyDerivation extends Keys implements AbstractKeyDerivation<"enterprise"> {

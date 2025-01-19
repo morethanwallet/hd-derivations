@@ -8,7 +8,7 @@ import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
   type ImportByPrivateKeyParameters,
-} from "../types/index.js";
+} from "../../types/index.js";
 
 class RewardKeyDerivation extends Keys implements AbstractKeyDerivation<"reward"> {
   public constructor(mnemonic: Mnemonic) {
