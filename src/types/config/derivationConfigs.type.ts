@@ -5,10 +5,12 @@ import {
   type BtcDerivationTypeUnion,
 } from "../derivationTypeUnion.type.js";
 
-type BtcDerivationConfigs = { derivationType: BtcDerivationTypeUnion; keysConfig: KeysConfig }[];
+type CommonKeysConfig = { keysConfig: KeysConfig };
+
+type BtcDerivationConfigs = ({ derivationType: BtcDerivationTypeUnion } & CommonKeysConfig)[];
 
 type AdaDerivationConfigs = { derivationType: AdaDerivationTypeUnion }[];
 
-type AvaxDerivationConfigs = { derivationType: AvaxDerivationTypeUnion; keysConfig: KeysConfig }[];
+type AvaxDerivationConfigs = ({ derivationType: AvaxDerivationTypeUnion } & CommonKeysConfig)[];
 
 export { type BtcDerivationConfigs, type AdaDerivationConfigs, type AvaxDerivationConfigs };
