@@ -12,6 +12,7 @@ import {
   type AdaDerivationTypeUnion,
 } from "@/types/index.js";
 import { type DerivationTypeUnion } from "@/types/index.js";
+import { type CommonNetworkPurposeRegTestExtendedUnion } from "@/types/network/index.js";
 
 type AvaxParameters = {
   isMainnet: boolean;
@@ -19,10 +20,11 @@ type AvaxParameters = {
   keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation>;
 };
 
-type BtcParameters<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends DerivationTypeMap["taproot"]
-    ? { keysDerivationInstance: InstanceType<typeof TaprootKeyDerivation> }
-    : { keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation> };
+type BtcParameters<TDerivationType extends DerivationTypeUnion> = {
+  networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
+} & (TDerivationType extends DerivationTypeMap["taproot"]
+  ? { keysDerivationInstance: InstanceType<typeof TaprootKeyDerivation> }
+  : { keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation> });
 
 type AdaParameters<TDerivationType extends DerivationTypeUnion> = {
   networkId: number;
@@ -41,6 +43,6 @@ type GetItemHandlerParameters<TDerivationType extends DerivationTypeUnion> =
     ? BtcParameters<TDerivationType>
     : TDerivationType extends AdaDerivationTypeUnion
     ? AdaParameters<TDerivationType>
-    : Record<string, unknown>;
+    : { keysDerivationInstance: CommonBipKeyDerivation };
 
 export { type GetItemHandlerParameters };
