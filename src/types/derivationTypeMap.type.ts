@@ -17,6 +17,7 @@ type DerivationTypeMap = {
   sol: "sol";
   xrpBase: "xrpBase";
   xrpX: "xrpX";
+  trx: "trx";
 };
 
 export { type DerivationTypeMap };

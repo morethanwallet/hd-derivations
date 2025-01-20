@@ -9,11 +9,25 @@ import { Keys } from "@/keys/bip32/index.js";
 import { type BIP32Interface } from "bip32";
 import { getKeyPairFromEc } from "@/keyDerivation/helpers/index.js";
 import { toUint8Array } from "@/helpers/index.js";
+import { type KeysConfig } from "@/keys/types/index.js";
+import { type Mnemonic } from "@/mnemonic/index.js";
 
 class CommonBipKeyDerivation
   extends Keys
   implements AbstractKeyDerivation<CommonBipDerivationTypeUnion>
 {
+  private isPrivateKeyWifFormatted: boolean;
+
+  constructor(
+    keysConfig: KeysConfig,
+    mnemonic: Mnemonic,
+    isPrivateKeyWifFormatted: boolean = true
+  ) {
+    super(keysConfig, mnemonic);
+
+    this.isPrivateKeyWifFormatted = isPrivateKeyWifFormatted;
+  }
+
   public deriveFromMnemonic({
     derivationPath,
     base58RootKey,
@@ -41,7 +55,11 @@ class CommonBipKeyDerivation
   }
 
   public getKeyPair(source: BIP32Interface | string | Uint8Array): CommonKeyPair {
-    return getKeyPairFromEc(this.keysConfig, source);
+    return getKeyPairFromEc({
+      source,
+      isPrivateKeyWifFormatted: this.isPrivateKeyWifFormatted,
+      keysConfig: this.keysConfig,
+    });
   }
 }
 
