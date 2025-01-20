@@ -12,25 +12,30 @@ import {
   type AvaxDerivationConfigs,
   type AdaDerivationConfigs,
   type BtcDerivationConfigs,
+  type TrxDerivationConfigs,
 } from "@/types/config/index.js";
 import { Avax } from "./avax/avax.network.js";
+import { Trx } from "./trx/trx.network.js";
 
 type NetworkTypeToAvailableDerivationConfigsMap = {
   btc: BtcDerivationConfigs;
   ada: AdaDerivationConfigs;
   avax: AvaxDerivationConfigs;
+  trx: TrxDerivationConfigs;
 };
 
 type NetworkTypeToNetworkPurpose = {
   btc: CommonNetworkPurposeRegTestExtendedUnion;
   ada: AdaNetworkPurposeUnion;
   avax: CommonNetworkPurposeUnion;
+  trx: null;
 };
 
 type Network = {
   btc: InstanceType<typeof Bitcoin>;
   ada: InstanceType<typeof Cardano>;
   avax: InstanceType<typeof Avax>;
+  trx: InstanceType<typeof Trx>;
 };
 
 class NetworkFacade<T extends NetworkTypeUnion> {
@@ -75,6 +80,15 @@ class NetworkFacade<T extends NetworkTypeUnion> {
             mnemonic: mnemonicInstance,
             networkPurpose: networkPurpose as CommonNetworkPurposeUnion,
             derivationConfigs: derivationConfigs as AvaxDerivationConfigs,
+          }) as Network[T];
+        }
+        break;
+      case "trx":
+        {
+          this.network = new Trx({
+            mnemonic: mnemonicInstance,
+            networkPurpose: networkPurpose as null,
+            derivationConfigs: derivationConfigs as TrxDerivationConfigs,
           }) as Network[T];
         }
         break;

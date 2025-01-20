@@ -3,6 +3,7 @@ import {
   type AvaxDerivationConfigs,
   type AdaDerivationConfigs,
   type BtcDerivationConfigs,
+  type TrxDerivationConfigs,
 } from "@/types/config/index.js";
 import {
   type CommonNetworkPurposeUnion,
@@ -29,4 +30,15 @@ type AvaxInstanceConfig = {
   derivationConfigs: AvaxDerivationConfigs;
 } & MnemonicProperty;
 
-export { type BtcInstanceConfig, AdaInstanceConfig, type AvaxInstanceConfig };
+type TrxInstanceConfig = {
+  network: NetworkTypeMap["trx"];
+  networkPurpose: null;
+  derivationConfigs: TrxDerivationConfigs;
+} & MnemonicProperty;
+
+export {
+  type BtcInstanceConfig,
+  type AdaInstanceConfig,
+  type AvaxInstanceConfig,
+  type TrxInstanceConfig,
+};

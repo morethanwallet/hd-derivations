@@ -4,6 +4,7 @@ import {
   type AdaDerivationTypeUnion,
   type BtcDerivationTypeUnion,
 } from "../derivationTypeUnion.type.js";
+import { type DerivationTypeMap } from "../derivationTypeMap.type.js";
 
 type CommonKeysConfig = { keysConfig: KeysConfig };
 
@@ -13,4 +14,11 @@ type AdaDerivationConfigs = { derivationType: AdaDerivationTypeUnion }[];
 
 type AvaxDerivationConfigs = ({ derivationType: AvaxDerivationTypeUnion } & CommonKeysConfig)[];
 
-export { type BtcDerivationConfigs, type AdaDerivationConfigs, type AvaxDerivationConfigs };
+type TrxDerivationConfigs = ({ derivationType: DerivationTypeMap["trxBase"] } & CommonKeysConfig)[];
+
+export {
+  type BtcDerivationConfigs,
+  type AdaDerivationConfigs,
+  type AvaxDerivationConfigs,
+  type TrxDerivationConfigs,
+};

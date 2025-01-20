@@ -16,18 +16,18 @@ type HandlersCommonParameters = {
 
 type DeriveItemsBatchFromMnemonicInnerHandlerParameters<
   TDerivationType extends DerivationTypeUnion
-> = Omit<
-  DeriveItemFromMnemonicInnerHandlerParameters<TDerivationType>,
-  DerivationPath["derivationPath"]
-> &
+> = Omit<DeriveItemFromMnemonicInnerHandlerParameters<TDerivationType>, "derivationPath"> &
   HandlersCommonParameters;
 
 type DeriveItemsBatchFromMnemonicInnerHandler<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicInnerHandlerParameters<TDerivationType>
 ) => DerivedItem<TDerivationType>[];
 
-type DeriveItemsBatchFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
-  DeriveItemFromMnemonicParameters<TDerivationType> & HandlersCommonParameters;
+type DeriveItemsBatchFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> = Omit<
+  DeriveItemFromMnemonicParameters<TDerivationType>,
+  "derivationPath"
+> &
+  HandlersCommonParameters;
 
 type DeriveItemsBatchFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicParameters<TDerivationType>

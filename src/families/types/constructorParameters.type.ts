@@ -15,6 +15,7 @@ import {
   type AdaDerivationConfigs,
   type BtcDerivationConfigs,
   type AvaxDerivationConfigs,
+  type TrxDerivationConfigs,
 } from "@/types/config/index.js";
 
 type BtcParameters = {
@@ -32,6 +33,11 @@ type AvaxParameters = {
   derivationConfigs: AvaxDerivationConfigs;
 };
 
+type TrxParameters = {
+  networkPurpose: null;
+  derivationConfigs: TrxDerivationConfigs;
+};
+
 type ConstructorInconsistentParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends BtcDerivationTypeUnion
     ? BtcParameters
@@ -39,6 +45,8 @@ type ConstructorInconsistentParameters<TDerivationType extends DerivationTypeUni
     ? AdaParameters
     : TDerivationType extends AvaxDerivationTypeUnion
     ? AvaxParameters
+    : TDerivationType extends DerivationTypeMap["trxBase"]
+    ? TrxParameters
     : Record<string, unknown>;
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {

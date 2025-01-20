@@ -3,6 +3,7 @@ import {
   type AdaDerivationTypeUnion,
   type BtcDerivationTypeUnion,
   type DerivationTypeUnion,
+  type DerivationTypeMap,
 } from "@/types/index.js";
 
 type CommonInconsistentOuterHandlerDerivationParameters<
@@ -13,6 +14,8 @@ type CommonInconsistentOuterHandlerDerivationParameters<
   ? { derivationType: AdaDerivationTypeUnion }
   : TDerivationType extends AvaxDerivationTypeUnion
   ? { derivationType: AvaxDerivationTypeUnion }
+  : TDerivationType extends DerivationTypeMap["trxBase"]
+  ? { derivationType: DerivationTypeMap["trxBase"] }
   : Record<string, unknown>;
 
 export { type CommonInconsistentOuterHandlerDerivationParameters };
