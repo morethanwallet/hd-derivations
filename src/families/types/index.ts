@@ -16,5 +16,6 @@ export { type GetItemHandlerParameters } from "./getItemHandlerParameters.type.j
 export {
   type DeriveItemsBatchFromMnemonic,
   type DeriveItemsBatchFromMnemonicParameters,
+  type DeriveItemsBatchFromMnemonicInnerHandler,
   type DeriveItemsBatchFromMnemonicInnerHandlerParameters,
 } from "./deriveItemsBatchFromMnemonic.type.js";
