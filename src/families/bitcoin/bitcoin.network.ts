@@ -6,6 +6,7 @@ import {
   type AbstractNetwork,
   type ConstructorParameters,
   type DeriveItemsBatchFromMnemonicParameters,
+  type CheckIfPrivateKeyBelongsToMnemonicParameters,
 } from "../types/index.js";
 import {
   type DerivedItem,
@@ -25,7 +26,7 @@ import { type Handlers } from "./types/index.js";
 import { findCustomConfig } from "../helpers/index.js";
 
 class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
-  public handlers: NonNullable<Partial<Handlers>>;
+  private handlers: NonNullable<Partial<Handlers>>;
 
   public constructor({
     derivationConfigs,
@@ -34,6 +35,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
   }: ConstructorParameters<BtcDerivationTypeUnion>) {
     const keysDerivationHandlers = {
       legacy: getLegacyItemHandlers({
+        networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("legacy", derivationConfigs) ??
             btcConfig[networkPurpose].legacy.keysConfig,
@@ -41,6 +43,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
         ),
       }),
       segWit: getSegWitItemHandlers({
+        networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("segWit", derivationConfigs) ??
             btcConfig[networkPurpose].segWit.keysConfig,
@@ -48,6 +51,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
         ),
       }),
       nativeSegWit: getNativeSegWitItemHandlers({
+        networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("nativeSegWit", derivationConfigs) ??
             btcConfig[networkPurpose].nativeSegWit.keysConfig,
@@ -55,6 +59,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
         ),
       }),
       taproot: getTaprootItemHandlers({
+        networkPurpose,
         keysDerivationInstance: new TaprootKeyDerivation(
           findCustomConfig("taproot", derivationConfigs) ??
             btcConfig[networkPurpose].taproot.keysConfig,
@@ -62,6 +67,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
         ),
       }),
       p2wsh: getP2wshItemHandlers({
+        networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("p2wsh", derivationConfigs) ??
             btcConfig[networkPurpose].p2wsh.keysConfig,
@@ -69,6 +75,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
         ),
       }),
       p2wshInP2sh: getP2wshInP2shItemHandlers({
+        networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("p2wshInP2sh", derivationConfigs) ??
             btcConfig[networkPurpose].p2wshInP2sh.keysConfig,
@@ -109,6 +116,16 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
     const derivationHandlers = this.getDerivationHandlers(derivationType);
 
     return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
+  }
+
+  public checkIfPrivateKeyBelongsToMnemonic(
+    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<BtcDerivationTypeUnion>
+  ): boolean {
+    for (const handler of Object.values(this.handlers)) {
+      if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
+    }
+
+    return false;
   }
 
   private getDerivationHandlers(

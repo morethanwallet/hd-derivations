@@ -5,19 +5,19 @@ import {
 } from "../types/index.js";
 import { appendAddressToDerivationPath } from "@/helpers/index.js";
 
-function deriveItemsBatchFromMnemonic<C extends DerivationTypeUnion>(
+function deriveItemsBatchFromMnemonic<T extends DerivationTypeUnion>(
   this: {
     deriveItemFromMnemonic: (
-      parameters: DeriveItemFromMnemonicInnerHandlerParameters<C>
-    ) => DerivedItem<C>;
+      parameters: DeriveItemFromMnemonicInnerHandlerParameters<T>
+    ) => DerivedItem<T>;
   },
-  { ...parameters }: DeriveItemsBatchFromMnemonicInnerHandlerParameters<C>
+  parameters: DeriveItemsBatchFromMnemonicInnerHandlerParameters<T>
 ) {
-  let batch: DerivedItem<C>[] = [];
+  let batch: DerivedItem<T>[] = [];
 
   for (let i = parameters.indexLookupFrom; i < parameters.indexLookupTo; i++) {
     const derivationPathWithAddressIndex = appendAddressToDerivationPath(
-      parameters.derivationPath,
+      parameters.derivationPathPrefix,
       i
     );
 

@@ -19,3 +19,8 @@ export {
   type DeriveItemsBatchFromMnemonicInnerHandler,
   type DeriveItemsBatchFromMnemonicInnerHandlerParameters,
 } from "./deriveItemsBatchFromMnemonic.type.js";
+export {
+  type CheckIfPrivateKeyBelongsToMnemonic,
+  type CheckIfPrivateKeyBelongsToMnemonicParameters,
+  type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
+} from "./checkIfPrivateKeyBelongsToMnemonic.type.js";
