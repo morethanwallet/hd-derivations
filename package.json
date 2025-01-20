@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "test": "vitest --coverage",
-    "build:graph": "npx madge src/ --ts-config ./tsconfig.json --extensions ts,tsx --image graph.svg"
+    "build:graph": "npx madge src/ --ts-config ./tsconfig.json --extensions ts,tsx --image graph.svg",
+    "lint:type": "npx tsc --noEmit"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run build:graph"
