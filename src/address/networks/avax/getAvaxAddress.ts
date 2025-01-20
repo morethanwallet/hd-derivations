@@ -5,11 +5,6 @@ import { type AvaxDerivationTypeUnion } from "@/types/index.js";
 import { utils } from "@avalabs/avalanchejs";
 import { crypto } from "bitcoinjs-lib";
 
-const NetworkPurposeHrp: Record<string, string> = {
-  MAINNET: "avax",
-  TESTNET: "fuji",
-};
-
 const derivationTypeToPrefix: Record<AvaxDerivationTypeUnion, string> = {
   avaxX: "X-",
   avaxP: "P-",
@@ -18,14 +13,10 @@ const derivationTypeToPrefix: Record<AvaxDerivationTypeUnion, string> = {
 function getAvaxAddress(
   publicKey: CommonKeyPair["publicKey"],
   derivationType: AvaxDerivationTypeUnion,
-  isMainnet: boolean
+  prefix: string
 ): Address["address"] {
   const rawPublicKey = toUint8Array(Buffer.from(publicKey, "hex"));
-
-  const address: string = utils.formatBech32(
-    isMainnet ? NetworkPurposeHrp.MAINNET : NetworkPurposeHrp.TESTNET,
-    crypto.hash160(rawPublicKey)
-  );
+  const address: string = utils.formatBech32(prefix, crypto.hash160(rawPublicKey));
 
   return derivationTypeToPrefix[derivationType].concat(address);
 }

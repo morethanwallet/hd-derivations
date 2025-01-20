@@ -8,9 +8,13 @@ import {
   type AbstractNetwork,
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
   type ConstructorParameters,
-  DeriveItemsBatchFromMnemonicParameters,
+  type DeriveItemsBatchFromMnemonicParameters,
 } from "../types/index.js";
-import { DerivedCredential, type AdaDerivationTypeUnion, type DerivedItem } from "@/types/index.js";
+import {
+  type DerivedCredential,
+  type AdaDerivationTypeUnion,
+  type DerivedItem,
+} from "@/types/index.js";
 import {
   getBaseItemHandlers,
   getEnterpriseItemHandlers,
@@ -19,9 +23,10 @@ import {
 } from "./helpers/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
 import { type Handlers } from "./types/index.js";
+import { getNetworkHandlers } from "../helpers/getNetworkHandlers.helper.js";
 
 class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
-  public handlers: NonNullable<Partial<Handlers>>;
+  private handlers: NonNullable<Partial<Handlers>>;
 
   public constructor({
     mnemonic,
@@ -45,11 +50,7 @@ class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
       }),
     };
 
-    this.handlers = Object.fromEntries(
-      derivationConfigs.map(({ derivationType }) => {
-        return [derivationType, keysDerivationHandlers[derivationType]];
-      })
-    );
+    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
   }
 
   public deriveItemFromMnemonic({

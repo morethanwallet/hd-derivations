@@ -8,7 +8,7 @@ import {
 import { ExceptionMessage } from "@/exceptions/index.js";
 import { hardenDerivationPathValue } from "./hardenDerivationPathValue.helper.js";
 import { getDerivationPathSegmentsArray } from "./getDerivationPathSegmentsArray.helper.js";
-import { checkIfSegmentHardened } from "./checkIfSegmentHardened.helper.js";
+import { checkHardenedSuffixEnding } from "./checkHardenedSuffixEnding.helper.js";
 
 function validateDerivationPath(path: string): void | never {
   const invalidPathLength = 0;
@@ -43,7 +43,7 @@ function validateDerivationPath(path: string): void | never {
       throw new Error(`Derivation path has invalid characters at depth ${depth}: ${invalidChars}`);
     }
 
-    const isHardened = checkIfSegmentHardened(segment);
+    const isHardened = checkHardenedSuffixEnding(segment);
 
     const numericIndexValue = isHardened
       ? parseInt(segment.replace(HARDENED_SUFFIX, ""), DECIMAL_SYSTEM_IDENTIFIER)

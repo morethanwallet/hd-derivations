@@ -8,6 +8,8 @@ import { type DerivationTypeUnion } from "@/types/index.js";
 import { increaseDerivationPathDepth } from "./increaseDerivationPathDepth.helper.js";
 import { getDerivationPathPrefix } from "./getDerivationPathPrefix.helper.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/index.js";
+import { checkHardenedSuffixEnding } from "@/helpers/index.js";
+import { hardenDerivationPath } from "./hardenDerivationPath.helper.js";
 
 function checkIfPrivateKeyBelongsToMnemonic<T extends Exclude<DerivationTypeUnion, "adaBase">>(
   this: { deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T> },
@@ -26,15 +28,19 @@ function checkIfPrivateKeyBelongsToMnemonic<T extends Exclude<DerivationTypeUnio
   do {
     const itemsBatch = this.deriveItemsBatchFromMnemonic({
       ...parameters,
-      derivationPath: updatedDerivationPath,
+      derivationPathPrefix: updatedDerivationPath,
     });
 
     if (itemsBatch.some((item) => item.privateKey === parameters.privateKey)) {
       return true;
     }
 
-    updatedDerivationPath = increaseDerivationPathDepth(updatedDerivationPath);
-    derivationPathDepth++;
+    if (!checkHardenedSuffixEnding(updatedDerivationPath)) {
+      updatedDerivationPath = hardenDerivationPath(updatedDerivationPath);
+    } else {
+      updatedDerivationPath = increaseDerivationPathDepth(updatedDerivationPath);
+      derivationPathDepth++;
+    }
   } while (derivationPathDepth <= MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY);
 
   return false;

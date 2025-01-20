@@ -4,7 +4,7 @@ export { assert } from "./assert.helper.js";
 export { validateDerivationPath } from "./validateDerivationPath.helper.js";
 export { hardenDerivationPathValue } from "./hardenDerivationPathValue.helper.js";
 export { getDerivationPathSegmentsArray } from "./getDerivationPathSegmentsArray.helper.js";
-export { checkIfSegmentHardened } from "./checkIfSegmentHardened.helper.js";
+export { checkHardenedSuffixEnding } from "./checkHardenedSuffixEnding.helper.js";
 export { toXOnlyPublicKey } from "./toXOnlyPublicKey.helper.js";
 export { checkAndRemoveEvmPublicKeyHexPrefix } from "./checkAndRemoveEvmPublicKeyHexPrefix.helper.js";
 export { appendAddressToDerivationPath } from "./appendAddressToDerivationPath.helper.js";

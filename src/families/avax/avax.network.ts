@@ -3,7 +3,8 @@ import {
   type DeriveItemFromMnemonicParameters,
   type ConstructorParameters,
   type GetCredentialFromPrivateKeyParameters,
-  DeriveItemsBatchFromMnemonicParameters,
+  type DeriveItemsBatchFromMnemonicParameters,
+  type CheckIfPrivateKeyBelongsToMnemonicParameters,
 } from "../types/index.js";
 import {
   type AvaxDerivationTypeUnion,
@@ -13,46 +14,42 @@ import {
 import { type Handlers } from "./types/index.js";
 import { getAvaxItemHandlers } from "./helpers/getItemHandlers.helper.js";
 import { CommonBipKeyDerivation } from "@/keyDerivation/index.js";
-import { findCustomConfig } from "../helpers/index.js";
+import { findCustomConfig, getNetworkHandlers } from "../helpers/index.js";
 import { avaxConfig } from "@/config/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
 
 class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
-  public handlers: Partial<Handlers>;
+  private handlers: Partial<Handlers>;
 
   public constructor({
     derivationConfigs,
     mnemonic,
     networkPurpose,
   }: ConstructorParameters<AvaxDerivationTypeUnion>) {
-    const isMainnet = networkPurpose === "mainnet";
-
     const keysDerivationHandlers = {
       avaxX: getAvaxItemHandlers({
-        isMainnet,
+        networkPurpose,
         derivationType: "avaxX",
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("p2wshInP2sh", derivationConfigs) ??
+          findCustomConfig("avaxX", derivationConfigs) ??
             avaxConfig[networkPurpose].avax.keysConfig,
-          mnemonic
+          mnemonic,
+          false
         ),
       }),
       avaxP: getAvaxItemHandlers({
-        isMainnet,
+        networkPurpose,
         derivationType: "avaxP",
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("p2wshInP2sh", derivationConfigs) ??
+          findCustomConfig("avaxP", derivationConfigs) ??
             avaxConfig[networkPurpose].avax.keysConfig,
-          mnemonic
+          mnemonic,
+          false
         ),
       }),
     };
 
-    this.handlers = Object.fromEntries(
-      derivationConfigs.map(({ derivationType }) => {
-        return [derivationType, keysDerivationHandlers[derivationType]];
-      })
-    );
+    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
   }
 
   public deriveItemFromMnemonic({
@@ -80,6 +77,16 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
     const derivationHandlers = this.getDerivationHandlers(derivationType);
 
     return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
+  }
+
+  public checkIfPrivateKeyBelongsToMnemonic(
+    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<AvaxDerivationTypeUnion>
+  ): boolean {
+    for (const handler of Object.values(this.handlers)) {
+      if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
+    }
+
+    return false;
   }
 
   private getDerivationHandlers(

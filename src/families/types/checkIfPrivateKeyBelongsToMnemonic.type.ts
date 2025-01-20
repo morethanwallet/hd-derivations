@@ -1,18 +1,17 @@
 import { type DerivationTypeUnion } from "@/types/index.js";
-import {
-  type DeriveItemsBatchFromMnemonicParameters,
-  type DeriveItemsBatchFromMnemonicInnerHandlerParameters,
-} from "./deriveItemsBatchFromMnemonic.type.js";
 import { type CommonKeyPair } from "@/keyDerivation/types/index.js";
+import { type LookupHandlersCommonParameters } from "./lookupHandlersCommonParameters.type.js";
 
-type CommonHandlersParameters = { privateKey: CommonKeyPair["privateKey"] };
+type CommonHandlersParameters<TDerivationType extends DerivationTypeUnion> = {
+  privateKey: CommonKeyPair["privateKey"];
+} & LookupHandlersCommonParameters<TDerivationType>;
 
 type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<
   TDerivationType extends DerivationTypeUnion
-> = DeriveItemsBatchFromMnemonicInnerHandlerParameters<TDerivationType> & CommonHandlersParameters;
+> = CommonHandlersParameters<TDerivationType>;
 
 type CheckIfPrivateKeyBelongsToMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
-  DeriveItemsBatchFromMnemonicParameters<TDerivationType> & CommonHandlersParameters;
+  CommonHandlersParameters<TDerivationType>;
 
 type CheckIfPrivateKeyBelongsToMnemonic<TDerivationType extends DerivationTypeUnion> = (
   parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<TDerivationType>

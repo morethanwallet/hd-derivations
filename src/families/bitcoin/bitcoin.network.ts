@@ -23,7 +23,7 @@ import {
   getTaprootItemHandlers,
 } from "./helpers/index.js";
 import { type Handlers } from "./types/index.js";
-import { findCustomConfig } from "../helpers/index.js";
+import { findCustomConfig, getNetworkHandlers } from "../helpers/index.js";
 
 class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
   private handlers: NonNullable<Partial<Handlers>>;
@@ -84,11 +84,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
       }),
     };
 
-    this.handlers = Object.fromEntries(
-      derivationConfigs.map(({ derivationType }) => {
-        return [derivationType, keysDerivationHandlers[derivationType]];
-      })
-    );
+    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
   }
 
   public deriveItemFromMnemonic({

@@ -12,10 +12,13 @@ import {
   type AdaDerivationTypeUnion,
 } from "@/types/index.js";
 import { type DerivationTypeUnion } from "@/types/index.js";
-import { type CommonNetworkPurposeRegTestExtendedUnion } from "@/types/network/index.js";
+import {
+  type CommonNetworkPurposeUnion,
+  type CommonNetworkPurposeRegTestExtendedUnion,
+} from "@/types/network/index.js";
 
 type AvaxParameters = {
-  isMainnet: boolean;
+  networkPurpose: CommonNetworkPurposeUnion;
   derivationType: AvaxDerivationTypeUnion;
   keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation>;
 };

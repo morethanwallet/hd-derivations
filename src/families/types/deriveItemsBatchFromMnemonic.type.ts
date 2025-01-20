@@ -1,35 +1,18 @@
 import { type DerivationTypeUnion, type DerivedItem } from "@/types/index.js";
-import {
-  type DeriveItemFromMnemonicParameters,
-  type DeriveItemFromMnemonicInnerHandlerParameters,
-} from "./deriveItemFromMnemonic.type.js";
-import { type DerivationPath } from "@/types/derivation/index.js";
-import { type DerivationHandlersCommonParameters } from "./derivationHandlersCommonParameters.type.js";
-
-type LookupRangeParameters = {
-  indexLookupFrom: number;
-  indexLookupTo: number;
-};
-
-type HandlersCommonParameters<TDerivationType extends DerivationTypeUnion> = {
-  derivationPathPrefix: DerivationPath["derivationPath"];
-} & LookupRangeParameters &
-  DerivationHandlersCommonParameters<TDerivationType>;
+import { type CommonInconsistentOuterHandlerDerivationParameters } from "./commonInconsistentOuterHandlerDerivationParameters.type.js";
+import { type LookupHandlersCommonParameters } from "./lookupHandlersCommonParameters.type.js";
 
 type DeriveItemsBatchFromMnemonicInnerHandlerParameters<
   TDerivationType extends DerivationTypeUnion
-> = Omit<DeriveItemFromMnemonicInnerHandlerParameters<TDerivationType>, "derivationPath"> &
-  HandlersCommonParameters<TDerivationType>;
+> = LookupHandlersCommonParameters<TDerivationType>;
 
 type DeriveItemsBatchFromMnemonicInnerHandler<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicInnerHandlerParameters<TDerivationType>
 ) => DerivedItem<TDerivationType>[];
 
-type DeriveItemsBatchFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> = Omit<
-  DeriveItemFromMnemonicParameters<TDerivationType>,
-  "derivationPath"
-> &
-  HandlersCommonParameters<TDerivationType>;
+type DeriveItemsBatchFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
+  LookupHandlersCommonParameters<TDerivationType> &
+    CommonInconsistentOuterHandlerDerivationParameters<TDerivationType>;
 
 type DeriveItemsBatchFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicParameters<TDerivationType>
