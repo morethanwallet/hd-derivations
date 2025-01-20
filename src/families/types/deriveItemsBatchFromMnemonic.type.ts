@@ -4,20 +4,22 @@ import {
   type DeriveItemFromMnemonicInnerHandlerParameters,
 } from "./deriveItemFromMnemonic.type.js";
 import { type DerivationPath } from "@/types/derivation/index.js";
+import { type DerivationHandlersCommonParameters } from "./derivationHandlersCommonParameters.type.js";
 
 type LookupRangeParameters = {
   indexLookupFrom: number;
   indexLookupTo: number;
 };
 
-type HandlersCommonParameters = {
+type HandlersCommonParameters<TDerivationType extends DerivationTypeUnion> = {
   derivationPathPrefix: DerivationPath["derivationPath"];
-} & LookupRangeParameters;
+} & LookupRangeParameters &
+  DerivationHandlersCommonParameters<TDerivationType>;
 
 type DeriveItemsBatchFromMnemonicInnerHandlerParameters<
   TDerivationType extends DerivationTypeUnion
 > = Omit<DeriveItemFromMnemonicInnerHandlerParameters<TDerivationType>, "derivationPath"> &
-  HandlersCommonParameters;
+  HandlersCommonParameters<TDerivationType>;
 
 type DeriveItemsBatchFromMnemonicInnerHandler<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicInnerHandlerParameters<TDerivationType>
@@ -27,7 +29,7 @@ type DeriveItemsBatchFromMnemonicParameters<TDerivationType extends DerivationTy
   DeriveItemFromMnemonicParameters<TDerivationType>,
   "derivationPath"
 > &
-  HandlersCommonParameters;
+  HandlersCommonParameters<TDerivationType>;
 
 type DeriveItemsBatchFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicParameters<TDerivationType>

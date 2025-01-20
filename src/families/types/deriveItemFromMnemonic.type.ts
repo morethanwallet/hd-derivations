@@ -5,11 +5,10 @@ import {
 } from "@/types/index.js";
 import { type CommonInconsistentOuterHandlerDerivationParameters } from "./commonInconsistentOuterHandlerDerivationParameters.type.js";
 import { type DerivationPath } from "@/types/derivation/index.js";
+import { type DerivationHandlersCommonParameters } from "./derivationHandlersCommonParameters.type.js";
 
 type HandlersCommonParameters<TDerivationType extends DerivationTypeUnion> = DerivationPath &
-  (TDerivationType extends BtcDerivationTypeUnion
-    ? { base58RootKey?: string }
-    : Record<string, unknown>);
+  DerivationHandlersCommonParameters<TDerivationType>;
 
 type DeriveItemFromMnemonicInnerHandlerParameters<TDerivationType extends DerivationTypeUnion> =
   HandlersCommonParameters<TDerivationType>;
