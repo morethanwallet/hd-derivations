@@ -1,28 +1,25 @@
 import {
   type DerivedCredential,
-  type DerivationTypeUnion,
   type DerivationTypeMap,
+  type DerivationTypeUnion,
 } from "@/types/index.js";
-import { type CardanoBaseKeyPair, type CommonKeyPair } from "@/keyDerivation/types/index.js";
 import { type CommonInconsistentOuterHandlerDerivationParameters } from "./commonInconsistentOuterHandlerDerivationParameters.type.js";
+import { type CardanoBaseKeyPair, type CommonKeyPair } from "@/keyDerivation/types/index.js";
 
-type GetCredentialFromPrivateKeyParametersKeys<TDerivationType extends DerivationTypeUnion> =
+type PrivateKey<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends DerivationTypeMap["adaBase"]
     ? {
         enterprisePrivateKey: CardanoBaseKeyPair["enterprisePrivateKey"];
         rewardPrivateKey: CardanoBaseKeyPair["rewardPrivateKey"];
       }
-    : {
-        privateKey: CommonKeyPair["privateKey"];
-      };
+    : { privateKey: CommonKeyPair["privateKey"] };
 
 type GetCredentialFromPrivateKeyInnerHandlerParameters<
   TDerivationType extends DerivationTypeUnion
-> = GetCredentialFromPrivateKeyParametersKeys<TDerivationType>;
+> = PrivateKey<TDerivationType>;
 
 type GetCredentialFromPrivateKeyParameters<TDerivationType extends DerivationTypeUnion> =
-  GetCredentialFromPrivateKeyParametersKeys<TDerivationType> &
-    CommonInconsistentOuterHandlerDerivationParameters<TDerivationType>;
+  PrivateKey<TDerivationType> & CommonInconsistentOuterHandlerDerivationParameters<TDerivationType>;
 
 type GetCredentialFromPrivateKey<TDerivationType extends DerivationTypeUnion> = (
   parameters: GetCredentialFromPrivateKeyParameters<TDerivationType>

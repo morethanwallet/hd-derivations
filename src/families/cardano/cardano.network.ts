@@ -9,6 +9,7 @@ import {
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
   type ConstructorParameters,
   type DeriveItemsBatchFromMnemonicParameters,
+  CheckIfPrivateKeyBelongsToMnemonicParameters,
 } from "../types/index.js";
 import {
   type DerivedCredential,
@@ -38,14 +39,17 @@ class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
     const keysDerivationHandlers = {
       enterprise: getEnterpriseItemHandlers({
         networkId,
+        networkPurpose,
         keysDerivationInstance: new EnterpriseKeyDerivation(mnemonic),
       }),
       reward: getRewardItemHandlers({
         networkId,
+        networkPurpose,
         keysDerivationInstance: new RewardKeyDerivation(mnemonic),
       }),
       adaBase: getBaseItemHandlers({
         networkId,
+        networkPurpose,
         keysDerivationInstance: new BaseKeyDerivation(mnemonic),
       }),
     };
@@ -96,6 +100,16 @@ class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
     const derivationHandlers = this.getDerivationHandlers(derivationType);
 
     return (derivationHandlers as any).deriveItemsBatchFromMnemonic(parameters);
+  }
+
+  public checkIfPrivateKeyBelongsToMnemonic(
+    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<AdaDerivationTypeUnion>
+  ): boolean {
+    for (const handler of Object.values(this.handlers)) {
+      if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
+    }
+
+    return false;
   }
 
   private getDerivationHandlers(

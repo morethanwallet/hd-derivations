@@ -15,6 +15,7 @@ import { type DerivationTypeUnion } from "@/types/index.js";
 import {
   type CommonNetworkPurposeUnion,
   type CommonNetworkPurposeRegTestExtendedUnion,
+  type AdaNetworkPurposeUnion,
 } from "@/types/network/index.js";
 
 type AvaxParameters = {
@@ -31,6 +32,7 @@ type BtcParameters<TDerivationType extends DerivationTypeUnion> = {
 
 type AdaParameters<TDerivationType extends DerivationTypeUnion> = {
   networkId: number;
+  networkPurpose: AdaNetworkPurposeUnion;
 } & {
   keysDerivationInstance: TDerivationType extends DerivationTypeMap["enterprise"]
     ? InstanceType<typeof EnterpriseKeyDerivation>

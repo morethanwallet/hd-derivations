@@ -3,17 +3,23 @@ import {
   getEnterpriseAddress,
   getRewardAddress,
 } from "@/address/networks/index.js";
-import { deriveItemsBatchFromMnemonic } from "@/families/helpers/index.js";
+import { adaConfig } from "@/config/index.js";
+import {
+  checkIfPrivateKeyBelongsToMnemonic,
+  deriveItemsBatchFromMnemonic,
+} from "@/families/helpers/index.js";
 import {
   type GetItemHandlerParameters,
   type DeriveItemFromMnemonicInnerHandlerParameters,
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
+  CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
 } from "@/families/types/index.js";
 import { type DerivedItem } from "@/types/index.js";
 
 function getEnterpriseItemHandlers({
   keysDerivationInstance,
   networkId,
+  networkPurpose,
 }: GetItemHandlerParameters<"enterprise">) {
   return {
     deriveItemFromMnemonic: (
@@ -33,12 +39,23 @@ function getEnterpriseItemHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"enterprise">,
+    checkIfPrivateKeyBelongsToMnemonic(
+      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"enterprise">
+    ): boolean {
+      // prettier-ignore
+      return (checkIfPrivateKeyBelongsToMnemonic<"enterprise">).call(
+        this,
+        adaConfig[networkPurpose].enterprise.derivationPathPrefix,
+        parameters
+      );
+    },
   };
 }
 
 function getRewardItemHandlers({
   keysDerivationInstance,
   networkId,
+  networkPurpose,
 }: GetItemHandlerParameters<"reward">) {
   return {
     deriveItemFromMnemonic: (
@@ -58,12 +75,23 @@ function getRewardItemHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"reward">,
+    checkIfPrivateKeyBelongsToMnemonic(
+      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"reward">
+    ): boolean {
+      // prettier-ignore
+      return (checkIfPrivateKeyBelongsToMnemonic<"reward">).call(
+        this,
+        adaConfig[networkPurpose].reward.derivationPathPrefix,
+        parameters
+      );
+    },
   };
 }
 
 function getBaseItemHandlers({
   keysDerivationInstance,
   networkId,
+  networkPurpose,
 }: GetItemHandlerParameters<"adaBase">) {
   return {
     deriveItemFromMnemonic: (
@@ -83,6 +111,16 @@ function getBaseItemHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaBase">,
+    checkIfPrivateKeyBelongsToMnemonic(
+      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"adaBase">
+    ): boolean {
+      // prettier-ignore
+      return (checkIfPrivateKeyBelongsToMnemonic<"adaBase">).call(
+        this,
+        adaConfig[networkPurpose].adaBase.derivationPathPrefix,
+        parameters
+      );
+    },
   };
 }
 

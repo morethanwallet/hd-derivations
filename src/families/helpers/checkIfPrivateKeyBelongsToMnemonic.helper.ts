@@ -11,7 +11,7 @@ import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/ind
 import { checkHardenedSuffixEnding } from "@/helpers/index.js";
 import { hardenDerivationPath } from "./hardenDerivationPath.helper.js";
 
-function checkIfPrivateKeyBelongsToMnemonic<T extends Exclude<DerivationTypeUnion, "adaBase">>(
+function checkIfPrivateKeyBelongsToMnemonic<T extends DerivationTypeUnion>(
   this: { deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T> },
   derivationPathPrefixToCompare: DerivationPath["derivationPath"],
   parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<T>
@@ -31,7 +31,18 @@ function checkIfPrivateKeyBelongsToMnemonic<T extends Exclude<DerivationTypeUnio
       derivationPathPrefix: updatedDerivationPath,
     });
 
-    if (itemsBatch.some((item) => item.privateKey === parameters.privateKey)) {
+    if (
+      itemsBatch.some((item) => {
+        if ("privateKey" in item && item.privateKey === parameters.privateKey) return true;
+        if (
+          "rewardPrivateKey" in item &&
+          "enterprisePrivateKey" in item &&
+          (item.rewardPrivateKey === parameters.privateKey ||
+            item.enterprisePrivateKey === parameters.privateKey)
+        )
+          return true;
+      })
+    ) {
       return true;
     }
 

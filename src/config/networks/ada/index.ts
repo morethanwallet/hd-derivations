@@ -1,1 +1,1 @@
-export { defaultAdaInstanceConfig } from "./adaConfig.js";
+export { adaConfig, defaultAdaInstanceConfig } from "./adaConfig.js";
