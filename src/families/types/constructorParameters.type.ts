@@ -3,6 +3,7 @@ import {
   type AdaDerivationTypeUnion,
   type BtcDerivationTypeUnion,
   type DerivationTypeUnion,
+  type DerivationTypeMap,
 } from "@/types/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import {
@@ -16,22 +17,28 @@ import {
   type AvaxDerivationConfigs,
 } from "@/types/config/index.js";
 
+type BtcParameters = {
+  networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
+  derivationConfigs: BtcDerivationConfigs;
+};
+
+type AdaParameters = {
+  networkPurpose: AdaNetworkPurposeUnion;
+  derivationConfigs: AdaDerivationConfigs;
+};
+
+type AvaxParameters = {
+  networkPurpose: CommonNetworkPurposeUnion;
+  derivationConfigs: AvaxDerivationConfigs;
+};
+
 type ConstructorInconsistentParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends BtcDerivationTypeUnion
-    ? {
-        networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-        derivationConfigs: BtcDerivationConfigs;
-      }
+    ? BtcParameters
     : TDerivationType extends AdaDerivationTypeUnion
-    ? {
-        networkPurpose: AdaNetworkPurposeUnion;
-        derivationConfigs: AdaDerivationConfigs;
-      }
+    ? AdaParameters
     : TDerivationType extends AvaxDerivationTypeUnion
-    ? {
-        networkPurpose: CommonNetworkPurposeUnion;
-        derivationConfigs: AvaxDerivationConfigs;
-      }
+    ? AvaxParameters
     : Record<string, unknown>;
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
