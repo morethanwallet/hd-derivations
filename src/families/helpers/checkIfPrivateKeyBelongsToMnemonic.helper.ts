@@ -1,15 +1,36 @@
-import { DERIVATION_PATH_DELIMITER } from "@/constants/index.js";
+import { DERIVATION_PATH_DELIMITER, HARDENED_SUFFIX } from "@/constants/index.js";
 import { type DerivationPath } from "@/types/derivation/index.js";
 import {
   type DeriveItemsBatchFromMnemonicInnerHandler,
   type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
 } from "../types/index.js";
 import { type DerivationTypeUnion } from "@/types/index.js";
-import { increaseDerivationPathDepth } from "./increaseDerivationPathDepth.helper.js";
-import { getDerivationPathPrefix } from "./getDerivationPathPrefix.helper.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/index.js";
 import { checkHardenedSuffixEnding } from "@/helpers/index.js";
-import { hardenDerivationPath } from "./hardenDerivationPath.helper.js";
+import { SplittedDerivationPathItemIndex } from "@/enums/index.js";
+
+const SEGMENT_INITIAL_VALUE = "0";
+
+function getDerivationPathPrefix(
+  derivationPath: DerivationPath["derivationPath"]
+): DerivationPath["derivationPath"] {
+  return derivationPath
+    .split(DERIVATION_PATH_DELIMITER)
+    .slice(SplittedDerivationPathItemIndex.MASTER_START, SplittedDerivationPathItemIndex.COIN_END)
+    .join(DERIVATION_PATH_DELIMITER);
+}
+
+function hardenDerivationPath(
+  derivationPath: DerivationPath["derivationPath"]
+): DerivationPath["derivationPath"] {
+  return derivationPath.concat(HARDENED_SUFFIX);
+}
+
+function increaseDerivationPathDepth(
+  derivationPath: DerivationPath["derivationPath"]
+): DerivationPath["derivationPath"] {
+  return `${derivationPath}${DERIVATION_PATH_DELIMITER}${SEGMENT_INITIAL_VALUE}`;
+}
 
 function checkIfPrivateKeyBelongsToMnemonic<T extends DerivationTypeUnion>(
   this: { deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T> },
