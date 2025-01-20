@@ -42,7 +42,11 @@ class EvmKeyDerivation extends Keys implements AbstractKeyDerivation<"evm"> {
   }
 
   private getKeyPair(rawPrivateKey?: Uint8Array): CommonKeyPair {
-    const { privateKey, publicKey } = getKeyPairFromEc(this.keysConfig, rawPrivateKey);
+    const { privateKey, publicKey } = getKeyPairFromEc({
+      keysConfig: this.keysConfig,
+      source: rawPrivateKey,
+      isPrivateKeyWifFormatted: false,
+    });
 
     return {
       privateKey: bufferToHex(Buffer.from(privateKey, "hex")),
