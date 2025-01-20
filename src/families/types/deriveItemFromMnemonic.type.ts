@@ -6,18 +6,17 @@ import {
 import { type CommonInconsistentOuterHandlerDerivationParameters } from "./commonInconsistentOuterHandlerDerivationParameters.type.js";
 import { type DerivationPath } from "@/types/derivation/index.js";
 
-type DeriveItemHandlersCommonParameters<TDerivationType extends DerivationTypeUnion> =
-  DerivationPath &
-    (TDerivationType extends BtcDerivationTypeUnion
-      ? { base58RootKey?: string }
-      : Record<string, unknown>);
+type HandlersCommonParameters<TDerivationType extends DerivationTypeUnion> = DerivationPath &
+  (TDerivationType extends BtcDerivationTypeUnion
+    ? { base58RootKey?: string }
+    : Record<string, unknown>);
 
 type DeriveItemFromMnemonicInnerHandlerParameters<TDerivationType extends DerivationTypeUnion> =
-  DeriveItemHandlersCommonParameters<TDerivationType>;
+  HandlersCommonParameters<TDerivationType>;
 
 type DeriveItemFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
   CommonInconsistentOuterHandlerDerivationParameters<TDerivationType> &
-    DeriveItemHandlersCommonParameters<TDerivationType>;
+    HandlersCommonParameters<TDerivationType>;
 
 type DeriveItemFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveItemFromMnemonicParameters<TDerivationType>
