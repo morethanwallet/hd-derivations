@@ -13,3 +13,4 @@ export { getXrpAddress } from "./xrp/index.js";
 export { getTransparentAddress } from "./zcash/index.js";
 export { getLegacyAddress } from "./common/index.js";
 export { getCashAddrAddress } from "./bitcoinCash/index.js";
+export { getTrxAddress } from "./trx/getTrxAddress.js";
