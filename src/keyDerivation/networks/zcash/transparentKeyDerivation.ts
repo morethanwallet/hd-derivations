@@ -73,7 +73,7 @@ class TransparentKeyDerivation extends Keys implements AbstractKeyDerivation<"tr
       };
     }
 
-    return getKeyPairFromEc(this.keysConfig, source);
+    return getKeyPairFromEc({ source, keysConfig: this.keysConfig });
   }
 }
 

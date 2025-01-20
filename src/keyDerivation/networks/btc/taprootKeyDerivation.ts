@@ -42,7 +42,7 @@ class TaprootKeyDerivation extends Keys implements AbstractKeyDerivation<"taproo
   }
 
   private getKeyPair(source: BIP32Interface | string): CommonKeyPair {
-    const keyPair = getKeyPairFromEc(this.keysConfig, source);
+    const keyPair = getKeyPairFromEc({ source, keysConfig: this.keysConfig });
 
     const publicKey = toHexFromBytes(
       toXOnlyPublicKey(toUint8Array(Buffer.from(keyPair.publicKey, "hex")))

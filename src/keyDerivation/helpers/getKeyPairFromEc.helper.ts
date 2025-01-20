@@ -6,10 +6,17 @@ import { type KeysConfig } from "@/keys/types/index.js";
 import { type CommonKeyPair } from "../types/index.js";
 import { convertEcBytesPrivateKeyToHexKeyPair } from "./convertEcBytesPrivateKeyToHexKeyPair.helper.js";
 
-function getKeyPairFromEc(
-  keysConfig: KeysConfig,
-  source?: Uint8Array | string | BIP32Interface
-): CommonKeyPair {
+type GetKeyPairFromEcParameters = {
+  keysConfig: KeysConfig;
+  source?: Uint8Array | string | BIP32Interface;
+  isPrivateKeyWifFormatted?: boolean;
+};
+
+function getKeyPairFromEc({
+  keysConfig,
+  source,
+  isPrivateKeyWifFormatted = true,
+}: GetKeyPairFromEcParameters): CommonKeyPair {
   assert(source, KeyDerivationError, ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
 
   if (ArrayBuffer.isView(source)) {
@@ -23,8 +30,12 @@ function getKeyPairFromEc(
     return { privateKey: source, publicKey };
   }
 
-  const privateKey = source.toWIF();
   const publicKey = toHexFromBytes(source.publicKey);
+
+  if (isPrivateKeyWifFormatted) return { privateKey: source.toWIF(), publicKey };
+
+  assert(source.privateKey, KeyDerivationError, ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
+  const privateKey = toHexFromBytes(source.privateKey);
 
   return { privateKey, publicKey };
 }
