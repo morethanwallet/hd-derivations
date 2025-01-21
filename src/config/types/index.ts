@@ -4,3 +4,9 @@ export {
   type AvaxInstanceConfig,
   type TrxInstanceConfig,
 } from "./instanceConfig.type.js";
+export {
+  type BtcDerivationConfigs,
+  type AdaDerivationConfigs,
+  type AvaxDerivationConfigs,
+  type TrxDerivationConfigs,
+} from "./derivationConfigs.type.js";

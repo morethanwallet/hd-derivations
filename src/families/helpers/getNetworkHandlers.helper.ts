@@ -7,7 +7,7 @@ import {
   type AvaxDerivationConfigs,
   type BtcDerivationConfigs,
   type TrxDerivationConfigs,
-} from "@/types/config/index.js";
+} from "@/config/types/index.js";
 
 type CombinedHandlers = BtcHandlers & AdaHandlers & TrxHandlers & AvaxHandlers;
 

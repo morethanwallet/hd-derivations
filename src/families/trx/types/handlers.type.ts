@@ -1,5 +1,5 @@
-import { type getTrxItemHandlers } from "../helpers/index.js";
+import { type GetItemHandlerReturnType } from "@/families/types/index.js";
 
-type Handlers = { trxBase: ReturnType<typeof getTrxItemHandlers> };
+type Handlers = { trxBase: GetItemHandlerReturnType<"trxBase"> };
 
 export { type Handlers };

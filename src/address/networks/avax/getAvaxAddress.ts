@@ -1,7 +1,7 @@
 import { type Address } from "@/address/types/index.js";
 import { toUint8Array } from "@/helpers/index.js";
-import { type CommonKeyPair } from "@/keyDerivation/types/index.js";
-import { type AvaxDerivationTypeUnion } from "@/types/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
+import { type AvaxDerivationTypeUnion } from "@/types/derivation/index.js";
 import { utils } from "@avalabs/avalanchejs";
 import { crypto } from "bitcoinjs-lib";
 

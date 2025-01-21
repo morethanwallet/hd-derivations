@@ -3,7 +3,7 @@ import { ExceptionMessage, KeyDerivationError } from "../exceptions/index.js";
 import { assert, toHexFromBytes } from "@/helpers/index.js";
 import { type BIP32Interface } from "bip32";
 import { type KeysConfig } from "@/keys/types/index.js";
-import { type CommonKeyPair } from "../types/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
 import { convertEcBytesPrivateKeyToHexKeyPair } from "./convertEcBytesPrivateKeyToHexKeyPair.helper.js";
 
 type GetKeyPairFromEcParameters = {

@@ -9,13 +9,10 @@ import {
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
   type ConstructorParameters,
   type DeriveItemsBatchFromMnemonicParameters,
-  CheckIfPrivateKeyBelongsToMnemonicParameters,
-} from "../types/index.js";
-import {
-  type DerivedCredential,
-  type AdaDerivationTypeUnion,
+  type CheckIfPrivateKeyBelongsToMnemonicParameters,
   type DerivedItem,
-} from "@/types/index.js";
+  type DerivedCredential,
+} from "../types/index.js";
 import {
   getBaseItemHandlers,
   getEnterpriseItemHandlers,
@@ -25,6 +22,7 @@ import {
 import { ExceptionMessage } from "../exceptions/index.js";
 import { type Handlers } from "./types/index.js";
 import { getNetworkHandlers } from "../helpers/getNetworkHandlers.helper.js";
+import { AdaDerivationTypeUnion } from "@/types/derivation/index.js";
 
 class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
   private handlers: NonNullable<Partial<Handlers>>;

@@ -10,38 +10,29 @@ import {
 } from "@/families/helpers/index.js";
 import {
   type GetItemHandlerParameters,
-  type DeriveItemFromMnemonicInnerHandlerParameters,
-  type GetCredentialFromPrivateKeyInnerHandlerParameters,
-  CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
+  type GetItemHandlerReturnType,
 } from "@/families/types/index.js";
-import { type DerivedItem } from "@/types/index.js";
 
 function getEnterpriseItemHandlers({
   keysDerivationInstance,
   networkId,
   networkPurpose,
-}: GetItemHandlerParameters<"enterprise">) {
+}: GetItemHandlerParameters<"enterprise">): GetItemHandlerReturnType<"enterprise"> {
   return {
-    deriveItemFromMnemonic: (
-      parameters: DeriveItemFromMnemonicInnerHandlerParameters<"enterprise">
-    ): DerivedItem<"enterprise"> => {
+    deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
       const address = getEnterpriseAddress(keys.publicKey, networkId);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (
-      parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"enterprise">
-    ) => {
+    getCredentialFromPrivateKey: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getEnterpriseAddress(keys.publicKey, networkId);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"enterprise">,
-    checkIfPrivateKeyBelongsToMnemonic(
-      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"enterprise">
-    ): boolean {
+    checkIfPrivateKeyBelongsToMnemonic(parameters) {
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"enterprise">).call(
         this,
@@ -56,28 +47,22 @@ function getRewardItemHandlers({
   keysDerivationInstance,
   networkId,
   networkPurpose,
-}: GetItemHandlerParameters<"reward">) {
+}: GetItemHandlerParameters<"reward">): GetItemHandlerReturnType<"reward"> {
   return {
-    deriveItemFromMnemonic: (
-      parameters: DeriveItemFromMnemonicInnerHandlerParameters<"reward">
-    ): DerivedItem<"reward"> => {
+    deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
       const address = getRewardAddress(keys.publicKey, networkId);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (
-      parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"reward">
-    ) => {
+    getCredentialFromPrivateKey: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getRewardAddress(keys.publicKey, networkId);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"reward">,
-    checkIfPrivateKeyBelongsToMnemonic(
-      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"reward">
-    ): boolean {
+    checkIfPrivateKeyBelongsToMnemonic(parameters) {
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"reward">).call(
         this,
@@ -92,28 +77,22 @@ function getBaseItemHandlers({
   keysDerivationInstance,
   networkId,
   networkPurpose,
-}: GetItemHandlerParameters<"adaBase">) {
+}: GetItemHandlerParameters<"adaBase">): GetItemHandlerReturnType<"adaBase"> {
   return {
-    deriveItemFromMnemonic: (
-      parameters: DeriveItemFromMnemonicInnerHandlerParameters<"adaBase">
-    ): DerivedItem<"adaBase"> => {
+    deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
       const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (
-      parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"adaBase">
-    ) => {
+    getCredentialFromPrivateKey: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaBase">,
-    checkIfPrivateKeyBelongsToMnemonic(
-      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"adaBase">
-    ): boolean {
+    checkIfPrivateKeyBelongsToMnemonic(parameters) {
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"adaBase">).call(
         this,

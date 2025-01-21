@@ -4,7 +4,7 @@ import {
   type AdaDerivationConfigs,
   type BtcDerivationConfigs,
   type TrxDerivationConfigs,
-} from "@/types/config/index.js";
+} from "./derivationConfigs.type.js";
 import {
   type CommonNetworkPurposeUnion,
   type AdaNetworkPurposeUnion,

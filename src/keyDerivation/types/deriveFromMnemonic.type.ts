@@ -1,6 +1,6 @@
 import { type CommonBipDerivationTypeUnion } from "./bip44DerivationTypeUnion.type.js";
-import { type KeyPair } from "./keyPair.type.js";
-import { type DerivationTypeUnion } from "@/types/index.js";
+import { type KeyPair } from "@/types/keys/index.js";
+import { type DerivationTypeUnion } from "@/types/derivation/index.js";
 
 type DeriveFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> = {
   derivationPath: string;

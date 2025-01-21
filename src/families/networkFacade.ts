@@ -13,7 +13,7 @@ import {
   type AdaDerivationConfigs,
   type BtcDerivationConfigs,
   type TrxDerivationConfigs,
-} from "@/types/config/index.js";
+} from "@/config/types/index.js";
 import { Avax } from "./avax/avax.network.js";
 import { Trx } from "./trx/trx.network.js";
 

@@ -1,5 +1,5 @@
 import { type KeysConfig } from "@/keys/types/index.js";
-import { type DerivationTypeUnion } from "@/types/index.js";
+import { type DerivationTypeUnion } from "@/types/derivation/index.js";
 
 function findCustomConfig(
   derivationType: DerivationTypeUnion,

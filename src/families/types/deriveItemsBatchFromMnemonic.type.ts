@@ -1,5 +1,6 @@
-import { type DerivationTypeUnion, type DerivedItem } from "@/types/index.js";
+import { type DerivationTypeUnion } from "@/types/derivation/index.js";
 import { type CommonInconsistentOuterHandlerDerivationParameters } from "./commonInconsistentOuterHandlerDerivationParameters.type.js";
+import { type DerivedItem } from "./derivedItem.type.js";
 import { type LookupHandlersCommonParameters } from "./lookupHandlersCommonParameters.type.js";
 
 type DeriveItemsBatchFromMnemonicInnerHandlerParameters<

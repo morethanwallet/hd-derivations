@@ -5,10 +5,10 @@ import { Keys } from "@/keys/bip32/index.js";
 import { type KeysConfig } from "@/keys/types/index.js";
 import {
   type AbstractKeyDerivation,
-  type CommonKeyPair,
   type DeriveFromMnemonicParameters,
   type ImportByPrivateKeyParameters,
 } from "@/keyDerivation/types/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
 import { convertEcBytesPrivateKeyToHexKeyPair } from "@/keyDerivation/helpers/index.js";
 import { KeyDerivationError } from "@/keyDerivation/exceptions/index.js";
 import { ExceptionMessage } from "@/keyDerivation/exceptions/index.js";

@@ -1,5 +1,5 @@
-import { type CardanoBaseKeyPair, type CommonKeyPair, type KeyPair } from "./keyPair.type.js";
-import { type DerivationTypeMap, type DerivationTypeUnion } from "@/types/index.js";
+import { type CardanoBaseKeyPair, type CommonKeyPair, type KeyPair } from "@/types/keys/index.js";
+import { type DerivationTypeMap, type DerivationTypeUnion } from "@/types/derivation/index.js";
 
 type ImportByPrivateKeyParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends DerivationTypeMap["adaBase"]

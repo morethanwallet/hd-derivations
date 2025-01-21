@@ -1,4 +1,4 @@
-import { type DerivationTypeMap, type DerivationTypeUnion } from "@/types/index.js";
+import { type DerivationTypeMap, type DerivationTypeUnion } from "../derivation/index.js";
 
 type CommonKeyPair = {
   publicKey: string;

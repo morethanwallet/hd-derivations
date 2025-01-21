@@ -1,10 +1,10 @@
 import {
-  type CommonKeyPair,
   type DeriveFromMnemonicParameters,
   type ImportByPrivateKeyParameters,
   type AbstractKeyDerivation,
   type CommonBipDerivationTypeUnion,
 } from "@/keyDerivation/types/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
 import { Keys } from "@/keys/bip32/index.js";
 import { type BIP32Interface } from "bip32";
 import { getKeyPairFromEc } from "@/keyDerivation/helpers/index.js";

@@ -4,7 +4,7 @@ import {
   type DeriveItemsBatchFromMnemonicInnerHandler,
   type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
 } from "../types/index.js";
-import { type DerivationTypeUnion } from "@/types/index.js";
+import { type DerivationTypeUnion } from "@/types/derivation/index.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/index.js";
 import { checkHardenedSuffixEnding } from "@/helpers/index.js";
 import { SplittedDerivationPathItemIndex } from "@/enums/index.js";

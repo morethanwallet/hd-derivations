@@ -6,8 +6,8 @@ import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
   type ImportByPrivateKeyParameters,
-  type CardanoBaseKeyPair,
 } from "../../types/index.js";
+import { type CardanoBaseKeyPair } from "@/types/keys/index.js";
 import { Keys } from "@/keys/cardano/index.js";
 
 class BaseKeyDerivation extends Keys implements AbstractKeyDerivation<"adaBase"> {

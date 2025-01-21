@@ -1,5 +1,5 @@
 import { checkAndRemoveEvmPublicKeyHexPrefix, toUint8Array } from "@/helpers/index.js";
-import { type CommonKeyPair } from "@/keyDerivation/types/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
 import { importPublic, publicToAddress } from "ethereumjs-util";
 
 function getPublicKeyBuffer(publicKey: Uint8Array): Buffer {

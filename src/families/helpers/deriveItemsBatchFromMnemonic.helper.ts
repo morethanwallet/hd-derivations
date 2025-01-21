@@ -1,5 +1,6 @@
-import { type DerivedItem, type DerivationTypeUnion } from "@/types/index.js";
+import { type DerivationTypeUnion } from "@/types/derivation/index.js";
 import {
+  type DerivedItem,
   type DeriveItemFromMnemonicInnerHandlerParameters,
   type DeriveItemsBatchFromMnemonicInnerHandlerParameters,
 } from "../types/index.js";

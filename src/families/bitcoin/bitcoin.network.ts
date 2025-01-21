@@ -7,12 +7,9 @@ import {
   type ConstructorParameters,
   type DeriveItemsBatchFromMnemonicParameters,
   type CheckIfPrivateKeyBelongsToMnemonicParameters,
-} from "../types/index.js";
-import {
-  type DerivedItem,
-  type BtcDerivationTypeUnion,
   type DerivedCredential,
-} from "@/types/index.js";
+  type DerivedItem,
+} from "../types/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
 import {
   getLegacyItemHandlers,
@@ -24,6 +21,7 @@ import {
 } from "./helpers/index.js";
 import { type Handlers } from "./types/index.js";
 import { findCustomConfig, getNetworkHandlers } from "../helpers/index.js";
+import { type BtcDerivationTypeUnion } from "@/types/derivation/index.js";
 
 class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
   private handlers: NonNullable<Partial<Handlers>>;

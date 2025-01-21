@@ -1,6 +1,6 @@
 import { type Address } from "@/address/types/index.js";
 import { toUint8Array } from "@/helpers/index.js";
-import { type CommonKeyPair } from "@/keyDerivation/types/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
 import { type KeysConfig } from "@/keys/types/index.js";
 import { hash160 } from "bitcoinjs-lib/src/crypto";
 import bs58check from "bs58check";

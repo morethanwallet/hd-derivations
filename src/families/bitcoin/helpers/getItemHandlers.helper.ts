@@ -16,34 +16,30 @@ import {
   type DeriveItemFromMnemonicInnerHandlerParameters,
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
   type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
+  type DerivedItem,
+  type DerivedCredential,
+  type GetItemHandlerReturnType,
 } from "@/families/types/index.js";
-import { type DerivedCredential, type DerivedItem } from "@/types/index.js";
 
 function getLegacyItemHandlers({
   keysDerivationInstance,
   networkPurpose,
-}: GetItemHandlerParameters<"legacy">) {
+}: GetItemHandlerParameters<"legacy">): GetItemHandlerReturnType<"legacy"> {
   return {
-    deriveItemFromMnemonic: (
-      parameters: DeriveItemFromMnemonicInnerHandlerParameters<"legacy">
-    ): DerivedItem<"legacy"> => {
+    deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
       const address = getLegacyAddress(keys.publicKey, keysDerivationInstance.keysConfig);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (
-      parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"legacy">
-    ): DerivedCredential<"legacy"> => {
+    getCredentialFromPrivateKey: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getLegacyAddress(keys.publicKey, keysDerivationInstance.keysConfig);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"legacy">,
-    checkIfPrivateKeyBelongsToMnemonic(
-      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"legacy">
-    ): boolean {
+    checkIfPrivateKeyBelongsToMnemonic(parameters) {
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"legacy">).call(
         this,
@@ -57,7 +53,7 @@ function getLegacyItemHandlers({
 function getSegWitItemHandlers({
   keysDerivationInstance,
   networkPurpose,
-}: GetItemHandlerParameters<"segWit">) {
+}: GetItemHandlerParameters<"segWit">): GetItemHandlerReturnType<"segWit"> {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"segWit">
@@ -92,7 +88,7 @@ function getSegWitItemHandlers({
 function getNativeSegWitItemHandlers({
   keysDerivationInstance,
   networkPurpose,
-}: GetItemHandlerParameters<"nativeSegWit">) {
+}: GetItemHandlerParameters<"nativeSegWit">): GetItemHandlerReturnType<"nativeSegWit"> {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"nativeSegWit">
@@ -127,7 +123,7 @@ function getNativeSegWitItemHandlers({
 function getTaprootItemHandlers({
   keysDerivationInstance,
   networkPurpose,
-}: GetItemHandlerParameters<"taproot">) {
+}: GetItemHandlerParameters<"taproot">): GetItemHandlerReturnType<"taproot"> {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"taproot">
@@ -162,7 +158,7 @@ function getTaprootItemHandlers({
 function getP2wshItemHandlers({
   keysDerivationInstance,
   networkPurpose,
-}: GetItemHandlerParameters<"p2wsh">) {
+}: GetItemHandlerParameters<"p2wsh">): GetItemHandlerReturnType<"p2wsh"> {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"p2wsh">
@@ -197,7 +193,7 @@ function getP2wshItemHandlers({
 function getP2wshInP2shItemHandlers({
   keysDerivationInstance,
   networkPurpose,
-}: GetItemHandlerParameters<"p2wshInP2sh">) {
+}: GetItemHandlerParameters<"p2wshInP2sh">): GetItemHandlerReturnType<"p2wshInP2sh"> {
   return {
     deriveItemFromMnemonic: (
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"p2wshInP2sh">

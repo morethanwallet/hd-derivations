@@ -4,7 +4,7 @@ import {
   type BtcDerivationTypeUnion,
   type DerivationTypeUnion,
   type DerivationTypeMap,
-} from "@/types/index.js";
+} from "@/types/derivation/index.js";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import {
   type CommonNetworkPurposeUnion,
@@ -16,7 +16,7 @@ import {
   type BtcDerivationConfigs,
   type AvaxDerivationConfigs,
   type TrxDerivationConfigs,
-} from "@/types/config/index.js";
+} from "@/config/types/index.js";
 
 type BtcParameters = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;

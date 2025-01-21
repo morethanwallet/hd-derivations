@@ -3,8 +3,8 @@ import {
   type AvaxDerivationTypeUnion,
   type AdaDerivationTypeUnion,
   type BtcDerivationTypeUnion,
-} from "../derivationTypeUnion.type.js";
-import { type DerivationTypeMap } from "../derivationTypeMap.type.js";
+  type DerivationTypeMap,
+} from "@/types/derivation/index.js";
 
 type CommonKeysConfig = { keysConfig: KeysConfig };
 

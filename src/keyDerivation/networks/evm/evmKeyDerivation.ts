@@ -7,9 +7,9 @@ import { getKeyPairFromEc } from "@/keyDerivation/helpers/index.js";
 import {
   type ImportByPrivateKeyParameters,
   type AbstractKeyDerivation,
-  type CommonKeyPair,
   type DeriveFromMnemonicParameters,
 } from "@/keyDerivation/types/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
 
 class EvmKeyDerivation extends Keys implements AbstractKeyDerivation<"evm"> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {

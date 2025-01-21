@@ -1,4 +1,4 @@
-import { type CommonKeyPair } from "@/keyDerivation/types/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
 import { isHexPrefixed, stripHexPrefix } from "ethereumjs-util";
 
 function checkAndRemoveEvmPublicKeyHexPrefix(

@@ -4,7 +4,7 @@ import {
   type BtcDerivationTypeUnion,
   type DerivationTypeUnion,
   type DerivationTypeMap,
-} from "@/types/index.js";
+} from "@/types/derivation/index.js";
 
 type CommonInconsistentOuterHandlerDerivationParameters<
   TDerivationType extends DerivationTypeUnion

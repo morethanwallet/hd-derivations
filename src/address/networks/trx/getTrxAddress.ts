@@ -1,5 +1,5 @@
 import { type Address } from "@/address/types/index.js";
-import { type CommonKeyPair } from "@/keyDerivation/types/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
 import { getEvmAddressBuffer } from "../helpers/index.js";
 import bs58check from "bs58check";
 import { toUint8Array } from "@/helpers/index.js";

@@ -4,12 +4,11 @@ import { getAccount, getAddressValue } from "./helpers/index.js";
 import { Change } from "./enums/index.js";
 import { Keys } from "@/keys/cardano/index.js";
 import {
-  type CommonKeyPair,
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
   type ImportByPrivateKeyParameters,
 } from "../../types/index.js";
-
+import { type CommonKeyPair } from "@/types/keys/index.js";
 class RewardKeyDerivation extends Keys implements AbstractKeyDerivation<"reward"> {
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);

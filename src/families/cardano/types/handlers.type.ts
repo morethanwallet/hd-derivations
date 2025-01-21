@@ -1,13 +1,9 @@
-import {
-  type getBaseItemHandlers,
-  type getEnterpriseItemHandlers,
-  type getRewardItemHandlers,
-} from "../helpers/index.js";
+import { type GetItemHandlerReturnType } from "@/families/types/index.js";
 
 type Handlers = {
-  enterprise: ReturnType<typeof getEnterpriseItemHandlers>;
-  reward: ReturnType<typeof getRewardItemHandlers>;
-  adaBase: ReturnType<typeof getBaseItemHandlers>;
+  enterprise: GetItemHandlerReturnType<"enterprise">;
+  reward: GetItemHandlerReturnType<"reward">;
+  adaBase: GetItemHandlerReturnType<"adaBase">;
 };
 
 export { type Handlers };

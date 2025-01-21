@@ -1,37 +1,32 @@
 import { getTrxAddress } from "@/address/networks/index.js";
 import { trxConfig } from "@/config/index.js";
-import { checkIfPrivateKeyBelongsToMnemonic } from "@/families/helpers/index.js";
-import { deriveItemsBatchFromMnemonic } from "@/families/helpers/index.js";
+import {
+  checkIfPrivateKeyBelongsToMnemonic,
+  deriveItemsBatchFromMnemonic,
+} from "@/families/helpers/index.js";
 import {
   type GetItemHandlerParameters,
-  type DeriveItemFromMnemonicInnerHandlerParameters,
-  type GetCredentialFromPrivateKeyInnerHandlerParameters,
-  type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
+  type GetItemHandlerReturnType,
 } from "@/families/types/index.js";
-import { type DerivedCredential, type DerivedItem } from "@/types/index.js";
 
-function getTrxItemHandlers({ keysDerivationInstance }: GetItemHandlerParameters<"trxBase">) {
+function getTrxItemHandlers({
+  keysDerivationInstance,
+}: GetItemHandlerParameters<"trxBase">): GetItemHandlerReturnType<"trxBase"> {
   return {
-    deriveItemFromMnemonic: (
-      parameters: DeriveItemFromMnemonicInnerHandlerParameters<"trxBase">
-    ): DerivedItem<"trxBase"> => {
+    deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
       const address = getTrxAddress(keys.publicKey, keysDerivationInstance.keysConfig.pubKeyHash);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (
-      parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"trxBase">
-    ): DerivedCredential<"trxBase"> => {
+    getCredentialFromPrivateKey: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getTrxAddress(keys.publicKey, keysDerivationInstance.keysConfig.pubKeyHash);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"trxBase">,
-    checkIfPrivateKeyBelongsToMnemonic(
-      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"trxBase">
-    ): boolean {
+    checkIfPrivateKeyBelongsToMnemonic(parameters) {
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"trxBase">).call(
         this,

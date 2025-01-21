@@ -1,6 +1,6 @@
 import { type Address } from "@/address/types/index.js";
-import { type CommonKeyPair } from "@/keyDerivation/types/index.js";
-import { type XrpDerivationTypeUnion } from "@/types/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
+import { type XrpDerivationTypeUnion } from "@/types/derivation/index.js";
 import { Wallet } from "xrpl";
 
 type GetXrpAddressParameters = {

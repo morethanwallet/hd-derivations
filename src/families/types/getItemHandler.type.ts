@@ -10,13 +10,17 @@ import {
   type DerivationTypeMap,
   type AvaxDerivationTypeUnion,
   type AdaDerivationTypeUnion,
-} from "@/types/index.js";
-import { type DerivationTypeUnion } from "@/types/index.js";
+  type DerivationTypeUnion,
+} from "@/types/derivation/index.js";
 import {
   type CommonNetworkPurposeUnion,
   type CommonNetworkPurposeRegTestExtendedUnion,
   type AdaNetworkPurposeUnion,
 } from "@/types/network/index.js";
+import { type DeriveItemFromMnemonicInnerHandler } from "./deriveItemFromMnemonic.type.js";
+import { type GetCredentialFromPrivateKeyInnerHandler } from "./getCredentialFromPrivateKey.type.js";
+import { type DeriveItemsBatchFromMnemonicInnerHandler } from "./deriveItemsBatchFromMnemonic.type.js";
+import { type CheckIfPrivateKeyBelongsToMnemonicInnerHandler } from "./checkIfPrivateKeyBelongsToMnemonic.type.js";
 
 type AvaxParameters = {
   networkPurpose: CommonNetworkPurposeUnion;
@@ -50,4 +54,11 @@ type GetItemHandlerParameters<TDerivationType extends DerivationTypeUnion> =
     ? AdaParameters<TDerivationType>
     : { keysDerivationInstance: CommonBipKeyDerivation };
 
-export { type GetItemHandlerParameters };
+type GetItemHandlerReturnType<T extends DerivationTypeUnion> = {
+  deriveItemFromMnemonic: DeriveItemFromMnemonicInnerHandler<T>;
+  getCredentialFromPrivateKey: GetCredentialFromPrivateKeyInnerHandler<T>;
+  deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T>;
+  checkIfPrivateKeyBelongsToMnemonic: CheckIfPrivateKeyBelongsToMnemonicInnerHandler<T>;
+};
+
+export { type GetItemHandlerParameters, type GetItemHandlerReturnType };

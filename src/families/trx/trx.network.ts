@@ -7,16 +7,14 @@ import {
   type ConstructorParameters,
   type DeriveItemsBatchFromMnemonicParameters,
   type CheckIfPrivateKeyBelongsToMnemonicParameters,
-} from "../types/index.js";
-import {
-  type DerivedItem,
-  type BtcDerivationTypeUnion,
   type DerivedCredential,
-} from "@/types/index.js";
+  type DerivedItem,
+} from "../types/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
 import { getTrxItemHandlers } from "./helpers/index.js";
 import { type Handlers } from "./types/index.js";
 import { findCustomConfig, getNetworkHandlers } from "../helpers/index.js";
+import { BtcDerivationTypeUnion } from "@/types/derivation/index.js";
 
 class Trx implements AbstractNetwork<"trxBase"> {
   private handlers: NonNullable<Partial<Handlers>>;

@@ -1,5 +1,5 @@
-import { type DerivationTypeUnion } from "@/types/index.js";
-import { type CommonKeyPair } from "@/keyDerivation/types/index.js";
+import { type DerivationTypeUnion } from "@/types/derivation/index.js";
+import { type CommonKeyPair } from "@/types/keys/index.js";
 import { type LookupHandlersCommonParameters } from "./lookupHandlersCommonParameters.type.js";
 
 type CommonHandlersParameters<TDerivationType extends DerivationTypeUnion> = {
@@ -9,6 +9,10 @@ type CommonHandlersParameters<TDerivationType extends DerivationTypeUnion> = {
 type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<
   TDerivationType extends DerivationTypeUnion
 > = CommonHandlersParameters<TDerivationType>;
+
+type CheckIfPrivateKeyBelongsToMnemonicInnerHandler<TDerivationType extends DerivationTypeUnion> = (
+  parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<TDerivationType>
+) => boolean;
 
 type CheckIfPrivateKeyBelongsToMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
   CommonHandlersParameters<TDerivationType>;
@@ -20,5 +24,6 @@ type CheckIfPrivateKeyBelongsToMnemonic<TDerivationType extends DerivationTypeUn
 export {
   type CheckIfPrivateKeyBelongsToMnemonic,
   type CheckIfPrivateKeyBelongsToMnemonicParameters,
+  type CheckIfPrivateKeyBelongsToMnemonicInnerHandler,
   type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
 };

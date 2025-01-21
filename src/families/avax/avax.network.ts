@@ -5,18 +5,16 @@ import {
   type GetCredentialFromPrivateKeyParameters,
   type DeriveItemsBatchFromMnemonicParameters,
   type CheckIfPrivateKeyBelongsToMnemonicParameters,
-} from "../types/index.js";
-import {
-  type AvaxDerivationTypeUnion,
   type DerivedCredential,
   type DerivedItem,
-} from "@/types/index.js";
+} from "../types/index.js";
 import { type Handlers } from "./types/index.js";
 import { getAvaxItemHandlers } from "./helpers/getItemHandlers.helper.js";
 import { CommonBipKeyDerivation } from "@/keyDerivation/index.js";
 import { findCustomConfig, getNetworkHandlers } from "../helpers/index.js";
 import { avaxConfig } from "@/config/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
+import { type AvaxDerivationTypeUnion } from "@/types/derivation/index.js";
 
 class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
   private handlers: Partial<Handlers>;

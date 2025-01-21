@@ -1,19 +1,12 @@
-import {
-  type getLegacyItemHandlers,
-  type getNativeSegWitItemHandlers,
-  type getP2wshInP2shItemHandlers,
-  type getP2wshItemHandlers,
-  type getSegWitItemHandlers,
-  type getTaprootItemHandlers,
-} from "../helpers/index.js";
+import { type GetItemHandlerReturnType } from "@/families/types/index.js";
 
 type Handlers = {
-  legacy: ReturnType<typeof getLegacyItemHandlers>;
-  segWit: ReturnType<typeof getSegWitItemHandlers>;
-  nativeSegWit: ReturnType<typeof getNativeSegWitItemHandlers>;
-  taproot: ReturnType<typeof getTaprootItemHandlers>;
-  p2wsh: ReturnType<typeof getP2wshItemHandlers>;
-  p2wshInP2sh: ReturnType<typeof getP2wshInP2shItemHandlers>;
+  legacy: GetItemHandlerReturnType<"legacy">;
+  segWit: GetItemHandlerReturnType<"segWit">;
+  nativeSegWit: GetItemHandlerReturnType<"nativeSegWit">;
+  taproot: GetItemHandlerReturnType<"taproot">;
+  p2wsh: GetItemHandlerReturnType<"p2wsh">;
+  p2wshInP2sh: GetItemHandlerReturnType<"p2wshInP2sh">;
 };
 
 export { type Handlers };

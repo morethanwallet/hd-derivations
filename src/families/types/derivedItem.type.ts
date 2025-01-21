@@ -1,5 +1,4 @@
-import { type DerivationPath } from "./derivation/index.js";
-import { type DerivationTypeUnion } from "./derivationTypeUnion.type.js";
+import { type DerivationPath, type DerivationTypeUnion } from "@/types/derivation/index.js";
 import { type DerivedCredential } from "./derivedCredential.type.js";
 
 type DerivedItem<TDerivationType extends DerivationTypeUnion> = DerivationPath &
