@@ -3,9 +3,8 @@ import { Keys } from "@/keys/ed25519/index.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
-  type ImportByPrivateKeyParameters,
 } from "@/keyDerivation/types/index.js";
-import { type CommonKeyPair } from "@/types/keys/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/types/keys/index.js";
 import edHd from "ed25519-hd-key";
 
 class SolanaKeyDerivation extends Keys implements AbstractKeyDerivation<"sol"> {
@@ -20,7 +19,7 @@ class SolanaKeyDerivation extends Keys implements AbstractKeyDerivation<"sol"> {
     };
   }
 
-  public importByPrivateKey({ privateKey }: ImportByPrivateKeyParameters<"sol">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"sol">): CommonKeyPair {
     const rawPrivateKeyStartIndex = 0;
     const rawPrivateKeyEndIndex = 32;
     const concatenatedRawPKeys = Buffer.from(base58.decode(privateKey));

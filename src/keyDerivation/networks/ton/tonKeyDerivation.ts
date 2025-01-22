@@ -2,9 +2,8 @@ import { Keys } from "@/keys/ed25519/index.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
-  type ImportByPrivateKeyParameters,
 } from "@/keyDerivation/types/index.js";
-import { type CommonKeyPair } from "@/types/keys/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/types/keys/index.js";
 import edHd from "ed25519-hd-key";
 import { toHexFromBytes } from "@/helpers/index.js";
 
@@ -20,9 +19,7 @@ class TonKeyDerivation extends Keys implements AbstractKeyDerivation<"tonBase"> 
     };
   }
 
-  public importByPrivateKey({
-    privateKey,
-  }: ImportByPrivateKeyParameters<"tonBase">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"tonBase">): CommonKeyPair {
     const rawPrivateKey = Buffer.from(privateKey, "hex");
     const publicKey = this.getPublicKey(rawPrivateKey);
 

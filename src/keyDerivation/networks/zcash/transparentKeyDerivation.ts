@@ -9,9 +9,8 @@ import { type KeysConfig } from "@/keys/types/index.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
-  type ImportByPrivateKeyParameters,
 } from "@/keyDerivation/types/index.js";
-import { type CommonKeyPair } from "@/types/keys/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/types/keys/index.js";
 import { KeyDerivationError } from "@/keyDerivation/exceptions/index.js";
 import { ExceptionMessage } from "@/keyDerivation/exceptions/index.js";
 import { getKeyPairFromEc } from "@/keyDerivation/helpers/index.js";
@@ -33,9 +32,7 @@ class TransparentKeyDerivation extends Keys implements AbstractKeyDerivation<"tr
     };
   }
 
-  public importByPrivateKey({
-    privateKey,
-  }: ImportByPrivateKeyParameters<"transparent">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"transparent">): CommonKeyPair {
     const { publicKey } = this.getKeyPair(privateKey);
 
     return {

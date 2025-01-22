@@ -6,9 +6,8 @@ import { type KeysConfig } from "@/keys/types/index.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
-  type ImportByPrivateKeyParameters,
 } from "@/keyDerivation/types/index.js";
-import { type CommonKeyPair } from "@/types/keys/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/types/keys/index.js";
 import { getKeyPairFromEc } from "@/keyDerivation/helpers/index.js";
 
 class TaprootKeyDerivation extends Keys implements AbstractKeyDerivation<"taproot"> {
@@ -30,9 +29,7 @@ class TaprootKeyDerivation extends Keys implements AbstractKeyDerivation<"taproo
     };
   }
 
-  public importByPrivateKey({
-    privateKey,
-  }: ImportByPrivateKeyParameters<"taproot">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"taproot">): CommonKeyPair {
     const { publicKey } = this.getKeyPair(privateKey);
 
     return {

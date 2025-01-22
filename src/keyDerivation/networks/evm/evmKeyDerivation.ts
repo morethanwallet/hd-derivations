@@ -5,11 +5,10 @@ import { Keys } from "@/keys/bip32/index.js";
 import { type KeysConfig } from "@/keys/types/index.js";
 import { getKeyPairFromEc } from "@/keyDerivation/helpers/index.js";
 import {
-  type ImportByPrivateKeyParameters,
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/keyDerivation/types/index.js";
-import { type CommonKeyPair } from "@/types/keys/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/types/keys/index.js";
 
 class EvmKeyDerivation extends Keys implements AbstractKeyDerivation<"evm"> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {
@@ -28,7 +27,7 @@ class EvmKeyDerivation extends Keys implements AbstractKeyDerivation<"evm"> {
     };
   }
 
-  public importByPrivateKey({ privateKey }: ImportByPrivateKeyParameters<"evm">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"evm">): CommonKeyPair {
     const rawPrivateKey = toUint8Array(
       Buffer.from(checkAndRemoveEvmPublicKeyHexPrefix(privateKey), "hex")
     );

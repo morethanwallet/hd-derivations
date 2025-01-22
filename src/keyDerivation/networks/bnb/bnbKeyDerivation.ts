@@ -6,9 +6,8 @@ import { type KeysConfig } from "@/keys/types/index.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
-  type ImportByPrivateKeyParameters,
 } from "@/keyDerivation/types/index.js";
-import { type CommonKeyPair } from "@/types/keys/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/types/keys/index.js";
 import { convertEcBytesPrivateKeyToHexKeyPair } from "@/keyDerivation/helpers/index.js";
 import { KeyDerivationError } from "@/keyDerivation/exceptions/index.js";
 import { ExceptionMessage } from "@/keyDerivation/exceptions/index.js";
@@ -30,7 +29,7 @@ class BnbKeyDerivation extends Keys implements AbstractKeyDerivation<"bnb"> {
     };
   }
 
-  public importByPrivateKey({ privateKey }: ImportByPrivateKeyParameters<"bnb">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"bnb">): CommonKeyPair {
     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
     const { publicKey } = this.getKeyPair(rawPrivateKey);
 

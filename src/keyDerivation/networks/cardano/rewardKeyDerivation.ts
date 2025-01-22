@@ -1,4 +1,4 @@
-import { PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
+import { PrivateKey as LibraryPrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { getAccount, getAddressValue } from "./helpers/index.js";
 import { Change } from "./enums/index.js";
@@ -6,9 +6,8 @@ import { Keys } from "@/keys/cardano/index.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
-  type ImportByPrivateKeyParameters,
 } from "../../types/index.js";
-import { type CommonKeyPair } from "@/types/keys/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/types/keys/index.js";
 class RewardKeyDerivation extends Keys implements AbstractKeyDerivation<"reward"> {
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
@@ -30,7 +29,7 @@ class RewardKeyDerivation extends Keys implements AbstractKeyDerivation<"reward"
     };
   }
 
-  public importByPrivateKey({ privateKey }: ImportByPrivateKeyParameters<"reward">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"reward">): CommonKeyPair {
     // const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
     // for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
@@ -47,7 +46,7 @@ class RewardKeyDerivation extends Keys implements AbstractKeyDerivation<"reward"
     //   if (data.privateKey === privateKey) return data;
     // }
 
-    const rawPublicKey = PrivateKey.from_hex(privateKey).to_public();
+    const rawPublicKey = LibraryPrivateKey.from_hex(privateKey).to_public();
 
     return {
       privateKey,

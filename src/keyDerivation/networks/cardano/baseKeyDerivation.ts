@@ -1,13 +1,12 @@
-import { PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
+import { PrivateKey as LibraryPrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
 import { type Mnemonic } from "@/mnemonic/index.js";
 import { EnterpriseKeyDerivation } from "./enterpriseKeyDerivation.js";
 import { RewardKeyDerivation } from "./rewardKeyDerivation.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
-  type ImportByPrivateKeyParameters,
 } from "../../types/index.js";
-import { type CardanoBaseKeyPair } from "@/types/keys/index.js";
+import { type PrivateKey, type CardanoBaseKeyPair } from "@/types/keys/index.js";
 import { Keys } from "@/keys/cardano/index.js";
 
 class BaseKeyDerivation extends Keys implements AbstractKeyDerivation<"adaBase"> {
@@ -46,7 +45,7 @@ class BaseKeyDerivation extends Keys implements AbstractKeyDerivation<"adaBase">
   public importByPrivateKey({
     enterprisePrivateKey,
     rewardPrivateKey,
-  }: ImportByPrivateKeyParameters<"adaBase">): CardanoBaseKeyPair {
+  }: PrivateKey<"adaBase">): CardanoBaseKeyPair {
     // TODO: Replace with checkIfPrivateKeyBelongsToMnemonic
     // const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
 
@@ -69,8 +68,11 @@ class BaseKeyDerivation extends Keys implements AbstractKeyDerivation<"adaBase">
     //   }
     // }
 
-    const enterprisePublicKey = PrivateKey.from_hex(enterprisePrivateKey).to_public().to_hex();
-    const rewardPublicKey = PrivateKey.from_hex(rewardPrivateKey).to_public().to_hex();
+    const enterprisePublicKey = LibraryPrivateKey.from_hex(enterprisePrivateKey)
+      .to_public()
+      .to_hex();
+
+    const rewardPublicKey = LibraryPrivateKey.from_hex(rewardPrivateKey).to_public().to_hex();
 
     return {
       enterprisePrivateKey,
