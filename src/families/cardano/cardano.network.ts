@@ -22,7 +22,7 @@ import {
 } from "./helpers/index.js";
 import { ExceptionMessage } from "../enums/index.js";
 import { type Handlers } from "./types/index.js";
-import { getNetworkHandlers } from "../helpers/getNetworkHandlers.helper.js";
+import { getNetworkHandlers } from "../helpers/index.js";
 import { AdaDerivationTypeUnion } from "@/types/derivation/index.js";
 
 class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
