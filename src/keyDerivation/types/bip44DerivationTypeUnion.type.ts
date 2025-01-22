@@ -1,4 +1,4 @@
-import { type DerivationTypeMap } from "@/types/index.js";
+import { type DerivationTypeMap } from "@/types/derivation/index.js";
 
 type CommonBipDerivationTypeUnion =
   | DerivationTypeMap["legacy"]
