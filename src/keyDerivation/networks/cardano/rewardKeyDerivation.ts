@@ -30,22 +30,6 @@ class RewardKeyDerivation extends Keys implements AbstractKeyDerivation<"reward"
   }
 
   public importByPrivateKey({ privateKey }: PrivateKey<"reward">): CommonKeyPair {
-    // const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
-
-    // for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-    //   const incrementedDerivationPath = appendAddressToDerivationPath(
-    //     derivationPathWithoutAddress,
-    //     i
-    //   );
-
-    //   const data = this.deriveFromMnemonic({
-    //     networkPurpose,
-    //     derivationPath: incrementedDerivationPath,
-    //   });
-
-    //   if (data.privateKey === privateKey) return data;
-    // }
-
     const rawPublicKey = LibraryPrivateKey.from_hex(privateKey).to_public();
 
     return {

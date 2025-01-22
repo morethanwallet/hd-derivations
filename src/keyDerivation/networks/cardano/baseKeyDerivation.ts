@@ -46,28 +46,6 @@ class BaseKeyDerivation extends Keys implements AbstractKeyDerivation<"adaBase">
     enterprisePrivateKey,
     rewardPrivateKey,
   }: PrivateKey<"adaBase">): CardanoBaseKeyPair {
-    // TODO: Replace with checkIfPrivateKeyBelongsToMnemonic
-    // const derivationPathWithoutAddress = removeDerivationPathAddress(derivationPath);
-
-    // for (let i = 0; i < SEARCH_FROM_MNEMONIC_LIMIT; i++) {
-    //   const incrementedDerivationPath = appendAddressToDerivationPath(
-    //     derivationPathWithoutAddress,
-    //     i
-    //   );
-
-    //   const data = this.deriveFromMnemonic({
-    //     networkPurpose,
-    //     derivationPath: incrementedDerivationPath,
-    //   });
-
-    //   if (
-    //     data.enterprisePrivateKey === enterprisePrivateKey &&
-    //     data.rewardPrivateKey === rewardPrivateKey
-    //   ) {
-    //     return data;
-    //   }
-    // }
-
     const enterprisePublicKey = LibraryPrivateKey.from_hex(enterprisePrivateKey)
       .to_public()
       .to_hex();
