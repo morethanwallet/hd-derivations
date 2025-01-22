@@ -1,4 +1,5 @@
-import { type DerivationTypeMap, type DerivationTypeUnion } from "../derivation/index.js";
+import { type DerivationTypeMap } from "../derivation/derivationTypeMap.type.js";
+import { type DerivationTypeUnion } from "../derivation/derivationTypeUnion.type.js";
 import { type CardanoBasePrivateKey, type CommonPrivateKey } from "./privateKey.type.js";
 
 type CommonKeyPair = { publicKey: string } & CommonPrivateKey;
