@@ -3,6 +3,7 @@ type NetworkTypeMap = {
   ada: "ada";
   avax: "avax";
   trx: "trx";
+  ton: "ton";
 };
 
 export { type NetworkTypeMap };

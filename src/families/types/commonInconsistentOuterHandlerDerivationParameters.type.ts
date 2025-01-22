@@ -16,6 +16,8 @@ type CommonInconsistentOuterHandlerDerivationParameters<
   ? { derivationType: AvaxDerivationTypeUnion }
   : TDerivationType extends DerivationTypeMap["trxBase"]
   ? { derivationType: DerivationTypeMap["trxBase"] }
+  : TDerivationType extends DerivationTypeMap["tonBase"]
+  ? { derivationType: DerivationTypeMap["tonBase"] }
   : Record<string, unknown>;
 
 export { type CommonInconsistentOuterHandlerDerivationParameters };

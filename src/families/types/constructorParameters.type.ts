@@ -16,6 +16,7 @@ import {
   type BtcDerivationConfigs,
   type AvaxDerivationConfigs,
   type TrxDerivationConfigs,
+  type TonDerivationConfigs,
 } from "@/config/types/index.js";
 
 type BtcParameters = {
@@ -38,6 +39,11 @@ type TrxParameters = {
   derivationConfigs: TrxDerivationConfigs;
 };
 
+type TonParameters = {
+  networkPurpose: CommonNetworkPurposeUnion;
+  derivationConfigs: TonDerivationConfigs;
+};
+
 type ConstructorInconsistentParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends BtcDerivationTypeUnion
     ? BtcParameters
@@ -47,6 +53,8 @@ type ConstructorInconsistentParameters<TDerivationType extends DerivationTypeUni
     ? AvaxParameters
     : TDerivationType extends DerivationTypeMap["trxBase"]
     ? TrxParameters
+    : TDerivationType extends DerivationTypeMap["tonBase"]
+    ? TonParameters
     : Record<string, unknown>;
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {

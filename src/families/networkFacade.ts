@@ -13,15 +13,18 @@ import {
   type AdaDerivationConfigs,
   type BtcDerivationConfigs,
   type TrxDerivationConfigs,
+  type TonDerivationConfigs,
 } from "@/config/types/index.js";
 import { Avax } from "./avax/avax.network.js";
 import { Trx } from "./trx/trx.network.js";
+import { Ton } from "./ton/ton.network.js";
 
 type NetworkTypeToAvailableDerivationConfigsMap = {
   btc: BtcDerivationConfigs;
   ada: AdaDerivationConfigs;
   avax: AvaxDerivationConfigs;
   trx: TrxDerivationConfigs;
+  ton: TonDerivationConfigs;
 };
 
 type NetworkTypeToNetworkPurpose = {
@@ -29,6 +32,7 @@ type NetworkTypeToNetworkPurpose = {
   ada: AdaNetworkPurposeUnion;
   avax: CommonNetworkPurposeUnion;
   trx: null;
+  ton: CommonNetworkPurposeUnion;
 };
 
 type Network = {
@@ -36,6 +40,7 @@ type Network = {
   ada: InstanceType<typeof Cardano>;
   avax: InstanceType<typeof Avax>;
   trx: InstanceType<typeof Trx>;
+  ton: InstanceType<typeof Ton>;
 };
 
 class NetworkFacade<T extends NetworkTypeUnion> {
@@ -89,6 +94,15 @@ class NetworkFacade<T extends NetworkTypeUnion> {
             mnemonic: mnemonicInstance,
             networkPurpose: networkPurpose as null,
             derivationConfigs: derivationConfigs as TrxDerivationConfigs,
+          }) as Network[T];
+        }
+        break;
+      case "ton":
+        {
+          this.network = new Ton({
+            mnemonic: mnemonicInstance,
+            networkPurpose: networkPurpose as CommonNetworkPurposeUnion,
+            derivationConfigs: derivationConfigs as TonDerivationConfigs,
           }) as Network[T];
         }
         break;

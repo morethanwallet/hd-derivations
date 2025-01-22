@@ -32,3 +32,4 @@ export {
 } from "./checkIfPrivateKeyBelongsToMnemonic.type.js";
 export { type DerivedItem } from "./derivedItem.type.js";
 export { type DerivedCredential } from "./derivedCredential.type.js";
+export { type DerivationHandlers } from "./derivationHandlers.type.js";

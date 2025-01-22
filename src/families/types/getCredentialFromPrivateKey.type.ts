@@ -1,10 +1,12 @@
 import { type DerivationTypeUnion } from "@/types/derivation/index.js";
 import { type CommonInconsistentOuterHandlerDerivationParameters } from "./commonInconsistentOuterHandlerDerivationParameters.type.js";
 import { type DerivedCredential } from "./derivedCredential.type.js";
+import { type TonAddressRequiredData } from "@/types/address/index.js";
 import { type PrivateKey } from "@/types/keys/index.js";
 
 type HandlersCommonParameters<TDerivationType extends DerivationTypeUnion> =
-  PrivateKey<TDerivationType>;
+  PrivateKey<TDerivationType> &
+    (TDerivationType extends "tonBase" ? TonAddressRequiredData : Record<string, unknown>);
 
 type GetCredentialFromPrivateKeyInnerHandlerParameters<
   TDerivationType extends DerivationTypeUnion

@@ -4,6 +4,7 @@ import {
   type EnterpriseKeyDerivation,
   type RewardKeyDerivation,
   type BaseKeyDerivation,
+  type TonKeyDerivation,
 } from "@/keyDerivation/index.js";
 import {
   type BtcDerivationTypeUnion,
@@ -45,6 +46,8 @@ type AdaParameters<TDerivationType extends DerivationTypeUnion> = {
     : InstanceType<typeof BaseKeyDerivation>;
 };
 
+type TonParameters = { keysDerivationInstance: InstanceType<typeof TonKeyDerivation> };
+
 type GetItemHandlerParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends AvaxDerivationTypeUnion
     ? AvaxParameters
@@ -52,6 +55,8 @@ type GetItemHandlerParameters<TDerivationType extends DerivationTypeUnion> =
     ? BtcParameters<TDerivationType>
     : TDerivationType extends AdaDerivationTypeUnion
     ? AdaParameters<TDerivationType>
+    : TDerivationType extends DerivationTypeMap["tonBase"]
+    ? TonParameters
     : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetItemHandlerReturnType<T extends DerivationTypeUnion> = {

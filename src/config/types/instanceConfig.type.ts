@@ -4,6 +4,7 @@ import {
   type AdaDerivationConfigs,
   type BtcDerivationConfigs,
   type TrxDerivationConfigs,
+  type TonDerivationConfigs,
 } from "./derivationConfigs.type.js";
 import {
   type CommonNetworkPurposeUnion,
@@ -36,9 +37,16 @@ type TrxInstanceConfig = {
   derivationConfigs: TrxDerivationConfigs;
 } & MnemonicProperty;
 
+type TonInstanceConfig = {
+  network: NetworkTypeMap["ton"];
+  networkPurpose: CommonNetworkPurposeUnion;
+  derivationConfigs: TonDerivationConfigs;
+} & MnemonicProperty;
+
 export {
   type BtcInstanceConfig,
   type AdaInstanceConfig,
   type AvaxInstanceConfig,
   type TrxInstanceConfig,
+  type TonInstanceConfig,
 };
