@@ -1,1 +1,1 @@
-export { type ContractVersion } from "./networks/ton/index.js";
+export { type TonAddressRequiredData } from "./tonAddressRequiredData.type.js";

@@ -1,6 +1,6 @@
 import { type Address } from "@/address/types/index.js";
 import { type CommonKeyPair } from "@/types/keys/index.js";
-import { type WorkChain, type ContractVersionToContract } from "./types/index.js";
+import { type ContractVersionToContract } from "./types/index.js";
 import {
   WalletContractV1R1,
   WalletContractV1R2,
@@ -12,19 +12,9 @@ import {
   WalletContractV4,
   WalletContractV5R1,
 } from "@ton/ton";
-import { type ContractVersion } from "@/types/address/index.js";
+import { type TonAddressRequiredData } from "@/types/address/index.js";
 
-type GetTonAddressParameters = {
-  publicKey: CommonKeyPair["publicKey"];
-  workChain: WorkChain;
-  contractVersion: ContractVersion;
-  isFriendlyFormat: boolean;
-  friendlyFormatArguments?: {
-    urlSafe?: boolean;
-    bounceable?: boolean;
-    testOnly?: boolean;
-  };
-};
+type GetTonAddressParameters = { publicKey: CommonKeyPair["publicKey"] } & TonAddressRequiredData;
 
 const contractVersionToContract: ContractVersionToContract = {
   v1r1: WalletContractV1R1,
