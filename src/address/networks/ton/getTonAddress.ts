@@ -1,6 +1,6 @@
 import { type Address } from "@/address/types/index.js";
 import { type CommonKeyPair } from "@/types/keys/index.js";
-import { type WorkChain, type DerivationTypeToContract } from "./types/index.js";
+import { type WorkChain, type ContractVersionToContract } from "./types/index.js";
 import {
   WalletContractV1R1,
   WalletContractV1R2,
@@ -12,12 +12,12 @@ import {
   WalletContractV4,
   WalletContractV5R1,
 } from "@ton/ton";
-import { type TonDerivationTypeUnion } from "@/types/derivation/index.js";
+import { type ContractVersion } from "@/types/address/index.js";
 
 type GetTonAddressParameters = {
   publicKey: CommonKeyPair["publicKey"];
   workChain: WorkChain;
-  derivationType: TonDerivationTypeUnion;
+  contractVersion: ContractVersion;
   isFriendlyFormat: boolean;
   friendlyFormatArguments?: {
     urlSafe?: boolean;
@@ -26,22 +26,22 @@ type GetTonAddressParameters = {
   };
 };
 
-const derivationTypeToContract: DerivationTypeToContract = {
-  tonV1r1: WalletContractV1R1,
-  tonV1r2: WalletContractV1R2,
-  tonV1r3: WalletContractV1R3,
-  tonV2r1: WalletContractV2R1,
-  tonV2r2: WalletContractV2R2,
-  tonV3r1: WalletContractV3R1,
-  tonV3r2: WalletContractV3R2,
-  tonV4r1: WalletContractV4,
-  tonV5r1: WalletContractV5R1,
+const contractVersionToContract: ContractVersionToContract = {
+  v1r1: WalletContractV1R1,
+  v1r2: WalletContractV1R2,
+  v1r3: WalletContractV1R3,
+  v2r1: WalletContractV2R1,
+  v2r2: WalletContractV2R2,
+  v3r1: WalletContractV3R1,
+  v3r2: WalletContractV3R2,
+  v4r1: WalletContractV4,
+  v5r1: WalletContractV5R1,
 };
 
 function getTonAddress({
   publicKey,
   workChain,
-  derivationType,
+  contractVersion,
   isFriendlyFormat,
   friendlyFormatArguments = {
     urlSafe: true,
@@ -50,7 +50,7 @@ function getTonAddress({
   },
 }: GetTonAddressParameters): Address["address"] {
   const publicKeyBuffer = Buffer.from(publicKey, "hex");
-  const contract = derivationTypeToContract[derivationType];
+  const contract = contractVersionToContract[contractVersion];
 
   const contractInstance = contract.create({
     publicKey: publicKeyBuffer,

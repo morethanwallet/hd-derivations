@@ -7,12 +7,11 @@ import {
 import { type CommonKeyPair } from "@/types/keys/index.js";
 import edHd from "ed25519-hd-key";
 import { toHexFromBytes } from "@/helpers/index.js";
-import { type TonDerivationTypeUnion } from "@/types/derivation/index.js";
 
-class TonKeyDerivation extends Keys implements AbstractKeyDerivation<TonDerivationTypeUnion> {
+class TonKeyDerivation extends Keys implements AbstractKeyDerivation<"tonBase"> {
   public deriveFromMnemonic({
     derivationPath,
-  }: DeriveFromMnemonicParameters<TonDerivationTypeUnion>): CommonKeyPair {
+  }: DeriveFromMnemonicParameters<"tonBase">): CommonKeyPair {
     const { privateKey, publicKey } = this.getKeyPair(derivationPath);
 
     return {
@@ -23,7 +22,7 @@ class TonKeyDerivation extends Keys implements AbstractKeyDerivation<TonDerivati
 
   public importByPrivateKey({
     privateKey,
-  }: ImportByPrivateKeyParameters<TonDerivationTypeUnion>): CommonKeyPair {
+  }: ImportByPrivateKeyParameters<"tonBase">): CommonKeyPair {
     const rawPrivateKey = Buffer.from(privateKey, "hex");
     const publicKey = this.getPublicKey(rawPrivateKey);
 

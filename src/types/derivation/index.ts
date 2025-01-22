@@ -5,6 +5,5 @@ export {
   type AdaDerivationTypeUnion,
   type XrpDerivationTypeUnion,
   type AvaxDerivationTypeUnion,
-  type TonDerivationTypeUnion,
 } from "./derivationTypeUnion.type.js";
 export { type DerivationTypeMap } from "./derivationTypeMap.type.js";
