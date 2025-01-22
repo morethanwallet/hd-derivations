@@ -18,6 +18,15 @@ type DerivationTypeMap = {
   xrpBase: "xrpBase";
   xrpX: "xrpX";
   trxBase: "trxBase";
+  tonV1r1: "tonV1r1";
+  tonV1r2: "tonV1r2";
+  tonV1r3: "tonV1r3";
+  tonV2r1: "tonV2r1";
+  tonV2r2: "tonV2r2";
+  tonV3r1: "tonV3r1";
+  tonV3r2: "tonV3r2";
+  tonV4r1: "tonV4r1";
+  tonV5r1: "tonV5r1";
 };
 
 export { type DerivationTypeMap };

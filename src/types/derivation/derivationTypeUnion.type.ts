@@ -20,10 +20,22 @@ type XrpDerivationTypeUnion = DerivationTypeMap["xrpX"] | DerivationTypeMap["xrp
 
 type AvaxDerivationTypeUnion = DerivationTypeMap["avaxX"] | DerivationTypeMap["avaxP"];
 
+type TonDerivationTypeUnion =
+  | DerivationTypeMap["tonV1r1"]
+  | DerivationTypeMap["tonV1r2"]
+  | DerivationTypeMap["tonV1r3"]
+  | DerivationTypeMap["tonV2r1"]
+  | DerivationTypeMap["tonV2r2"]
+  | DerivationTypeMap["tonV3r1"]
+  | DerivationTypeMap["tonV3r2"]
+  | DerivationTypeMap["tonV4r1"]
+  | DerivationTypeMap["tonV5r1"];
+
 export {
   type DerivationTypeUnion,
   type BtcDerivationTypeUnion,
   type AdaDerivationTypeUnion,
   type XrpDerivationTypeUnion,
   type AvaxDerivationTypeUnion,
+  type TonDerivationTypeUnion,
 };
