@@ -12,6 +12,7 @@ import {
   type CheckIfPrivateKeyBelongsToMnemonicParameters,
   type DerivedItem,
   type DerivedCredential,
+  type DerivationHandlers,
 } from "../types/index.js";
 import {
   getBaseItemHandlers,
@@ -34,7 +35,7 @@ class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
   }: ConstructorParameters<AdaDerivationTypeUnion>) {
     const networkId = getNetworkId(networkPurpose);
 
-    const keysDerivationHandlers = {
+    const keysDerivationHandlers: DerivationHandlers<AdaDerivationTypeUnion> = {
       enterprise: getEnterpriseItemHandlers({
         networkId,
         networkPurpose,

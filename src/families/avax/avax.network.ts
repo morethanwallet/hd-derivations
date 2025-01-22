@@ -7,6 +7,7 @@ import {
   type CheckIfPrivateKeyBelongsToMnemonicParameters,
   type DerivedCredential,
   type DerivedItem,
+  type DerivationHandlers,
 } from "../types/index.js";
 import { type Handlers } from "./types/index.js";
 import { getAvaxItemHandlers } from "./helpers/getItemHandlers.helper.js";
@@ -24,7 +25,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
     mnemonic,
     networkPurpose,
   }: ConstructorParameters<AvaxDerivationTypeUnion>) {
-    const keysDerivationHandlers = {
+    const keysDerivationHandlers: DerivationHandlers<AvaxDerivationTypeUnion> = {
       avaxX: getAvaxItemHandlers({
         networkPurpose,
         derivationType: "avaxX",

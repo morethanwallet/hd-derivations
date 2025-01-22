@@ -9,6 +9,7 @@ import {
   type CheckIfPrivateKeyBelongsToMnemonicParameters,
   type DerivedCredential,
   type DerivedItem,
+  type DerivationHandlers,
 } from "../types/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
 import {
@@ -31,7 +32,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
     mnemonic,
     networkPurpose,
   }: ConstructorParameters<BtcDerivationTypeUnion>) {
-    const keysDerivationHandlers = {
+    const keysDerivationHandlers: DerivationHandlers<BtcDerivationTypeUnion> = {
       legacy: getLegacyItemHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(

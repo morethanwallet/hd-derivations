@@ -9,6 +9,7 @@ import {
   type CheckIfPrivateKeyBelongsToMnemonicParameters,
   type DerivedCredential,
   type DerivedItem,
+  type DerivationHandlers,
 } from "../types/index.js";
 import { ExceptionMessage } from "../exceptions/index.js";
 import { getTrxItemHandlers } from "./helpers/index.js";
@@ -20,7 +21,7 @@ class Trx implements AbstractNetwork<"trxBase"> {
   private handlers: NonNullable<Partial<Handlers>>;
 
   public constructor({ derivationConfigs, mnemonic }: ConstructorParameters<"trxBase">) {
-    const keysDerivationHandlers = {
+    const keysDerivationHandlers: DerivationHandlers<"trxBase"> = {
       trxBase: getTrxItemHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("trxBase", derivationConfigs) ?? trxConfig.trxBase.keysConfig,
