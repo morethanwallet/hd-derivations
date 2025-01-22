@@ -43,8 +43,8 @@ function getLegacyItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"legacy">).call(
         this,
+        parameters,
         btcConfig[networkPurpose].legacy.derivationPathPrefix,
-        parameters
       );
     },
   };
@@ -78,8 +78,8 @@ function getSegWitItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"segWit">).call(
         this,
+        parameters,
         btcConfig[networkPurpose].segWit.derivationPathPrefix,
-        parameters
       );
     },
   };
@@ -113,8 +113,8 @@ function getNativeSegWitItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"nativeSegWit">).call(
         this,
+        parameters,
         btcConfig[networkPurpose].nativeSegWit.derivationPathPrefix,
-        parameters
       );
     },
   };
@@ -148,8 +148,8 @@ function getTaprootItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"taproot">).call(
         this,
+        parameters,
         btcConfig[networkPurpose].taproot.derivationPathPrefix,
-        parameters
       );
     },
   };
@@ -183,8 +183,8 @@ function getP2wshItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"p2wsh">).call(
         this,
+        parameters,
         btcConfig[networkPurpose].p2wsh.derivationPathPrefix,
-        parameters
       );
     },
   };
@@ -218,8 +218,8 @@ function getP2wshInP2shItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"p2wshInP2sh">).call(
         this,
+        parameters,
         btcConfig[networkPurpose].p2wshInP2sh.derivationPathPrefix,
-        parameters
       );
     },
   };

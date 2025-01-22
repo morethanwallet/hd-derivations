@@ -30,8 +30,8 @@ function getTrxItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"trxBase">).call(
         this,
+        parameters,
         trxConfig.trxBase.derivationPathPrefix,
-        parameters
       );
     },
   };

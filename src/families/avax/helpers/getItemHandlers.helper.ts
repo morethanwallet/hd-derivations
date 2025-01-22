@@ -35,8 +35,8 @@ function getAvaxItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<AvaxDerivationTypeUnion>).call(
         this,
+        parameters,
         avaxConfig[networkPurpose].avax.derivationPathPrefix,
-        parameters
       );
     },
   };

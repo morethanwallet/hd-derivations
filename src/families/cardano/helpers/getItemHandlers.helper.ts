@@ -36,8 +36,8 @@ function getEnterpriseItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"enterprise">).call(
         this,
+        parameters,
         adaConfig[networkPurpose].enterprise.derivationPathPrefix,
-        parameters
       );
     },
   };
@@ -66,8 +66,8 @@ function getRewardItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"reward">).call(
         this,
+        parameters,
         adaConfig[networkPurpose].reward.derivationPathPrefix,
-        parameters
       );
     },
   };
@@ -96,8 +96,8 @@ function getBaseItemHandlers({
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<"adaBase">).call(
         this,
+        parameters,
         adaConfig[networkPurpose].adaBase.derivationPathPrefix,
-        parameters
       );
     },
   };

@@ -8,8 +8,14 @@ import { type DerivationTypeUnion } from "@/types/derivation/index.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/index.js";
 import { checkHardenedSuffixEnding } from "@/helpers/index.js";
 import { SplittedDerivationPathItemIndex } from "@/enums/index.js";
+import { type EllipticCurveAlgorithmUnion } from "@/types/index.js";
 
 const SEGMENT_INITIAL_VALUE = "0";
+
+type IncreaseDerivationPathDepthParameters = {
+  derivationPath: DerivationPath["derivationPath"];
+  algorithm?: EllipticCurveAlgorithmUnion;
+};
 
 function getDerivationPathPrefix(
   derivationPath: DerivationPath["derivationPath"]
@@ -26,16 +32,19 @@ function hardenDerivationPath(
   return derivationPath.concat(HARDENED_SUFFIX);
 }
 
-function increaseDerivationPathDepth(
-  derivationPath: DerivationPath["derivationPath"]
-): DerivationPath["derivationPath"] {
-  return `${derivationPath}${DERIVATION_PATH_DELIMITER}${SEGMENT_INITIAL_VALUE}`;
+function increaseDerivationPathDepth({
+  derivationPath,
+  algorithm = "secp256k1",
+}: IncreaseDerivationPathDepthParameters): DerivationPath["derivationPath"] {
+  const hardenedSuffix = algorithm === "ed25519" ? HARDENED_SUFFIX : "";
+  return `${derivationPath}${DERIVATION_PATH_DELIMITER}${SEGMENT_INITIAL_VALUE}${hardenedSuffix}`;
 }
 
 function checkIfPrivateKeyBelongsToMnemonic<T extends DerivationTypeUnion>(
   this: { deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T> },
+  parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<T>,
   derivationPathPrefixToCompare: DerivationPath["derivationPath"],
-  parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<T>
+  algorithm?: EllipticCurveAlgorithmUnion
 ): boolean {
   const derivationPathPrefix = getDerivationPathPrefix(parameters.derivationPathPrefix);
 
@@ -70,7 +79,10 @@ function checkIfPrivateKeyBelongsToMnemonic<T extends DerivationTypeUnion>(
     if (!checkHardenedSuffixEnding(updatedDerivationPath)) {
       updatedDerivationPath = hardenDerivationPath(updatedDerivationPath);
     } else {
-      updatedDerivationPath = increaseDerivationPathDepth(updatedDerivationPath);
+      updatedDerivationPath = increaseDerivationPathDepth({
+        algorithm,
+        derivationPath: updatedDerivationPath,
+      });
       derivationPathDepth++;
     }
   } while (derivationPathDepth <= MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY);
