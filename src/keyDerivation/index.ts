@@ -9,3 +9,4 @@ export { CommonBipKeyDerivation } from "./networks/common/commonBipKeyDerivation
 export { EvmKeyDerivation } from "./networks/evm/evmKeyDerivation.js";
 export { SolanaKeyDerivation } from "./networks/solana/solanaKeyDerivation.js";
 export { TransparentKeyDerivation } from "./networks/zcash/index.js";
+export { TonKeyDerivation } from "./networks/ton/index.js";

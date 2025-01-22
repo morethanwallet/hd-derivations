@@ -5,7 +5,7 @@ import {
   HARDENED_SUFFIX,
   MASTER_KEY_SYMBOL,
 } from "@/constants/index.js";
-import { ExceptionMessage } from "@/exceptions/index.js";
+import { ExceptionMessage } from "@/enums/index.js";
 import { hardenDerivationPathValue } from "./hardenDerivationPathValue.helper.js";
 import { getDerivationPathSegmentsArray } from "./getDerivationPathSegmentsArray.helper.js";
 import { checkHardenedSuffixEnding } from "./checkHardenedSuffixEnding.helper.js";
