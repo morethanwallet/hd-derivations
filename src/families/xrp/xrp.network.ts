@@ -13,7 +13,7 @@
 // import { Keys } from "@/keys/bip32/index.js";
 // import { toUint8Array } from "@/helpers/index.js";
 // import { getKeyPairFromEc } from "../helpers/index.js";
-// import { ExceptionMessage } from "../exceptions/index.js";
+// import { ExceptionMessage } from "../enums/index.js";
 // import { Wallet } from "xrpl";
 
 // class Xrp extends Keys implements AbstractNetwork<"xrp"> {

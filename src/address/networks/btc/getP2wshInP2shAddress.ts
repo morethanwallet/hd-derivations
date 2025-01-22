@@ -1,5 +1,6 @@
 import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/address/constants/index.js";
-import { AddressError, ExceptionMessage } from "@/address/exceptions/index.js";
+import { ExceptionMessage } from "@/address/enums/index.js";
+import { AddressError } from "@/exceptions/index.js";
 import { type Address } from "@/address/types/index.js";
 import { assert, toUint8Array } from "@/helpers/index.js";
 import { type CommonKeyPair } from "@/types/keys/index.js";

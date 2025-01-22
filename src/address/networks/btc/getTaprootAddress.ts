@@ -1,4 +1,5 @@
-import { AddressError, ExceptionMessage } from "@/address/exceptions/index.js";
+import { ExceptionMessage } from "@/address/enums/index.js";
+import { AddressError } from "@/exceptions/index.js";
 import { type Address } from "@/address/types/index.js";
 import { assert, toUint8Array, toXOnlyPublicKey } from "@/helpers/index.js";
 import { type CommonKeyPair } from "@/types/keys/index.js";

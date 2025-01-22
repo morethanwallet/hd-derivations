@@ -10,7 +10,7 @@ import {
   type DerivedItem,
   type DerivationHandlers,
 } from "../types/index.js";
-import { ExceptionMessage } from "../exceptions/index.js";
+import { ExceptionMessage } from "../enums/index.js";
 import { getTonItemHandlers } from "./helpers/index.js";
 import { type Handlers } from "./types/index.js";
 import { getNetworkHandlers } from "../helpers/index.js";

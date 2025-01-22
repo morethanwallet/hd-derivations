@@ -14,7 +14,7 @@ import { getAvaxItemHandlers } from "./helpers/getItemHandlers.helper.js";
 import { CommonBipKeyDerivation } from "@/keyDerivation/index.js";
 import { findCustomConfig, getNetworkHandlers } from "../helpers/index.js";
 import { avaxConfig } from "@/config/index.js";
-import { ExceptionMessage } from "../exceptions/index.js";
+import { ExceptionMessage } from "../enums/index.js";
 import { type AvaxDerivationTypeUnion } from "@/types/derivation/index.js";
 
 class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {

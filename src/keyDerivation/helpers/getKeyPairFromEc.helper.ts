@@ -1,5 +1,6 @@
 import { ecPair, type ECPairInterface } from "@/ecc/index.js";
-import { ExceptionMessage, KeyDerivationError } from "../exceptions/index.js";
+import { ExceptionMessage } from "../enums/index.js";
+import { KeyDerivationError } from "@/exceptions/index.js";
 import { assert, toHexFromBytes } from "@/helpers/index.js";
 import { type BIP32Interface } from "bip32";
 import { type KeysConfig } from "@/keys/types/index.js";

@@ -9,8 +9,8 @@ import {
 } from "@/keyDerivation/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/types/keys/index.js";
 import { convertEcBytesPrivateKeyToHexKeyPair } from "@/keyDerivation/helpers/index.js";
-import { KeyDerivationError } from "@/keyDerivation/exceptions/index.js";
-import { ExceptionMessage } from "@/keyDerivation/exceptions/index.js";
+import { KeyDerivationError } from "@/exceptions/index.js";
+import { ExceptionMessage } from "@/keyDerivation/enums/index.js";
 
 class BnbKeyDerivation extends Keys implements AbstractKeyDerivation<"bnb"> {
   public constructor(keysConfig: KeysConfig, mnemonic: Mnemonic) {

@@ -19,7 +19,7 @@
 //   stripHexPrefix,
 //   toChecksumAddress,
 // } from "ethereumjs-util";
-// import { ExceptionMessage } from "../exceptions/index.js";
+// import { ExceptionMessage } from "../enums/index.js";
 // import { getKeyPairFromEc } from "../helpers/index.js";
 
 // class Evm extends Keys implements AbstractNetwork<"evm"> {

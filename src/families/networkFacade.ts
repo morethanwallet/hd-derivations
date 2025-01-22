@@ -1,7 +1,7 @@
 import { Bitcoin } from "./bitcoin/bitcoin.network.js";
 import { Cardano } from "./cardano/cardano.network.js";
 import { Mnemonic } from "@/mnemonic/index.js";
-import { ExceptionMessage } from "./exceptions/index.js";
+import { ExceptionMessage } from "./enums/index.js";
 import {
   type CommonNetworkPurposeUnion,
   type AdaNetworkPurposeUnion,

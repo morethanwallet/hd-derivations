@@ -20,7 +20,7 @@ import {
   getNetworkId,
   getRewardItemHandlers,
 } from "./helpers/index.js";
-import { ExceptionMessage } from "../exceptions/index.js";
+import { ExceptionMessage } from "../enums/index.js";
 import { type Handlers } from "./types/index.js";
 import { getNetworkHandlers } from "../helpers/getNetworkHandlers.helper.js";
 import { AdaDerivationTypeUnion } from "@/types/derivation/index.js";

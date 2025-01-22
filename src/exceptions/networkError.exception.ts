@@ -1,6 +1,6 @@
 class NetworkError extends Error {
   public constructor(message: string) {
-    super(`Network Metadata Error: ${message}`);
+    super(`Network Error: ${message}`);
     this.name = "NetworkError";
   }
 }

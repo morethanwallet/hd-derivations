@@ -11,7 +11,7 @@ import {
   type DerivedItem,
   type DerivationHandlers,
 } from "../types/index.js";
-import { ExceptionMessage } from "../exceptions/index.js";
+import { ExceptionMessage } from "../enums/index.js";
 import { getTrxItemHandlers } from "./helpers/index.js";
 import { type Handlers } from "./types/index.js";
 import { findCustomConfig, getNetworkHandlers } from "../helpers/index.js";

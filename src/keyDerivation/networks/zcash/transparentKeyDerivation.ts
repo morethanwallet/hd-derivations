@@ -11,8 +11,8 @@ import {
   type DeriveFromMnemonicParameters,
 } from "@/keyDerivation/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/types/keys/index.js";
-import { KeyDerivationError } from "@/keyDerivation/exceptions/index.js";
-import { ExceptionMessage } from "@/keyDerivation/exceptions/index.js";
+import { KeyDerivationError } from "@/exceptions/index.js";
+import { ExceptionMessage } from "@/keyDerivation/enums/index.js";
 import { getKeyPairFromEc } from "@/keyDerivation/helpers/index.js";
 
 class TransparentKeyDerivation extends Keys implements AbstractKeyDerivation<"transparent"> {

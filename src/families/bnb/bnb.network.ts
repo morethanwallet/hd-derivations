@@ -10,7 +10,7 @@
 // import { config } from "./config/index.js";
 // import { Keys } from "@/keys/bip32/index.js";
 // import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
-// import { NetworkError, ExceptionMessage } from "../exceptions/index.js";
+// import { NetworkError, ExceptionMessage } from "../enums/index.js";
 // import { ecPair, type ECPairInterface } from "@/ecc/index.js";
 // import {
 //   getAddressFromPrivateKey,

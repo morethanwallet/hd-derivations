@@ -1,6 +1,6 @@
 class AddressError extends Error {
   public constructor(message: string) {
-    super(`Address Metadata Error: ${message}`);
+    super(`Address Error: ${message}`);
     this.name = "AddressError";
   }
 }
