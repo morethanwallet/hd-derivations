@@ -33,3 +33,10 @@ export {
 export { type DerivedItem } from "./derivedItem.type.js";
 export { type DerivedCredential } from "./derivedCredential.type.js";
 export { type DerivationHandlers } from "./derivationHandlers.type.js";
+export type {
+  AvaxHandlers,
+  BtcHandlers,
+  AdaHandlers,
+  TonHandlers,
+  TrxHandlers,
+} from "./handlers.type.js";

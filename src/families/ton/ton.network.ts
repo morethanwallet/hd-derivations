@@ -1,23 +1,23 @@
 import { TonKeyDerivation } from "@/keyDerivation/index.js";
-import {
-  type DeriveItemFromMnemonicParameters,
-  type GetCredentialFromPrivateKeyParameters,
-  type AbstractNetwork,
-  type ConstructorParameters,
-  type DeriveItemsBatchFromMnemonicParameters,
-  type CheckIfPrivateKeyBelongsToMnemonicParameters,
-  type DerivedCredential,
-  type DerivedItem,
-  type DerivationHandlers,
+import type {
+  DeriveItemFromMnemonicParameters,
+  GetCredentialFromPrivateKeyParameters,
+  AbstractNetwork,
+  ConstructorParameters,
+  DeriveItemsBatchFromMnemonicParameters,
+  CheckIfPrivateKeyBelongsToMnemonicParameters,
+  DerivedCredential,
+  DerivedItem,
+  DerivationHandlers,
+  TonHandlers,
 } from "../types/index.js";
 import { ExceptionMessage } from "../enums/index.js";
 import { getTonItemHandlers } from "./helpers/index.js";
-import { type Handlers } from "./types/index.js";
 import { getNetworkHandlers } from "../helpers/index.js";
 import { BtcDerivationTypeUnion } from "@/types/derivation/index.js";
 
 class Ton implements AbstractNetwork<"tonBase"> {
-  private handlers: NonNullable<Partial<Handlers>>;
+  private handlers: NonNullable<Partial<TonHandlers>>;
 
   public constructor({ derivationConfigs, mnemonic }: ConstructorParameters<"tonBase">) {
     const derivationHandlers: DerivationHandlers<"tonBase"> = {
@@ -63,7 +63,7 @@ class Ton implements AbstractNetwork<"tonBase"> {
     return false;
   }
 
-  private getDerivationHandlers(): Handlers["tonBase"] | never {
+  private getDerivationHandlers(): TonHandlers["tonBase"] | never {
     const derivationHandlers = this.handlers["tonBase"];
 
     if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);

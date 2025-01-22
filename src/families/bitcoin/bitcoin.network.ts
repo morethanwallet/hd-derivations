@@ -1,15 +1,16 @@
 import { TaprootKeyDerivation, CommonBipKeyDerivation } from "@/keyDerivation/index.js";
 import { btcConfig } from "@/config/index.js";
-import {
-  type DeriveItemFromMnemonicParameters,
-  type GetCredentialFromPrivateKeyParameters,
-  type AbstractNetwork,
-  type ConstructorParameters,
-  type DeriveItemsBatchFromMnemonicParameters,
-  type CheckIfPrivateKeyBelongsToMnemonicParameters,
-  type DerivedCredential,
-  type DerivedItem,
-  type DerivationHandlers,
+import type {
+  DeriveItemFromMnemonicParameters,
+  GetCredentialFromPrivateKeyParameters,
+  AbstractNetwork,
+  ConstructorParameters,
+  DeriveItemsBatchFromMnemonicParameters,
+  CheckIfPrivateKeyBelongsToMnemonicParameters,
+  DerivedCredential,
+  DerivedItem,
+  DerivationHandlers,
+  BtcHandlers,
 } from "../types/index.js";
 import { ExceptionMessage } from "../enums/index.js";
 import {
@@ -20,12 +21,11 @@ import {
   getSegWitItemHandlers,
   getTaprootItemHandlers,
 } from "./helpers/index.js";
-import { type Handlers } from "./types/index.js";
 import { findCustomConfig, getNetworkHandlers } from "../helpers/index.js";
 import { type BtcDerivationTypeUnion } from "@/types/derivation/index.js";
 
 class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
-  private handlers: NonNullable<Partial<Handlers>>;
+  private handlers: NonNullable<Partial<BtcHandlers>>;
 
   public constructor({
     derivationConfigs,
@@ -125,7 +125,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
 
   private getDerivationHandlers(
     derivationType: BtcDerivationTypeUnion
-  ): Handlers[BtcDerivationTypeUnion] | never {
+  ): BtcHandlers[BtcDerivationTypeUnion] | never {
     const derivationHandlers = this.handlers[derivationType];
 
     if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);

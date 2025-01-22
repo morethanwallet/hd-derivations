@@ -3,16 +3,17 @@ import {
   EnterpriseKeyDerivation,
   RewardKeyDerivation,
 } from "@/keyDerivation/index.js";
-import {
-  type DeriveItemFromMnemonicParameters,
-  type AbstractNetwork,
-  type GetCredentialFromPrivateKeyInnerHandlerParameters,
-  type ConstructorParameters,
-  type DeriveItemsBatchFromMnemonicParameters,
-  type CheckIfPrivateKeyBelongsToMnemonicParameters,
-  type DerivedItem,
-  type DerivedCredential,
-  type DerivationHandlers,
+import type {
+  DeriveItemFromMnemonicParameters,
+  AbstractNetwork,
+  GetCredentialFromPrivateKeyInnerHandlerParameters,
+  ConstructorParameters,
+  DeriveItemsBatchFromMnemonicParameters,
+  CheckIfPrivateKeyBelongsToMnemonicParameters,
+  DerivedItem,
+  DerivedCredential,
+  DerivationHandlers,
+  AdaHandlers,
 } from "../types/index.js";
 import {
   getBaseItemHandlers,
@@ -21,12 +22,11 @@ import {
   getRewardItemHandlers,
 } from "./helpers/index.js";
 import { ExceptionMessage } from "../enums/index.js";
-import { type Handlers } from "./types/index.js";
 import { getNetworkHandlers } from "../helpers/index.js";
 import { AdaDerivationTypeUnion } from "@/types/derivation/index.js";
 
 class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
-  private handlers: NonNullable<Partial<Handlers>>;
+  private handlers: NonNullable<Partial<AdaHandlers>>;
 
   public constructor({
     mnemonic,
@@ -113,7 +113,7 @@ class Cardano implements AbstractNetwork<AdaDerivationTypeUnion> {
 
   private getDerivationHandlers(
     derivationType: AdaDerivationTypeUnion
-  ): Handlers[AdaDerivationTypeUnion] | never {
+  ): AdaHandlers[AdaDerivationTypeUnion] | never {
     const derivationHandlers = this.handlers[derivationType];
 
     if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);

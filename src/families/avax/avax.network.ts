@@ -1,15 +1,15 @@
-import {
-  type AbstractNetwork,
-  type DeriveItemFromMnemonicParameters,
-  type ConstructorParameters,
-  type GetCredentialFromPrivateKeyParameters,
-  type DeriveItemsBatchFromMnemonicParameters,
-  type CheckIfPrivateKeyBelongsToMnemonicParameters,
-  type DerivedCredential,
-  type DerivedItem,
-  type DerivationHandlers,
+import type {
+  AbstractNetwork,
+  DeriveItemFromMnemonicParameters,
+  ConstructorParameters,
+  GetCredentialFromPrivateKeyParameters,
+  DeriveItemsBatchFromMnemonicParameters,
+  CheckIfPrivateKeyBelongsToMnemonicParameters,
+  DerivedCredential,
+  DerivedItem,
+  DerivationHandlers,
+  AvaxHandlers,
 } from "../types/index.js";
-import { type Handlers } from "./types/index.js";
 import { getAvaxItemHandlers } from "./helpers/getItemHandlers.helper.js";
 import { CommonBipKeyDerivation } from "@/keyDerivation/index.js";
 import { findCustomConfig, getNetworkHandlers } from "../helpers/index.js";
@@ -18,7 +18,7 @@ import { ExceptionMessage } from "../enums/index.js";
 import { type AvaxDerivationTypeUnion } from "@/types/derivation/index.js";
 
 class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
-  private handlers: Partial<Handlers>;
+  private handlers: Partial<AvaxHandlers>;
 
   public constructor({
     derivationConfigs,
@@ -90,7 +90,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
 
   private getDerivationHandlers(
     derivationType: AvaxDerivationTypeUnion
-  ): Handlers[AvaxDerivationTypeUnion] | never {
+  ): AvaxHandlers[AvaxDerivationTypeUnion] | never {
     const derivationHandlers = this.handlers[derivationType];
 
     if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
