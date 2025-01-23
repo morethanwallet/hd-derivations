@@ -1,5 +1,4 @@
-import { HARDENED_SUFFIX, MASTER_KEY_SYMBOL } from "@/libs/constants/index.js";
-import { SplittedDerivationPathItemIndex } from "@/libs/enums/index.js";
+import { DerivationPathSymbol, SplittedDerivationPathItemIndex } from "@/libs/enums/index.js";
 import {
   checkHardenedSuffixEnding,
   getDerivationPathSegmentsArray,
@@ -16,12 +15,12 @@ function getAccount(rootKey: Bip32PrivateKey, derivationPath: string): Bip32Priv
   let account = rootKey;
 
   for (const segment of pathSegmentsArray) {
-    if (segment === MASTER_KEY_SYMBOL) continue;
+    if (segment === DerivationPathSymbol.MASTER_KEY) continue;
 
     const isHardened = checkHardenedSuffixEnding(segment);
 
     const formattedSegment = hardenDerivationPathValue(
-      isHardened ? segment.replace(HARDENED_SUFFIX, "") : segment
+      isHardened ? segment.replace(DerivationPathSymbol.HARDENED_SUFFIX, "") : segment
     );
 
     account = account.derive(formattedSegment);

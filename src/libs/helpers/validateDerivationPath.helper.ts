@@ -1,11 +1,5 @@
-import {
-  DECIMAL_SYSTEM_IDENTIFIER,
-  DERIVATION_PATH_DELIMITER,
-  HARDEN_RANGE_START_INDEX,
-  HARDENED_SUFFIX,
-  MASTER_KEY_SYMBOL,
-} from "@/libs/constants/index.js";
-import { ExceptionMessage } from "@/libs/enums/index.js";
+import { DECIMAL_SYSTEM_IDENTIFIER, HARDEN_RANGE_START_INDEX } from "@/libs/constants/index.js";
+import { DerivationPathSymbol, ExceptionMessage } from "@/libs/enums/index.js";
 import { hardenDerivationPathValue } from "./hardenDerivationPathValue.helper.js";
 import { getDerivationPathSegmentsArray } from "./getDerivationPathSegmentsArray.helper.js";
 import { checkHardenedSuffixEnding } from "./checkHardenedSuffixEnding.helper.js";
@@ -23,8 +17,8 @@ function validateDerivationPath(path: string): void | never {
 
   if (
     path.length <= invalidPathLength ||
-    path[masterKeySymbolIndex] !== MASTER_KEY_SYMBOL ||
-    path[delimiterIndex] !== DERIVATION_PATH_DELIMITER
+    path[masterKeySymbolIndex] !== DerivationPathSymbol.MASTER_KEY ||
+    path[delimiterIndex] !== DerivationPathSymbol.DELIMITER
   ) {
     throw new Error(ExceptionMessage.INVALID_DERIVATION_PATH);
   }
@@ -46,7 +40,10 @@ function validateDerivationPath(path: string): void | never {
     const isHardened = checkHardenedSuffixEnding(segment);
 
     const numericIndexValue = isHardened
-      ? parseInt(segment.replace(HARDENED_SUFFIX, ""), DECIMAL_SYSTEM_IDENTIFIER)
+      ? parseInt(
+          segment.replace(DerivationPathSymbol.HARDENED_SUFFIX, ""),
+          DECIMAL_SYSTEM_IDENTIFIER
+        )
       : parseInt(segment, DECIMAL_SYSTEM_IDENTIFIER);
 
     if (isNaN(numericIndexValue)) {

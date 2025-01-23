@@ -1,7 +1,7 @@
-import { DERIVATION_PATH_DELIMITER } from "@/libs/constants/index.js";
+import { DerivationPathSymbol } from "../enums/index.js";
 
 function getDerivationPathSegmentsArray(path: string): string[] {
-  return path.split(DERIVATION_PATH_DELIMITER);
+  return path.split(DerivationPathSymbol.DELIMITER);
 }
 
 export { getDerivationPathSegmentsArray };

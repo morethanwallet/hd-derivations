@@ -1,4 +1,4 @@
-import { DERIVATION_PATH_DELIMITER } from "@/libs/constants/index.js";
+import { DerivationPathSymbol } from "@/libs/enums/index.js";
 import { getDerivationPathSegmentsArray } from "@/libs/helpers/index.js";
 
 function updateDerivationPathChange(derivationPath: string, change: number): string {
@@ -6,7 +6,7 @@ function updateDerivationPathChange(derivationPath: string, change: number): str
   const changePositionIndex = 4;
   pathSegmentsArray[changePositionIndex] = String(change);
 
-  return pathSegmentsArray.join(DERIVATION_PATH_DELIMITER);
+  return pathSegmentsArray.join(DerivationPathSymbol.DELIMITER);
 }
 
 export { updateDerivationPathChange };

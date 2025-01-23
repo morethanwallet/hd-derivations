@@ -1,4 +1,3 @@
-import { DERIVATION_PATH_DELIMITER, HARDENED_SUFFIX } from "@/libs/constants/index.js";
 import type {
   DerivationPath,
   DerivationTypeUnion,
@@ -10,7 +9,7 @@ import {
 } from "../types/index.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../../constants/index.js";
 import { checkHardenedSuffixEnding } from "@/libs/helpers/index.js";
-import { SplittedDerivationPathItemIndex } from "@/libs/enums/index.js";
+import { DerivationPathSymbol, SplittedDerivationPathItemIndex } from "@/libs/enums/index.js";
 
 const SEGMENT_INITIAL_VALUE = "0";
 
@@ -23,23 +22,23 @@ function getDerivationPathPrefix(
   derivationPath: DerivationPath["derivationPath"]
 ): DerivationPath["derivationPath"] {
   return derivationPath
-    .split(DERIVATION_PATH_DELIMITER)
+    .split(DerivationPathSymbol.DELIMITER)
     .slice(SplittedDerivationPathItemIndex.MASTER_START, SplittedDerivationPathItemIndex.COIN_END)
-    .join(DERIVATION_PATH_DELIMITER);
+    .join(DerivationPathSymbol.DELIMITER);
 }
 
 function hardenDerivationPath(
   derivationPath: DerivationPath["derivationPath"]
 ): DerivationPath["derivationPath"] {
-  return derivationPath.concat(HARDENED_SUFFIX);
+  return derivationPath.concat(DerivationPathSymbol.HARDENED_SUFFIX);
 }
 
 function increaseDerivationPathDepth({
   derivationPath,
   algorithm = "secp256k1",
 }: IncreaseDerivationPathDepthParameters): DerivationPath["derivationPath"] {
-  const hardenedSuffix = algorithm === "ed25519" ? HARDENED_SUFFIX : "";
-  return `${derivationPath}${DERIVATION_PATH_DELIMITER}${SEGMENT_INITIAL_VALUE}${hardenedSuffix}`;
+  const hardenedSuffix = algorithm === "ed25519" ? DerivationPathSymbol.HARDENED_SUFFIX : "";
+  return `${derivationPath}${DerivationPathSymbol.DELIMITER}${SEGMENT_INITIAL_VALUE}${hardenedSuffix}`;
 }
 
 function checkIfPrivateKeyBelongsToMnemonic<T extends DerivationTypeUnion>(
@@ -55,7 +54,7 @@ function checkIfPrivateKeyBelongsToMnemonic<T extends DerivationTypeUnion>(
   }
 
   let updatedDerivationPath = parameters.derivationPathPrefix;
-  let derivationPathDepth = updatedDerivationPath.split(DERIVATION_PATH_DELIMITER).length;
+  let derivationPathDepth = updatedDerivationPath.split(DerivationPathSymbol.DELIMITER).length;
 
   do {
     const itemsBatch = this.deriveItemsBatchFromMnemonic({
