@@ -1,3 +1,5 @@
+import type { NetworkTypeUnion } from "../libs/types/index.js";
+import type { ConstructorParameters } from "./libs/types/index.js";
 import { Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { ExceptionMessage } from "../libs/enums/index.js";
 import { Bitcoin } from "../bitcoin/index.js";
@@ -5,8 +7,6 @@ import { Ada } from "../ada/index.js";
 import { Avax } from "../avax/index.js";
 import { Trx } from "../trx/index.js";
 import { Ton } from "../ton/index.js";
-import type { NetworkTypeUnion } from "../libs/types/index.js";
-import type { ConstructorParameters } from "./libs/types/index.js";
 
 type Network = {
   btc: InstanceType<typeof Bitcoin>;
@@ -19,7 +19,8 @@ type Network = {
 class NetworkFacade<T extends NetworkTypeUnion> {
   private network: Network[T];
 
-  constructor({ network, mnemonic, networkPurpose, derivationConfigs }: ConstructorParameters<T>) {
+  constructor(parameters: ConstructorParameters<T>) {
+    const { network, mnemonic } = parameters;
     const mnemonicInstance = new Mnemonic(mnemonic);
 
     // TODO: Fix assertions
@@ -27,8 +28,7 @@ class NetworkFacade<T extends NetworkTypeUnion> {
       case "btc":
         {
           this.network = new Bitcoin({
-            networkPurpose,
-            derivationConfigs,
+            ...(parameters as ConstructorParameters<"btc">),
             mnemonic: mnemonicInstance,
           }) as Network[T];
         }
@@ -36,17 +36,15 @@ class NetworkFacade<T extends NetworkTypeUnion> {
       case "ada":
         {
           this.network = new Ada({
+            ...(parameters as ConstructorParameters<"ada">),
             mnemonic: mnemonicInstance,
-            networkPurpose,
-            derivationConfigs,
           }) as Network[T];
         }
         break;
       case "avax":
         {
           this.network = new Avax({
-            networkPurpose,
-            derivationConfigs,
+            ...(parameters as ConstructorParameters<"avax">),
             mnemonic: mnemonicInstance,
           }) as Network[T];
         }
@@ -54,8 +52,7 @@ class NetworkFacade<T extends NetworkTypeUnion> {
       case "trx":
         {
           this.network = new Trx({
-            networkPurpose,
-            derivationConfigs,
+            ...(parameters as ConstructorParameters<"trx">),
             mnemonic: mnemonicInstance,
           }) as Network[T];
         }
@@ -63,12 +60,12 @@ class NetworkFacade<T extends NetworkTypeUnion> {
       case "ton":
         {
           this.network = new Ton({
-            networkPurpose,
-            derivationConfigs,
+            ...(parameters as ConstructorParameters<"ton">),
             mnemonic: mnemonicInstance,
           }) as Network[T];
         }
         break;
+
       default:
         throw new Error(ExceptionMessage.NETWORK_IS_NOT_SUPPORTED);
     }
