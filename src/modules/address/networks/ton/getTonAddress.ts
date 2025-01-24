@@ -1,7 +1,4 @@
-import {
-  type TonAddressRequiredData,
-  type Address,
-} from "@/modules/address/libs/types/index.js";
+import { type TonAddressRequiredData, type Address } from "@/modules/address/libs/types/index.js";
 import { type CommonKeyPair } from "@/libs/types/index.js";
 import { type ContractVersionToContract } from "./libs/types/index.js";
 import {

@@ -1,7 +1,4 @@
-import {
-  DECIMAL_SYSTEM_IDENTIFIER,
-  HARDEN_RANGE_START_INDEX,
-} from "@/libs/constants/index.js";
+import { DECIMAL_SYSTEM_IDENTIFIER, HARDEN_RANGE_START_INDEX } from "@/libs/constants/index.js";
 import { DerivationPathSymbol, ExceptionMessage } from "@/libs/enums/index.js";
 import { hardenDerivationPathValue } from "./hardenDerivationPathValue.helper.js";
 import { getDerivationPathSegmentsArray } from "./getDerivationPathSegmentsArray.helper.js";
@@ -37,9 +34,7 @@ function validateDerivationPath(path: string): void | never {
     const invalidChars = segment.replace(validSegmentSymbols, "");
 
     if (invalidChars.length > maxInvalidCharactersLength) {
-      throw new Error(
-        `Derivation path has invalid characters at depth ${depth}: ${invalidChars}`,
-      );
+      throw new Error(`Derivation path has invalid characters at depth ${depth}: ${invalidChars}`);
     }
 
     const isHardened = checkHardenedSuffixEnding(segment);
@@ -52,14 +47,11 @@ function validateDerivationPath(path: string): void | never {
       : parseInt(segment, DECIMAL_SYSTEM_IDENTIFIER);
 
     if (isNaN(numericIndexValue)) {
-      throw new Error(
-        `Derivation path has invalid number at depth ${depth}: ${segment}`,
-      );
+      throw new Error(`Derivation path has invalid number at depth ${depth}: ${segment}`);
     }
 
     if (
-      (isHardened &&
-        hardenDerivationPathValue(numericIndexValue) > maxHardenedRangeIndex) ||
+      (isHardened && hardenDerivationPathValue(numericIndexValue) > maxHardenedRangeIndex) ||
       (!isHardened && numericIndexValue > maxNormalRangeIndex)
     ) {
       throw new Error(

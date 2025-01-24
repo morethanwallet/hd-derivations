@@ -1,7 +1,4 @@
-import {
-  DerivationPathSymbol,
-  SplittedDerivationPathItemIndex,
-} from "@/libs/enums/index.js";
+import { DerivationPathSymbol, SplittedDerivationPathItemIndex } from "@/libs/enums/index.js";
 import {
   checkHardenedSuffixEnding,
   getDerivationPathSegmentsArray,
@@ -9,13 +6,8 @@ import {
 } from "@/libs/helpers/index.js";
 import { Bip32PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
 
-function getAccount(
-  rootKey: Bip32PrivateKey,
-  derivationPath: string,
-): Bip32PrivateKey {
-  const pathSegmentsArray = getDerivationPathSegmentsArray(
-    derivationPath,
-  ).slice(
+function getAccount(rootKey: Bip32PrivateKey, derivationPath: string): Bip32PrivateKey {
+  const pathSegmentsArray = getDerivationPathSegmentsArray(derivationPath).slice(
     SplittedDerivationPathItemIndex.PURPOSE_START,
     SplittedDerivationPathItemIndex.ACCOUNT_END,
   );
@@ -28,9 +20,7 @@ function getAccount(
     const isHardened = checkHardenedSuffixEnding(segment);
 
     const formattedSegment = hardenDerivationPathValue(
-      isHardened
-        ? segment.replace(DerivationPathSymbol.HARDENED_SUFFIX, "")
-        : segment,
+      isHardened ? segment.replace(DerivationPathSymbol.HARDENED_SUFFIX, "") : segment,
     );
 
     account = account.derive(formattedSegment);

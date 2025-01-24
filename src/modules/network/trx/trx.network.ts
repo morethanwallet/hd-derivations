@@ -9,39 +9,29 @@ import type {
   CheckIfPrivateKeyBelongsToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
-  DerivationHandlers,
+  NetworkHandlers,
   TrxHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
 import { getTrxItemHandlers } from "./libs/helpers/index.js";
-import {
-  findCustomConfig,
-  getNetworkHandlers,
-} from "@/modules/network/libs/helpers/index.js";
+import { findCustomConfig, getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 import { BtcDerivationTypeUnion } from "@/libs/types/index.js";
 
 class Trx implements AbstractNetwork<"trxBase"> {
   private handlers: NonNullable<Partial<TrxHandlers>>;
 
-  public constructor({
-    derivationConfigs,
-    mnemonic,
-  }: ConstructorParameters<"trxBase">) {
-    const keysDerivationHandlers: DerivationHandlers<"trxBase"> = {
+  public constructor({ derivationConfigs, mnemonic }: ConstructorParameters<"trxBase">) {
+    const keysDerivationHandlers: NetworkHandlers<"trxBase"> = {
       trxBase: getTrxItemHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("trxBase", derivationConfigs) ??
-            trxConfig.trxBase.prefixConfig,
+          findCustomConfig("trxBase", derivationConfigs) ?? trxConfig.trxBase.prefixConfig,
           mnemonic,
           false,
         ),
       }),
     };
 
-    this.handlers = getNetworkHandlers(
-      derivationConfigs,
-      keysDerivationHandlers,
-    );
+    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
   }
 
   public deriveItemFromMnemonic(
@@ -81,8 +71,7 @@ class Trx implements AbstractNetwork<"trxBase"> {
   private getDerivationHandlers(): TrxHandlers["trxBase"] | never {
     const derivationHandlers = this.handlers["trxBase"];
 
-    if (!derivationHandlers)
-      throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
     return derivationHandlers;
   }

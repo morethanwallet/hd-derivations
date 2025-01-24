@@ -7,10 +7,7 @@ import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import edHd from "ed25519-hd-key";
 import { toHexFromBytes } from "@/libs/helpers/index.js";
 
-class TonKeyDerivation
-  extends Ed25519Keys
-  implements AbstractKeyDerivation<"tonBase">
-{
+class TonKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"tonBase"> {
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"tonBase">): CommonKeyPair {
@@ -22,9 +19,7 @@ class TonKeyDerivation
     };
   }
 
-  public importByPrivateKey({
-    privateKey,
-  }: PrivateKey<"tonBase">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"tonBase">): CommonKeyPair {
     const rawPrivateKey = Buffer.from(privateKey, "hex");
     const publicKey = this.getPublicKey(rawPrivateKey);
 
@@ -32,10 +27,7 @@ class TonKeyDerivation
   }
 
   private getKeyPair(derivationPath: string): CommonKeyPair {
-    const rawPrivateKey = edHd.derivePath(
-      derivationPath,
-      this.getHexSeed(),
-    ).key;
+    const rawPrivateKey = edHd.derivePath(derivationPath, this.getHexSeed()).key;
     const publicKey = this.getPublicKey(rawPrivateKey);
     const privateKey = toHexFromBytes(rawPrivateKey);
 

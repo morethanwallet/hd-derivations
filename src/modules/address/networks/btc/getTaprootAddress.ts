@@ -1,11 +1,7 @@
 import { ExceptionMessage } from "@/modules/address/libs/enums/index.js";
 import { AddressError } from "@/libs/exceptions/index.js";
 import { type Address } from "@/modules/address/libs/types/index.js";
-import {
-  assert,
-  toUint8Array,
-  toXOnlyPublicKey,
-} from "@/libs/helpers/index.js";
+import { assert, toUint8Array, toXOnlyPublicKey } from "@/libs/helpers/index.js";
 import { type CommonKeyPair } from "@/libs/types/index.js";
 import { type PrefixConfig } from "@/libs/modules/keys/index.js";
 import { payments } from "bitcoinjs-lib";

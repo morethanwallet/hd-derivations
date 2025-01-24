@@ -9,8 +9,6 @@ type CardanoBasePrivateKey = {
 };
 
 type PrivateKey<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends DerivationTypeMap["adaBase"]
-    ? CardanoBasePrivateKey
-    : CommonPrivateKey;
+  TDerivationType extends DerivationTypeMap["adaBase"] ? CardanoBasePrivateKey : CommonPrivateKey;
 
 export { type PrivateKey, type CommonPrivateKey, type CardanoBasePrivateKey };

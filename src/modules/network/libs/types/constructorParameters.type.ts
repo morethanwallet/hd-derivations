@@ -44,21 +44,20 @@ type SuiParameters = {
   derivationConfigs: SuiInstanceParameters["derivationConfigs"];
 };
 
-type ConstructorInconsistentParameters<
-  TDerivationType extends DerivationTypeUnion,
-> = TDerivationType extends BtcDerivationTypeUnion
-  ? BtcParameters
-  : TDerivationType extends AdaDerivationTypeUnion
-    ? AdaParameters
-    : TDerivationType extends AvaxDerivationTypeUnion
-      ? AvaxParameters
-      : TDerivationType extends DerivationTypeMap["trxBase"]
-        ? TrxParameters
-        : TDerivationType extends DerivationTypeMap["tonBase"]
-          ? TonParameters
-          : TDerivationType extends DerivationTypeMap["suiBase"]
-            ? SuiParameters
-            : Record<string, unknown>;
+type ConstructorInconsistentParameters<TDerivationType extends DerivationTypeUnion> =
+  TDerivationType extends BtcDerivationTypeUnion
+    ? BtcParameters
+    : TDerivationType extends AdaDerivationTypeUnion
+      ? AdaParameters
+      : TDerivationType extends AvaxDerivationTypeUnion
+        ? AvaxParameters
+        : TDerivationType extends DerivationTypeMap["trxBase"]
+          ? TrxParameters
+          : TDerivationType extends DerivationTypeMap["tonBase"]
+            ? TonParameters
+            : TDerivationType extends DerivationTypeMap["suiBase"]
+              ? SuiParameters
+              : Record<string, unknown>;
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
   mnemonic: Mnemonic;

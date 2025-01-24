@@ -22,26 +22,17 @@ function getAvaxItemHandlers({
       const keys = keysDerivationInstance.deriveFromMnemonic({
         derivationPath,
       });
-      const address = getAvaxAddress(
-        keys.publicKey,
-        derivationType,
-        bech32Prefix,
-      );
+      const address = getAvaxAddress(keys.publicKey, derivationType, bech32Prefix);
 
       return { ...keys, address, derivationPath };
     },
     getCredentialFromPrivateKey: ({ privateKey }) => {
       const keys = keysDerivationInstance.importByPrivateKey({ privateKey });
-      const address = getAvaxAddress(
-        keys.publicKey,
-        derivationType,
-        bech32Prefix,
-      );
+      const address = getAvaxAddress(keys.publicKey, derivationType, bech32Prefix);
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic:
-      deriveItemsBatchFromMnemonic<AvaxDerivationTypeUnion>,
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<AvaxDerivationTypeUnion>,
     checkIfPrivateKeyBelongsToMnemonic(parameters) {
       // prettier-ignore
       return (checkIfPrivateKeyBelongsToMnemonic<AvaxDerivationTypeUnion>).call(

@@ -8,7 +8,7 @@ import type {
   CheckIfPrivateKeyBelongsToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
-  DerivationHandlers,
+  NetworkHandlers,
   SuiHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
@@ -18,12 +18,8 @@ import { getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 class Sui implements AbstractNetwork<"suiBase"> {
   private handlers: NonNullable<Partial<SuiHandlers>>;
 
-  public constructor({
-    derivationConfigs,
-    mnemonic,
-    scheme,
-  }: ConstructorParameters<"suiBase">) {
-    const derivationHandlers: DerivationHandlers<"suiBase"> = {
+  public constructor({ derivationConfigs, mnemonic, scheme }: ConstructorParameters<"suiBase">) {
+    const derivationHandlers: NetworkHandlers<"suiBase"> = {
       suiBase: getSuiItemHandlers({
         scheme,
         keysDerivationInstance: new SuiKeyDerivation(mnemonic),
@@ -70,8 +66,7 @@ class Sui implements AbstractNetwork<"suiBase"> {
   private getDerivationHandlers(): SuiHandlers["suiBase"] | never {
     const derivationHandlers = this.handlers.suiBase;
 
-    if (!derivationHandlers)
-      throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
     return derivationHandlers;
   }

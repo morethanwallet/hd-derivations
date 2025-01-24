@@ -1,8 +1,5 @@
 import { addHexPrefix, bufferToHex } from "ethereumjs-util";
-import {
-  checkAndRemoveEvmPublicKeyHexPrefix,
-  toUint8Array,
-} from "@/libs/helpers/index.js";
+import { checkAndRemoveEvmPublicKeyHexPrefix, toUint8Array } from "@/libs/helpers/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { type PrefixConfig, Bip32Keys } from "@/libs/modules/keys/index.js";
 import { getKeyPairFromEc } from "@/modules/keyDerivation/libs/helpers/index.js";
@@ -12,10 +9,7 @@ import {
 } from "@/modules/keyDerivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 
-class EvmKeyDerivation
-  extends Bip32Keys
-  implements AbstractKeyDerivation<"evm">
-{
+class EvmKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"evm"> {
   public constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
     super(prefixConfig, mnemonic);
   }

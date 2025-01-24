@@ -1,8 +1,4 @@
-import {
-  getBaseAddress,
-  getEnterpriseAddress,
-  getRewardAddress,
-} from "@/modules/address/index.js";
+import { getBaseAddress, getEnterpriseAddress, getRewardAddress } from "@/modules/address/index.js";
 import {
   checkIfPrivateKeyBelongsToMnemonic,
   deriveItemsBatchFromMnemonic,
@@ -81,21 +77,13 @@ function getBaseItemHandlers({
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getBaseAddress(
-        keys.enterprisePublicKey,
-        keys.rewardPublicKey,
-        networkId,
-      );
+      const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
     getCredentialFromPrivateKey: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getBaseAddress(
-        keys.enterprisePublicKey,
-        keys.rewardPublicKey,
-        networkId,
-      );
+      const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
 
       return { ...keys, address };
     },
@@ -111,8 +99,4 @@ function getBaseItemHandlers({
   };
 }
 
-export {
-  getEnterpriseItemHandlers,
-  getRewardItemHandlers,
-  getBaseItemHandlers,
-};
+export { getEnterpriseItemHandlers, getRewardItemHandlers, getBaseItemHandlers };

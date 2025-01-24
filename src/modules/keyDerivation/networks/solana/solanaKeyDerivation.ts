@@ -4,28 +4,16 @@ import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/modules/keyDerivation/libs/types/index.js";
-import {
-  type PrivateKey,
-  type CommonKeyPair,
-  type DerivationPath,
-} from "@/libs/types/index.js";
+import { type PrivateKey, type CommonKeyPair, type DerivationPath } from "@/libs/types/index.js";
 import edHd from "ed25519-hd-key";
 
-class SolanaKeyDerivation
-  extends Ed25519Keys
-  implements AbstractKeyDerivation<"sol">
-{
+class SolanaKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sol"> {
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"sol">): CommonKeyPair {
-    const rawPrivateKey = edHd.derivePath(
-      derivationPath,
-      this.getHexSeed(),
-    ).key;
+    const rawPrivateKey = edHd.derivePath(derivationPath, this.getHexSeed()).key;
     const rawPublicKey = this.getRawPublicKey(rawPrivateKey);
-    const privateKey = base58.encode(
-      Buffer.concat([rawPrivateKey, rawPublicKey]),
-    );
+    const privateKey = base58.encode(Buffer.concat([rawPrivateKey, rawPublicKey]));
     const publicKey = this.getBase58PublicKey(rawPublicKey);
 
     return { privateKey, publicKey };

@@ -15,19 +15,13 @@ function getTrxItemHandlers({
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getTrxAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig.pubKeyHash,
-      );
+      const address = getTrxAddress(keys.publicKey, keysDerivationInstance.prefixConfig.pubKeyHash);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
     getCredentialFromPrivateKey: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getTrxAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig.pubKeyHash,
-      );
+      const address = getTrxAddress(keys.publicKey, keysDerivationInstance.prefixConfig.pubKeyHash);
 
       return { ...keys, address };
     },

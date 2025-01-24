@@ -11,10 +11,7 @@ import { convertEcBytesPrivateKeyToHexKeyPair } from "@/modules/keyDerivation/li
 import { KeyDerivationError } from "@/libs/exceptions/index.js";
 import { ExceptionMessage } from "@/modules/keyDerivation/libs/enums/index.js";
 
-class BnbKeyDerivation
-  extends Bip32Keys
-  implements AbstractKeyDerivation<"bnb">
-{
+class BnbKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"bnb"> {
   public constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
     super(prefixConfig, mnemonic);
   }
@@ -42,15 +39,8 @@ class BnbKeyDerivation
   }
 
   private getKeyPair(rawPrivateKey?: Uint8Array): CommonKeyPair {
-    assert(
-      rawPrivateKey,
-      KeyDerivationError,
-      ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED,
-    );
-    const { privateKey } = convertEcBytesPrivateKeyToHexKeyPair(
-      rawPrivateKey,
-      this.prefixConfig,
-    );
+    assert(rawPrivateKey, KeyDerivationError, ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
+    const { privateKey } = convertEcBytesPrivateKeyToHexKeyPair(rawPrivateKey, this.prefixConfig);
     const publicKey = getPublicKeyFromPrivateKey(privateKey);
 
     return { privateKey, publicKey };

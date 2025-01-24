@@ -1,8 +1,4 @@
-import type {
-  AddressError,
-  KeyDerivationError,
-  NetworkError,
-} from "@/libs/exceptions/index.js";
+import type { AddressError, KeyDerivationError, NetworkError } from "@/libs/exceptions/index.js";
 
 type CustomError =
   | typeof AddressError

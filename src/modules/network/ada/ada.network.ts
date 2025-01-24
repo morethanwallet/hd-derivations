@@ -12,7 +12,7 @@ import type {
   CheckIfPrivateKeyBelongsToMnemonicParameters,
   DerivedItem,
   DerivedCredential,
-  DerivationHandlers,
+  NetworkHandlers,
   AdaHandlers,
 } from "@/modules/network/libs/types/index.js";
 import {
@@ -35,7 +35,7 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
   }: ConstructorParameters<AdaDerivationTypeUnion>) {
     const networkId = getNetworkId(networkPurpose);
 
-    const keysDerivationHandlers: DerivationHandlers<AdaDerivationTypeUnion> = {
+    const keysDerivationHandlers: NetworkHandlers<AdaDerivationTypeUnion> = {
       enterprise: getEnterpriseItemHandlers({
         networkId,
         networkPurpose,
@@ -53,10 +53,7 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
       }),
     };
 
-    this.handlers = getNetworkHandlers(
-      derivationConfigs,
-      keysDerivationHandlers,
-    );
+    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
   }
 
   public deriveItemFromMnemonic({
@@ -119,8 +116,7 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
   ): AdaHandlers[AdaDerivationTypeUnion] | never {
     const derivationHandlers = this.handlers[derivationType];
 
-    if (!derivationHandlers)
-      throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
     return derivationHandlers;
   }

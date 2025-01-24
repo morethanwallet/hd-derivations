@@ -7,21 +7,16 @@ type DeriveItemsBatchFromMnemonicInnerHandlerParameters<
   TDerivationType extends DerivationTypeUnion,
 > = LookupHandlersCommonParameters<TDerivationType>;
 
-type DeriveItemsBatchFromMnemonicInnerHandler<
-  TDerivationType extends DerivationTypeUnion,
-> = (
+type DeriveItemsBatchFromMnemonicInnerHandler<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicInnerHandlerParameters<TDerivationType>,
 ) => DerivedItem<TDerivationType>[];
 
-type DeriveItemsBatchFromMnemonicParameters<
-  TDerivationType extends DerivationTypeUnion,
-> = LookupHandlersCommonParameters<TDerivationType> &
-  DerivationTypeParameter<TDerivationType>;
+type DeriveItemsBatchFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
+  LookupHandlersCommonParameters<TDerivationType> & DerivationTypeParameter<TDerivationType>;
 
-type DeriveItemsBatchFromMnemonic<TDerivationType extends DerivationTypeUnion> =
-  (
-    parameters: DeriveItemsBatchFromMnemonicParameters<TDerivationType>,
-  ) => DerivedItem<TDerivationType>[];
+type DeriveItemsBatchFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
+  parameters: DeriveItemsBatchFromMnemonicParameters<TDerivationType>,
+) => DerivedItem<TDerivationType>[];
 
 export {
   type DeriveItemsBatchFromMnemonic,

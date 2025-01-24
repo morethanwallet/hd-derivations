@@ -28,19 +28,13 @@ function getLegacyItemHandlers({
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getLegacyAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
     getCredentialFromPrivateKey: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getLegacyAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address };
     },
@@ -65,10 +59,7 @@ function getSegWitItemHandlers({
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"segWit">,
     ): DerivedItem<"segWit"> => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getSegWitAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
@@ -76,10 +67,7 @@ function getSegWitItemHandlers({
       parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"segWit">,
     ): DerivedCredential<"segWit"> => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getSegWitAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address };
     },
@@ -106,10 +94,7 @@ function getNativeSegWitItemHandlers({
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"nativeSegWit">,
     ): DerivedItem<"nativeSegWit"> => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getNativeSegWitAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getNativeSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
@@ -117,10 +102,7 @@ function getNativeSegWitItemHandlers({
       parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"nativeSegWit">,
     ): DerivedCredential<"nativeSegWit"> => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getNativeSegWitAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getNativeSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address };
     },
@@ -147,10 +129,7 @@ function getTaprootItemHandlers({
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"taproot">,
     ): DerivedItem<"taproot"> => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getTaprootAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getTaprootAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
@@ -158,10 +137,7 @@ function getTaprootItemHandlers({
       parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"taproot">,
     ): DerivedCredential<"taproot"> => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getTaprootAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getTaprootAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address };
     },
@@ -188,10 +164,7 @@ function getP2wshItemHandlers({
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"p2wsh">,
     ): DerivedItem<"p2wsh"> => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getP2wshAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getP2wshAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
@@ -199,10 +172,7 @@ function getP2wshItemHandlers({
       parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"p2wsh">,
     ): DerivedCredential<"p2wsh"> => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getP2wshAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getP2wshAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address };
     },
@@ -229,10 +199,7 @@ function getP2wshInP2shItemHandlers({
       parameters: DeriveItemFromMnemonicInnerHandlerParameters<"p2wshInP2sh">,
     ): DerivedItem<"p2wshInP2sh"> => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getP2wshInP2shAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getP2wshInP2shAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
@@ -240,10 +207,7 @@ function getP2wshInP2shItemHandlers({
       parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"p2wshInP2sh">,
     ): DerivedCredential<"p2wshInP2sh"> => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getP2wshInP2shAddress(
-        keys.publicKey,
-        keysDerivationInstance.prefixConfig,
-      );
+      const address = getP2wshInP2shAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address };
     },

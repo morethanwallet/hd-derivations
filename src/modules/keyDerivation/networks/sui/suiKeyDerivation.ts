@@ -3,10 +3,7 @@ import type {
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
 } from "@/modules/keyDerivation/libs/types/index.js";
-import type {
-  CommonKeyPair,
-  SignatureSchemeUnion,
-} from "@/libs/types/index.js";
+import type { CommonKeyPair, SignatureSchemeUnion } from "@/libs/types/index.js";
 import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
 import { Secp256r1Keypair } from "@mysten/sui/keypairs/secp256r1";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
@@ -15,19 +12,13 @@ import { KeyDerivationError } from "@/libs/exceptions/index.js";
 import type { KeyPairInstanceUnion, KeyPairUnion } from "./libs/types/index.js";
 import { Ed25519Keys } from "@/libs/modules/keys/index.js";
 
-class SuiKeyDerivation
-  extends Ed25519Keys
-  implements AbstractKeyDerivation<"suiBase">
-{
+class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"suiBase"> {
   public deriveFromMnemonic({
     derivationPath,
     scheme,
   }: DeriveFromMnemonicParameters<"suiBase">): CommonKeyPair {
     const keyPairHandler = this.getKeyPairHandler(scheme);
-    const keyPair = keyPairHandler.deriveKeypair(
-      this.mnemonic.getMnemonic(),
-      derivationPath,
-    );
+    const keyPair = keyPairHandler.deriveKeypair(this.mnemonic.getMnemonic(), derivationPath);
 
     return this.getKeyPair(keyPair);
   }
@@ -50,9 +41,7 @@ class SuiKeyDerivation
     return { privateKey, publicKey };
   }
 
-  private getPublicKey(
-    keyPair: KeyPairInstanceUnion,
-  ): CommonKeyPair["publicKey"] {
+  private getPublicKey(keyPair: KeyPairInstanceUnion): CommonKeyPair["publicKey"] {
     return keyPair.getPublicKey().toSuiPublicKey();
   }
 

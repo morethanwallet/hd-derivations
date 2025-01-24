@@ -1,7 +1,4 @@
-import {
-  TaprootKeyDerivation,
-  CommonBipKeyDerivation,
-} from "@/modules/keyDerivation/index.js";
+import { TaprootKeyDerivation, CommonBipKeyDerivation } from "@/modules/keyDerivation/index.js";
 import { btcConfig } from "@/modules/network/libs/modules/config/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
@@ -12,7 +9,7 @@ import type {
   CheckIfPrivateKeyBelongsToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
-  DerivationHandlers,
+  NetworkHandlers,
   BtcHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
@@ -24,10 +21,7 @@ import {
   getSegWitItemHandlers,
   getTaprootItemHandlers,
 } from "./libs/helpers/index.js";
-import {
-  findCustomConfig,
-  getNetworkHandlers,
-} from "@/modules/network/libs/helpers/index.js";
+import { findCustomConfig, getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 import { type BtcDerivationTypeUnion } from "@/libs/types/index.js";
 
 class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
@@ -38,7 +32,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
     mnemonic,
     networkPurpose,
   }: ConstructorParameters<BtcDerivationTypeUnion>) {
-    const keysDerivationHandlers: DerivationHandlers<BtcDerivationTypeUnion> = {
+    const keysDerivationHandlers: NetworkHandlers<BtcDerivationTypeUnion> = {
       legacy: getLegacyItemHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
@@ -89,10 +83,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
       }),
     };
 
-    this.handlers = getNetworkHandlers(
-      derivationConfigs,
-      keysDerivationHandlers,
-    );
+    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
   }
 
   public deriveItemFromMnemonic({
@@ -137,8 +128,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
   ): BtcHandlers[BtcDerivationTypeUnion] | never {
     const derivationHandlers = this.handlers[derivationType];
 
-    if (!derivationHandlers)
-      throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
     return derivationHandlers;
   }

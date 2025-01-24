@@ -9,10 +9,7 @@ import {
 } from "@/modules/keyDerivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 
-class RewardKeyDerivation
-  extends AdaKeys
-  implements AbstractKeyDerivation<"reward">
-{
+class RewardKeyDerivation extends AdaKeys implements AbstractKeyDerivation<"reward"> {
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
   }
@@ -33,9 +30,7 @@ class RewardKeyDerivation
     };
   }
 
-  public importByPrivateKey({
-    privateKey,
-  }: PrivateKey<"reward">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"reward">): CommonKeyPair {
     const rawPublicKey = LibraryPrivateKey.from_hex(privateKey).to_public();
 
     return {

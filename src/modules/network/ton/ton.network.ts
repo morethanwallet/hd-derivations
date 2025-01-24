@@ -8,7 +8,7 @@ import type {
   CheckIfPrivateKeyBelongsToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
-  DerivationHandlers,
+  NetworkHandlers,
   TonHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
@@ -19,11 +19,8 @@ import { BtcDerivationTypeUnion } from "@/libs/types/index.js";
 class Ton implements AbstractNetwork<"tonBase"> {
   private handlers: NonNullable<Partial<TonHandlers>>;
 
-  public constructor({
-    derivationConfigs,
-    mnemonic,
-  }: ConstructorParameters<"tonBase">) {
-    const derivationHandlers: DerivationHandlers<"tonBase"> = {
+  public constructor({ derivationConfigs, mnemonic }: ConstructorParameters<"tonBase">) {
+    const derivationHandlers: NetworkHandlers<"tonBase"> = {
       tonBase: getTonItemHandlers({
         keysDerivationInstance: new TonKeyDerivation(mnemonic),
       }),
@@ -69,8 +66,7 @@ class Ton implements AbstractNetwork<"tonBase"> {
   private getDerivationHandlers(): TonHandlers["tonBase"] | never {
     const derivationHandlers = this.handlers["tonBase"];
 
-    if (!derivationHandlers)
-      throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
     return derivationHandlers;
   }

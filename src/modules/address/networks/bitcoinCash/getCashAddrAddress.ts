@@ -10,10 +10,7 @@ const REGTEST_PREFIX = "bchreg";
 const HRP_DELIMITER = ":";
 const ADDRESS_INDEX = 1;
 
-function getCashAddrAddress(
-  publicKey: Uint8Array,
-  prefixConfig: PrefixConfig,
-): Address["address"] {
+function getCashAddrAddress(publicKey: Uint8Array, prefixConfig: PrefixConfig): Address["address"] {
   const { address } = payments.p2pkh({
     network: prefixConfig,
     pubkey: publicKey,

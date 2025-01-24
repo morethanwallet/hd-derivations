@@ -1,10 +1,6 @@
 import { toUint8Array } from "@/libs/helpers/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
-import {
-  Bip32PrivateKey,
-  PrivateKey,
-  PublicKey,
-} from "@emurgo/cardano-serialization-lib-nodejs";
+import { Bip32PrivateKey, PrivateKey, PublicKey } from "@emurgo/cardano-serialization-lib-nodejs";
 
 const EMPTY_PASSWORD = "";
 
@@ -23,14 +19,9 @@ class AdaKeys {
   }
 
   protected getRootKey(): Bip32PrivateKey {
-    const bip39Entropy = toUint8Array(
-      Buffer.from(this.mnemonic.getEntropy(), "hex"),
-    );
+    const bip39Entropy = toUint8Array(Buffer.from(this.mnemonic.getEntropy(), "hex"));
 
-    return Bip32PrivateKey.from_bip39_entropy(
-      bip39Entropy,
-      toUint8Array(EMPTY_PASSWORD),
-    );
+    return Bip32PrivateKey.from_bip39_entropy(bip39Entropy, toUint8Array(EMPTY_PASSWORD));
   }
 
   protected getRawKeys(node: Bip32PrivateKey): RawKeys {

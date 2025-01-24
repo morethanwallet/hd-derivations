@@ -6,9 +6,7 @@ import { Secp256k1PublicKey } from "@mysten/sui/keypairs/secp256k1";
 import { Secp256r1PublicKey } from "@mysten/sui/keypairs/secp256r1";
 import type { PublicKeyHandlerUnion } from "../types/index.js";
 
-function getPublicKeyHandler(
-  scheme: SignatureSchemeUnion,
-): PublicKeyHandlerUnion {
+function getPublicKeyHandler(scheme: SignatureSchemeUnion): PublicKeyHandlerUnion {
   switch (scheme) {
     case "secp256k1":
       return Secp256k1PublicKey;

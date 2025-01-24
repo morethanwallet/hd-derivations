@@ -1,8 +1,4 @@
-import type {
-  PrivateKey,
-  KeyPair,
-  DerivationTypeUnion,
-} from "@/libs/types/index.js";
+import type { PrivateKey, KeyPair, DerivationTypeUnion } from "@/libs/types/index.js";
 import type { CommonHandlersParameters } from "./commonHandlersParameters.type.js";
 
 type ImportByPrivateKeyParameters<TDerivationType extends DerivationTypeUnion> =

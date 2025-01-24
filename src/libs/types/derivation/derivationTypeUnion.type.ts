@@ -16,13 +16,9 @@ type AdaDerivationTypeUnion =
   | DerivationTypeMap["reward"]
   | DerivationTypeMap["adaBase"];
 
-type XrpDerivationTypeUnion =
-  | DerivationTypeMap["xrpX"]
-  | DerivationTypeMap["xrpBase"];
+type XrpDerivationTypeUnion = DerivationTypeMap["xrpX"] | DerivationTypeMap["xrpBase"];
 
-type AvaxDerivationTypeUnion =
-  | DerivationTypeMap["avaxX"]
-  | DerivationTypeMap["avaxP"];
+type AvaxDerivationTypeUnion = DerivationTypeMap["avaxX"] | DerivationTypeMap["avaxP"];
 
 export {
   type DerivationTypeUnion,

@@ -68,9 +68,7 @@ const DEFAULT_BTC_INSTANCE_PARAMETERS: BtcInstanceParameters = {
 
 const DEFAULT_TRX_INSTANCE_PARAMETERS: TrxInstanceParameters = {
   network: "trx",
-  derivationConfigs: [
-    { derivationType: "trxBase", prefixConfig: trxConfig.trxBase.prefixConfig },
-  ],
+  derivationConfigs: [{ derivationType: "trxBase", prefixConfig: trxConfig.trxBase.prefixConfig }],
 };
 
 const DEFAULT_TON_INSTANCE_PARAMETERS: TonInstanceParameters = {

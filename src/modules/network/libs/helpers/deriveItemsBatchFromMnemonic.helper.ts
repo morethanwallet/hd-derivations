@@ -1,7 +1,4 @@
-import type {
-  DerivationTypeUnion,
-  SignatureSchemeUnion,
-} from "@/libs/types/index.js";
+import type { DerivationTypeUnion, SignatureSchemeUnion } from "@/libs/types/index.js";
 import {
   type DerivedItem,
   type DeriveItemFromMnemonicInnerHandlerParameters,

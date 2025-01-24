@@ -7,9 +7,7 @@ import {
 
 type KeysConfigRequiredDerivationTypeUnion = Exclude<
   DerivationTypeUnion,
-  | AdaDerivationTypeUnion
-  | DerivationTypeMap["sol"]
-  | DerivationTypeMap["tonBase"]
+  AdaDerivationTypeUnion | DerivationTypeMap["sol"] | DerivationTypeMap["tonBase"]
 >;
 
 function findCustomConfig(
@@ -19,9 +17,7 @@ function findCustomConfig(
     prefixConfig: PrefixConfig;
   }[],
 ): PrefixConfig | void {
-  return derivationConfigs.find(
-    (config) => config.derivationType === derivationType,
-  )?.prefixConfig;
+  return derivationConfigs.find((config) => config.derivationType === derivationType)?.prefixConfig;
 }
 
 export { findCustomConfig };

@@ -18,11 +18,7 @@ function getKeyPairFromEc({
   source,
   isPrivateKeyWifFormatted = true,
 }: GetKeyPairFromEcParameters): CommonKeyPair {
-  assert(
-    source,
-    KeyDerivationError,
-    ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED,
-  );
+  assert(source, KeyDerivationError, ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
 
   if (ArrayBuffer.isView(source)) {
     return convertEcBytesPrivateKeyToHexKeyPair(source, prefixConfig);
@@ -37,14 +33,9 @@ function getKeyPairFromEc({
 
   const publicKey = toHexFromBytes(source.publicKey);
 
-  if (isPrivateKeyWifFormatted)
-    return { privateKey: source.toWIF(), publicKey };
+  if (isPrivateKeyWifFormatted) return { privateKey: source.toWIF(), publicKey };
 
-  assert(
-    source.privateKey,
-    KeyDerivationError,
-    ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED,
-  );
+  assert(source.privateKey, KeyDerivationError, ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
   const privateKey = toHexFromBytes(source.privateKey);
 
   return { privateKey, publicKey };
