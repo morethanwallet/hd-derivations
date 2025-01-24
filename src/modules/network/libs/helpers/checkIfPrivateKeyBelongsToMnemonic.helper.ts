@@ -1,7 +1,7 @@
 import type {
   DerivationPath,
   DerivationTypeUnion,
-  EllipticCurveAlgorithmUnion,
+  SignatureSchemeUnion,
 } from "@/libs/types/index.js";
 import {
   type DeriveItemsBatchFromMnemonicInnerHandler,
@@ -15,7 +15,7 @@ const SEGMENT_INITIAL_VALUE = "0";
 
 type IncreaseDerivationPathDepthParameters = {
   derivationPath: DerivationPath["derivationPath"];
-  algorithm?: EllipticCurveAlgorithmUnion;
+  scheme?: SignatureSchemeUnion;
 };
 
 function getDerivationPathPrefix(
@@ -35,9 +35,9 @@ function hardenDerivationPath(
 
 function increaseDerivationPathDepth({
   derivationPath,
-  algorithm = "secp256k1",
+  scheme = "secp256k1",
 }: IncreaseDerivationPathDepthParameters): DerivationPath["derivationPath"] {
-  const hardenedSuffix = algorithm === "ed25519" ? DerivationPathSymbol.HARDENED_SUFFIX : "";
+  const hardenedSuffix = scheme === "ed25519" ? DerivationPathSymbol.HARDENED_SUFFIX : "";
   return `${derivationPath}${DerivationPathSymbol.DELIMITER}${SEGMENT_INITIAL_VALUE}${hardenedSuffix}`;
 }
 
@@ -45,7 +45,7 @@ function checkIfPrivateKeyBelongsToMnemonic<T extends DerivationTypeUnion>(
   this: { deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T> },
   parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<T>,
   derivationPathPrefixToCompare: DerivationPath["derivationPath"],
-  algorithm?: EllipticCurveAlgorithmUnion
+  scheme?: SignatureSchemeUnion
 ): boolean {
   const derivationPathPrefix = getDerivationPathPrefix(parameters.derivationPathPrefix);
 
@@ -81,7 +81,7 @@ function checkIfPrivateKeyBelongsToMnemonic<T extends DerivationTypeUnion>(
       updatedDerivationPath = hardenDerivationPath(updatedDerivationPath);
     } else {
       updatedDerivationPath = increaseDerivationPathDepth({
-        algorithm,
+        scheme,
         derivationPath: updatedDerivationPath,
       });
       derivationPathDepth++;

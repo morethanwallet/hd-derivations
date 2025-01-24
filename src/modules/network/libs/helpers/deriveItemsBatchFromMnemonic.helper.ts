@@ -1,4 +1,4 @@
-import type { DerivationTypeUnion, EllipticCurveAlgorithmUnion } from "@/libs/types/index.js";
+import type { DerivationTypeUnion, SignatureSchemeUnion } from "@/libs/types/index.js";
 import {
   type DerivedItem,
   type DeriveItemFromMnemonicInnerHandlerParameters,
@@ -13,13 +13,13 @@ function deriveItemsBatchFromMnemonic<T extends DerivationTypeUnion>(
     ) => DerivedItem<T>;
   },
   parameters: DeriveItemsBatchFromMnemonicInnerHandlerParameters<T>,
-  algorithm?: EllipticCurveAlgorithmUnion
+  scheme?: SignatureSchemeUnion
 ) {
   let batch: DerivedItem<T>[] = [];
 
   for (let i = parameters.indexLookupFrom; i < parameters.indexLookupTo; i++) {
     const derivationPathWithAddressIndex = appendAddressToDerivationPath({
-      algorithm,
+      scheme,
       derivationPath: parameters.derivationPathPrefix,
       addressIndex: i,
     });

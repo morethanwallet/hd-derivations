@@ -1,4 +1,4 @@
-export { type EllipticCurveAlgorithmUnion } from "./ellipticCurveAlgorithmUnion.type.js";
+export { type SignatureSchemeUnion } from "./signatureSchemeUnion.type.js";
 export { type CustomError } from "./customError.type.js";
 export {
   type DerivationPath,
