@@ -17,7 +17,9 @@ class Bip32Keys {
     this.rootKey = this.getBip32RootKeyFromSeed(prefixConfig);
   }
 
-  protected getBip32RootKeyFromSeed(prefixConfig: PrefixConfig): BIP32Interface {
+  protected getBip32RootKeyFromSeed(
+    prefixConfig: PrefixConfig,
+  ): BIP32Interface {
     const seed = this.mnemonic.getSeed();
 
     return this.bip32.fromSeed(toUint8Array(seed), prefixConfig);

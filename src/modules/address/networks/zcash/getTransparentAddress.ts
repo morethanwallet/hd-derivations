@@ -14,12 +14,12 @@ function splitPrefixIntoBytesArray(prefix: number): Uint8Array {
 
   const firstByte = Number.parseInt(
     stringifiedPrefix.slice(firstByteStartIndex, secondByteStartIndex),
-    HEXADECIMAL_SYSTEM_IDENTIFIER
+    HEXADECIMAL_SYSTEM_IDENTIFIER,
   );
 
   const secondByte = Number.parseInt(
     stringifiedPrefix.slice(secondByteStartIndex),
-    HEXADECIMAL_SYSTEM_IDENTIFIER
+    HEXADECIMAL_SYSTEM_IDENTIFIER,
   );
 
   return toUint8Array(Buffer.from([firstByte, secondByte]));
@@ -27,7 +27,7 @@ function splitPrefixIntoBytesArray(prefix: number): Uint8Array {
 
 function getTransparentAddress(
   publicKey: CommonKeyPair["publicKey"],
-  prefixConfig: PrefixConfig
+  prefixConfig: PrefixConfig,
 ): Address["address"] {
   const ripemd160 = hash160(toUint8Array(Buffer.from(publicKey, "hex")));
   const prefix = splitPrefixIntoBytesArray(prefixConfig.pubKeyHash);

@@ -10,11 +10,17 @@ type CommonPrefixConfig = { prefixConfig: PrefixConfig };
 
 type AdaDerivationConfig = { derivationType: AdaDerivationTypeUnion };
 
-type AvaxDerivationConfig = { derivationType: AvaxDerivationTypeUnion } & CommonPrefixConfig;
+type AvaxDerivationConfig = {
+  derivationType: AvaxDerivationTypeUnion;
+} & CommonPrefixConfig;
 
-type BtcDerivationConfig = { derivationType: BtcDerivationTypeUnion } & CommonPrefixConfig;
+type BtcDerivationConfig = {
+  derivationType: BtcDerivationTypeUnion;
+} & CommonPrefixConfig;
 
-type TrxDerivationConfig = { derivationType: DerivationTypeMap["trxBase"] } & CommonPrefixConfig;
+type TrxDerivationConfig = {
+  derivationType: DerivationTypeMap["trxBase"];
+} & CommonPrefixConfig;
 
 type TonDerivationConfig = { derivationType: DerivationTypeMap["tonBase"] };
 

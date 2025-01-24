@@ -18,7 +18,11 @@ import { getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 class Sui implements AbstractNetwork<"suiBase"> {
   private handlers: NonNullable<Partial<SuiHandlers>>;
 
-  public constructor({ derivationConfigs, mnemonic, scheme }: ConstructorParameters<"suiBase">) {
+  public constructor({
+    derivationConfigs,
+    mnemonic,
+    scheme,
+  }: ConstructorParameters<"suiBase">) {
     const derivationHandlers: DerivationHandlers<"suiBase"> = {
       suiBase: getSuiItemHandlers({
         scheme,
@@ -30,7 +34,7 @@ class Sui implements AbstractNetwork<"suiBase"> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<"suiBase">
+    parameters: DeriveItemFromMnemonicParameters<"suiBase">,
   ): DerivedItem<"suiBase"> {
     const derivationHandlers = this.getDerivationHandlers();
 
@@ -38,7 +42,7 @@ class Sui implements AbstractNetwork<"suiBase"> {
   }
 
   public getCredentialFromPrivateKey(
-    parameters: GetCredentialFromPrivateKeyParameters<"suiBase">
+    parameters: GetCredentialFromPrivateKeyParameters<"suiBase">,
   ): DerivedCredential<"suiBase"> {
     const derivationHandlers = this.getDerivationHandlers();
 
@@ -46,7 +50,7 @@ class Sui implements AbstractNetwork<"suiBase"> {
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<"suiBase">
+    parameters: DeriveItemsBatchFromMnemonicParameters<"suiBase">,
   ): DerivedItem<"suiBase">[] {
     const derivationHandlers = this.getDerivationHandlers();
 
@@ -54,7 +58,7 @@ class Sui implements AbstractNetwork<"suiBase"> {
   }
 
   public checkIfPrivateKeyBelongsToMnemonic(
-    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<"suiBase">
+    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<"suiBase">,
   ): boolean {
     for (const handler of Object.values(this.handlers)) {
       if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
@@ -66,7 +70,8 @@ class Sui implements AbstractNetwork<"suiBase"> {
   private getDerivationHandlers(): SuiHandlers["suiBase"] | never {
     const derivationHandlers = this.handlers.suiBase;
 
-    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers)
+      throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
     return derivationHandlers;
   }

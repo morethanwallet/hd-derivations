@@ -15,13 +15,19 @@ function getSuiItemHandlers({
 }: GetItemHandlerParameters<"suiBase">): GetItemHandlerReturnType<"suiBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath, scheme });
+      const keys = keysDerivationInstance.deriveFromMnemonic({
+        derivationPath,
+        scheme,
+      });
       const address = getSuiAddress(keys.publicKey, scheme);
 
       return { ...keys, address, derivationPath };
     },
     getCredentialFromPrivateKey: ({ privateKey }) => {
-      const keys = keysDerivationInstance.importByPrivateKey({ privateKey, scheme });
+      const keys = keysDerivationInstance.importByPrivateKey({
+        privateKey,
+        scheme,
+      });
       const address = getSuiAddress(keys.publicKey, scheme);
 
       return { ...keys, address };

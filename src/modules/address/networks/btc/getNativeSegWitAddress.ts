@@ -8,10 +8,13 @@ import { payments } from "bitcoinjs-lib";
 
 function getNativeSegWitAddress(
   publicKey: CommonKeyPair["publicKey"],
-  prefixConfig: PrefixConfig
+  prefixConfig: PrefixConfig,
 ): Address["address"] {
   const rawPublicKey = toUint8Array(Buffer.from(publicKey, "hex"));
-  const { address } = payments.p2wpkh({ network: prefixConfig, pubkey: rawPublicKey });
+  const { address } = payments.p2wpkh({
+    network: prefixConfig,
+    pubkey: rawPublicKey,
+  });
   assert(address, AddressError, ExceptionMessage.ADDRESS_GENERATION_FAILED);
 
   return address;

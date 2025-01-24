@@ -1,4 +1,7 @@
-import { type TonAddressRequiredData, type Address } from "@/modules/address/libs/types/index.js";
+import {
+  type TonAddressRequiredData,
+  type Address,
+} from "@/modules/address/libs/types/index.js";
 import { type CommonKeyPair } from "@/libs/types/index.js";
 import { type ContractVersionToContract } from "./libs/types/index.js";
 import {
@@ -13,7 +16,9 @@ import {
   WalletContractV5R1,
 } from "@ton/ton";
 
-type GetTonAddressParameters = { publicKey: CommonKeyPair["publicKey"] } & TonAddressRequiredData;
+type GetTonAddressParameters = {
+  publicKey: CommonKeyPair["publicKey"];
+} & TonAddressRequiredData;
 
 const contractVersionToContract: ContractVersionToContract = {
   v1r1: WalletContractV1R1,

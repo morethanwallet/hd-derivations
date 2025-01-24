@@ -8,10 +8,13 @@ import { payments } from "bitcoinjs-lib";
 
 function getSegWitAddress(
   publicKey: CommonKeyPair["publicKey"],
-  prefixConfig: PrefixConfig
+  prefixConfig: PrefixConfig,
 ): Address["address"] {
   const rawPublicKey = toUint8Array(Buffer.from(publicKey, "hex"));
-  const redeem = payments.p2wpkh({ pubkey: rawPublicKey, network: prefixConfig });
+  const redeem = payments.p2wpkh({
+    pubkey: rawPublicKey,
+    network: prefixConfig,
+  });
   const { address } = payments.p2sh({ redeem, network: prefixConfig });
   assert(address, AddressError, ExceptionMessage.ADDRESS_GENERATION_FAILED);
 

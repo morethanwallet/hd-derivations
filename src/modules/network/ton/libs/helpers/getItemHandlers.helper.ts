@@ -15,13 +15,19 @@ function getTonItemHandlers({
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getTonAddress({ publicKey: keys.publicKey, ...parameters });
+      const address = getTonAddress({
+        publicKey: keys.publicKey,
+        ...parameters,
+      });
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
     getCredentialFromPrivateKey: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getTonAddress({ publicKey: keys.publicKey, ...parameters });
+      const address = getTonAddress({
+        publicKey: keys.publicKey,
+        ...parameters,
+      });
 
       return { ...keys, address };
     },

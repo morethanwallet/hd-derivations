@@ -19,7 +19,10 @@ import { BtcDerivationTypeUnion } from "@/libs/types/index.js";
 class Ton implements AbstractNetwork<"tonBase"> {
   private handlers: NonNullable<Partial<TonHandlers>>;
 
-  public constructor({ derivationConfigs, mnemonic }: ConstructorParameters<"tonBase">) {
+  public constructor({
+    derivationConfigs,
+    mnemonic,
+  }: ConstructorParameters<"tonBase">) {
     const derivationHandlers: DerivationHandlers<"tonBase"> = {
       tonBase: getTonItemHandlers({
         keysDerivationInstance: new TonKeyDerivation(mnemonic),
@@ -30,7 +33,7 @@ class Ton implements AbstractNetwork<"tonBase"> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<"tonBase">
+    parameters: DeriveItemFromMnemonicParameters<"tonBase">,
   ): DerivedItem<BtcDerivationTypeUnion> {
     const derivationHandlers = this.getDerivationHandlers();
 
@@ -38,7 +41,7 @@ class Ton implements AbstractNetwork<"tonBase"> {
   }
 
   public getCredentialFromPrivateKey(
-    parameters: GetCredentialFromPrivateKeyParameters<"tonBase">
+    parameters: GetCredentialFromPrivateKeyParameters<"tonBase">,
   ): DerivedCredential<BtcDerivationTypeUnion> {
     const derivationHandlers = this.getDerivationHandlers();
 
@@ -46,7 +49,7 @@ class Ton implements AbstractNetwork<"tonBase"> {
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<"tonBase">
+    parameters: DeriveItemsBatchFromMnemonicParameters<"tonBase">,
   ): DerivedItem<BtcDerivationTypeUnion>[] {
     const derivationHandlers = this.getDerivationHandlers();
 
@@ -54,7 +57,7 @@ class Ton implements AbstractNetwork<"tonBase"> {
   }
 
   public checkIfPrivateKeyBelongsToMnemonic(
-    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<"tonBase">
+    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<"tonBase">,
   ): boolean {
     for (const handler of Object.values(this.handlers)) {
       if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
@@ -66,7 +69,8 @@ class Ton implements AbstractNetwork<"tonBase"> {
   private getDerivationHandlers(): TonHandlers["tonBase"] | never {
     const derivationHandlers = this.handlers["tonBase"];
 
-    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers)
+      throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
     return derivationHandlers;
   }

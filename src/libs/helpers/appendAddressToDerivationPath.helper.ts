@@ -1,4 +1,7 @@
-import type { DerivationPath, SignatureSchemeUnion } from "@/libs/types/index.js";
+import type {
+  DerivationPath,
+  SignatureSchemeUnion,
+} from "@/libs/types/index.js";
 import { DerivationPathSymbol } from "../enums/index.js";
 
 type AppendAddressToDerivationPathParameters = {

@@ -53,7 +53,10 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
+    this.handlers = getNetworkHandlers(
+      derivationConfigs,
+      keysDerivationHandlers,
+    );
   }
 
   public deriveItemFromMnemonic({
@@ -102,7 +105,7 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
   }
 
   public checkIfPrivateKeyBelongsToMnemonic(
-    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<AdaDerivationTypeUnion>
+    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<AdaDerivationTypeUnion>,
   ): boolean {
     for (const handler of Object.values(this.handlers)) {
       if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
@@ -112,11 +115,12 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
   }
 
   private getDerivationHandlers(
-    derivationType: AdaDerivationTypeUnion
+    derivationType: AdaDerivationTypeUnion,
   ): AdaHandlers[AdaDerivationTypeUnion] | never {
     const derivationHandlers = this.handlers[derivationType];
 
-    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers)
+      throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
     return derivationHandlers;
   }

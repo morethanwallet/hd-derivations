@@ -1,6 +1,8 @@
 type CommonNetworkPurposeUnion = "mainnet" | "testnet";
 
-type CommonNetworkPurposeRegTestExtendedUnion = CommonNetworkPurposeUnion | "regtest";
+type CommonNetworkPurposeRegTestExtendedUnion =
+  | CommonNetworkPurposeUnion
+  | "regtest";
 
 type AdaNetworkPurposeUnion = "mainnet" | "testnetPreview" | "testnetPreprod";
 

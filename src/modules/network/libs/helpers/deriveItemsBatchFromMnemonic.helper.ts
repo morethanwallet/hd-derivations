@@ -1,4 +1,7 @@
-import type { DerivationTypeUnion, SignatureSchemeUnion } from "@/libs/types/index.js";
+import type {
+  DerivationTypeUnion,
+  SignatureSchemeUnion,
+} from "@/libs/types/index.js";
 import {
   type DerivedItem,
   type DeriveItemFromMnemonicInnerHandlerParameters,
@@ -9,11 +12,11 @@ import { appendAddressToDerivationPath } from "@/libs/helpers/index.js";
 function deriveItemsBatchFromMnemonic<T extends DerivationTypeUnion>(
   this: {
     deriveItemFromMnemonic: (
-      parameters: DeriveItemFromMnemonicInnerHandlerParameters<T>
+      parameters: DeriveItemFromMnemonicInnerHandlerParameters<T>,
     ) => DerivedItem<T>;
   },
   parameters: DeriveItemsBatchFromMnemonicInnerHandlerParameters<T>,
-  scheme?: SignatureSchemeUnion
+  scheme?: SignatureSchemeUnion,
 ) {
   let batch: DerivedItem<T>[] = [];
 
@@ -25,7 +28,10 @@ function deriveItemsBatchFromMnemonic<T extends DerivationTypeUnion>(
     });
 
     batch.push(
-      this.deriveItemFromMnemonic({ ...parameters, derivationPath: derivationPathWithAddressIndex })
+      this.deriveItemFromMnemonic({
+        ...parameters,
+        derivationPath: derivationPathWithAddressIndex,
+      }),
     );
   }
 

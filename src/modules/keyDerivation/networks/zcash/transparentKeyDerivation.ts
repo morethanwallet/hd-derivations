@@ -14,7 +14,10 @@ import { KeyDerivationError } from "@/libs/exceptions/index.js";
 import { ExceptionMessage } from "@/modules/keyDerivation/libs/enums/index.js";
 import { getKeyPairFromEc } from "@/modules/keyDerivation/libs/helpers/index.js";
 
-class TransparentKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"transparent"> {
+class TransparentKeyDerivation
+  extends Bip32Keys
+  implements AbstractKeyDerivation<"transparent">
+{
   public constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
     super(prefixConfig, mnemonic);
   }
@@ -31,7 +34,9 @@ class TransparentKeyDerivation extends Bip32Keys implements AbstractKeyDerivatio
     };
   }
 
-  public importByPrivateKey({ privateKey }: PrivateKey<"transparent">): CommonKeyPair {
+  public importByPrivateKey({
+    privateKey,
+  }: PrivateKey<"transparent">): CommonKeyPair {
     const { publicKey } = this.getKeyPair(privateKey);
 
     return {
@@ -53,7 +58,10 @@ class TransparentKeyDerivation extends Bip32Keys implements AbstractKeyDerivatio
         throw new KeyDerivationError(ExceptionMessage.ZCASH_INVALID_WIF_PREFIX);
       }
 
-      const privateKey = decoded.slice(privateKeyStartIndex, isCompressedByteStartIndex);
+      const privateKey = decoded.slice(
+        privateKeyStartIndex,
+        isCompressedByteStartIndex,
+      );
       const compressed =
         decoded.length === wifCompressedLength &&
         decoded[isCompressedByteStartIndex] === wifCompressedByte;

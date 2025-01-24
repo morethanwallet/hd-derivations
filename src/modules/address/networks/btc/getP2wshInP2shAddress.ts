@@ -9,7 +9,7 @@ import { payments } from "bitcoinjs-lib";
 
 function getP2wshInP2shAddress(
   publicKey: CommonKeyPair["publicKey"],
-  prefixConfig: PrefixConfig
+  prefixConfig: PrefixConfig,
 ): Address["address"] {
   const rawPublicKey = toUint8Array(Buffer.from(publicKey, "hex"));
   const p2wshRedeem = payments.p2ms({
@@ -18,8 +18,14 @@ function getP2wshInP2shAddress(
     network: prefixConfig,
   });
 
-  const p2shRedeem = payments.p2wsh({ redeem: p2wshRedeem, network: prefixConfig });
-  const { address } = payments.p2sh({ redeem: p2shRedeem, network: prefixConfig });
+  const p2shRedeem = payments.p2wsh({
+    redeem: p2wshRedeem,
+    network: prefixConfig,
+  });
+  const { address } = payments.p2sh({
+    redeem: p2shRedeem,
+    network: prefixConfig,
+  });
   assert(address, AddressError, ExceptionMessage.ADDRESS_GENERATION_FAILED);
 
   return address;

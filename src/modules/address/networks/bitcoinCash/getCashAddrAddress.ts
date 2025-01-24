@@ -10,15 +10,21 @@ const REGTEST_PREFIX = "bchreg";
 const HRP_DELIMITER = ":";
 const ADDRESS_INDEX = 1;
 
-function getCashAddrAddress(publicKey: Uint8Array, prefixConfig: PrefixConfig): Address["address"] {
-  const { address } = payments.p2pkh({ network: prefixConfig, pubkey: publicKey });
+function getCashAddrAddress(
+  publicKey: Uint8Array,
+  prefixConfig: PrefixConfig,
+): Address["address"] {
+  const { address } = payments.p2pkh({
+    network: prefixConfig,
+    pubkey: publicKey,
+  });
   assert(address, AddressError, ExceptionMessage.ADDRESS_GENERATION_FAILED);
   const formattedAddress = toCashAddress(address);
 
   if (prefixConfig.bech32 === "bc") {
     return REGTEST_PREFIX.concat(
       HRP_DELIMITER,
-      String(formattedAddress.split(HRP_DELIMITER)[ADDRESS_INDEX])
+      String(formattedAddress.split(HRP_DELIMITER)[ADDRESS_INDEX]),
     );
   }
 

@@ -17,13 +17,22 @@ const commonTestnetsDerivationPathPrefix = {
 
 const btcConfig = {
   mainnet: {
-    legacy: { derivationPathPrefix: "m/44'/0'", ...getCommonLegacyKeysConfig("mainnet") },
+    legacy: {
+      derivationPathPrefix: "m/44'/0'",
+      ...getCommonLegacyKeysConfig("mainnet"),
+    },
     segWit: {
       derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
       prefixConfig: networks.bitcoin,
     },
-    nativeSegWit: { derivationPathPrefix: "m/84'/0'", prefixConfig: networks.bitcoin },
-    taproot: { derivationPathPrefix: "m/86'/0'", prefixConfig: networks.bitcoin },
+    nativeSegWit: {
+      derivationPathPrefix: "m/84'/0'",
+      prefixConfig: networks.bitcoin,
+    },
+    taproot: {
+      derivationPathPrefix: "m/86'/0'",
+      prefixConfig: networks.bitcoin,
+    },
     p2wsh: {
       derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
       prefixConfig: networks.bitcoin,

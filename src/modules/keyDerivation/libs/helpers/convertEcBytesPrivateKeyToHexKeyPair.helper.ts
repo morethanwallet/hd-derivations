@@ -5,9 +5,11 @@ import { toHexFromBytes } from "@/libs/helpers/index.js";
 
 function convertEcBytesPrivateKeyToHexKeyPair(
   bytes: Uint8Array,
-  prefixConfig: PrefixConfig
+  prefixConfig: PrefixConfig,
 ): CommonKeyPair {
-  const keyPair: ECPairInterface = ecPair.fromPrivateKey(bytes, { network: prefixConfig });
+  const keyPair: ECPairInterface = ecPair.fromPrivateKey(bytes, {
+    network: prefixConfig,
+  });
   const privateKey = toHexFromBytes(keyPair.privateKey);
   const publicKey = toHexFromBytes(keyPair.publicKey);
 

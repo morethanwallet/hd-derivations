@@ -4,7 +4,9 @@ import { getAddressFromPrivateKey } from "@binance-chain/javascript-sdk/lib/cryp
 
 const HRP = "bnb";
 
-function getBnbAddress(privateKey: CommonKeyPair["privateKey"]): Address["address"] {
+function getBnbAddress(
+  privateKey: CommonKeyPair["privateKey"],
+): Address["address"] {
   return getAddressFromPrivateKey(privateKey, HRP);
 }
 

@@ -61,6 +61,6 @@ const data = dogecoin.derive("m/44'/144'/0'/0/0");
 ```js
 dogecoin.importByPrivateKey(
   "m/44'/144'/0'/0/0",
-  "QVyDqtJqgkVdohyfuVFQq8Tt9h46q6ib26xnabLMHAumT42JWA6Y"
+  "QVyDqtJqgkVdohyfuVFQq8Tt9h46q6ib26xnabLMHAumT42JWA6Y",
 );
 ```

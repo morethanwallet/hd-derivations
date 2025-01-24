@@ -44,11 +44,13 @@ type AdaParameters<TDerivationType extends DerivationTypeUnion> = {
   keysDerivationInstance: TDerivationType extends DerivationTypeMap["enterprise"]
     ? InstanceType<typeof EnterpriseKeyDerivation>
     : TDerivationType extends DerivationTypeMap["reward"]
-    ? InstanceType<typeof RewardKeyDerivation>
-    : InstanceType<typeof BaseKeyDerivation>;
+      ? InstanceType<typeof RewardKeyDerivation>
+      : InstanceType<typeof BaseKeyDerivation>;
 };
 
-type TonParameters = { keysDerivationInstance: InstanceType<typeof TonKeyDerivation> };
+type TonParameters = {
+  keysDerivationInstance: InstanceType<typeof TonKeyDerivation>;
+};
 
 type SuiParameters = {
   keysDerivationInstance: InstanceType<typeof SuiKeyDerivation>;
@@ -58,14 +60,14 @@ type GetItemHandlerParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends AvaxDerivationTypeUnion
     ? AvaxParameters
     : TDerivationType extends BtcDerivationTypeUnion
-    ? BtcParameters<TDerivationType>
-    : TDerivationType extends AdaDerivationTypeUnion
-    ? AdaParameters<TDerivationType>
-    : TDerivationType extends DerivationTypeMap["tonBase"]
-    ? TonParameters
-    : TDerivationType extends DerivationTypeMap["suiBase"]
-    ? SuiParameters
-    : { keysDerivationInstance: CommonBipKeyDerivation };
+      ? BtcParameters<TDerivationType>
+      : TDerivationType extends AdaDerivationTypeUnion
+        ? AdaParameters<TDerivationType>
+        : TDerivationType extends DerivationTypeMap["tonBase"]
+          ? TonParameters
+          : TDerivationType extends DerivationTypeMap["suiBase"]
+            ? SuiParameters
+            : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetItemHandlerReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonicInnerHandler<T>;

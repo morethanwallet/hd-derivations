@@ -14,28 +14,38 @@ import type {
 } from "@/modules/network/libs/types/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
 import { getTrxItemHandlers } from "./libs/helpers/index.js";
-import { findCustomConfig, getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
+import {
+  findCustomConfig,
+  getNetworkHandlers,
+} from "@/modules/network/libs/helpers/index.js";
 import { BtcDerivationTypeUnion } from "@/libs/types/index.js";
 
 class Trx implements AbstractNetwork<"trxBase"> {
   private handlers: NonNullable<Partial<TrxHandlers>>;
 
-  public constructor({ derivationConfigs, mnemonic }: ConstructorParameters<"trxBase">) {
+  public constructor({
+    derivationConfigs,
+    mnemonic,
+  }: ConstructorParameters<"trxBase">) {
     const keysDerivationHandlers: DerivationHandlers<"trxBase"> = {
       trxBase: getTrxItemHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("trxBase", derivationConfigs) ?? trxConfig.trxBase.prefixConfig,
+          findCustomConfig("trxBase", derivationConfigs) ??
+            trxConfig.trxBase.prefixConfig,
           mnemonic,
-          false
+          false,
         ),
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
+    this.handlers = getNetworkHandlers(
+      derivationConfigs,
+      keysDerivationHandlers,
+    );
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<"trxBase">
+    parameters: DeriveItemFromMnemonicParameters<"trxBase">,
   ): DerivedItem<BtcDerivationTypeUnion> {
     const derivationHandlers = this.getDerivationHandlers();
 
@@ -51,7 +61,7 @@ class Trx implements AbstractNetwork<"trxBase"> {
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<"trxBase">
+    parameters: DeriveItemsBatchFromMnemonicParameters<"trxBase">,
   ): DerivedItem<BtcDerivationTypeUnion>[] {
     const derivationHandlers = this.getDerivationHandlers();
 
@@ -59,7 +69,7 @@ class Trx implements AbstractNetwork<"trxBase"> {
   }
 
   public checkIfPrivateKeyBelongsToMnemonic(
-    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<"trxBase">
+    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<"trxBase">,
   ): boolean {
     for (const handler of Object.values(this.handlers)) {
       if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
@@ -71,7 +81,8 @@ class Trx implements AbstractNetwork<"trxBase"> {
   private getDerivationHandlers(): TrxHandlers["trxBase"] | never {
     const derivationHandlers = this.handlers["trxBase"];
 
-    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
+    if (!derivationHandlers)
+      throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
     return derivationHandlers;
   }

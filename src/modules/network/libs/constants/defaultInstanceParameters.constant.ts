@@ -24,8 +24,14 @@ const DEFAULT_AVAX_INSTANCE_PARAMETERS: AvaxInstanceParameters = {
   network: "avax",
   networkPurpose: "mainnet",
   derivationConfigs: [
-    { derivationType: "avaxP", prefixConfig: avaxConfig.mainnet.avax.prefixConfig },
-    { derivationType: "avaxX", prefixConfig: avaxConfig.mainnet.avax.prefixConfig },
+    {
+      derivationType: "avaxP",
+      prefixConfig: avaxConfig.mainnet.avax.prefixConfig,
+    },
+    {
+      derivationType: "avaxX",
+      prefixConfig: avaxConfig.mainnet.avax.prefixConfig,
+    },
   ],
 };
 
@@ -33,14 +39,26 @@ const DEFAULT_BTC_INSTANCE_PARAMETERS: BtcInstanceParameters = {
   network: "btc",
   networkPurpose: "mainnet",
   derivationConfigs: [
-    { derivationType: "legacy", prefixConfig: btcConfig.mainnet.legacy.prefixConfig },
-    { derivationType: "segWit", prefixConfig: btcConfig.mainnet.segWit.prefixConfig },
+    {
+      derivationType: "legacy",
+      prefixConfig: btcConfig.mainnet.legacy.prefixConfig,
+    },
+    {
+      derivationType: "segWit",
+      prefixConfig: btcConfig.mainnet.segWit.prefixConfig,
+    },
     {
       derivationType: "nativeSegWit",
       prefixConfig: btcConfig.mainnet.nativeSegWit.prefixConfig,
     },
-    { derivationType: "taproot", prefixConfig: btcConfig.mainnet.taproot.prefixConfig },
-    { derivationType: "p2wsh", prefixConfig: btcConfig.mainnet.p2wsh.prefixConfig },
+    {
+      derivationType: "taproot",
+      prefixConfig: btcConfig.mainnet.taproot.prefixConfig,
+    },
+    {
+      derivationType: "p2wsh",
+      prefixConfig: btcConfig.mainnet.p2wsh.prefixConfig,
+    },
     {
       derivationType: "p2wshInP2sh",
       prefixConfig: btcConfig.mainnet.p2wshInP2sh.prefixConfig,
@@ -50,7 +68,9 @@ const DEFAULT_BTC_INSTANCE_PARAMETERS: BtcInstanceParameters = {
 
 const DEFAULT_TRX_INSTANCE_PARAMETERS: TrxInstanceParameters = {
   network: "trx",
-  derivationConfigs: [{ derivationType: "trxBase", prefixConfig: trxConfig.trxBase.prefixConfig }],
+  derivationConfigs: [
+    { derivationType: "trxBase", prefixConfig: trxConfig.trxBase.prefixConfig },
+  ],
 };
 
 const DEFAULT_TON_INSTANCE_PARAMETERS: TonInstanceParameters = {

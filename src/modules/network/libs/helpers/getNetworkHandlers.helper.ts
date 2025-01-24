@@ -30,12 +30,12 @@ type CombinedDerivationConfigs =
 
 function getNetworkHandlers<
   T extends CombinedDerivationConfigs,
-  S extends Partial<CombinedHandlers>
+  S extends Partial<CombinedHandlers>,
 >(configs: T, handlers: S) {
   return Object.fromEntries(
     configs.map(({ derivationType }) => {
       return [derivationType, handlers[derivationType]];
-    })
+    }),
   );
 }
 

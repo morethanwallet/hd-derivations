@@ -19,7 +19,7 @@ class CommonBipKeyDerivation
   constructor(
     prefixConfig: PrefixConfig,
     mnemonic: Mnemonic,
-    isPrivateKeyWifFormatted: boolean = true
+    isPrivateKeyWifFormatted: boolean = true,
   ) {
     super(prefixConfig, mnemonic);
 
@@ -30,7 +30,9 @@ class CommonBipKeyDerivation
     derivationPath,
     base58RootKey,
   }: DeriveFromMnemonicParameters<CommonBipDerivationTypeUnion>): CommonKeyPair {
-    const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.rootKey;
+    const rootKey = base58RootKey
+      ? this.getRootKeyFromBase58(base58RootKey)
+      : this.rootKey;
     const node = rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
 
@@ -52,7 +54,9 @@ class CommonBipKeyDerivation
     };
   }
 
-  public getKeyPair(source: BIP32Interface | string | Uint8Array): CommonKeyPair {
+  public getKeyPair(
+    source: BIP32Interface | string | Uint8Array,
+  ): CommonKeyPair {
     return getKeyPairFromEc({
       source,
       isPrivateKeyWifFormatted: this.isPrivateKeyWifFormatted,
