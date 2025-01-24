@@ -19,6 +19,7 @@ type DerivationTypeMap = {
   xrpX: "xrpX";
   trxBase: "trxBase";
   tonBase: "tonBase";
+  suiBase: "suiBase";
 };
 
 export { type DerivationTypeMap };

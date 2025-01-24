@@ -3,5 +3,8 @@ export {
   type DeriveFromMnemonic,
   type DeriveFromMnemonicParameters,
 } from "./deriveFromMnemonic.type.js";
-export { type ImportByPrivateKey } from "./importByPrivateKey.type.js";
+export type {
+  ImportByPrivateKey,
+  ImportByPrivateKeyParameters,
+} from "./importByPrivateKey.type.js";
 export { type CommonBipDerivationTypeUnion } from "./bip44DerivationTypeUnion.type.js";

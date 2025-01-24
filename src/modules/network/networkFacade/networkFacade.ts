@@ -7,6 +7,7 @@ import { Ada } from "../ada/index.js";
 import { Avax } from "../avax/index.js";
 import { Trx } from "../trx/index.js";
 import { Ton } from "../ton/index.js";
+import { Sui } from "../sui/index.js";
 
 type Network = {
   btc: InstanceType<typeof Bitcoin>;
@@ -14,6 +15,7 @@ type Network = {
   avax: InstanceType<typeof Avax>;
   trx: InstanceType<typeof Trx>;
   ton: InstanceType<typeof Ton>;
+  sui: InstanceType<typeof Sui>;
 };
 
 class NetworkFacade<T extends NetworkTypeUnion> {
@@ -65,7 +67,14 @@ class NetworkFacade<T extends NetworkTypeUnion> {
           }) as Network[T];
         }
         break;
-
+      case "sui":
+        {
+          this.network = new Sui({
+            ...(parameters as ConstructorParameters<"sui">),
+            mnemonic: mnemonicInstance,
+          }) as Network[T];
+        }
+        break;
       default:
         throw new Error(ExceptionMessage.NETWORK_IS_NOT_SUPPORTED);
     }

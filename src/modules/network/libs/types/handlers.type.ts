@@ -24,4 +24,6 @@ type TonHandlers = { tonBase: GetItemHandlerReturnType<"tonBase"> };
 
 type TrxHandlers = { trxBase: GetItemHandlerReturnType<"trxBase"> };
 
-export type { AvaxHandlers, BtcHandlers, AdaHandlers, TonHandlers, TrxHandlers };
+type SuiHandlers = { suiBase: GetItemHandlerReturnType<"suiBase"> };
+
+export type { AvaxHandlers, BtcHandlers, AdaHandlers, TonHandlers, TrxHandlers, SuiHandlers };

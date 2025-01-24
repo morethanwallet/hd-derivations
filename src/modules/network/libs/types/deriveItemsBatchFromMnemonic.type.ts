@@ -1,5 +1,5 @@
 import { type DerivationTypeUnion } from "@/libs/types/index.js";
-import { type CommonInconsistentOuterHandlerDerivationParameters } from "./commonInconsistentOuterHandlerDerivationParameters.type.js";
+import { type DerivationTypeParameter } from "./derivationTypeParameter.type.js";
 import { type DerivedItem } from "./derivedItem.type.js";
 import { type LookupHandlersCommonParameters } from "./lookupHandlersCommonParameters.type.js";
 
@@ -12,8 +12,7 @@ type DeriveItemsBatchFromMnemonicInnerHandler<TDerivationType extends Derivation
 ) => DerivedItem<TDerivationType>[];
 
 type DeriveItemsBatchFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
-  LookupHandlersCommonParameters<TDerivationType> &
-    CommonInconsistentOuterHandlerDerivationParameters<TDerivationType>;
+  LookupHandlersCommonParameters<TDerivationType> & DerivationTypeParameter<TDerivationType>;
 
 type DeriveItemsBatchFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicParameters<TDerivationType>

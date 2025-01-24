@@ -5,6 +5,7 @@ import type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
   BtcInstanceParameters,
+  SuiInstanceParameters,
   TonInstanceParameters,
   TrxInstanceParameters,
 } from "../types/index.js";
@@ -58,10 +59,17 @@ const DEFAULT_TON_INSTANCE_PARAMETERS: TonInstanceParameters = {
   derivationConfigs: [{ derivationType: "tonBase" }],
 };
 
+const DEFAULT_SUI_INSTANCE_PARAMETERS: SuiInstanceParameters = {
+  network: "sui",
+  derivationConfigs: [{ derivationType: "suiBase" }],
+  scheme: "ed25519",
+};
+
 export {
   DEFAULT_ADA_INSTANCE_PARAMETERS,
   DEFAULT_AVAX_INSTANCE_PARAMETERS,
   DEFAULT_BTC_INSTANCE_PARAMETERS,
   DEFAULT_TRX_INSTANCE_PARAMETERS,
   DEFAULT_TON_INSTANCE_PARAMETERS,
+  DEFAULT_SUI_INSTANCE_PARAMETERS,
 };

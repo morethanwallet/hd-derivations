@@ -18,10 +18,13 @@ type TrxDerivationConfig = { derivationType: DerivationTypeMap["trxBase"] } & Co
 
 type TonDerivationConfig = { derivationType: DerivationTypeMap["tonBase"] };
 
+type SuiDerivationConfig = { derivationType: DerivationTypeMap["suiBase"] };
+
 export type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
   BtcDerivationConfig,
   TrxDerivationConfig,
   TonDerivationConfig,
+  SuiDerivationConfig,
 };

@@ -5,13 +5,15 @@ import type {
   BtcDerivationConfig,
   TonDerivationConfig,
   TrxDerivationConfig,
+  SuiDerivationConfig,
 } from "./derivationConfig.type.js";
 import type {
   AdaNetworkPurposeUnion,
   CommonNetworkPurposeRegTestExtendedUnion,
   CommonNetworkPurposeUnion,
 } from "./networkPurposeUnion.type.js";
-import { NetworkTypeMap } from "./networkTypeMap.type.js";
+import type { NetworkTypeMap } from "./networkTypeMap.type.js";
+import type { SignatureSchemeUnion } from "@/libs/types/index.js";
 
 type AdaInstanceParameters = {
   network: NetworkTypeMap["ada"];
@@ -33,7 +35,6 @@ type BtcInstanceParameters = {
 
 type TrxInstanceParameters = {
   network: NetworkTypeMap["trx"];
-  networkPurpose?: null;
   derivationConfigs: TrxDerivationConfig[];
 } & MnemonicProperty;
 
@@ -43,10 +44,17 @@ type TonInstanceParameters = {
   derivationConfigs: TonDerivationConfig[];
 } & MnemonicProperty;
 
+type SuiInstanceParameters = {
+  network: NetworkTypeMap["sui"];
+  scheme: SignatureSchemeUnion;
+  derivationConfigs: SuiDerivationConfig[];
+} & MnemonicProperty;
+
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
   BtcInstanceParameters,
   TrxInstanceParameters,
   TonInstanceParameters,
+  SuiInstanceParameters,
 };

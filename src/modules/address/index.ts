@@ -17,4 +17,5 @@ export {
   getCashAddrAddress,
   getTrxAddress,
   getTonAddress,
+  getSuiAddress,
 } from "./networks/index.js";

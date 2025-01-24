@@ -1,10 +1,11 @@
-import {
-  type TaprootKeyDerivation,
-  type CommonBipKeyDerivation,
-  type EnterpriseKeyDerivation,
-  type RewardKeyDerivation,
-  type BaseKeyDerivation,
-  type TonKeyDerivation,
+import type {
+  TaprootKeyDerivation,
+  CommonBipKeyDerivation,
+  EnterpriseKeyDerivation,
+  RewardKeyDerivation,
+  BaseKeyDerivation,
+  TonKeyDerivation,
+  SuiKeyDerivation,
 } from "@/modules/keyDerivation/index.js";
 import type {
   BtcDerivationTypeUnion,
@@ -12,6 +13,7 @@ import type {
   AvaxDerivationTypeUnion,
   AdaDerivationTypeUnion,
   DerivationTypeUnion,
+  SignatureSchemeProperty,
 } from "@/libs/types/index.js";
 import { type DeriveItemFromMnemonicInnerHandler } from "./deriveItemFromMnemonic.type.js";
 import { type GetCredentialFromPrivateKeyInnerHandler } from "./getCredentialFromPrivateKey.type.js";
@@ -48,6 +50,10 @@ type AdaParameters<TDerivationType extends DerivationTypeUnion> = {
 
 type TonParameters = { keysDerivationInstance: InstanceType<typeof TonKeyDerivation> };
 
+type SuiParameters = {
+  keysDerivationInstance: InstanceType<typeof SuiKeyDerivation>;
+} & SignatureSchemeProperty;
+
 type GetItemHandlerParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends AvaxDerivationTypeUnion
     ? AvaxParameters
@@ -57,6 +63,8 @@ type GetItemHandlerParameters<TDerivationType extends DerivationTypeUnion> =
     ? AdaParameters<TDerivationType>
     : TDerivationType extends DerivationTypeMap["tonBase"]
     ? TonParameters
+    : TDerivationType extends DerivationTypeMap["suiBase"]
+    ? SuiParameters
     : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetItemHandlerReturnType<T extends DerivationTypeUnion> = {

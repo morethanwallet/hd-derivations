@@ -10,3 +10,4 @@ export { EvmKeyDerivation } from "./networks/evm/index.js";
 export { SolanaKeyDerivation } from "./networks/solana/index.js";
 export { TransparentKeyDerivation } from "./networks/zcash/index.js";
 export { TonKeyDerivation } from "./networks/ton/index.js";
+export { SuiKeyDerivation } from "./networks/sui/index.js";

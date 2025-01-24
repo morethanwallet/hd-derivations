@@ -11,7 +11,7 @@ export {
   type GetCredentialFromPrivateKeyInnerHandler,
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
 } from "./getCredentialFromPrivateKey.type.js";
-export { type CommonInconsistentOuterHandlerDerivationParameters } from "./commonInconsistentOuterHandlerDerivationParameters.type.js";
+export { type DerivationTypeParameter } from "./derivationTypeParameter.type.js";
 export { type ConstructorParameters } from "./constructorParameters.type.js";
 export {
   type GetItemHandlerParameters,
@@ -38,6 +38,7 @@ export type {
   AdaHandlers,
   TonHandlers,
   TrxHandlers,
+  SuiHandlers,
 } from "./handlers.type.js";
 export type {
   AdaInstanceParameters,
@@ -45,6 +46,7 @@ export type {
   BtcInstanceParameters,
   TrxInstanceParameters,
   TonInstanceParameters,
+  SuiInstanceParameters,
 } from "./instanceParameters.type.js";
 export type {
   AdaDerivationConfig,
@@ -52,6 +54,7 @@ export type {
   BtcDerivationConfig,
   TonDerivationConfig,
   TrxDerivationConfig,
+  SuiDerivationConfig,
 } from "./derivationConfig.type.js";
 export {
   type CommonNetworkPurposeUnion,

@@ -5,20 +5,28 @@ import type {
   AvaxHandlers,
   BtcDerivationConfig,
   BtcHandlers,
+  SuiDerivationConfig,
+  SuiHandlers,
   TonDerivationConfig,
   TonHandlers,
   TrxDerivationConfig,
   TrxHandlers,
 } from "../types/index.js";
 
-type CombinedHandlers = BtcHandlers & AdaHandlers & TrxHandlers & AvaxHandlers & TonHandlers;
+type CombinedHandlers = BtcHandlers &
+  AdaHandlers &
+  TrxHandlers &
+  AvaxHandlers &
+  TonHandlers &
+  SuiHandlers;
 
 type CombinedDerivationConfigs =
   | BtcDerivationConfig[]
   | AdaDerivationConfig[]
   | AvaxDerivationConfig[]
   | TrxDerivationConfig[]
-  | TonDerivationConfig[];
+  | TonDerivationConfig[]
+  | SuiDerivationConfig[];
 
 function getNetworkHandlers<
   T extends CombinedDerivationConfigs,

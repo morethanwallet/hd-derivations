@@ -1,5 +1,5 @@
 import type { DerivationPath, DerivationTypeUnion } from "@/libs/types/index.js";
-import { type DerivationHandlersCommonParameters } from "./derivationHandlersCommonParameters.type.js";
+import { type CommonHandlersParameters } from "./commonHandlersParameters.type.js";
 
 type LookupRangeParameters = {
   indexLookupFrom: number;
@@ -9,6 +9,6 @@ type LookupRangeParameters = {
 type LookupHandlersCommonParameters<TDerivationType extends DerivationTypeUnion> = {
   derivationPathPrefix: DerivationPath["derivationPath"];
 } & LookupRangeParameters &
-  DerivationHandlersCommonParameters<TDerivationType>;
+  CommonHandlersParameters<TDerivationType>;
 
 export { type LookupHandlersCommonParameters };

@@ -12,6 +12,7 @@ import type {
   BtcInstanceParameters,
   TonInstanceParameters,
   TrxInstanceParameters,
+  SuiInstanceParameters,
 } from "./instanceParameters.type.js";
 
 type BtcParameters = {
@@ -30,13 +31,17 @@ type AvaxParameters = {
 };
 
 type TrxParameters = {
-  networkPurpose: TrxInstanceParameters["networkPurpose"];
   derivationConfigs: TrxInstanceParameters["derivationConfigs"];
 };
 
 type TonParameters = {
   networkPurpose: TonInstanceParameters["networkPurpose"];
   derivationConfigs: TonInstanceParameters["derivationConfigs"];
+};
+
+type SuiParameters = {
+  scheme: SuiInstanceParameters["scheme"];
+  derivationConfigs: SuiInstanceParameters["derivationConfigs"];
 };
 
 type ConstructorInconsistentParameters<TDerivationType extends DerivationTypeUnion> =
@@ -50,6 +55,8 @@ type ConstructorInconsistentParameters<TDerivationType extends DerivationTypeUni
     ? TrxParameters
     : TDerivationType extends DerivationTypeMap["tonBase"]
     ? TonParameters
+    : TDerivationType extends DerivationTypeMap["suiBase"]
+    ? SuiParameters
     : Record<string, unknown>;
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {

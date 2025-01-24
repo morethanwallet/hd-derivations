@@ -23,7 +23,7 @@ import {
 } from "./libs/helpers/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
 import { getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
-import { AdaDerivationTypeUnion } from "@/libs/types/index.js";
+import type { AdaDerivationTypeUnion } from "@/libs/types/index.js";
 
 class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
   private handlers: NonNullable<Partial<AdaHandlers>>;

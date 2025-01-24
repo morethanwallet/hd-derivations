@@ -4,6 +4,7 @@ import type {
   BtcInstanceParameters,
   NetworkTypeMap,
   NetworkTypeUnion,
+  SuiInstanceParameters,
   TonInstanceParameters,
   TrxInstanceParameters,
 } from "@/modules/network/libs/types/index.js";
@@ -18,6 +19,8 @@ type ConstructorParameters<T extends NetworkTypeUnion> = T extends NetworkTypeMa
   ? TonInstanceParameters
   : T extends NetworkTypeMap["trx"]
   ? TrxInstanceParameters
-  : unknown;
+  : T extends NetworkTypeMap["sui"]
+  ? SuiInstanceParameters
+  : { network: null; networkPurpose: null; derivationConfigs: []; mnemonic: null; scheme: null };
 
 export type { ConstructorParameters };

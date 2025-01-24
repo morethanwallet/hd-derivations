@@ -4,6 +4,7 @@ type NetworkTypeMap = {
   avax: "avax";
   trx: "trx";
   ton: "ton";
+  sui: "sui";
 };
 
 export { type NetworkTypeMap };
