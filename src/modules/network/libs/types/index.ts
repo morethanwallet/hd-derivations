@@ -59,3 +59,4 @@ export {
   type AdaNetworkPurposeUnion,
 } from "./networkPurposeUnion.type.js";
 export type { NetworkTypeUnion } from "./networkTypeUnion.type.js";
+export type { NetworkTypeMap } from "./networkTypeMap.type.js";

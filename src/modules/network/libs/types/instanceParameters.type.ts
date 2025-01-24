@@ -33,7 +33,7 @@ type BtcInstanceParameters = {
 
 type TrxInstanceParameters = {
   network: NetworkTypeMap["trx"];
-  networkPurpose: null;
+  networkPurpose?: null;
   derivationConfigs: TrxDerivationConfig[];
 } & MnemonicProperty;
 

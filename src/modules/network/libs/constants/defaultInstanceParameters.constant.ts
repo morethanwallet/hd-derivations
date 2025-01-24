@@ -11,7 +11,6 @@ import type {
 
 const DEFAULT_ADA_INSTANCE_PARAMETERS: AdaInstanceParameters = {
   network: "ada",
-  mnemonic: "",
   networkPurpose: "mainnet",
   derivationConfigs: [
     { derivationType: "enterprise" },
@@ -22,7 +21,6 @@ const DEFAULT_ADA_INSTANCE_PARAMETERS: AdaInstanceParameters = {
 
 const DEFAULT_AVAX_INSTANCE_PARAMETERS: AvaxInstanceParameters = {
   network: "avax",
-  mnemonic: "",
   networkPurpose: "mainnet",
   derivationConfigs: [
     { derivationType: "avaxP", prefixConfig: avaxConfig.mainnet.avax.prefixConfig },
@@ -32,7 +30,6 @@ const DEFAULT_AVAX_INSTANCE_PARAMETERS: AvaxInstanceParameters = {
 
 const DEFAULT_BTC_INSTANCE_PARAMETERS: BtcInstanceParameters = {
   network: "btc",
-  mnemonic: "",
   networkPurpose: "mainnet",
   derivationConfigs: [
     { derivationType: "legacy", prefixConfig: btcConfig.mainnet.legacy.prefixConfig },
@@ -52,14 +49,11 @@ const DEFAULT_BTC_INSTANCE_PARAMETERS: BtcInstanceParameters = {
 
 const DEFAULT_TRX_INSTANCE_PARAMETERS: TrxInstanceParameters = {
   network: "trx",
-  mnemonic: "",
-  networkPurpose: null,
   derivationConfigs: [{ derivationType: "trxBase", prefixConfig: trxConfig.trxBase.prefixConfig }],
 };
 
 const DEFAULT_TON_INSTANCE_PARAMETERS: TonInstanceParameters = {
   network: "ton",
-  mnemonic: "",
   networkPurpose: "mainnet",
   derivationConfigs: [{ derivationType: "tonBase" }],
 };

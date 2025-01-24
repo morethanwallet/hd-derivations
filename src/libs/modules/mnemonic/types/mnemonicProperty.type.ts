@@ -1,3 +1,3 @@
-type MnemonicProperty = { mnemonic: string };
+type MnemonicProperty = { mnemonic?: string };
 
 export { type MnemonicProperty };
