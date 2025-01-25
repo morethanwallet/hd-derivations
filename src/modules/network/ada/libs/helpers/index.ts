@@ -1,6 +1,6 @@
 export { getNetworkId } from "./getNetworkId.helper.js";
 export {
-  getEnterpriseItemHandlers,
-  getRewardItemHandlers,
-  getBaseItemHandlers,
-} from "./getItemHandlers.helper.js";
+  getEnterpriseDerivationHandlers,
+  getRewardDerivationHandlers,
+  getBaseDerivationHandlers,
+} from "./getDerivationHandlers.helper.js";

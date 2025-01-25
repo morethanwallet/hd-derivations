@@ -4,17 +4,17 @@ import {
   deriveItemsBatchFromMnemonic,
 } from "@/modules/network/libs/helpers/index.js";
 import {
-  type GetItemHandlerParameters,
-  type GetItemHandlerReturnType,
+  type GetDerivationHandlersParameters,
+  type GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
 import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";
 import { avaxConfig } from "@/modules/network/libs/modules/config/index.js";
 
-function getAvaxItemHandlers({
+function getAvaxDerivationHandlers({
   derivationType,
   networkPurpose,
   keysDerivationInstance,
-}: GetItemHandlerParameters<AvaxDerivationTypeUnion>): GetItemHandlerReturnType<AvaxDerivationTypeUnion> {
+}: GetDerivationHandlersParameters<AvaxDerivationTypeUnion>): GetDerivationHandlersReturnType<AvaxDerivationTypeUnion> {
   const bech32Prefix = keysDerivationInstance.prefixConfig.bech32;
 
   return {
@@ -44,4 +44,4 @@ function getAvaxItemHandlers({
   };
 }
 
-export { getAvaxItemHandlers };
+export { getAvaxDerivationHandlers };

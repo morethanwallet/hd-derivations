@@ -13,20 +13,19 @@ import type {
   DerivedItem,
   DerivedCredential,
   NetworkHandlers,
-  AdaHandlers,
 } from "@/modules/network/libs/types/index.js";
 import {
-  getBaseItemHandlers,
-  getEnterpriseItemHandlers,
   getNetworkId,
-  getRewardItemHandlers,
+  getEnterpriseDerivationHandlers,
+  getRewardDerivationHandlers,
+  getBaseDerivationHandlers,
 } from "./libs/helpers/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
 import { getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 import type { AdaDerivationTypeUnion } from "@/libs/types/index.js";
 
 class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
-  private handlers: NonNullable<Partial<AdaHandlers>>;
+  private handlers: NonNullable<Partial<NetworkHandlers<AdaDerivationTypeUnion>>>;
 
   public constructor({
     mnemonic,
@@ -35,25 +34,25 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
   }: ConstructorParameters<AdaDerivationTypeUnion>) {
     const networkId = getNetworkId(networkPurpose);
 
-    const keysDerivationHandlers: NetworkHandlers<AdaDerivationTypeUnion> = {
-      enterprise: getEnterpriseItemHandlers({
+    const networkHandlers: NetworkHandlers<AdaDerivationTypeUnion> = {
+      enterprise: getEnterpriseDerivationHandlers({
         networkId,
         networkPurpose,
         keysDerivationInstance: new EnterpriseKeyDerivation(mnemonic),
       }),
-      reward: getRewardItemHandlers({
+      reward: getRewardDerivationHandlers({
         networkId,
         networkPurpose,
         keysDerivationInstance: new RewardKeyDerivation(mnemonic),
       }),
-      adaBase: getBaseItemHandlers({
+      adaBase: getBaseDerivationHandlers({
         networkId,
         networkPurpose,
         keysDerivationInstance: new BaseKeyDerivation(mnemonic),
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
+    this.handlers = getNetworkHandlers(derivationConfigs, networkHandlers);
   }
 
   public deriveItemFromMnemonic({
@@ -113,7 +112,7 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
 
   private getDerivationHandlers(
     derivationType: AdaDerivationTypeUnion,
-  ): AdaHandlers[AdaDerivationTypeUnion] | never {
+  ): NetworkHandlers<AdaDerivationTypeUnion>[AdaDerivationTypeUnion] | never {
     const derivationHandlers = this.handlers[derivationType];
 
     if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);

@@ -5,15 +5,15 @@ import {
 } from "@/modules/network/libs/helpers/index.js";
 import { adaConfig } from "@/modules/network/libs/modules/config/index.js";
 import {
-  type GetItemHandlerParameters,
-  type GetItemHandlerReturnType,
+  type GetDerivationHandlersParameters,
+  type GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
 
-function getEnterpriseItemHandlers({
+function getEnterpriseDerivationHandlers({
   keysDerivationInstance,
   networkId,
   networkPurpose,
-}: GetItemHandlerParameters<"enterprise">): GetItemHandlerReturnType<"enterprise"> {
+}: GetDerivationHandlersParameters<"enterprise">): GetDerivationHandlersReturnType<"enterprise"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
@@ -39,11 +39,11 @@ function getEnterpriseItemHandlers({
   };
 }
 
-function getRewardItemHandlers({
+function getRewardDerivationHandlers({
   keysDerivationInstance,
   networkId,
   networkPurpose,
-}: GetItemHandlerParameters<"reward">): GetItemHandlerReturnType<"reward"> {
+}: GetDerivationHandlersParameters<"reward">): GetDerivationHandlersReturnType<"reward"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
@@ -69,11 +69,11 @@ function getRewardItemHandlers({
   };
 }
 
-function getBaseItemHandlers({
+function getBaseDerivationHandlers({
   keysDerivationInstance,
   networkId,
   networkPurpose,
-}: GetItemHandlerParameters<"adaBase">): GetItemHandlerReturnType<"adaBase"> {
+}: GetDerivationHandlersParameters<"adaBase">): GetDerivationHandlersReturnType<"adaBase"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
@@ -99,4 +99,4 @@ function getBaseItemHandlers({
   };
 }
 
-export { getEnterpriseItemHandlers, getRewardItemHandlers, getBaseItemHandlers };
+export { getEnterpriseDerivationHandlers, getRewardDerivationHandlers, getBaseDerivationHandlers };

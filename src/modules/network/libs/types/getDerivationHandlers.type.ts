@@ -56,7 +56,7 @@ type SuiParameters = {
   keysDerivationInstance: InstanceType<typeof SuiKeyDerivation>;
 } & SignatureSchemeProperty;
 
-type GetItemHandlerParameters<TDerivationType extends DerivationTypeUnion> =
+type GetDerivationHandlersParameters<TDerivationType extends DerivationTypeUnion> =
   TDerivationType extends AvaxDerivationTypeUnion
     ? AvaxParameters
     : TDerivationType extends BtcDerivationTypeUnion
@@ -69,11 +69,11 @@ type GetItemHandlerParameters<TDerivationType extends DerivationTypeUnion> =
             ? SuiParameters
             : { keysDerivationInstance: CommonBipKeyDerivation };
 
-type GetItemHandlerReturnType<T extends DerivationTypeUnion> = {
+type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonicInnerHandler<T>;
   getCredentialFromPrivateKey: GetCredentialFromPrivateKeyInnerHandler<T>;
   deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T>;
   checkIfPrivateKeyBelongsToMnemonic: CheckIfPrivateKeyBelongsToMnemonicInnerHandler<T>;
 };
 
-export { type GetItemHandlerParameters, type GetItemHandlerReturnType };
+export { type GetDerivationHandlersParameters, type GetDerivationHandlersReturnType };

@@ -5,13 +5,13 @@ import {
 } from "@/modules/network/libs/helpers/index.js";
 import { tonConfig } from "@/modules/network/libs/modules/config/index.js";
 import {
-  type GetItemHandlerParameters,
-  type GetItemHandlerReturnType,
+  type GetDerivationHandlersParameters,
+  type GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
 
-function getTonItemHandlers({
+function getTonDerivationHandlers({
   keysDerivationInstance,
-}: GetItemHandlerParameters<"tonBase">): GetItemHandlerReturnType<"tonBase"> {
+}: GetDerivationHandlersParameters<"tonBase">): GetDerivationHandlersReturnType<"tonBase"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
@@ -51,4 +51,4 @@ function getTonItemHandlers({
   };
 }
 
-export { getTonItemHandlers };
+export { getTonDerivationHandlers };

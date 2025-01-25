@@ -9,24 +9,25 @@ import type {
   TrxInstanceParameters,
 } from "@/modules/network/libs/types/index.js";
 
-type ConstructorParameters<T extends NetworkTypeUnion> = T extends NetworkTypeMap["btc"]
-  ? BtcInstanceParameters
+type ConstructorParameters<T extends NetworkTypeUnion> = {
+  network: T;
+} & (T extends NetworkTypeMap["btc"]
+  ? Omit<BtcInstanceParameters, "network">
   : T extends NetworkTypeMap["ada"]
-    ? AdaInstanceParameters
+    ? Omit<AdaInstanceParameters, "network">
     : T extends NetworkTypeMap["avax"]
-      ? AvaxInstanceParameters
+      ? Omit<AvaxInstanceParameters, "network">
       : T extends NetworkTypeMap["ton"]
-        ? TonInstanceParameters
+        ? Omit<TonInstanceParameters, "network">
         : T extends NetworkTypeMap["trx"]
-          ? TrxInstanceParameters
+          ? Omit<TrxInstanceParameters, "network">
           : T extends NetworkTypeMap["sui"]
-            ? SuiInstanceParameters
+            ? Omit<SuiInstanceParameters, "network">
             : {
-                network: null;
                 networkPurpose: null;
                 derivationConfigs: [];
                 mnemonic: null;
                 scheme: null;
-              };
+              });
 
 export type { ConstructorParameters };

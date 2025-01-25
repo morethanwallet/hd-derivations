@@ -10,30 +10,29 @@ import type {
   DerivedCredential,
   DerivedItem,
   NetworkHandlers,
-  BtcHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
 import {
-  getLegacyItemHandlers,
-  getNativeSegWitItemHandlers,
-  getP2wshInP2shItemHandlers,
-  getP2wshItemHandlers,
-  getSegWitItemHandlers,
-  getTaprootItemHandlers,
+  getLegacyDerivationHandlers,
+  getSegWitDerivationHandlers,
+  getNativeSegWitDerivationHandlers,
+  getTaprootDerivationHandlers,
+  getP2wshDerivationHandlers,
+  getP2wshInP2shDerivationHandlers,
 } from "./libs/helpers/index.js";
 import { findCustomConfig, getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 import { type BtcDerivationTypeUnion } from "@/libs/types/index.js";
 
 class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
-  private handlers: NonNullable<Partial<BtcHandlers>>;
+  private handlers: NonNullable<Partial<NetworkHandlers<BtcDerivationTypeUnion>>>;
 
   public constructor({
     derivationConfigs,
     mnemonic,
     networkPurpose,
   }: ConstructorParameters<BtcDerivationTypeUnion>) {
-    const keysDerivationHandlers: NetworkHandlers<BtcDerivationTypeUnion> = {
-      legacy: getLegacyItemHandlers({
+    const networkHandlers: NetworkHandlers<BtcDerivationTypeUnion> = {
+      legacy: getLegacyDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("legacy", derivationConfigs) ??
@@ -41,7 +40,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
           mnemonic,
         ),
       }),
-      segWit: getSegWitItemHandlers({
+      segWit: getSegWitDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("segWit", derivationConfigs) ??
@@ -49,7 +48,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
           mnemonic,
         ),
       }),
-      nativeSegWit: getNativeSegWitItemHandlers({
+      nativeSegWit: getNativeSegWitDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("nativeSegWit", derivationConfigs) ??
@@ -57,7 +56,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
           mnemonic,
         ),
       }),
-      taproot: getTaprootItemHandlers({
+      taproot: getTaprootDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new TaprootKeyDerivation(
           findCustomConfig("taproot", derivationConfigs) ??
@@ -65,7 +64,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
           mnemonic,
         ),
       }),
-      p2wsh: getP2wshItemHandlers({
+      p2wsh: getP2wshDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("p2wsh", derivationConfigs) ??
@@ -73,7 +72,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
           mnemonic,
         ),
       }),
-      p2wshInP2sh: getP2wshInP2shItemHandlers({
+      p2wshInP2sh: getP2wshInP2shDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("p2wshInP2sh", derivationConfigs) ??
@@ -83,7 +82,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
+    this.handlers = getNetworkHandlers(derivationConfigs, networkHandlers);
   }
 
   public deriveItemFromMnemonic({
@@ -125,7 +124,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
 
   private getDerivationHandlers(
     derivationType: BtcDerivationTypeUnion,
-  ): BtcHandlers[BtcDerivationTypeUnion] | never {
+  ): NetworkHandlers<BtcDerivationTypeUnion>[BtcDerivationTypeUnion] | never {
     const derivationHandlers = this.handlers[derivationType];
 
     if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);

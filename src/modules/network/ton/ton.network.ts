@@ -9,24 +9,23 @@ import type {
   DerivedCredential,
   DerivedItem,
   NetworkHandlers,
-  TonHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
-import { getTonItemHandlers } from "./libs/helpers/index.js";
+import { getTonDerivationHandlers } from "./libs/helpers/index.js";
 import { getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 import { BtcDerivationTypeUnion } from "@/libs/types/index.js";
 
 class Ton implements AbstractNetwork<"tonBase"> {
-  private handlers: NonNullable<Partial<TonHandlers>>;
+  private handlers: NonNullable<Partial<NetworkHandlers<"tonBase">>>;
 
   public constructor({ derivationConfigs, mnemonic }: ConstructorParameters<"tonBase">) {
-    const derivationHandlers: NetworkHandlers<"tonBase"> = {
-      tonBase: getTonItemHandlers({
+    const networkHandlers: NetworkHandlers<"tonBase"> = {
+      tonBase: getTonDerivationHandlers({
         keysDerivationInstance: new TonKeyDerivation(mnemonic),
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, derivationHandlers);
+    this.handlers = getNetworkHandlers(derivationConfigs, networkHandlers);
   }
 
   public deriveItemFromMnemonic(
@@ -63,7 +62,7 @@ class Ton implements AbstractNetwork<"tonBase"> {
     return false;
   }
 
-  private getDerivationHandlers(): TonHandlers["tonBase"] | never {
+  private getDerivationHandlers(): NetworkHandlers<"tonBase">["tonBase"] | never {
     const derivationHandlers = this.handlers["tonBase"];
 
     if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);

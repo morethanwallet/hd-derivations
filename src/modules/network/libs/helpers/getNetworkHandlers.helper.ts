@@ -1,24 +1,24 @@
 import type {
+  AdaDerivationTypeUnion,
+  AvaxDerivationTypeUnion,
+  BtcDerivationTypeUnion,
+} from "@/libs/types/index.js";
+import type {
   AdaDerivationConfig,
-  AdaHandlers,
   AvaxDerivationConfig,
-  AvaxHandlers,
   BtcDerivationConfig,
-  BtcHandlers,
+  NetworkHandlers,
   SuiDerivationConfig,
-  SuiHandlers,
   TonDerivationConfig,
-  TonHandlers,
   TrxDerivationConfig,
-  TrxHandlers,
 } from "../types/index.js";
 
-type CombinedHandlers = BtcHandlers &
-  AdaHandlers &
-  TrxHandlers &
-  AvaxHandlers &
-  TonHandlers &
-  SuiHandlers;
+type CombinedHandlers = NetworkHandlers<BtcDerivationTypeUnion> &
+  NetworkHandlers<AdaDerivationTypeUnion> &
+  NetworkHandlers<"trxBase"> &
+  NetworkHandlers<AvaxDerivationTypeUnion> &
+  NetworkHandlers<"tonBase"> &
+  NetworkHandlers<"suiBase">;
 
 type CombinedDerivationConfigs =
   | BtcDerivationConfig[]

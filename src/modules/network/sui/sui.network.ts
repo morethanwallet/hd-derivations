@@ -9,24 +9,23 @@ import type {
   DerivedCredential,
   DerivedItem,
   NetworkHandlers,
-  SuiHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
-import { getSuiItemHandlers } from "./libs/helpers/index.js";
+import { getSuiDerivationHandlers } from "./libs/helpers/index.js";
 import { getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 
 class Sui implements AbstractNetwork<"suiBase"> {
-  private handlers: NonNullable<Partial<SuiHandlers>>;
+  private handlers: NonNullable<Partial<NetworkHandlers<"suiBase">>>;
 
   public constructor({ derivationConfigs, mnemonic, scheme }: ConstructorParameters<"suiBase">) {
-    const derivationHandlers: NetworkHandlers<"suiBase"> = {
-      suiBase: getSuiItemHandlers({
+    const networkHandlers: NetworkHandlers<"suiBase"> = {
+      suiBase: getSuiDerivationHandlers({
         scheme,
         keysDerivationInstance: new SuiKeyDerivation(mnemonic),
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, derivationHandlers);
+    this.handlers = getNetworkHandlers(derivationConfigs, networkHandlers);
   }
 
   public deriveItemFromMnemonic(
@@ -63,7 +62,7 @@ class Sui implements AbstractNetwork<"suiBase"> {
     return false;
   }
 
-  private getDerivationHandlers(): SuiHandlers["suiBase"] | never {
+  private getDerivationHandlers(): NetworkHandlers<"suiBase">["suiBase"] | never {
     const derivationHandlers = this.handlers.suiBase;
 
     if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);

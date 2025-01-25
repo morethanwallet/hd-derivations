@@ -8,9 +8,8 @@ import type {
   DerivedCredential,
   DerivedItem,
   NetworkHandlers,
-  AvaxHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { getAvaxItemHandlers } from "./libs/helpers/index.js";
+import { getAvaxDerivationHandlers } from "./libs/helpers/index.js";
 import { CommonBipKeyDerivation } from "@/modules/keyDerivation/index.js";
 import { findCustomConfig, getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
@@ -18,15 +17,15 @@ import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";
 import { avaxConfig } from "@/modules/network/libs/modules/config/index.js";
 
 class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
-  private handlers: Partial<AvaxHandlers>;
+  private handlers: Partial<NetworkHandlers<AvaxDerivationTypeUnion>>;
 
   public constructor({
     derivationConfigs,
     mnemonic,
     networkPurpose,
   }: ConstructorParameters<AvaxDerivationTypeUnion>) {
-    const keysDerivationHandlers: NetworkHandlers<AvaxDerivationTypeUnion> = {
-      avaxX: getAvaxItemHandlers({
+    const networkHandlers: NetworkHandlers<AvaxDerivationTypeUnion> = {
+      avaxX: getAvaxDerivationHandlers({
         networkPurpose,
         derivationType: "avaxX",
         keysDerivationInstance: new CommonBipKeyDerivation(
@@ -36,7 +35,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
           false,
         ),
       }),
-      avaxP: getAvaxItemHandlers({
+      avaxP: getAvaxDerivationHandlers({
         networkPurpose,
         derivationType: "avaxP",
         keysDerivationInstance: new CommonBipKeyDerivation(
@@ -48,7 +47,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, keysDerivationHandlers);
+    this.handlers = getNetworkHandlers(derivationConfigs, networkHandlers);
   }
 
   public deriveItemFromMnemonic({
@@ -90,7 +89,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
 
   private getDerivationHandlers(
     derivationType: AvaxDerivationTypeUnion,
-  ): AvaxHandlers[AvaxDerivationTypeUnion] | never {
+  ): NetworkHandlers<AvaxDerivationTypeUnion>[AvaxDerivationTypeUnion] | never {
     const derivationHandlers = this.handlers[derivationType];
 
     if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);

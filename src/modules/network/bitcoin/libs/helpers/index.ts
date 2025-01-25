@@ -1,8 +1,8 @@
 export {
-  getLegacyItemHandlers,
-  getSegWitItemHandlers,
-  getNativeSegWitItemHandlers,
-  getTaprootItemHandlers,
-  getP2wshItemHandlers,
-  getP2wshInP2shItemHandlers,
-} from "./getItemHandlers.helper.js";
+  getLegacyDerivationHandlers,
+  getSegWitDerivationHandlers,
+  getNativeSegWitDerivationHandlers,
+  getTaprootDerivationHandlers,
+  getP2wshDerivationHandlers,
+  getP2wshInP2shDerivationHandlers,
+} from "./getDerivationHandlers.helper.js";

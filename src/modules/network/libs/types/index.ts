@@ -14,9 +14,9 @@ export {
 export { type DerivationTypeParameter } from "./derivationTypeParameter.type.js";
 export { type ConstructorParameters } from "./constructorParameters.type.js";
 export {
-  type GetItemHandlerParameters,
-  type GetItemHandlerReturnType,
-} from "./getItemHandler.type.js";
+  type GetDerivationHandlersParameters,
+  type GetDerivationHandlersReturnType,
+} from "./getDerivationHandlers.type.js";
 export {
   type DeriveItemsBatchFromMnemonic,
   type DeriveItemsBatchFromMnemonicParameters,
@@ -32,14 +32,6 @@ export {
 export { type DerivedItem } from "./derivedItem.type.js";
 export { type DerivedCredential } from "./derivedCredential.type.js";
 export { type NetworkHandlers } from "./networkHandlers.type.js";
-export type {
-  AvaxHandlers,
-  BtcHandlers,
-  AdaHandlers,
-  TonHandlers,
-  TrxHandlers,
-  SuiHandlers,
-} from "./handlers.type.js";
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,

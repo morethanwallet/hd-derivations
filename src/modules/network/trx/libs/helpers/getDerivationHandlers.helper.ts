@@ -5,13 +5,13 @@ import {
 } from "@/modules/network/libs/helpers/index.js";
 import { trxConfig } from "@/modules/network/libs/modules/config/index.js";
 import {
-  type GetItemHandlerParameters,
-  type GetItemHandlerReturnType,
+  type GetDerivationHandlersParameters,
+  type GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
 
-function getTrxItemHandlers({
+function getTrxDerivationHandlers({
   keysDerivationInstance,
-}: GetItemHandlerParameters<"trxBase">): GetItemHandlerReturnType<"trxBase"> {
+}: GetDerivationHandlersParameters<"trxBase">): GetDerivationHandlersReturnType<"trxBase"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
@@ -37,4 +37,4 @@ function getTrxItemHandlers({
   };
 }
 
-export { getTrxItemHandlers };
+export { getTrxDerivationHandlers };

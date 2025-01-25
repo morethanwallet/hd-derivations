@@ -1,1 +1,1 @@
-export { getTrxItemHandlers } from "./getItemHandlers.helper.js";
+export { getTrxDerivationHandlers } from "./getDerivationHandlers.helper.js";

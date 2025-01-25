@@ -6,17 +6,20 @@ import {
   type DerivationTypeMap,
 } from "@/libs/types/index.js";
 
-type DerivationTypeParameter<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends BtcDerivationTypeUnion
-    ? { derivationType: BtcDerivationTypeUnion }
+type DerivationTypeParameter<TDerivationType extends DerivationTypeUnion> = {
+  derivationType: TDerivationType extends BtcDerivationTypeUnion
+    ? BtcDerivationTypeUnion
     : TDerivationType extends AdaDerivationTypeUnion
-      ? { derivationType: AdaDerivationTypeUnion }
+      ? AdaDerivationTypeUnion
       : TDerivationType extends AvaxDerivationTypeUnion
-        ? { derivationType: AvaxDerivationTypeUnion }
+        ? AvaxDerivationTypeUnion
         : TDerivationType extends DerivationTypeMap["trxBase"]
-          ? { derivationType: DerivationTypeMap["trxBase"] }
+          ? DerivationTypeMap["trxBase"]
           : TDerivationType extends DerivationTypeMap["tonBase"]
-            ? { derivationType: DerivationTypeMap["tonBase"] }
-            : Record<string, unknown>;
+            ? DerivationTypeMap["tonBase"]
+            : TDerivationType extends DerivationTypeMap["suiBase"]
+              ? DerivationTypeMap["suiBase"]
+              : unknown;
+};
 
 export { type DerivationTypeParameter };

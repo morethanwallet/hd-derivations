@@ -1,1 +1,1 @@
-export { getAvaxItemHandlers } from "./getItemHandlers.helper.js";
+export { getAvaxDerivationHandlers } from "./getDerivationHandlers.helper.js";

@@ -5,14 +5,14 @@ import {
 } from "@/modules/network/libs/helpers/index.js";
 import { suiConfig } from "@/modules/network/libs/modules/config/index.js";
 import {
-  type GetItemHandlerParameters,
-  type GetItemHandlerReturnType,
+  type GetDerivationHandlersParameters,
+  type GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
 
-function getSuiItemHandlers({
+function getSuiDerivationHandlers({
   keysDerivationInstance,
   scheme,
-}: GetItemHandlerParameters<"suiBase">): GetItemHandlerReturnType<"suiBase"> {
+}: GetDerivationHandlersParameters<"suiBase">): GetDerivationHandlersReturnType<"suiBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({
@@ -52,4 +52,4 @@ function getSuiItemHandlers({
   };
 }
 
-export { getSuiItemHandlers };
+export { getSuiDerivationHandlers };
