@@ -7,3 +7,11 @@ export {
   DEFAULT_TRX_INSTANCE_PARAMETERS,
   DEFAULT_SUI_INSTANCE_PARAMETERS,
 } from "./libs/constants/index.js";
+
+
+// question: what's the diff between paths 
+// ./modules/address/networks/..
+// ./modules/network/..
+
+// summary:
+// move modules/address and modules/keyDerivation to libs 

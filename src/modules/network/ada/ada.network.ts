@@ -25,6 +25,11 @@ import { getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 import type { AdaDerivationTypeUnion } from "@/libs/types/index.js";
 
 class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
+  // question: can be allow to pass only specific networkHandler?
+  // hard to imagine the case when we need multiple of them at once
+
+  // summary: simplify and set derivationType in constructor
+  // maybe also rename `NetworkHandlers` to `DerivationHandlers`
   private handlers: NonNullable<Partial<NetworkHandlers<AdaDerivationTypeUnion>>>;
 
   public constructor({

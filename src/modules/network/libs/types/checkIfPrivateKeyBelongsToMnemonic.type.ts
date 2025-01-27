@@ -12,6 +12,8 @@ type CheckIfPrivateKeyBelongsToMnemonicInnerHandler<TDerivationType extends Deri
   parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<TDerivationType>,
 ) => boolean;
 
+// question: can we simplify type names ??
+// summary: maybe replace `PrivateKey` to `Pk` ??
 type CheckIfPrivateKeyBelongsToMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
   CommonHandlersParameters<TDerivationType>;
 
