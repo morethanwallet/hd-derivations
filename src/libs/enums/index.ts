@@ -1,3 +1,3 @@
-export { SplittedDerivationPathItemIndex } from "./splittedDerivationPathItemIndex.enum.js";
-export { ExceptionMessage } from "./exceptionMessage.enum.js";
-export { DerivationPathSymbol } from "./derivationPathSymbol.enum.js";
+export { SplittedDerivationPathItemIndex } from "./splitted-derivation-path-item-index.enum.js";
+export { ExceptionMessage } from "./exception-message.enum.js";
+export { DerivationPathSymbol } from "./derivation-path-symbol.enum.js";

@@ -1,1 +1,1 @@
-export { getAvaxDerivationHandlers } from "./getDerivationHandlers.helper.js";
+export { getAvaxDerivationHandlers } from "./get-derivation-handlers.helper.js";

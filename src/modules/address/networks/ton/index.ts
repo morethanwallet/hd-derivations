@@ -1,1 +1,1 @@
-export { getTonAddress } from "./getTonAddress.js";
+export { getTonAddress } from "./get-ton-address.js";

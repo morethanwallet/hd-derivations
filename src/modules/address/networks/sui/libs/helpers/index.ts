@@ -1,1 +1,1 @@
-export { getPublicKeyHandler } from "./getPublicKeyHandler.helper.js";
+export { getPublicKeyHandler } from "./get-public-key-handler.helper.js";

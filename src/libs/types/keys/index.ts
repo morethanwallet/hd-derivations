@@ -1,6 +1,6 @@
-export { type CardanoBaseKeyPair, type CommonKeyPair, type KeyPair } from "./keyPair.type.js";
+export { type CardanoBaseKeyPair, type CommonKeyPair, type KeyPair } from "./key-pair.type.js";
 export {
   type PrivateKey,
   type CommonPrivateKey,
   type CardanoBasePrivateKey,
-} from "./privateKey.type.js";
+} from "./private-key.type.js";

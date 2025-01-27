@@ -1,1 +1,1 @@
-export { getSuiAddress } from "./getSuiAddress.js";
+export { getSuiAddress } from "./get-sui-address.js";

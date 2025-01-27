@@ -5,4 +5,4 @@ export {
   getTaprootDerivationHandlers,
   getP2wshDerivationHandlers,
   getP2wshInP2shDerivationHandlers,
-} from "./getDerivationHandlers.helper.js";
+} from "./get-derivation-handlers.helper.js";

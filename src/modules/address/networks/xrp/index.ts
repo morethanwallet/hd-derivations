@@ -1,1 +1,1 @@
-export { getXrpAddress } from "./getXrpAddress.js";
+export { getXrpAddress } from "./get-xrp-address.js";

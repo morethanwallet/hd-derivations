@@ -1,1 +1,1 @@
-export { getCommonLegacyKeysConfig } from "./getCommonLegacyKeysConfig.helper.js";
+export { getCommonLegacyKeysConfig } from "./get-common-legacy-keys-config.helper.js";

@@ -1,1 +1,1 @@
-export { getTrxDerivationHandlers } from "./getDerivationHandlers.helper.js";
+export { getTrxDerivationHandlers } from "./get-derivation-handlers.helper.js";

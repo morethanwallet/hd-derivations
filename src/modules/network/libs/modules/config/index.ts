@@ -1,6 +1,6 @@
-export { adaConfig } from "./adaConfig.js";
-export { avaxConfig } from "./avaxConfig.js";
-export { btcConfig } from "./btcConfig.js";
-export { trxConfig } from "./trxConfig.js";
-export { tonConfig } from "./tonConfig.js";
-export { suiConfig } from "./suiConfig.js";
+export { adaConfig } from "./ada-config.js";
+export { avaxConfig } from "./avax-config.js";
+export { btcConfig } from "./btc-config.js";
+export { trxConfig } from "./trx-config.js";
+export { tonConfig } from "./ton-config.js";
+export { suiConfig } from "./sui-config.js";

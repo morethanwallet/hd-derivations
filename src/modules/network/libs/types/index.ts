@@ -1,37 +1,37 @@
-export { type AbstractNetwork } from "./abstractNetwork.type.js";
+export { type AbstractNetwork } from "./abstract-network.type.js";
 export {
   type DeriveItemFromMnemonic,
   type DeriveItemFromMnemonicParameters,
   type DeriveItemFromMnemonicInnerHandler,
   type DeriveItemFromMnemonicInnerHandlerParameters,
-} from "./deriveItemFromMnemonic.type.js";
+} from "./derive-item-from-mnemonic.type.js";
 export {
   type GetCredentialFromPrivateKey,
   type GetCredentialFromPrivateKeyParameters,
   type GetCredentialFromPrivateKeyInnerHandler,
   type GetCredentialFromPrivateKeyInnerHandlerParameters,
-} from "./getCredentialFromPrivateKey.type.js";
-export { type DerivationTypeParameter } from "./derivationTypeParameter.type.js";
-export { type ConstructorParameters } from "./constructorParameters.type.js";
+} from "./get-credential-from-private-key.type.js";
+export { type DerivationTypeParameter } from "./derivation-type-parameter.type.js";
+export { type ConstructorParameters } from "./constructor-parameters.type.js";
 export {
   type GetDerivationHandlersParameters,
   type GetDerivationHandlersReturnType,
-} from "./getDerivationHandlers.type.js";
+} from "./get-derivation-handlers.type.js";
 export {
   type DeriveItemsBatchFromMnemonic,
   type DeriveItemsBatchFromMnemonicParameters,
   type DeriveItemsBatchFromMnemonicInnerHandler,
   type DeriveItemsBatchFromMnemonicInnerHandlerParameters,
-} from "./deriveItemsBatchFromMnemonic.type.js";
+} from "./derive-items-batch-from-mnemonic.type.js";
 export {
   type CheckIfPrivateKeyBelongsToMnemonic,
   type CheckIfPrivateKeyBelongsToMnemonicParameters,
   type CheckIfPrivateKeyBelongsToMnemonicInnerHandler,
   type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
-} from "./checkIfPrivateKeyBelongsToMnemonic.type.js";
-export { type DerivedItem } from "./derivedItem.type.js";
-export { type DerivedCredential } from "./derivedCredential.type.js";
-export { type NetworkHandlers } from "./networkHandlers.type.js";
+} from "./check-if-private-key-belongs-to-mnemonic.type.js";
+export { type DerivedItem } from "./derived-item.type.js";
+export { type DerivedCredential } from "./derived-credential.type.js";
+export { type NetworkHandlers } from "./network-handlers.type.js";
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
@@ -39,7 +39,7 @@ export type {
   TrxInstanceParameters,
   TonInstanceParameters,
   SuiInstanceParameters,
-} from "./instanceParameters.type.js";
+} from "./instance-parameters.type.js";
 export type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
@@ -47,11 +47,11 @@ export type {
   TonDerivationConfig,
   TrxDerivationConfig,
   SuiDerivationConfig,
-} from "./derivationConfig.type.js";
+} from "./derivation-config.type.js";
 export {
   type CommonNetworkPurposeUnion,
   type CommonNetworkPurposeRegTestExtendedUnion,
   type AdaNetworkPurposeUnion,
-} from "./networkPurposeUnion.type.js";
-export type { NetworkTypeUnion } from "./networkTypeUnion.type.js";
-export type { NetworkTypeMap } from "./networkTypeMap.type.js";
+} from "./network-purpose-union.type.js";
+export type { NetworkTypeUnion } from "./network-type-union.type.js";
+export type { NetworkTypeMap } from "./network-type-map.type.js";

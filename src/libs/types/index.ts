@@ -1,5 +1,5 @@
-export type { SignatureSchemeUnion, SignatureSchemeProperty } from "./signatureScheme.type.js";
-export { type CustomError } from "./customError.type.js";
+export type { SignatureSchemeUnion, SignatureSchemeProperty } from "./signature-scheme.type.js";
+export { type CustomError } from "./custom-error.type.js";
 export {
   type DerivationPath,
   type DerivationTypeUnion,

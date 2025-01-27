@@ -1,6 +1,6 @@
-export { getNetworkId } from "./getNetworkId.helper.js";
+export { getNetworkId } from "./get-network-id.helper.js";
 export {
   getEnterpriseDerivationHandlers,
   getRewardDerivationHandlers,
   getBaseDerivationHandlers,
-} from "./getDerivationHandlers.helper.js";
+} from "./get-derivation-handlers.helper.js";

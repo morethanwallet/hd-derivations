@@ -1,1 +1,1 @@
-export { getSuiDerivationHandlers } from "./getDerivationHandlers.helper.js";
+export { getSuiDerivationHandlers } from "./get-derivation-handlers.helper.js";

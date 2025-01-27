@@ -1,1 +1,1 @@
-export { getAvaxAddress } from "./getAvaxAddress.js";
+export { getAvaxAddress } from "./get-avax-address.js";

@@ -1,1 +1,1 @@
-export { getTonDerivationHandlers } from "./getDerivationHandlers.helper.js";
+export { getTonDerivationHandlers } from "./get-derivation-handlers.helper.js";

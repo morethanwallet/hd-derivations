@@ -1,1 +1,1 @@
-export type { PublicKeyHandlerUnion } from "./publicKeyHandlerUnion.type.js";
+export type { PublicKeyHandlerUnion } from "./public-key-handler-union.type.js";

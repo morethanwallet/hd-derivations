@@ -1,1 +1,1 @@
-export { getBnbAddress } from "./getBnbAddress.js";
+export { getBnbAddress } from "./get-bnb-address.js";

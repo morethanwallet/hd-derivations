@@ -1,1 +1,1 @@
-export { getTrxAddress } from "./getTrxAddress.js";
+export { getTrxAddress } from "./get-trx-address.js";

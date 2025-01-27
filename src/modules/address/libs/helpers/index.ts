@@ -1,1 +1,1 @@
-export { getEvmAddressBuffer } from "./getEvmAddressBuffer.helper.js";
+export { getEvmAddressBuffer } from "./get-evm-address-buffer.helper.js";

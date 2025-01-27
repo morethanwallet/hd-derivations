@@ -1,1 +1,1 @@
-export { getTransparentAddress } from "./getTransparentAddress.js";
+export { getTransparentAddress } from "./get-transparent-address.js";

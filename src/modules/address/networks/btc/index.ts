@@ -1,5 +1,5 @@
-export { getSegWitAddress } from "./getSegWitAddress.js";
-export { getNativeSegWitAddress } from "./getNativeSegWitAddress.js";
-export { getTaprootAddress } from "./getTaprootAddress.js";
-export { getP2wshAddress } from "./getP2wshAddress.js";
-export { getP2wshInP2shAddress } from "./getP2wshInP2shAddress.js";
+export { getSegWitAddress } from "./get-seg-wit-address.js";
+export { getNativeSegWitAddress } from "./get-native-seg-wit-address.js";
+export { getTaprootAddress } from "./get-taproot-address.js";
+export { getP2wshAddress } from "./get-p2wsh-address.js";
+export { getP2wshInP2shAddress } from "./get-p2wsh-in-p2sh-address.js";

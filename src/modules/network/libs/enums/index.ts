@@ -1,1 +1,1 @@
-export { ExceptionMessage } from "./exceptionMessage.enum.js";
+export { ExceptionMessage } from "./exception-message.enum.js";

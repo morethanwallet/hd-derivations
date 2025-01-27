@@ -1,1 +1,1 @@
-export { getLegacyAddress } from "./getLegacyAddress.js";
+export { getLegacyAddress } from "./get-legacy-address.js";

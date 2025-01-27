@@ -1,4 +1,4 @@
-export { NetworkFacade } from "./networkFacade/index.js";
+export { NetworkFacade } from "./network-facade/index.js";
 export {
   DEFAULT_ADA_INSTANCE_PARAMETERS,
   DEFAULT_AVAX_INSTANCE_PARAMETERS,

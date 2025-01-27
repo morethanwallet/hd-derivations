@@ -5,4 +5,4 @@ export {
   DEFAULT_TRX_INSTANCE_PARAMETERS,
   DEFAULT_TON_INSTANCE_PARAMETERS,
   DEFAULT_SUI_INSTANCE_PARAMETERS,
-} from "./defaultInstanceParameters.constant.js";
+} from "./default-instance-parameters.constant.js";

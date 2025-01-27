@@ -1,1 +1,1 @@
-export { type MnemonicProperty } from "./mnemonicProperty.type.js";
+export { type MnemonicProperty } from "./mnemonic-property.type.js";

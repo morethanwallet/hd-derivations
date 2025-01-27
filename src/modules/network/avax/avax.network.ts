@@ -10,7 +10,7 @@ import type {
   NetworkHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { getAvaxDerivationHandlers } from "./libs/helpers/index.js";
-import { CommonBipKeyDerivation } from "@/modules/keyDerivation/index.js";
+import { CommonBipKeyDerivation } from "@/modules/key-derivation/index.js";
 import { findCustomConfig, getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
 import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
 import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";

@@ -2,7 +2,7 @@ import {
   BaseKeyDerivation,
   EnterpriseKeyDerivation,
   RewardKeyDerivation,
-} from "@/modules/keyDerivation/index.js";
+} from "@/modules/key-derivation/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
   AbstractNetwork,

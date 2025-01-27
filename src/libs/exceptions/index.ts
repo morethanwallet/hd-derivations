@@ -1,3 +1,3 @@
-export { AddressError } from "./addressError.exception.js";
-export { NetworkError } from "./networkError.exception.js";
-export { KeyDerivationError } from "./keyDerivationError.exception.js";
+export { AddressError } from "./address-error.exception.js";
+export { NetworkError } from "./network-error.exception.js";
+export { KeyDerivationError } from "./key-derivation-error.exception.js";

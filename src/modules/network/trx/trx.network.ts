@@ -1,4 +1,4 @@
-import { CommonBipKeyDerivation } from "@/modules/keyDerivation/index.js";
+import { CommonBipKeyDerivation } from "@/modules/key-derivation/index.js";
 import { trxConfig } from "@/modules/network/libs/modules/config/index.js";
 import type {
   DeriveItemFromMnemonicParameters,

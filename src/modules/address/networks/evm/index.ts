@@ -1,1 +1,1 @@
-export { getEvmAddress } from "./getEvmAddress.js";
+export { getEvmAddress } from "./get-evm-address.js";
