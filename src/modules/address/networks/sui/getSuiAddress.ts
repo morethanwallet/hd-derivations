@@ -1,5 +1,5 @@
 import type { CommonKeyPair, SignatureSchemeUnion } from "@/libs/types/index.js";
-import { type Address } from "../../libs/types/index.js";
+import type { Address } from "../../libs/types/index.js";
 import { fromBase64 } from "@mysten/sui/utils";
 import { getPublicKeyHandler } from "./libs/helpers/index.js";
 
