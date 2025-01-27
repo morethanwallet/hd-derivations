@@ -25,7 +25,6 @@
     "@types/tiny-secp256k1": "^2.0.1",
     "@vitest/coverage-istanbul": "^2.1.8",
     "bchaddrjs-slp": "^0.2.14",
-    "bech32": "^2.0.0",
     "bip38": "^3.1.1",
     "bip38grs": "^3.1.1",
     "bip85": "^0.0.3",
@@ -44,13 +43,13 @@
     "zxcvbn": "^4.4.2"
   },
   "dependencies": {
-    "@avalabs/avalanchejs": "^4.0.5",
     "@binance-chain/javascript-sdk": "^4.2.2",
     "@mysten/sui": "^1.20.0",
     "@ton/core": "^0.59.1",
     "@ton/crypto": "^3.3.0",
     "@ton/ton": "^15.1.0",
     "bchaddrjs": "^0.5.2",
+    "bech32": "^2.0.0",
     "bip32": "^5.0.0-rc.0",
     "bip39": "^3.1.0",
     "bitcoinjs-lib": "^7.0.0-rc.0",
