@@ -12,17 +12,17 @@ import type {
 type ConstructorParameters<T extends NetworkTypeUnion> = {
   network: T;
 } & (T extends NetworkTypeMap["btc"]
-  ? Omit<BtcInstanceParameters, "network">
+  ? BtcInstanceParameters
   : T extends NetworkTypeMap["ada"]
-    ? Omit<AdaInstanceParameters, "network">
+    ? AdaInstanceParameters
     : T extends NetworkTypeMap["avax"]
-      ? Omit<AvaxInstanceParameters, "network">
+      ? AvaxInstanceParameters
       : T extends NetworkTypeMap["ton"]
-        ? Omit<TonInstanceParameters, "network">
+        ? TonInstanceParameters
         : T extends NetworkTypeMap["trx"]
-          ? Omit<TrxInstanceParameters, "network">
+          ? TrxInstanceParameters
           : T extends NetworkTypeMap["sui"]
-            ? Omit<SuiInstanceParameters, "network">
+            ? SuiInstanceParameters
             : {
                 networkPurpose: null;
                 derivationConfigs: [];
