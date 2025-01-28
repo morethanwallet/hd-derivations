@@ -1,5 +1,5 @@
 // import { Mnemonic } from "@/mnemonic/index.js";
-// import { Bitcoin } from "../index.js";
+// import { Btc } from "../index.js";
 // import { describe, it, expect } from "vitest";
 // import { EMPTY_MNEMONIC } from "@/keyDerivation/constants/index.js";
 
@@ -246,18 +246,18 @@
 // };
 
 // let mnemonic: Mnemonic;
-// let bitcoinMainnet: Bitcoin;
-// let bitcoinTestnet: Bitcoin;
-// let bitcoinRegtest: Bitcoin;
+// let bitcoinMainnet: Btc;
+// let bitcoinTestnet: Btc;
+// let bitcoinRegtest: Btc;
 
 // beforeEach(() => {
 //   mnemonic = new Mnemonic(MNEMONIC);
-//   bitcoinMainnet = new Bitcoin(mnemonic, "mainnet");
-//   bitcoinTestnet = new Bitcoin(mnemonic, "testnet");
-//   bitcoinRegtest = new Bitcoin(mnemonic, "regtest");
+//   bitcoinMainnet = new Btc(mnemonic, "mainnet");
+//   bitcoinTestnet = new Btc(mnemonic, "testnet");
+//   bitcoinRegtest = new Btc(mnemonic, "regtest");
 // });
 
-// describe("Bitcoin", () => {
+// describe("Btc", () => {
 //   describe("mainnet", () => {
 //     describe("derive", () => {
 //       it("Derives correct legacy item", () => {

@@ -2,7 +2,7 @@ import type { NetworkTypeUnion } from "../libs/types/index.js";
 import type { ConstructorParameters } from "./libs/types/index.js";
 import { Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { ExceptionMessage } from "../libs/enums/index.js";
-import { Bitcoin } from "../bitcoin/index.js";
+import { Btc } from "../btc/index.js";
 import { Ada } from "../ada/index.js";
 import { Avax } from "../avax/index.js";
 import { Trx } from "../trx/index.js";
@@ -10,7 +10,7 @@ import { Ton } from "../ton/index.js";
 import { Sui } from "../sui/index.js";
 
 type Network = {
-  btc: Bitcoin;
+  btc: Btc;
   ada: Ada;
   avax: Avax;
   trx: Trx;
@@ -29,7 +29,7 @@ class NetworkFacade<T extends NetworkTypeUnion> {
     switch (network) {
       case "btc":
         {
-          this.network = new Bitcoin({
+          this.network = new Btc({
             ...(parameters as ConstructorParameters<"btc">),
             mnemonic: mnemonicInstance,
           }) as Network[T];

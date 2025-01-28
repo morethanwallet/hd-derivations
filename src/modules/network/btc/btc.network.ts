@@ -25,7 +25,7 @@ import {
 import { findCustomConfig } from "@/modules/network/libs/helpers/index.js";
 import { type BtcDerivationTypeUnion } from "@/libs/types/index.js";
 
-class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
+class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
   private derivationHandlers: DerivationsHandlers<BtcDerivationTypeUnion>[BtcDerivationTypeUnion];
 
   public constructor({
@@ -112,4 +112,4 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
   }
 }
 
-export { Bitcoin };
+export { Btc };
