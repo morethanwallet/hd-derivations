@@ -1,7 +1,7 @@
 import type { PrivateKey, DerivationTypeUnion } from "@/libs/types/index.js";
 import { type DerivationTypeParameter } from "./derivation-type-parameter.type.js";
 import { type DerivedCredential } from "./derived-credential.type.js";
-import { type TonAddressRequiredData } from "@/modules/address/index.js";
+import { type TonAddressRequiredData } from "@/libs/modules/address/index.js";
 import type { CommonHandlersParameters } from "./common-handlers-parameters.type.js";
 
 type HandlersCommonParameters<TDerivationType extends DerivationTypeUnion> =

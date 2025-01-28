@@ -4,9 +4,9 @@ import type {
   EnterpriseKeyDerivation,
   RewardKeyDerivation,
   BaseKeyDerivation,
-  TonKeyDerivation,
+  CommonEd25519KeyDerivation,
   SuiKeyDerivation,
-} from "@/modules/key-derivation/index.js";
+} from "@/libs/modules/key-derivation/index.js";
 import type {
   BtcDerivationTypeUnion,
   DerivationTypeMap,
@@ -49,7 +49,7 @@ type AdaParameters<TDerivationType extends DerivationTypeUnion> = {
 };
 
 type TonParameters = {
-  keysDerivationInstance: InstanceType<typeof TonKeyDerivation>;
+  keysDerivationInstance: InstanceType<typeof CommonEd25519KeyDerivation>;
 };
 
 type SuiParameters = {

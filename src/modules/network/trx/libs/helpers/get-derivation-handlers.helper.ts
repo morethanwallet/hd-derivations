@@ -1,4 +1,4 @@
-import { getTrxAddress } from "@/modules/address/index.js";
+import { getTrxAddress } from "@/libs/modules/address/index.js";
 import {
   checkIfPrivateKeyBelongsToMnemonic,
   deriveItemsBatchFromMnemonic,

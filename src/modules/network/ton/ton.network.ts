@@ -1,4 +1,4 @@
-import { TonKeyDerivation } from "@/modules/key-derivation/index.js";
+import { CommonEd25519KeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
   GetCredentialFromPrivateKeyParameters,
@@ -21,7 +21,7 @@ class Ton implements AbstractNetwork<"tonBase"> {
   public constructor({ derivationConfigs, mnemonic }: ConstructorParameters<"tonBase">) {
     const networkHandlers: NetworkHandlers<"tonBase"> = {
       tonBase: getTonDerivationHandlers({
-        keysDerivationInstance: new TonKeyDerivation(mnemonic),
+        keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic),
       }),
     };
 

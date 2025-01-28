@@ -1,4 +1,4 @@
-import { getTonAddress } from "@/modules/address/index.js";
+import { getTonAddress } from "@/libs/modules/address/index.js";
 import {
   checkIfPrivateKeyBelongsToMnemonic,
   deriveItemsBatchFromMnemonic,

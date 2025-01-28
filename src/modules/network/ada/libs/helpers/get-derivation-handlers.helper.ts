@@ -1,4 +1,4 @@
-import { getBaseAddress, getEnterpriseAddress, getRewardAddress } from "@/modules/address/index.js";
+import { getBaseAddress, getEnterpriseAddress, getRewardAddress } from "@/libs/modules/address/index.js";
 import {
   checkIfPrivateKeyBelongsToMnemonic,
   deriveItemsBatchFromMnemonic,

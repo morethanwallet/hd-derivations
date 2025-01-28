@@ -1,4 +1,4 @@
-import { getSuiAddress } from "@/modules/address/index.js";
+import { getSuiAddress } from "@/libs/modules/address/index.js";
 import {
   checkIfPrivateKeyBelongsToMnemonic,
   deriveItemsBatchFromMnemonic,

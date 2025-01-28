@@ -1,4 +1,4 @@
-import { type TonAddressRequiredData } from "@/modules/address/index.js";
+import { type TonAddressRequiredData } from "@/libs/modules/address/index.js";
 import { type BtcDerivationTypeUnion, type DerivationTypeUnion } from "@/libs/types/index.js";
 
 type CommonHandlersParameters<TDerivationType extends DerivationTypeUnion> =
