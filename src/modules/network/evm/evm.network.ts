@@ -4,7 +4,7 @@
 //   type DerivedItem,
 //   type DerivedKeyPair,
 //   type DeriveItemFromMnemonicParameters,
-//   type GetCredentialFromPrivateKeyParameters,
+//   type GetCredentialFromPKParameters,
 //   type AbstractNetwork,
 // } from "@/families/types/index.js";
 // import { config } from "./config/index.js";
@@ -42,9 +42,9 @@
 //     };
 //   }
 
-//   public getCredentialFromPrivateKey({
+//   public getCredentialFromPK({
 //     privateKey,
-//   }: GetCredentialFromPrivateKeyParameters<"evm">): DerivedCredential<"evm"> {
+//   }: GetCredentialFromPKParameters<"evm">): DerivedCredential<"evm"> {
 //     const rawPrivateKey = toUint8Array(
 //       Buffer.from(this.checkAndRemoveHexPrefix(privateKey), "hex")
 //     );

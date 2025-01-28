@@ -4,7 +4,7 @@
 //   DerivedItem,
 //   DerivedKeyPair,
 //   DeriveItemFromMnemonicParameters,
-//   GetCredentialFromPrivateKeyParameters,
+//   GetCredentialFromPKParameters,
 //   type AbstractNetwork,
 // } from "@/families/types/index.js";
 // import { Keys } from "@/keys/solana/index.js";
@@ -29,9 +29,9 @@
 //     };
 //   }
 
-//   public getCredentialFromPrivateKey({
+//   public getCredentialFromPK({
 //     privateKey,
-//   }: GetCredentialFromPrivateKeyParameters<"sol">): DerivedCredential<"sol"> {
+//   }: GetCredentialFromPKParameters<"sol">): DerivedCredential<"sol"> {
 //     const keyPair = Keypair.fromSecretKey(base58.decode(privateKey));
 //     const publicKey = this.getPublicKey(keyPair);
 

@@ -1,6 +1,6 @@
 import { getSuiAddress } from "@/libs/modules/address/index.js";
 import {
-  checkIfPrivateKeyBelongsToMnemonic,
+  doesPKeyBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
 } from "@/modules/network/libs/helpers/index.js";
 import { suiConfig } from "@/modules/network/libs/modules/config/index.js";
@@ -23,7 +23,7 @@ function getSuiDerivationHandlers({
 
       return { ...keys, address, derivationPath };
     },
-    getCredentialFromPrivateKey: ({ privateKey }) => {
+    getCredentialFromPK: ({ privateKey }) => {
       const keys = keysDerivationInstance.importByPrivateKey({
         privateKey,
         scheme,
@@ -40,9 +40,9 @@ function getSuiDerivationHandlers({
        scheme
       );
     },
-    checkIfPrivateKeyBelongsToMnemonic(parameters) {
+    doesPKeyBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"suiBase">).call(
+      return (doesPKeyBelongToMnemonic<"suiBase">).call(
         this,
         parameters,
         suiConfig.suiBase[scheme].derivationPathPrefix,

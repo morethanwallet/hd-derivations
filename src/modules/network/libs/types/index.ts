@@ -6,11 +6,11 @@ export {
   type DeriveItemFromMnemonicInnerHandlerParameters,
 } from "./derive-item-from-mnemonic.type.js";
 export {
-  type GetCredentialFromPrivateKey,
-  type GetCredentialFromPrivateKeyParameters,
-  type GetCredentialFromPrivateKeyInnerHandler,
-  type GetCredentialFromPrivateKeyInnerHandlerParameters,
-} from "./get-credential-from-private-key.type.js";
+  type GetCredentialFromPK,
+  type GetCredentialFromPKParameters,
+  type GetCredentialFromPKInnerHandler,
+  type GetCredentialFromPKInnerHandlerParameters,
+} from "./get-credential-from-p-k.type.js";
 export { type DerivationTypeParameter } from "./derivation-type-parameter.type.js";
 export { type ConstructorParameters } from "./constructor-parameters.type.js";
 export {
@@ -24,11 +24,11 @@ export {
   type DeriveItemsBatchFromMnemonicInnerHandlerParameters,
 } from "./derive-items-batch-from-mnemonic.type.js";
 export {
-  type CheckIfPrivateKeyBelongsToMnemonic,
-  type CheckIfPrivateKeyBelongsToMnemonicParameters,
-  type CheckIfPrivateKeyBelongsToMnemonicInnerHandler,
-  type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
-} from "./check-if-private-key-belongs-to-mnemonic.type.js";
+  type DoesPKBelongToMnemonic,
+  type DoesPKBelongToMnemonicParameters,
+  type DoesPKBelongToMnemonicInnerHandler,
+  type DoesPKBelongToMnemonicInnerHandlerParameters,
+} from "./does-p-k-belong-to-mnemonic.type.js";
 export { type DerivedItem } from "./derived-item.type.js";
 export { type DerivedCredential } from "./derived-credential.type.js";
 export { type NetworkHandlers } from "./network-handlers.type.js";

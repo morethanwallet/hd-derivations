@@ -6,10 +6,10 @@ import {
 import type {
   DeriveItemFromMnemonicParameters,
   AbstractNetwork,
-  GetCredentialFromPrivateKeyInnerHandlerParameters,
+  GetCredentialFromPKInnerHandlerParameters,
   ConstructorParameters,
   DeriveItemsBatchFromMnemonicParameters,
-  CheckIfPrivateKeyBelongsToMnemonicParameters,
+  DoesPKBelongToMnemonicParameters,
   DerivedItem,
   DerivedCredential,
   NetworkHandlers,
@@ -64,31 +64,31 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
     return derivationHandlers.deriveItemFromMnemonic({ derivationPath });
   }
 
-  // public getCredentialFromPrivateKey({
+  // public getCredentialFromPK({
   //   derivationType,
   //   ...parameters
-  // }: GetCredentialFromPrivateKeyParameters<AdaDerivationTypeUnion>): DerivedCredential<AdaDerivationTypeUnion> {
+  // }: GetCredentialFromPKParameters<AdaDerivationTypeUnion>): DerivedCredential<AdaDerivationTypeUnion> {
   //   const derivationHandlers = this.handlers[derivationType];
 
   //   if (!derivationHandler) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
 
   //   if (derivationType === "adaBase") {
-  //     return derivationHandlers.getCredentialFromPrivateKey(
-  //       parameters as GetCredentialFromPrivateKeyParameters<"adaBase">
+  //     return derivationHandlers.getCredentialFromPK(
+  //       parameters as GetCredentialFromPKParameters<"adaBase">
   //     );
   //   }
   // }
 
-  public getCredentialFromPrivateKey<C extends AdaDerivationTypeUnion>({
+  public getCredentialFromPK<C extends AdaDerivationTypeUnion>({
     derivationType,
     ...parameters
-  }: GetCredentialFromPrivateKeyInnerHandlerParameters<C> & {
+  }: GetCredentialFromPKInnerHandlerParameters<C> & {
     derivationType: C;
   }): DerivedCredential<AdaDerivationTypeUnion> {
     const derivationHandlers = this.getDerivationHandlers(derivationType);
 
     // TODO: Fix assertions
-    return derivationHandlers.getCredentialFromPrivateKey(parameters as any);
+    return derivationHandlers.getCredentialFromPK(parameters as any);
   }
 
   public deriveItemsBatchFromMnemonic({
@@ -100,11 +100,11 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
     return (derivationHandlers as any).deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public checkIfPrivateKeyBelongsToMnemonic(
-    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<AdaDerivationTypeUnion>,
+  public doesPKeyBelongToMnemonic(
+    parameters: DoesPKBelongToMnemonicParameters<AdaDerivationTypeUnion>,
   ): boolean {
     for (const handler of Object.values(this.handlers)) {
-      if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
+      if (handler.doesPKeyBelongToMnemonic(parameters)) return true;
     }
 
     return false;

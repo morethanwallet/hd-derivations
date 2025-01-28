@@ -1,6 +1,6 @@
 import { getTonAddress } from "@/libs/modules/address/index.js";
 import {
-  checkIfPrivateKeyBelongsToMnemonic,
+  doesPKeyBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
 } from "@/modules/network/libs/helpers/index.js";
 import { tonConfig } from "@/modules/network/libs/modules/config/index.js";
@@ -22,7 +22,7 @@ function getTonDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (parameters) => {
+    getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getTonAddress({
         publicKey: keys.publicKey,
@@ -39,9 +39,9 @@ function getTonDerivationHandlers({
        "ed25519"
       );
     },
-    checkIfPrivateKeyBelongsToMnemonic(parameters) {
+    doesPKeyBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"tonBase">).call(
+      return (doesPKeyBelongToMnemonic<"tonBase">).call(
         this,
         parameters,
         tonConfig.tonBase.derivationPathPrefix,

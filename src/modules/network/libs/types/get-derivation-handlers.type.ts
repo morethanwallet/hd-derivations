@@ -16,9 +16,9 @@ import type {
   SignatureSchemeProperty,
 } from "@/libs/types/index.js";
 import { type DeriveItemFromMnemonicInnerHandler } from "./derive-item-from-mnemonic.type.js";
-import { type GetCredentialFromPrivateKeyInnerHandler } from "./get-credential-from-private-key.type.js";
+import { type GetCredentialFromPKInnerHandler } from "./get-credential-from-p-k.type.js";
 import { type DeriveItemsBatchFromMnemonicInnerHandler } from "./derive-items-batch-from-mnemonic.type.js";
-import { type CheckIfPrivateKeyBelongsToMnemonicInnerHandler } from "./check-if-private-key-belongs-to-mnemonic.type.js";
+import { type DoesPKBelongToMnemonicInnerHandler } from "./does-p-k-belong-to-mnemonic.type.js";
 import type {
   CommonNetworkPurposeUnion,
   CommonNetworkPurposeRegTestExtendedUnion,
@@ -71,9 +71,9 @@ type GetDerivationHandlersParameters<TDerivationType extends DerivationTypeUnion
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonicInnerHandler<T>;
-  getCredentialFromPrivateKey: GetCredentialFromPrivateKeyInnerHandler<T>;
+  getCredentialFromPK: GetCredentialFromPKInnerHandler<T>;
   deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T>;
-  checkIfPrivateKeyBelongsToMnemonic: CheckIfPrivateKeyBelongsToMnemonicInnerHandler<T>;
+  doesPKeyBelongToMnemonic: DoesPKBelongToMnemonicInnerHandler<T>;
 };
 
 export { type GetDerivationHandlersParameters, type GetDerivationHandlersReturnType };

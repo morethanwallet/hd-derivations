@@ -1,6 +1,10 @@
-import { getBaseAddress, getEnterpriseAddress, getRewardAddress } from "@/libs/modules/address/index.js";
 import {
-  checkIfPrivateKeyBelongsToMnemonic,
+  getBaseAddress,
+  getEnterpriseAddress,
+  getRewardAddress,
+} from "@/libs/modules/address/index.js";
+import {
+  doesPKeyBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
 } from "@/modules/network/libs/helpers/index.js";
 import { adaConfig } from "@/modules/network/libs/modules/config/index.js";
@@ -21,16 +25,16 @@ function getEnterpriseDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (parameters) => {
+    getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getEnterpriseAddress(keys.publicKey, networkId);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"enterprise">,
-    checkIfPrivateKeyBelongsToMnemonic(parameters) {
+    doesPKeyBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"enterprise">).call(
+      return (doesPKeyBelongToMnemonic<"enterprise">).call(
         this,
         parameters,
         adaConfig[networkPurpose].enterprise.derivationPathPrefix,
@@ -51,16 +55,16 @@ function getRewardDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (parameters) => {
+    getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getRewardAddress(keys.publicKey, networkId);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"reward">,
-    checkIfPrivateKeyBelongsToMnemonic(parameters) {
+    doesPKeyBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"reward">).call(
+      return (doesPKeyBelongToMnemonic<"reward">).call(
         this,
         parameters,
         adaConfig[networkPurpose].reward.derivationPathPrefix,
@@ -81,16 +85,16 @@ function getBaseDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (parameters) => {
+    getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaBase">,
-    checkIfPrivateKeyBelongsToMnemonic(parameters) {
+    doesPKeyBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"adaBase">).call(
+      return (doesPKeyBelongToMnemonic<"adaBase">).call(
         this,
         parameters,
         adaConfig[networkPurpose].adaBase.derivationPathPrefix,

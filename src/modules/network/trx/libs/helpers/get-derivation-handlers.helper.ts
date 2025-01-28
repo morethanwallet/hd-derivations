@@ -1,6 +1,6 @@
 import { getTrxAddress } from "@/libs/modules/address/index.js";
 import {
-  checkIfPrivateKeyBelongsToMnemonic,
+  doesPKeyBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
 } from "@/modules/network/libs/helpers/index.js";
 import { trxConfig } from "@/modules/network/libs/modules/config/index.js";
@@ -19,16 +19,16 @@ function getTrxDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (parameters) => {
+    getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getTrxAddress(keys.publicKey, keysDerivationInstance.prefixConfig.pubKeyHash);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"trxBase">,
-    checkIfPrivateKeyBelongsToMnemonic(parameters) {
+    doesPKeyBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"trxBase">).call(
+      return (doesPKeyBelongToMnemonic<"trxBase">).call(
         this,
         parameters,
         trxConfig.trxBase.derivationPathPrefix,

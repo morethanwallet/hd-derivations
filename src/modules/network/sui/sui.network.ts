@@ -1,11 +1,11 @@
 import { SuiKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
-  GetCredentialFromPrivateKeyParameters,
+  GetCredentialFromPKParameters,
   AbstractNetwork,
   ConstructorParameters,
   DeriveItemsBatchFromMnemonicParameters,
-  CheckIfPrivateKeyBelongsToMnemonicParameters,
+  DoesPKBelongToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
   NetworkHandlers,
@@ -36,12 +36,12 @@ class Sui implements AbstractNetwork<"suiBase"> {
     return derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
-  public getCredentialFromPrivateKey(
-    parameters: GetCredentialFromPrivateKeyParameters<"suiBase">,
+  public getCredentialFromPK(
+    parameters: GetCredentialFromPKParameters<"suiBase">,
   ): DerivedCredential<"suiBase"> {
     const derivationHandlers = this.getDerivationHandlers();
 
-    return derivationHandlers.getCredentialFromPrivateKey(parameters);
+    return derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
@@ -52,11 +52,11 @@ class Sui implements AbstractNetwork<"suiBase"> {
     return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public checkIfPrivateKeyBelongsToMnemonic(
-    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<"suiBase">,
+  public doesPKeyBelongToMnemonic(
+    parameters: DoesPKBelongToMnemonicParameters<"suiBase">,
   ): boolean {
     for (const handler of Object.values(this.handlers)) {
-      if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
+      if (handler.doesPKeyBelongToMnemonic(parameters)) return true;
     }
 
     return false;

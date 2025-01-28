@@ -5,7 +5,7 @@
 //   type DerivedItem,
 //   type DerivedKeyPair,
 //   type DeriveItemFromMnemonicParameters,
-//   type GetCredentialFromPrivateKeyParameters,
+//   type GetCredentialFromPKParameters,
 //   type XrpAddressUnion,
 //   type AbstractNetwork,
 //   type CommonNetworkPurposeUnion,
@@ -43,11 +43,11 @@
 //     };
 //   }
 
-//   public getCredentialFromPrivateKey({
+//   public getCredentialFromPK({
 //     addressType,
 //     privateKey,
 //     destinationTag,
-//   }: GetCredentialFromPrivateKeyParameters<"xrp">): DerivedCredential<"xrp"> {
+//   }: GetCredentialFromPKParameters<"xrp">): DerivedCredential<"xrp"> {
 //     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
 //     const { publicKey } = this.getKeyPair(rawPrivateKey);
 //     const wallet = this.getWallet(privateKey, publicKey);

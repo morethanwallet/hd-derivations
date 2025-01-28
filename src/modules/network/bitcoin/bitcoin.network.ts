@@ -5,11 +5,11 @@ import {
 import { btcConfig } from "@/modules/network/libs/modules/config/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
-  GetCredentialFromPrivateKeyParameters,
+  GetCredentialFromPKParameters,
   AbstractNetwork,
   ConstructorParameters,
   DeriveItemsBatchFromMnemonicParameters,
-  CheckIfPrivateKeyBelongsToMnemonicParameters,
+  DoesPKBelongToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
   NetworkHandlers,
@@ -97,13 +97,13 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
     return derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
-  public getCredentialFromPrivateKey({
+  public getCredentialFromPK({
     derivationType,
     privateKey,
-  }: GetCredentialFromPrivateKeyParameters<BtcDerivationTypeUnion>): DerivedCredential<BtcDerivationTypeUnion> {
+  }: GetCredentialFromPKParameters<BtcDerivationTypeUnion>): DerivedCredential<BtcDerivationTypeUnion> {
     const derivationHandlers = this.getDerivationHandlers(derivationType);
 
-    return derivationHandlers.getCredentialFromPrivateKey({ privateKey });
+    return derivationHandlers.getCredentialFromPK({ privateKey });
   }
 
   public deriveItemsBatchFromMnemonic({
@@ -115,11 +115,11 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
     return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public checkIfPrivateKeyBelongsToMnemonic(
-    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<BtcDerivationTypeUnion>,
+  public doesPKeyBelongToMnemonic(
+    parameters: DoesPKBelongToMnemonicParameters<BtcDerivationTypeUnion>,
   ): boolean {
     for (const handler of Object.values(this.handlers)) {
-      if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
+      if (handler.doesPKeyBelongToMnemonic(parameters)) return true;
     }
 
     return false;

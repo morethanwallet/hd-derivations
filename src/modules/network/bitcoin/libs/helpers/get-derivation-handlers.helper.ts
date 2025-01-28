@@ -7,15 +7,15 @@ import {
   getTaprootAddress,
 } from "@/libs/modules/address/index.js";
 import {
-  checkIfPrivateKeyBelongsToMnemonic,
+  doesPKeyBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
 } from "@/modules/network/libs/helpers/index.js";
 import { btcConfig } from "@/modules/network/libs/modules/config/index.js";
 import {
   type GetDerivationHandlersParameters,
   type DeriveItemFromMnemonicInnerHandlerParameters,
-  type GetCredentialFromPrivateKeyInnerHandlerParameters,
-  type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
+  type GetCredentialFromPKInnerHandlerParameters,
+  type DoesPKBelongToMnemonicInnerHandlerParameters,
   type DerivedItem,
   type DerivedCredential,
   type GetDerivationHandlersReturnType,
@@ -32,16 +32,16 @@ function getLegacyDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (parameters) => {
+    getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"legacy">,
-    checkIfPrivateKeyBelongsToMnemonic(parameters) {
+    doesPKeyBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"legacy">).call(
+      return (doesPKeyBelongToMnemonic<"legacy">).call(
         this,
         parameters,
         btcConfig[networkPurpose].legacy.derivationPathPrefix,
@@ -63,8 +63,8 @@ function getSegWitDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (
-      parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"segWit">,
+    getCredentialFromPK: (
+      parameters: GetCredentialFromPKInnerHandlerParameters<"segWit">,
     ): DerivedCredential<"segWit"> => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
@@ -72,11 +72,11 @@ function getSegWitDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"segWit">,
-    checkIfPrivateKeyBelongsToMnemonic(
-      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"segWit">,
+    doesPKeyBelongToMnemonic(
+      parameters: DoesPKBelongToMnemonicInnerHandlerParameters<"segWit">,
     ): boolean {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"segWit">).call(
+      return (doesPKeyBelongToMnemonic<"segWit">).call(
         this,
         parameters,
         btcConfig[networkPurpose].segWit.derivationPathPrefix,
@@ -98,8 +98,8 @@ function getNativeSegWitDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (
-      parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"nativeSegWit">,
+    getCredentialFromPK: (
+      parameters: GetCredentialFromPKInnerHandlerParameters<"nativeSegWit">,
     ): DerivedCredential<"nativeSegWit"> => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getNativeSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
@@ -107,11 +107,11 @@ function getNativeSegWitDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"nativeSegWit">,
-    checkIfPrivateKeyBelongsToMnemonic(
-      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"nativeSegWit">,
+    doesPKeyBelongToMnemonic(
+      parameters: DoesPKBelongToMnemonicInnerHandlerParameters<"nativeSegWit">,
     ): boolean {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"nativeSegWit">).call(
+      return (doesPKeyBelongToMnemonic<"nativeSegWit">).call(
         this,
         parameters,
         btcConfig[networkPurpose].nativeSegWit.derivationPathPrefix,
@@ -133,8 +133,8 @@ function getTaprootDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (
-      parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"taproot">,
+    getCredentialFromPK: (
+      parameters: GetCredentialFromPKInnerHandlerParameters<"taproot">,
     ): DerivedCredential<"taproot"> => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getTaprootAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
@@ -142,11 +142,11 @@ function getTaprootDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"taproot">,
-    checkIfPrivateKeyBelongsToMnemonic(
-      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"taproot">,
+    doesPKeyBelongToMnemonic(
+      parameters: DoesPKBelongToMnemonicInnerHandlerParameters<"taproot">,
     ): boolean {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"taproot">).call(
+      return (doesPKeyBelongToMnemonic<"taproot">).call(
         this,
         parameters,
         btcConfig[networkPurpose].taproot.derivationPathPrefix,
@@ -168,8 +168,8 @@ function getP2wshDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (
-      parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"p2wsh">,
+    getCredentialFromPK: (
+      parameters: GetCredentialFromPKInnerHandlerParameters<"p2wsh">,
     ): DerivedCredential<"p2wsh"> => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getP2wshAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
@@ -177,11 +177,11 @@ function getP2wshDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"p2wsh">,
-    checkIfPrivateKeyBelongsToMnemonic(
-      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"p2wsh">,
+    doesPKeyBelongToMnemonic(
+      parameters: DoesPKBelongToMnemonicInnerHandlerParameters<"p2wsh">,
     ): boolean {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"p2wsh">).call(
+      return (doesPKeyBelongToMnemonic<"p2wsh">).call(
         this,
         parameters,
         btcConfig[networkPurpose].p2wsh.derivationPathPrefix,
@@ -203,8 +203,8 @@ function getP2wshInP2shDerivationHandlers({
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
-    getCredentialFromPrivateKey: (
-      parameters: GetCredentialFromPrivateKeyInnerHandlerParameters<"p2wshInP2sh">,
+    getCredentialFromPK: (
+      parameters: GetCredentialFromPKInnerHandlerParameters<"p2wshInP2sh">,
     ): DerivedCredential<"p2wshInP2sh"> => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
       const address = getP2wshInP2shAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
@@ -212,11 +212,11 @@ function getP2wshInP2shDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"p2wshInP2sh">,
-    checkIfPrivateKeyBelongsToMnemonic(
-      parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<"p2wshInP2sh">,
+    doesPKeyBelongToMnemonic(
+      parameters: DoesPKBelongToMnemonicInnerHandlerParameters<"p2wshInP2sh">,
     ): boolean {
       // prettier-ignore
-      return (checkIfPrivateKeyBelongsToMnemonic<"p2wshInP2sh">).call(
+      return (doesPKeyBelongToMnemonic<"p2wshInP2sh">).call(
         this,
         parameters,
         btcConfig[networkPurpose].p2wshInP2sh.derivationPathPrefix,

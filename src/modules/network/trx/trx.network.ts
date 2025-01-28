@@ -2,11 +2,11 @@ import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import { trxConfig } from "@/modules/network/libs/modules/config/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
-  GetCredentialFromPrivateKeyParameters,
+  GetCredentialFromPKParameters,
   AbstractNetwork,
   ConstructorParameters,
   DeriveItemsBatchFromMnemonicParameters,
-  CheckIfPrivateKeyBelongsToMnemonicParameters,
+  DoesPKBelongToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
   NetworkHandlers,
@@ -41,12 +41,12 @@ class Trx implements AbstractNetwork<"trxBase"> {
     return derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
-  public getCredentialFromPrivateKey({
+  public getCredentialFromPK({
     privateKey,
-  }: GetCredentialFromPrivateKeyParameters<"trxBase">): DerivedCredential<BtcDerivationTypeUnion> {
+  }: GetCredentialFromPKParameters<"trxBase">): DerivedCredential<BtcDerivationTypeUnion> {
     const derivationHandlers = this.getDerivationHandlers();
 
-    return derivationHandlers.getCredentialFromPrivateKey({ privateKey });
+    return derivationHandlers.getCredentialFromPK({ privateKey });
   }
 
   public deriveItemsBatchFromMnemonic(
@@ -57,11 +57,11 @@ class Trx implements AbstractNetwork<"trxBase"> {
     return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public checkIfPrivateKeyBelongsToMnemonic(
-    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<"trxBase">,
+  public doesPKeyBelongToMnemonic(
+    parameters: DoesPKBelongToMnemonicParameters<"trxBase">,
   ): boolean {
     for (const handler of Object.values(this.handlers)) {
-      if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
+      if (handler.doesPKeyBelongToMnemonic(parameters)) return true;
     }
 
     return false;

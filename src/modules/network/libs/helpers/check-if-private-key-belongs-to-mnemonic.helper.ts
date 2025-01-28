@@ -5,7 +5,7 @@ import type {
 } from "@/libs/types/index.js";
 import {
   type DeriveItemsBatchFromMnemonicInnerHandler,
-  type CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters,
+  type DoesPKBelongToMnemonicInnerHandlerParameters,
 } from "../types/index.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../../constants/index.js";
 import { checkHardenedSuffixEnding } from "@/libs/helpers/index.js";
@@ -41,11 +41,11 @@ function increaseDerivationPathDepth({
   return `${derivationPath}${DerivationPathSymbol.DELIMITER}${SEGMENT_INITIAL_VALUE}${hardenedSuffix}`;
 }
 
-function checkIfPrivateKeyBelongsToMnemonic<T extends DerivationTypeUnion>(
+function doesPKeyBelongToMnemonic<T extends DerivationTypeUnion>(
   this: {
     deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T>;
   },
-  parameters: CheckIfPrivateKeyBelongsToMnemonicInnerHandlerParameters<T>,
+  parameters: DoesPKBelongToMnemonicInnerHandlerParameters<T>,
   derivationPathPrefixToCompare: DerivationPath["derivationPath"],
   scheme?: SignatureSchemeUnion,
 ): boolean {
@@ -93,4 +93,4 @@ function checkIfPrivateKeyBelongsToMnemonic<T extends DerivationTypeUnion>(
   return false;
 }
 
-export { checkIfPrivateKeyBelongsToMnemonic };
+export { doesPKeyBelongToMnemonic };

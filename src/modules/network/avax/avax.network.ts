@@ -2,9 +2,9 @@ import type {
   AbstractNetwork,
   DeriveItemFromMnemonicParameters,
   ConstructorParameters,
-  GetCredentialFromPrivateKeyParameters,
+  GetCredentialFromPKParameters,
   DeriveItemsBatchFromMnemonicParameters,
-  CheckIfPrivateKeyBelongsToMnemonicParameters,
+  DoesPKBelongToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
   NetworkHandlers,
@@ -59,13 +59,13 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
     return derivationHandlers.deriveItemFromMnemonic({ derivationPath });
   }
 
-  public getCredentialFromPrivateKey({
+  public getCredentialFromPK({
     derivationType,
     privateKey,
-  }: GetCredentialFromPrivateKeyParameters<AvaxDerivationTypeUnion>): DerivedCredential<AvaxDerivationTypeUnion> {
+  }: GetCredentialFromPKParameters<AvaxDerivationTypeUnion>): DerivedCredential<AvaxDerivationTypeUnion> {
     const derivationHandlers = this.getDerivationHandlers(derivationType);
 
-    return derivationHandlers.getCredentialFromPrivateKey({ privateKey });
+    return derivationHandlers.getCredentialFromPK({ privateKey });
   }
 
   public deriveItemsBatchFromMnemonic({
@@ -77,11 +77,11 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
     return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public checkIfPrivateKeyBelongsToMnemonic(
-    parameters: CheckIfPrivateKeyBelongsToMnemonicParameters<AvaxDerivationTypeUnion>,
+  public doesPKeyBelongToMnemonic(
+    parameters: DoesPKBelongToMnemonicParameters<AvaxDerivationTypeUnion>,
   ): boolean {
     for (const handler of Object.values(this.handlers)) {
-      if (handler.checkIfPrivateKeyBelongsToMnemonic(parameters)) return true;
+      if (handler.doesPKeyBelongToMnemonic(parameters)) return true;
     }
 
     return false;
