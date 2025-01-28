@@ -28,32 +28,32 @@ import type {
 type AvaxParameters = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: AvaxDerivationTypeUnion;
-  keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation>;
+  keysDerivationInstance: CommonBipKeyDerivation;
 };
 
 type BtcParameters<TDerivationType extends DerivationTypeUnion> = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
 } & (TDerivationType extends DerivationTypeMap["taproot"]
-  ? { keysDerivationInstance: InstanceType<typeof TaprootKeyDerivation> }
-  : { keysDerivationInstance: InstanceType<typeof CommonBipKeyDerivation> });
+  ? { keysDerivationInstance: TaprootKeyDerivation }
+  : { keysDerivationInstance: CommonBipKeyDerivation });
 
 type AdaParameters<TDerivationType extends DerivationTypeUnion> = {
   networkId: number;
   networkPurpose: AdaNetworkPurposeUnion;
 } & {
   keysDerivationInstance: TDerivationType extends DerivationTypeMap["enterprise"]
-    ? InstanceType<typeof EnterpriseKeyDerivation>
+    ? EnterpriseKeyDerivation
     : TDerivationType extends DerivationTypeMap["reward"]
-      ? InstanceType<typeof RewardKeyDerivation>
-      : InstanceType<typeof BaseKeyDerivation>;
+      ? RewardKeyDerivation
+      : BaseKeyDerivation;
 };
 
 type TonParameters = {
-  keysDerivationInstance: InstanceType<typeof CommonEd25519KeyDerivation>;
+  keysDerivationInstance: CommonEd25519KeyDerivation;
 };
 
 type SuiParameters = {
-  keysDerivationInstance: InstanceType<typeof SuiKeyDerivation>;
+  keysDerivationInstance: SuiKeyDerivation;
 } & SignatureSchemeProperty;
 
 type GetDerivationHandlersParameters<TDerivationType extends DerivationTypeUnion> =

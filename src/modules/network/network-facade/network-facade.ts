@@ -10,12 +10,12 @@ import { Ton } from "../ton/index.js";
 import { Sui } from "../sui/index.js";
 
 type Network = {
-  btc: InstanceType<typeof Bitcoin>;
-  ada: InstanceType<typeof Ada>;
-  avax: InstanceType<typeof Avax>;
-  trx: InstanceType<typeof Trx>;
-  ton: InstanceType<typeof Ton>;
-  sui: InstanceType<typeof Sui>;
+  btc: Bitcoin;
+  ada: Ada;
+  avax: Avax;
+  trx: Trx;
+  ton: Ton;
+  sui: Sui;
 };
 
 class NetworkFacade<T extends NetworkTypeUnion> {
