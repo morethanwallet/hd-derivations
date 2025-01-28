@@ -13,73 +13,41 @@ import type {
 const DEFAULT_ADA_INSTANCE_PARAMETERS: AdaInstanceParameters = {
   network: "ada",
   networkPurpose: "mainnet",
-  derivationConfigs: [
-    { derivationType: "enterprise" },
-    { derivationType: "reward" },
-    { derivationType: "adaBase" },
-  ],
+  derivationConfig: { derivationType: "adaBase" },
 };
 
 const DEFAULT_AVAX_INSTANCE_PARAMETERS: AvaxInstanceParameters = {
   network: "avax",
   networkPurpose: "mainnet",
-  derivationConfigs: [
-    {
-      derivationType: "avaxP",
-      prefixConfig: avaxConfig.mainnet.avax.prefixConfig,
-    },
-    {
-      derivationType: "avaxX",
-      prefixConfig: avaxConfig.mainnet.avax.prefixConfig,
-    },
-  ],
+  derivationConfig: {
+    derivationType: "avaxX",
+    prefixConfig: avaxConfig.mainnet.avax.prefixConfig,
+  },
 };
 
 const DEFAULT_BTC_INSTANCE_PARAMETERS: BtcInstanceParameters = {
   network: "btc",
   networkPurpose: "mainnet",
-  derivationConfigs: [
-    {
-      derivationType: "legacy",
-      prefixConfig: btcConfig.mainnet.legacy.prefixConfig,
-    },
-    {
-      derivationType: "segWit",
-      prefixConfig: btcConfig.mainnet.segWit.prefixConfig,
-    },
-    {
-      derivationType: "nativeSegWit",
-      prefixConfig: btcConfig.mainnet.nativeSegWit.prefixConfig,
-    },
-    {
-      derivationType: "taproot",
-      prefixConfig: btcConfig.mainnet.taproot.prefixConfig,
-    },
-    {
-      derivationType: "p2wsh",
-      prefixConfig: btcConfig.mainnet.p2wsh.prefixConfig,
-    },
-    {
-      derivationType: "p2wshInP2sh",
-      prefixConfig: btcConfig.mainnet.p2wshInP2sh.prefixConfig,
-    },
-  ],
+  derivationConfig: {
+    derivationType: "taproot",
+    prefixConfig: btcConfig.mainnet.taproot.prefixConfig,
+  },
 };
 
 const DEFAULT_TRX_INSTANCE_PARAMETERS: TrxInstanceParameters = {
   network: "trx",
-  derivationConfigs: [{ derivationType: "trxBase", prefixConfig: trxConfig.trxBase.prefixConfig }],
+  derivationConfig: { derivationType: "trxBase", prefixConfig: trxConfig.trxBase.prefixConfig },
 };
 
 const DEFAULT_TON_INSTANCE_PARAMETERS: TonInstanceParameters = {
   network: "ton",
   networkPurpose: "mainnet",
-  derivationConfigs: [{ derivationType: "tonBase" }],
+  derivationConfig: { derivationType: "tonBase" },
 };
 
 const DEFAULT_SUI_INSTANCE_PARAMETERS: SuiInstanceParameters = {
   network: "sui",
-  derivationConfigs: [{ derivationType: "suiBase" }],
+  derivationConfig: { derivationType: "suiBase" },
   scheme: "ed25519",
 };
 

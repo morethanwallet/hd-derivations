@@ -7,29 +7,28 @@ import type {
   DoesPKBelongToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
-  NetworkHandlers,
+  DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { getAvaxDerivationHandlers } from "./libs/helpers/index.js";
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
-import { findCustomConfig, getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
-import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
+import { findCustomConfig } from "@/modules/network/libs/helpers/index.js";
 import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";
 import { avaxConfig } from "@/modules/network/libs/modules/config/index.js";
 
 class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
-  private handlers: Partial<NetworkHandlers<AvaxDerivationTypeUnion>>;
+  private derivationHandlers: DerivationsHandlers<AvaxDerivationTypeUnion>[AvaxDerivationTypeUnion];
 
   public constructor({
-    derivationConfigs,
     mnemonic,
     networkPurpose,
+    derivationConfig,
   }: ConstructorParameters<AvaxDerivationTypeUnion>) {
-    const networkHandlers: NetworkHandlers<AvaxDerivationTypeUnion> = {
+    const derivationsHandlers: DerivationsHandlers<AvaxDerivationTypeUnion> = {
       avaxX: getAvaxDerivationHandlers({
         networkPurpose,
         derivationType: "avaxX",
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("avaxX", derivationConfigs) ??
+          findCustomConfig("avaxX", derivationConfig) ??
             avaxConfig[networkPurpose].avax.prefixConfig,
           mnemonic,
           false,
@@ -39,7 +38,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
         networkPurpose,
         derivationType: "avaxP",
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("avaxP", derivationConfigs) ??
+          findCustomConfig("avaxP", derivationConfig) ??
             avaxConfig[networkPurpose].avax.prefixConfig,
           mnemonic,
           false,
@@ -47,54 +46,31 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, networkHandlers);
+    this.derivationHandlers = derivationsHandlers[derivationConfig.derivationType];
   }
 
-  public deriveItemFromMnemonic({
-    derivationPath,
-    derivationType,
-  }: DeriveItemFromMnemonicParameters<AvaxDerivationTypeUnion>): DerivedItem<AvaxDerivationTypeUnion> {
-    const derivationHandlers = this.getDerivationHandlers(derivationType);
-
-    return derivationHandlers.deriveItemFromMnemonic({ derivationPath });
+  public deriveItemFromMnemonic(
+    parameters: DeriveItemFromMnemonicParameters<AvaxDerivationTypeUnion>,
+  ): DerivedItem<AvaxDerivationTypeUnion> {
+    return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
-  public getCredentialFromPK({
-    derivationType,
-    privateKey,
-  }: GetCredentialFromPKParameters<AvaxDerivationTypeUnion>): DerivedCredential<AvaxDerivationTypeUnion> {
-    const derivationHandlers = this.getDerivationHandlers(derivationType);
-
-    return derivationHandlers.getCredentialFromPK({ privateKey });
+  public getCredentialFromPK(
+    parameters: GetCredentialFromPKParameters<AvaxDerivationTypeUnion>,
+  ): DerivedCredential<AvaxDerivationTypeUnion> {
+    return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
-  public deriveItemsBatchFromMnemonic({
-    derivationType,
-    ...parameters
-  }: DeriveItemsBatchFromMnemonicParameters<AvaxDerivationTypeUnion>) {
-    const derivationHandlers = this.getDerivationHandlers(derivationType);
-
-    return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
+  public deriveItemsBatchFromMnemonic(
+    parameters: DeriveItemsBatchFromMnemonicParameters<AvaxDerivationTypeUnion>,
+  ) {
+    return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKeyBelongToMnemonic(
     parameters: DoesPKBelongToMnemonicParameters<AvaxDerivationTypeUnion>,
-  ): boolean {
-    for (const handler of Object.values(this.handlers)) {
-      if (handler.doesPKeyBelongToMnemonic(parameters)) return true;
-    }
-
-    return false;
-  }
-
-  private getDerivationHandlers(
-    derivationType: AvaxDerivationTypeUnion,
-  ): NetworkHandlers<AvaxDerivationTypeUnion>[AvaxDerivationTypeUnion] | never {
-    const derivationHandlers = this.handlers[derivationType];
-
-    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
-
-    return derivationHandlers;
+  ) {
+    return this.derivationHandlers.doesPKeyBelongToMnemonic(parameters);
   }
 }
 

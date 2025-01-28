@@ -4,20 +4,24 @@ import {
   type AdaDerivationTypeUnion,
   type DerivationTypeUnion,
 } from "@/libs/types/index.js";
+import type {
+  AvaxDerivationConfig,
+  BtcDerivationConfig,
+  TrxDerivationConfig,
+} from "../types/index.js";
 
 type KeysConfigRequiredDerivationTypeUnion = Exclude<
   DerivationTypeUnion,
   AdaDerivationTypeUnion | DerivationTypeMap["sol"] | DerivationTypeMap["tonBase"]
 >;
 
+type DerivationConfigUnion = AvaxDerivationConfig | BtcDerivationConfig | TrxDerivationConfig;
+
 function findCustomConfig(
   derivationType: KeysConfigRequiredDerivationTypeUnion,
-  derivationConfigs: {
-    derivationType: KeysConfigRequiredDerivationTypeUnion;
-    prefixConfig: PrefixConfig;
-  }[],
+  derivationConfig: DerivationConfigUnion,
 ): PrefixConfig | void {
-  return derivationConfigs.find((config) => config.derivationType === derivationType)?.prefixConfig;
+  if (derivationConfig.derivationType === derivationType) return derivationConfig.prefixConfig;
 }
 
 export { findCustomConfig };

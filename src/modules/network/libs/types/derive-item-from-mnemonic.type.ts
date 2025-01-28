@@ -1,4 +1,3 @@
-import { type DerivationTypeParameter } from "./derivation-type-parameter.type.js";
 import { type DerivationTypeUnion, type DerivationPath } from "@/libs/types/index.js";
 import { type CommonHandlersParameters } from "./common-handlers-parameters.type.js";
 import { type DerivedItem } from "./derived-item.type.js";
@@ -14,7 +13,7 @@ type DeriveItemFromMnemonicInnerHandler<TDerivationType extends DerivationTypeUn
 ) => DerivedItem<TDerivationType>;
 
 type DeriveItemFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
-  DerivationTypeParameter<TDerivationType> & HandlersCommonParameters<TDerivationType>;
+  HandlersCommonParameters<TDerivationType>;
 
 type DeriveItemFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
   parameters: DeriveItemFromMnemonicParameters<TDerivationType>,

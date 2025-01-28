@@ -12,9 +12,8 @@ import type {
   DoesPKBelongToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
-  NetworkHandlers,
+  DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
 import {
   getLegacyDerivationHandlers,
   getSegWitDerivationHandlers,
@@ -23,22 +22,22 @@ import {
   getP2wshDerivationHandlers,
   getP2wshInP2shDerivationHandlers,
 } from "./libs/helpers/index.js";
-import { findCustomConfig, getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
+import { findCustomConfig } from "@/modules/network/libs/helpers/index.js";
 import { type BtcDerivationTypeUnion } from "@/libs/types/index.js";
 
 class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
-  private handlers: NonNullable<Partial<NetworkHandlers<BtcDerivationTypeUnion>>>;
+  private derivationHandlers: DerivationsHandlers<BtcDerivationTypeUnion>[BtcDerivationTypeUnion];
 
   public constructor({
-    derivationConfigs,
     mnemonic,
     networkPurpose,
+    derivationConfig,
   }: ConstructorParameters<BtcDerivationTypeUnion>) {
-    const networkHandlers: NetworkHandlers<BtcDerivationTypeUnion> = {
+    const derivationsHandlers: DerivationsHandlers<BtcDerivationTypeUnion> = {
       legacy: getLegacyDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("legacy", derivationConfigs) ??
+          findCustomConfig("legacy", derivationConfig) ??
             btcConfig[networkPurpose].legacy.prefixConfig,
           mnemonic,
         ),
@@ -46,7 +45,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
       segWit: getSegWitDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("segWit", derivationConfigs) ??
+          findCustomConfig("segWit", derivationConfig) ??
             btcConfig[networkPurpose].segWit.prefixConfig,
           mnemonic,
         ),
@@ -54,7 +53,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
       nativeSegWit: getNativeSegWitDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("nativeSegWit", derivationConfigs) ??
+          findCustomConfig("nativeSegWit", derivationConfig) ??
             btcConfig[networkPurpose].nativeSegWit.prefixConfig,
           mnemonic,
         ),
@@ -62,7 +61,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
       taproot: getTaprootDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new TaprootKeyDerivation(
-          findCustomConfig("taproot", derivationConfigs) ??
+          findCustomConfig("taproot", derivationConfig) ??
             btcConfig[networkPurpose].taproot.prefixConfig,
           mnemonic,
         ),
@@ -70,7 +69,7 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
       p2wsh: getP2wshDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("p2wsh", derivationConfigs) ??
+          findCustomConfig("p2wsh", derivationConfig) ??
             btcConfig[networkPurpose].p2wsh.prefixConfig,
           mnemonic,
         ),
@@ -78,61 +77,38 @@ class Bitcoin implements AbstractNetwork<BtcDerivationTypeUnion> {
       p2wshInP2sh: getP2wshInP2shDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("p2wshInP2sh", derivationConfigs) ??
+          findCustomConfig("p2wshInP2sh", derivationConfig) ??
             btcConfig[networkPurpose].p2wshInP2sh.prefixConfig,
           mnemonic,
         ),
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, networkHandlers);
+    this.derivationHandlers = derivationsHandlers[derivationConfig.derivationType];
   }
 
-  public deriveItemFromMnemonic({
-    derivationType,
-    ...parameters
-  }: DeriveItemFromMnemonicParameters<BtcDerivationTypeUnion>): DerivedItem<BtcDerivationTypeUnion> {
-    const derivationHandlers = this.getDerivationHandlers(derivationType);
-
-    return derivationHandlers.deriveItemFromMnemonic(parameters);
+  public deriveItemFromMnemonic(
+    parameters: DeriveItemFromMnemonicParameters<BtcDerivationTypeUnion>,
+  ): DerivedItem<BtcDerivationTypeUnion> {
+    return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
-  public getCredentialFromPK({
-    derivationType,
-    privateKey,
-  }: GetCredentialFromPKParameters<BtcDerivationTypeUnion>): DerivedCredential<BtcDerivationTypeUnion> {
-    const derivationHandlers = this.getDerivationHandlers(derivationType);
-
-    return derivationHandlers.getCredentialFromPK({ privateKey });
+  public getCredentialFromPK(
+    parameters: GetCredentialFromPKParameters<BtcDerivationTypeUnion>,
+  ): DerivedCredential<BtcDerivationTypeUnion> {
+    return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
-  public deriveItemsBatchFromMnemonic({
-    derivationType,
-    ...parameters
-  }: DeriveItemsBatchFromMnemonicParameters<BtcDerivationTypeUnion>): DerivedItem<BtcDerivationTypeUnion>[] {
-    const derivationHandlers = this.getDerivationHandlers(derivationType);
-
-    return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
+  public deriveItemsBatchFromMnemonic(
+    parameters: DeriveItemsBatchFromMnemonicParameters<BtcDerivationTypeUnion>,
+  ) {
+    return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKeyBelongToMnemonic(
     parameters: DoesPKBelongToMnemonicParameters<BtcDerivationTypeUnion>,
-  ): boolean {
-    for (const handler of Object.values(this.handlers)) {
-      if (handler.doesPKeyBelongToMnemonic(parameters)) return true;
-    }
-
-    return false;
-  }
-
-  private getDerivationHandlers(
-    derivationType: BtcDerivationTypeUnion,
-  ): NetworkHandlers<BtcDerivationTypeUnion>[BtcDerivationTypeUnion] | never {
-    const derivationHandlers = this.handlers[derivationType];
-
-    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
-
-    return derivationHandlers;
+  ) {
+    return this.derivationHandlers.doesPKeyBelongToMnemonic(parameters);
   }
 }
 

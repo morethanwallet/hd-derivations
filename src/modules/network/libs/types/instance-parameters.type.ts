@@ -18,36 +18,36 @@ import type { SignatureSchemeUnion } from "@/libs/types/index.js";
 type AdaInstanceParameters = {
   network: NetworkTypeMap["ada"];
   networkPurpose: AdaNetworkPurposeUnion;
-  derivationConfigs: AdaDerivationConfig[];
+  derivationConfig: AdaDerivationConfig;
 } & MnemonicProperty;
 
 type AvaxInstanceParameters = {
   network: NetworkTypeMap["avax"];
   networkPurpose: CommonNetworkPurposeUnion;
-  derivationConfigs: AvaxDerivationConfig[];
+  derivationConfig: AvaxDerivationConfig;
 } & MnemonicProperty;
 
 type BtcInstanceParameters = {
   network: NetworkTypeMap["btc"];
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-  derivationConfigs: BtcDerivationConfig[];
+  derivationConfig: BtcDerivationConfig;
 } & MnemonicProperty;
 
 type TrxInstanceParameters = {
   network: NetworkTypeMap["trx"];
-  derivationConfigs: TrxDerivationConfig[];
+  derivationConfig: TrxDerivationConfig;
 } & MnemonicProperty;
 
 type TonInstanceParameters = {
   network: NetworkTypeMap["ton"];
   networkPurpose: CommonNetworkPurposeUnion;
-  derivationConfigs: TonDerivationConfig[];
+  derivationConfig: TonDerivationConfig;
 } & MnemonicProperty;
 
 type SuiInstanceParameters = {
   network: NetworkTypeMap["sui"];
   scheme: SignatureSchemeUnion;
-  derivationConfigs: SuiDerivationConfig[];
+  derivationConfig: SuiDerivationConfig;
 } & MnemonicProperty;
 
 export type {

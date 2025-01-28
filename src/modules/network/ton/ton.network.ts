@@ -8,66 +8,51 @@ import type {
   DoesPKBelongToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
-  NetworkHandlers,
+  DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
 import { getTonDerivationHandlers } from "./libs/helpers/index.js";
-import { getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
-import { BtcDerivationTypeUnion } from "@/libs/types/index.js";
+import { type DerivationTypeMap } from "@/libs/types/index.js";
 
-class Ton implements AbstractNetwork<"tonBase"> {
-  private handlers: NonNullable<Partial<NetworkHandlers<"tonBase">>>;
+class Ton implements AbstractNetwork<DerivationTypeMap["tonBase"]> {
+  private derivationHandlers: DerivationsHandlers<
+    DerivationTypeMap["tonBase"]
+  >[DerivationTypeMap["tonBase"]];
 
-  public constructor({ derivationConfigs, mnemonic }: ConstructorParameters<"tonBase">) {
-    const networkHandlers: NetworkHandlers<"tonBase"> = {
+  public constructor({
+    derivationConfig,
+    mnemonic,
+  }: ConstructorParameters<DerivationTypeMap["tonBase"]>) {
+    const derivationsHandlers: DerivationsHandlers<DerivationTypeMap["tonBase"]> = {
       tonBase: getTonDerivationHandlers({
         keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic),
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, networkHandlers);
+    this.derivationHandlers = derivationsHandlers[derivationConfig.derivationType];
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<"tonBase">,
-  ): DerivedItem<BtcDerivationTypeUnion> {
-    const derivationHandlers = this.getDerivationHandlers();
-
-    return derivationHandlers.deriveItemFromMnemonic(parameters);
+    parameters: DeriveItemFromMnemonicParameters<DerivationTypeMap["tonBase"]>,
+  ): DerivedItem<DerivationTypeMap["tonBase"]> {
+    return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<"tonBase">,
-  ): DerivedCredential<BtcDerivationTypeUnion> {
-    const derivationHandlers = this.getDerivationHandlers();
-
-    return derivationHandlers.getCredentialFromPK(parameters);
+    parameters: GetCredentialFromPKParameters<DerivationTypeMap["tonBase"]>,
+  ): DerivedCredential<DerivationTypeMap["tonBase"]> {
+    return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<"tonBase">,
-  ): DerivedItem<BtcDerivationTypeUnion>[] {
-    const derivationHandlers = this.getDerivationHandlers();
-
-    return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
+    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeMap["tonBase"]>,
+  ) {
+    return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKeyBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<"tonBase">,
-  ): boolean {
-    for (const handler of Object.values(this.handlers)) {
-      if (handler.doesPKeyBelongToMnemonic(parameters)) return true;
-    }
-
-    return false;
-  }
-
-  private getDerivationHandlers(): NetworkHandlers<"tonBase">["tonBase"] | never {
-    const derivationHandlers = this.handlers["tonBase"];
-
-    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
-
-    return derivationHandlers;
+    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeMap["tonBase"]>,
+  ) {
+    return this.derivationHandlers.doesPKeyBelongToMnemonic(parameters);
   }
 }
 

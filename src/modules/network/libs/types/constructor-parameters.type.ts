@@ -17,45 +17,45 @@ import type {
 
 type BtcParameters = {
   networkPurpose: BtcInstanceParameters["networkPurpose"];
-  derivationConfigs: BtcInstanceParameters["derivationConfigs"];
+  derivationConfig: BtcInstanceParameters["derivationConfig"];
 };
 
 type AdaParameters = {
   networkPurpose: AdaInstanceParameters["networkPurpose"];
-  derivationConfigs: AdaInstanceParameters["derivationConfigs"];
+  derivationConfig: AdaInstanceParameters["derivationConfig"];
 };
 
 type AvaxParameters = {
   networkPurpose: AvaxInstanceParameters["networkPurpose"];
-  derivationConfigs: AvaxInstanceParameters["derivationConfigs"];
+  derivationConfig: AvaxInstanceParameters["derivationConfig"];
 };
 
 type TrxParameters = {
-  derivationConfigs: TrxInstanceParameters["derivationConfigs"];
+  derivationConfig: TrxInstanceParameters["derivationConfig"];
 };
 
 type TonParameters = {
   networkPurpose: TonInstanceParameters["networkPurpose"];
-  derivationConfigs: TonInstanceParameters["derivationConfigs"];
+  derivationConfig: TonInstanceParameters["derivationConfig"];
 };
 
 type SuiParameters = {
   scheme: SuiInstanceParameters["scheme"];
-  derivationConfigs: SuiInstanceParameters["derivationConfigs"];
+  derivationConfig: SuiInstanceParameters["derivationConfig"];
 };
 
-type ConstructorInconsistentParameters<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends BtcDerivationTypeUnion
+type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
+  T extends BtcDerivationTypeUnion
     ? BtcParameters
-    : TDerivationType extends AdaDerivationTypeUnion
+    : T extends AdaDerivationTypeUnion
       ? AdaParameters
-      : TDerivationType extends AvaxDerivationTypeUnion
+      : T extends AvaxDerivationTypeUnion
         ? AvaxParameters
-        : TDerivationType extends DerivationTypeMap["trxBase"]
+        : T extends DerivationTypeMap["trxBase"]
           ? TrxParameters
-          : TDerivationType extends DerivationTypeMap["tonBase"]
+          : T extends DerivationTypeMap["tonBase"]
             ? TonParameters
-            : TDerivationType extends DerivationTypeMap["suiBase"]
+            : T extends DerivationTypeMap["suiBase"]
               ? SuiParameters
               : Record<string, unknown>;
 

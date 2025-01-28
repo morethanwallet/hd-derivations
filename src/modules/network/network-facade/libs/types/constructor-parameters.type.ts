@@ -25,7 +25,7 @@ type ConstructorParameters<T extends NetworkTypeUnion> = {
             ? SuiInstanceParameters
             : {
                 networkPurpose: null;
-                derivationConfigs: [];
+                derivationConfigs: {};
                 mnemonic: null;
                 scheme: null;
               });

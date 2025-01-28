@@ -11,7 +11,6 @@ export {
   type GetCredentialFromPKInnerHandler,
   type GetCredentialFromPKInnerHandlerParameters,
 } from "./get-credential-from-p-k.type.js";
-export { type DerivationTypeParameter } from "./derivation-type-parameter.type.js";
 export { type ConstructorParameters } from "./constructor-parameters.type.js";
 export {
   type GetDerivationHandlersParameters,
@@ -31,7 +30,7 @@ export {
 } from "./does-p-k-belong-to-mnemonic.type.js";
 export { type DerivedItem } from "./derived-item.type.js";
 export { type DerivedCredential } from "./derived-credential.type.js";
-export { type NetworkHandlers } from "./network-handlers.type.js";
+export { type DerivationsHandlers } from "./derivations-handlers.type.js";
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,

@@ -8,66 +8,53 @@ import type {
   DoesPKBelongToMnemonicParameters,
   DerivedCredential,
   DerivedItem,
-  NetworkHandlers,
+  DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { ExceptionMessage } from "@/modules/network/libs/enums/index.js";
 import { getSuiDerivationHandlers } from "./libs/helpers/index.js";
-import { getNetworkHandlers } from "@/modules/network/libs/helpers/index.js";
+import { DerivationTypeMap } from "@/libs/types/index.js";
 
-class Sui implements AbstractNetwork<"suiBase"> {
-  private handlers: NonNullable<Partial<NetworkHandlers<"suiBase">>>;
+class Sui implements AbstractNetwork<DerivationTypeMap["suiBase"]> {
+  private derivationHandlers: DerivationsHandlers<
+    DerivationTypeMap["suiBase"]
+  >[DerivationTypeMap["suiBase"]];
 
-  public constructor({ derivationConfigs, mnemonic, scheme }: ConstructorParameters<"suiBase">) {
-    const networkHandlers: NetworkHandlers<"suiBase"> = {
+  public constructor({
+    mnemonic,
+    scheme,
+    derivationConfig,
+  }: ConstructorParameters<DerivationTypeMap["suiBase"]>) {
+    const derivationsHandlers: DerivationsHandlers<DerivationTypeMap["suiBase"]> = {
       suiBase: getSuiDerivationHandlers({
         scheme,
         keysDerivationInstance: new SuiKeyDerivation(mnemonic),
       }),
     };
 
-    this.handlers = getNetworkHandlers(derivationConfigs, networkHandlers);
+    this.derivationHandlers = derivationsHandlers[derivationConfig.derivationType];
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<"suiBase">,
-  ): DerivedItem<"suiBase"> {
-    const derivationHandlers = this.getDerivationHandlers();
-
-    return derivationHandlers.deriveItemFromMnemonic(parameters);
+    parameters: DeriveItemFromMnemonicParameters<DerivationTypeMap["suiBase"]>,
+  ): DerivedItem<DerivationTypeMap["suiBase"]> {
+    return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<"suiBase">,
-  ): DerivedCredential<"suiBase"> {
-    const derivationHandlers = this.getDerivationHandlers();
-
-    return derivationHandlers.getCredentialFromPK(parameters);
+    parameters: GetCredentialFromPKParameters<DerivationTypeMap["suiBase"]>,
+  ): DerivedCredential<DerivationTypeMap["suiBase"]> {
+    return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<"suiBase">,
-  ): DerivedItem<"suiBase">[] {
-    const derivationHandlers = this.getDerivationHandlers();
-
-    return derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
+    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeMap["suiBase"]>,
+  ) {
+    return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKeyBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<"suiBase">,
-  ): boolean {
-    for (const handler of Object.values(this.handlers)) {
-      if (handler.doesPKeyBelongToMnemonic(parameters)) return true;
-    }
-
-    return false;
-  }
-
-  private getDerivationHandlers(): NetworkHandlers<"suiBase">["suiBase"] | never {
-    const derivationHandlers = this.handlers.suiBase;
-
-    if (!derivationHandlers) throw new Error(ExceptionMessage.INVALID_DERIVATION_TYPE);
-
-    return derivationHandlers;
+    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeMap["suiBase"]>,
+  ) {
+    return this.derivationHandlers.doesPKeyBelongToMnemonic(parameters);
   }
 }
 

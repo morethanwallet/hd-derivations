@@ -8,7 +8,9 @@ import type {
 
 type CommonPrefixConfig = { prefixConfig: PrefixConfig };
 
-type AdaDerivationConfig = { derivationType: AdaDerivationTypeUnion };
+type AdaDerivationConfig = {
+  derivationType: AdaDerivationTypeUnion;
+};
 
 type AvaxDerivationConfig = {
   derivationType: AvaxDerivationTypeUnion;
@@ -22,9 +24,13 @@ type TrxDerivationConfig = {
   derivationType: DerivationTypeMap["trxBase"];
 } & CommonPrefixConfig;
 
-type TonDerivationConfig = { derivationType: DerivationTypeMap["tonBase"] };
+type TonDerivationConfig = {
+  derivationType: DerivationTypeMap["tonBase"];
+};
 
-type SuiDerivationConfig = { derivationType: DerivationTypeMap["suiBase"] };
+type SuiDerivationConfig = {
+  derivationType: DerivationTypeMap["suiBase"];
+};
 
 export type {
   AdaDerivationConfig,
