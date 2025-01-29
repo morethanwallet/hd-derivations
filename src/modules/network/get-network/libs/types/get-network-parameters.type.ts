@@ -9,7 +9,7 @@ import type {
   TrxInstanceParameters,
 } from "@/modules/network/libs/types/index.js";
 
-type ConstructorParameters<T extends NetworkTypeUnion> = {
+type GetNetworkParameters<T extends NetworkTypeUnion> = {
   network: T;
 } & (T extends NetworkTypeMap["btc"]
   ? BtcInstanceParameters
@@ -30,4 +30,4 @@ type ConstructorParameters<T extends NetworkTypeUnion> = {
                 scheme: null;
               });
 
-export type { ConstructorParameters };
+export type { GetNetworkParameters };
