@@ -1,4 +1,4 @@
-import type { CommonBipDerivationTypeUnion } from "./bip44-derivation-type-union.type.js";
+import type { CommonBipDerivationTypeUnion } from "./common-bip-derivation-type-union.type.js";
 import type { DerivationPath, DerivationTypeUnion, KeyPair } from "@/libs/types/index.js";
 import type { CommonHandlersParameters } from "./common-handlers-parameters.type.js";
 
