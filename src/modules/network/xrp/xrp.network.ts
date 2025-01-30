@@ -1,91 +1,77 @@
-// import { type Mnemonic } from "@/mnemonic/index.js";
-// import { config } from "./config/index.js";
-// import {
-//   type DerivedCredential,
-//   type DerivedItem,
-//   type DerivedKeyPair,
-//   type DeriveItemFromMnemonicParameters,
-//   type GetCredentialFromPKParameters,
-//   type XrpAddressUnion,
-//   type AbstractNetwork,
-//   type CommonNetworkPurposeUnion,
-// } from "../types/index.js";
-// import { Keys } from "@/keys/bip32/index.js";
-// import { toUint8Array } from "@/helpers/index.js";
-// import { getKeyPairFromEc } from "../helpers/index.js";
-// import { ExceptionMessage } from "../enums/index.js";
-// import { Wallet } from "xrpl";
+import type {
+  AbstractNetwork,
+  DerivationsHandlers,
+  ConstructorParameters,
+  DerivedCredential,
+  DerivedItem,
+  DeriveItemFromMnemonicParameters,
+  DeriveItemsBatchFromMnemonicParameters,
+  DoesPKBelongToMnemonicParameters,
+  GetCredentialFromPKParameters,
+} from "../libs/types/index.js";
+import type { XrpDerivationTypeUnion } from "@/libs/types/index.js";
+import { geXrpDerivationHandlers } from "./libs/helpers/index.js";
+import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
+import { findCustomConfig } from "../libs/helpers/index.js";
+import { xrpConfig } from "../libs/modules/config/index.js";
 
-// class Xrp extends Keys implements AbstractNetwork<"xrp"> {
-//   private purpose: CommonNetworkPurposeUnion;
+class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
+  private derivationHandlers: DerivationsHandlers<XrpDerivationTypeUnion>[XrpDerivationTypeUnion];
 
-//   public constructor(mnemonic: Mnemonic, purpose: CommonNetworkPurposeUnion) {
-//     super(config.prefixConfig, mnemonic);
+  public constructor({
+    mnemonic,
+    derivationConfig,
+  }: ConstructorParameters<XrpDerivationTypeUnion>) {
+    const { derivationType, networkPurpose, destinationTag } = derivationConfig;
+    const isTestnet = networkPurpose === "testnet";
 
-//     this.purpose = purpose;
-//   }
+    const derivationsHandlers: DerivationsHandlers<XrpDerivationTypeUnion> = {
+      xrpBase: geXrpDerivationHandlers({
+        derivationType,
+        isTestnet,
+        destinationTag,
+        keysDerivationInstance: new CommonBipKeyDerivation(
+          findCustomConfig("bchLegacy", derivationConfig) ?? xrpConfig.prefixConfig,
+          mnemonic,
+        ),
+      }),
+      xrpX: geXrpDerivationHandlers({
+        derivationType,
+        isTestnet,
+        destinationTag,
+        keysDerivationInstance: new CommonBipKeyDerivation(
+          findCustomConfig("bchCashAddr", derivationConfig) ?? xrpConfig.prefixConfig,
+          mnemonic,
+        ),
+      }),
+    };
 
-//   public deriveItemFromMnemonic({
-//     addressType,
-//     derivationPath,
-//     destinationTag,
-//   }: DeriveItemFromMnemonicParameters<"xrp">): DerivedItem<"xrp"> {
-//     const node = this.rootKey.derivePath(derivationPath);
-//     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
-//     const wallet = this.getWallet(privateKey, publicKey);
-//     const address = this.getAddress(wallet, addressType, destinationTag);
+    this.derivationHandlers = derivationsHandlers[derivationType];
+  }
 
-//     return {
-//       privateKey,
-//       publicKey,
-//       address,
-//       derivationPath,
-//     };
-//   }
+  public deriveItemFromMnemonic(
+    parameters: DeriveItemFromMnemonicParameters<XrpDerivationTypeUnion>,
+  ): DerivedItem<XrpDerivationTypeUnion> {
+    return this.derivationHandlers.deriveItemFromMnemonic(parameters);
+  }
 
-//   public getCredentialFromPK({
-//     addressType,
-//     privateKey,
-//     destinationTag,
-//   }: GetCredentialFromPKParameters<"xrp">): DerivedCredential<"xrp"> {
-//     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
-//     const { publicKey } = this.getKeyPair(rawPrivateKey);
-//     const wallet = this.getWallet(privateKey, publicKey);
-//     const address = this.getAddress(wallet, addressType, destinationTag);
+  public getCredentialFromPK(
+    parameters: GetCredentialFromPKParameters<XrpDerivationTypeUnion>,
+  ): DerivedCredential<XrpDerivationTypeUnion> {
+    return this.derivationHandlers.getCredentialFromPK(parameters);
+  }
 
-//     return {
-//       privateKey,
-//       publicKey,
-//       address,
-//     };
-//   }
+  public deriveItemsBatchFromMnemonic(
+    parameters: DeriveItemsBatchFromMnemonicParameters<XrpDerivationTypeUnion>,
+  ) {
+    return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
+  }
 
-//   private getKeyPair(rawPrivateKey?: Uint8Array): DerivedKeyPair {
-//     return getKeyPairFromEc(
-//       ExceptionMessage.XRP_PRIVATE_KEY_GENERATION_FAILED,
-//       this.prefixConfig,
-//       rawPrivateKey
-//     );
-//   }
+  public doesPKBelongToMnemonic(
+    parameters: DoesPKBelongToMnemonicParameters<XrpDerivationTypeUnion>,
+  ) {
+    return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
+  }
+}
 
-//   private getAddress(
-//     wallet: Wallet,
-//     addressType: XrpAddressUnion,
-//     destinationTag?: number
-//   ): string {
-//     const isTestnet = this.purpose === "testnet";
-
-//     return addressType === "base"
-//       ? wallet.classicAddress
-//       : wallet.getXAddress(destinationTag, isTestnet);
-//   }
-
-//   private getWallet(
-//     privateKey: DerivedKeyPair["privateKey"],
-//     publicKey: DerivedKeyPair["publicKey"]
-//   ): Wallet {
-//     return new Wallet(publicKey, privateKey);
-//   }
-// }
-
-// export { Xrp };
+export { Xrp };

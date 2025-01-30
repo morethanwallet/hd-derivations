@@ -9,18 +9,20 @@ import type {
   BchDerivationConfig,
   BtcDerivationConfig,
   TrxDerivationConfig,
+  XrpDerivationConfig,
 } from "../types/index.js";
 
 type KeysConfigRequiredDerivationTypeUnion = Exclude<
   DerivationTypeUnion,
-  AdaDerivationTypeUnion | DerivationTypeMap["sol"] | DerivationTypeMap["tonBase"]
+  AdaDerivationTypeUnion | DerivationTypeMap["tonBase"]
 >;
 
 type DerivationConfigUnion =
   | AvaxDerivationConfig
   | BtcDerivationConfig
   | TrxDerivationConfig
-  | BchDerivationConfig;
+  | BchDerivationConfig
+  | XrpDerivationConfig;
 
 function findCustomConfig(
   derivationType: KeysConfigRequiredDerivationTypeUnion,

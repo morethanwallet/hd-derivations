@@ -1,6 +1,6 @@
 import { avaxConfig } from "../modules/config/avax-config.js";
 import { btcConfig } from "../modules/config/btc-config.js";
-import { bchConfig, trxConfig } from "../modules/config/index.js";
+import { bchConfig, trxConfig, xrpConfig } from "../modules/config/index.js";
 import type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
@@ -9,6 +9,7 @@ import type {
   SuiInstanceParameters,
   TonInstanceParameters,
   TrxInstanceParameters,
+  XrpInstanceParameters,
 } from "../types/index.js";
 
 const DEFAULT_ADA_INSTANCE_PARAMETERS: AdaInstanceParameters = {
@@ -70,6 +71,15 @@ const DEFAULT_BCH_INSTANCE_PARAMETERS: BchInstanceParameters = {
   },
 };
 
+const DEFAULT_XRP_INSTANCE_PARAMETERS: XrpInstanceParameters = {
+  network: "xrp",
+  derivationConfig: {
+    derivationType: "xrpBase",
+    networkPurpose: "mainnet",
+    prefixConfig: xrpConfig.prefixConfig,
+  },
+};
+
 export {
   DEFAULT_ADA_INSTANCE_PARAMETERS,
   DEFAULT_AVAX_INSTANCE_PARAMETERS,
@@ -78,4 +88,5 @@ export {
   DEFAULT_TON_INSTANCE_PARAMETERS,
   DEFAULT_SUI_INSTANCE_PARAMETERS,
   DEFAULT_BCH_INSTANCE_PARAMETERS,
+  DEFAULT_XRP_INSTANCE_PARAMETERS,
 };

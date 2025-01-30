@@ -5,6 +5,7 @@ import { type Trx } from "@/modules/network/trx/index.js";
 import { type Ton } from "@/modules/network/ton/index.js";
 import { type Sui } from "@/modules/network/sui/index.js";
 import { type Bch } from "@/modules/network/bch/index.js";
+import { type Xrp } from "@/modules/network/xrp/index.js";
 
 type NetworkNameToNetwork = {
   btc: Btc;
@@ -14,6 +15,7 @@ type NetworkNameToNetwork = {
   ton: Ton;
   sui: Sui;
   bch: Bch;
+  xrp: Xrp;
 };
 
 export type { NetworkNameToNetwork };
