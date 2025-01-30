@@ -10,9 +10,6 @@
     "target": "ESNext",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "outDir": "build",
-    "declaration": true,
-    "sourceMap": true,
     "baseUrl": ".",
     "noImplicitAny": true,
     "paths": {

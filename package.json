@@ -1,19 +1,23 @@
 {
-  "name": "src",
+  "name": "hd-derivations",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/src/index.ts",
   "scripts": {
     "start": "tsx src/index.ts",
     "test": "vitest --coverage",
-    "build": "tsc && tsc-alias",
+    "build": "tsc --project ./tsconfig.build.json && tsc-alias --project ./tsconfig.build.json && npm run build:copy",
     "build:graph": "npx madge src/ --ts-config ./tsconfig.json --extensions ts,tsx --image graph.svg",
+    "build:copy": "cpy \"./build/**\" \"./build/src\" --parents && del build/* !build/src",
     "lint:prettify": "prettier ./ --write \"**/*.{ts,json,md}\"",
     "lint:type": "npx tsc --noEmit"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run build:graph"
   },
+  "files": [
+    "build"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -28,6 +32,8 @@
     "bip38": "^3.1.1",
     "bip38grs": "^3.1.1",
     "bip85": "^0.0.3",
+    "cpy-cli": "^5.0.0",
+    "del-cli": "^6.0.0",
     "elastos-wallet-js": "^1.0.9",
     "fast-levenshtein": "^3.0.0",
     "groestlcoinjs-lib": "^6.1.5",
