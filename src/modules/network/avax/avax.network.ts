@@ -20,9 +20,10 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
 
   public constructor({
     mnemonic,
-    networkPurpose,
     derivationConfig,
   }: ConstructorParameters<AvaxDerivationTypeUnion>) {
+    const { networkPurpose, derivationType } = derivationConfig;
+
     const derivationsHandlers: DerivationsHandlers<AvaxDerivationTypeUnion> = {
       avaxX: getAvaxDerivationHandlers({
         networkPurpose,
@@ -46,7 +47,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
       }),
     };
 
-    this.derivationHandlers = derivationsHandlers[derivationConfig.derivationType];
+    this.derivationHandlers = derivationsHandlers[derivationType];
   }
 
   public deriveItemFromMnemonic(

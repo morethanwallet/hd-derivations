@@ -20,8 +20,7 @@ class Sui implements AbstractNetwork<DerivationTypeMap["suiBase"]> {
 
   public constructor({
     mnemonic,
-    scheme,
-    derivationConfig,
+    derivationConfig: { derivationType, scheme },
   }: ConstructorParameters<DerivationTypeMap["suiBase"]>) {
     const derivationsHandlers: DerivationsHandlers<DerivationTypeMap["suiBase"]> = {
       suiBase: getSuiDerivationHandlers({
@@ -30,7 +29,7 @@ class Sui implements AbstractNetwork<DerivationTypeMap["suiBase"]> {
       }),
     };
 
-    this.derivationHandlers = derivationsHandlers[derivationConfig.derivationType];
+    this.derivationHandlers = derivationsHandlers[derivationType];
   }
 
   public deriveItemFromMnemonic(

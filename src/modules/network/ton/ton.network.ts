@@ -18,17 +18,21 @@ class Ton implements AbstractNetwork<DerivationTypeMap["tonBase"]> {
     DerivationTypeMap["tonBase"]
   >[DerivationTypeMap["tonBase"]];
 
+  // TODO: Remove derivation type for chains with only 1 derivation type
   public constructor({
     derivationConfig,
     mnemonic,
   }: ConstructorParameters<DerivationTypeMap["tonBase"]>) {
+    const { derivationType, ...addressParameters } = derivationConfig;
+
     const derivationsHandlers: DerivationsHandlers<DerivationTypeMap["tonBase"]> = {
       tonBase: getTonDerivationHandlers({
+        ...addressParameters,
         keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic),
       }),
     };
 
-    this.derivationHandlers = derivationsHandlers[derivationConfig.derivationType];
+    this.derivationHandlers = derivationsHandlers[derivationType];
   }
 
   public deriveItemFromMnemonic(
@@ -49,10 +53,10 @@ class Ton implements AbstractNetwork<DerivationTypeMap["tonBase"]> {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public doesPKeyBelongToMnemonic(
+  public doesPKBelongToMnemonic(
     parameters: DoesPKBelongToMnemonicParameters<DerivationTypeMap["tonBase"]>,
   ) {
-    return this.derivationHandlers.doesPKeyBelongToMnemonic(parameters);
+    return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }
 }
 

@@ -30,9 +30,10 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
 
   public constructor({
     mnemonic,
-    networkPurpose,
     derivationConfig,
   }: ConstructorParameters<BtcDerivationTypeUnion>) {
+    const { networkPurpose, derivationType } = derivationConfig;
+
     const derivationsHandlers: DerivationsHandlers<BtcDerivationTypeUnion> = {
       legacy: getLegacyDerivationHandlers({
         networkPurpose,
@@ -84,7 +85,7 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
       }),
     };
 
-    this.derivationHandlers = derivationsHandlers[derivationConfig.derivationType];
+    this.derivationHandlers = derivationsHandlers[derivationType];
   }
 
   public deriveItemFromMnemonic(

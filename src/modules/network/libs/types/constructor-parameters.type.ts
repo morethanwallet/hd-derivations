@@ -15,48 +15,19 @@ import type {
   SuiInstanceParameters,
 } from "./instance-parameters.type.js";
 
-type BtcParameters = {
-  networkPurpose: BtcInstanceParameters["networkPurpose"];
-  derivationConfig: BtcInstanceParameters["derivationConfig"];
-};
-
-type AdaParameters = {
-  networkPurpose: AdaInstanceParameters["networkPurpose"];
-  derivationConfig: AdaInstanceParameters["derivationConfig"];
-};
-
-type AvaxParameters = {
-  networkPurpose: AvaxInstanceParameters["networkPurpose"];
-  derivationConfig: AvaxInstanceParameters["derivationConfig"];
-};
-
-type TrxParameters = {
-  derivationConfig: TrxInstanceParameters["derivationConfig"];
-};
-
-type TonParameters = {
-  networkPurpose: TonInstanceParameters["networkPurpose"];
-  derivationConfig: TonInstanceParameters["derivationConfig"];
-};
-
-type SuiParameters = {
-  scheme: SuiInstanceParameters["scheme"];
-  derivationConfig: SuiInstanceParameters["derivationConfig"];
-};
-
 type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
   T extends BtcDerivationTypeUnion
-    ? BtcParameters
+    ? Pick<BtcInstanceParameters, "derivationConfig">
     : T extends AdaDerivationTypeUnion
-      ? AdaParameters
+      ? Pick<AdaInstanceParameters, "derivationConfig">
       : T extends AvaxDerivationTypeUnion
-        ? AvaxParameters
+        ? Pick<AvaxInstanceParameters, "derivationConfig">
         : T extends DerivationTypeMap["trxBase"]
-          ? TrxParameters
+          ? Pick<TrxInstanceParameters, "derivationConfig">
           : T extends DerivationTypeMap["tonBase"]
-            ? TonParameters
+            ? Pick<TonInstanceParameters, "derivationConfig">
             : T extends DerivationTypeMap["suiBase"]
-              ? SuiParameters
+              ? Pick<SuiInstanceParameters, "derivationConfig">
               : Record<string, unknown>;
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {

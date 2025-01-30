@@ -27,8 +27,7 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
 
   public constructor({
     mnemonic,
-    networkPurpose,
-    derivationConfig,
+    derivationConfig: { derivationType, networkPurpose },
   }: ConstructorParameters<AdaDerivationTypeUnion>) {
     const networkId = getNetworkId(networkPurpose);
 
@@ -50,7 +49,7 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
       }),
     };
 
-    this.derivationHandlers = derivationsHandlers[derivationConfig.derivationType];
+    this.derivationHandlers = derivationsHandlers[derivationType];
   }
 
   public deriveItemFromMnemonic(
