@@ -1,9 +1,7 @@
-
 # Ignore TypeScript config and caches
 tsconfig.json
 tsconfig.build.json
 .github/**
-
 
 # Ignore test cases
 src/**/*.test.ts
