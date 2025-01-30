@@ -51,16 +51,16 @@ type SuiParameters = {
   keysDerivationInstance: SuiKeyDerivation;
 } & SignatureSchemeProperty;
 
-type GetDerivationHandlersParameters<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends AvaxDerivationTypeUnion
+type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
+  T extends AvaxDerivationTypeUnion
     ? AvaxParameters
-    : TDerivationType extends BtcDerivationTypeUnion
-      ? BtcParameters<TDerivationType>
-      : TDerivationType extends AdaDerivationTypeUnion
-        ? AdaParameters<TDerivationType>
-        : TDerivationType extends DerivationTypeMap["tonBase"]
+    : T extends BtcDerivationTypeUnion
+      ? BtcParameters<T>
+      : T extends AdaDerivationTypeUnion
+        ? AdaParameters<T>
+        : T extends DerivationTypeMap["tonBase"]
           ? TonParameters
-          : TDerivationType extends DerivationTypeMap["suiBase"]
+          : T extends DerivationTypeMap["suiBase"]
             ? SuiParameters
             : { keysDerivationInstance: CommonBipKeyDerivation };
 
