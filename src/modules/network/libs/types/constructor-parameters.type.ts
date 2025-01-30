@@ -4,6 +4,7 @@ import type {
   BtcDerivationTypeUnion,
   DerivationTypeUnion,
   DerivationTypeMap,
+  BchDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import type {
@@ -13,6 +14,7 @@ import type {
   TonInstanceParameters,
   TrxInstanceParameters,
   SuiInstanceParameters,
+  BchInstanceParameters,
 } from "./instance-parameters.type.js";
 
 type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
@@ -28,7 +30,9 @@ type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
             ? Pick<TonInstanceParameters, "derivationConfig">
             : T extends DerivationTypeMap["suiBase"]
               ? Pick<SuiInstanceParameters, "derivationConfig">
-              : Record<string, unknown>;
+              : T extends BchDerivationTypeUnion
+                ? Pick<BchInstanceParameters, "derivationConfig">
+                : Record<string, unknown>;
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
   mnemonic: Mnemonic;

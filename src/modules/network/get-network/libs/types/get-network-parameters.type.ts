@@ -7,6 +7,7 @@ import type {
   SuiInstanceParameters,
   TonInstanceParameters,
   TrxInstanceParameters,
+  BchInstanceParameters,
 } from "@/modules/network/libs/types/index.js";
 
 type GetNetworkParameters<T extends NetworkTypeUnion> = {
@@ -23,11 +24,13 @@ type GetNetworkParameters<T extends NetworkTypeUnion> = {
           ? TrxInstanceParameters
           : T extends NetworkTypeMap["sui"]
             ? SuiInstanceParameters
-            : {
-                networkPurpose: null;
-                derivationConfigs: {};
-                mnemonic: null;
-                scheme: null;
-              });
+            : T extends NetworkTypeMap["bch"]
+              ? BchInstanceParameters
+              : {
+                  networkPurpose: null;
+                  derivationConfigs: {};
+                  mnemonic: null;
+                  scheme: null;
+                });
 
 export type { GetNetworkParameters };

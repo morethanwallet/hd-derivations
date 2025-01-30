@@ -6,6 +6,7 @@ import {
 } from "@/libs/types/index.js";
 import type {
   AvaxDerivationConfig,
+  BchDerivationConfig,
   BtcDerivationConfig,
   TrxDerivationConfig,
 } from "../types/index.js";
@@ -15,7 +16,11 @@ type KeysConfigRequiredDerivationTypeUnion = Exclude<
   AdaDerivationTypeUnion | DerivationTypeMap["sol"] | DerivationTypeMap["tonBase"]
 >;
 
-type DerivationConfigUnion = AvaxDerivationConfig | BtcDerivationConfig | TrxDerivationConfig;
+type DerivationConfigUnion =
+  | AvaxDerivationConfig
+  | BtcDerivationConfig
+  | TrxDerivationConfig
+  | BchDerivationConfig;
 
 function findCustomConfig(
   derivationType: KeysConfigRequiredDerivationTypeUnion,

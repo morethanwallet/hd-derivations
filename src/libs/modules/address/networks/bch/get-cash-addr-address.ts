@@ -24,7 +24,7 @@ function getCashAddrAddress(
   assert(address, AddressError, ExceptionMessage.ADDRESS_GENERATION_FAILED);
   const formattedAddress = toCashAddress(address);
 
-  if (prefixConfig.bech32 === "bc") {
+  if (prefixConfig.bech32 === "bcrt") {
     return REGTEST_PREFIX.concat(
       HRP_DELIMITER,
       String(formattedAddress.split(HRP_DELIMITER)[ADDRESS_INDEX]),

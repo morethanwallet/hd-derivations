@@ -8,6 +8,7 @@ import { Avax } from "../avax/index.js";
 import { Trx } from "../trx/index.js";
 import { Ton } from "../ton/index.js";
 import { Sui } from "../sui/index.js";
+import { Bch } from "../bch/index.js";
 
 function getNetwork<T extends NetworkTypeUnion>(
   parameters: GetNetworkParameters<T>,
@@ -50,6 +51,12 @@ function getNetwork<T extends NetworkTypeUnion>(
     case "sui": {
       return new Sui({
         ...(parameters as GetNetworkParameters<"sui">),
+        mnemonic: mnemonicInstance,
+      }) as NetworkNameToNetwork[T];
+    }
+    case "bch": {
+      return new Bch({
+        ...(parameters as GetNetworkParameters<"bch">),
         mnemonic: mnemonicInstance,
       }) as NetworkNameToNetwork[T];
     }

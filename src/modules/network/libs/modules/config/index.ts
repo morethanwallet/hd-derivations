@@ -4,3 +4,4 @@ export { btcConfig } from "./btc-config.js";
 export { trxConfig } from "./trx-config.js";
 export { tonConfig } from "./ton-config.js";
 export { suiConfig } from "./sui-config.js";
+export { bchConfig } from "./bch-config.js";

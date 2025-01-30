@@ -4,6 +4,7 @@ import { type Avax } from "@/modules/network/avax/index.js";
 import { type Trx } from "@/modules/network/trx/index.js";
 import { type Ton } from "@/modules/network/ton/index.js";
 import { type Sui } from "@/modules/network/sui/index.js";
+import { type Bch } from "@/modules/network/bch/index.js";
 
 type NetworkNameToNetwork = {
   btc: Btc;
@@ -12,6 +13,7 @@ type NetworkNameToNetwork = {
   trx: Trx;
   ton: Ton;
   sui: Sui;
+  bch: Bch;
 };
 
 export type { NetworkNameToNetwork };

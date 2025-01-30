@@ -11,6 +11,7 @@ export type {
   XrpDerivationTypeUnion,
   AvaxDerivationTypeUnion,
   DerivationTypeMap,
+  BchDerivationTypeUnion,
 } from "./derivation/index.js";
 export {
   type CardanoBaseKeyPair,

@@ -6,6 +6,7 @@ import type {
   TonDerivationConfig,
   TrxDerivationConfig,
   SuiDerivationConfig,
+  BchDerivationConfig,
 } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
 
@@ -39,6 +40,11 @@ type SuiInstanceParameters = {
   derivationConfig: SuiDerivationConfig;
 } & MnemonicProperty;
 
+type BchInstanceParameters = {
+  network: NetworkTypeMap["bch"];
+  derivationConfig: BchDerivationConfig;
+} & MnemonicProperty;
+
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
@@ -46,4 +52,5 @@ export type {
   TrxInstanceParameters,
   TonInstanceParameters,
   SuiInstanceParameters,
+  BchInstanceParameters,
 };

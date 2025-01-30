@@ -30,6 +30,7 @@ export type {
   TrxInstanceParameters,
   TonInstanceParameters,
   SuiInstanceParameters,
+  BchInstanceParameters,
 } from "./instance-parameters.type.js";
 export type {
   AdaDerivationConfig,
@@ -38,6 +39,7 @@ export type {
   TonDerivationConfig,
   TrxDerivationConfig,
   SuiDerivationConfig,
+  BchDerivationConfig,
 } from "./derivation-config.type.js";
 export {
   type CommonNetworkPurposeUnion,

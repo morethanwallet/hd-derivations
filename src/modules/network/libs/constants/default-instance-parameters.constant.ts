@@ -1,9 +1,10 @@
 import { avaxConfig } from "../modules/config/avax-config.js";
 import { btcConfig } from "../modules/config/btc-config.js";
-import { trxConfig } from "../modules/config/index.js";
+import { bchConfig, trxConfig } from "../modules/config/index.js";
 import type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
+  BchInstanceParameters,
   BtcInstanceParameters,
   SuiInstanceParameters,
   TonInstanceParameters,
@@ -60,6 +61,15 @@ const DEFAULT_SUI_INSTANCE_PARAMETERS: SuiInstanceParameters = {
   derivationConfig: { scheme: "ed25519", derivationType: "suiBase" },
 };
 
+const DEFAULT_BCH_INSTANCE_PARAMETERS: BchInstanceParameters = {
+  network: "bch",
+  derivationConfig: {
+    networkPurpose: "mainnet",
+    derivationType: "bchCashAddr",
+    prefixConfig: bchConfig.mainnet.bchCashAddr.prefixConfig,
+  },
+};
+
 export {
   DEFAULT_ADA_INSTANCE_PARAMETERS,
   DEFAULT_AVAX_INSTANCE_PARAMETERS,
@@ -67,4 +77,5 @@ export {
   DEFAULT_TRX_INSTANCE_PARAMETERS,
   DEFAULT_TON_INSTANCE_PARAMETERS,
   DEFAULT_SUI_INSTANCE_PARAMETERS,
+  DEFAULT_BCH_INSTANCE_PARAMETERS,
 };

@@ -45,6 +45,11 @@ type SuiDerivationConfig = {
   derivationType: DerivationTypeMap["suiBase"];
 };
 
+type BchDerivationConfig = {
+  networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
+  derivationType: BchDerivationTypeUnion;
+} & CommonPrefixConfig;
+
 export type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
@@ -52,4 +57,5 @@ export type {
   TrxDerivationConfig,
   TonDerivationConfig,
   SuiDerivationConfig,
+  BchDerivationConfig,
 };
