@@ -14,6 +14,7 @@ import type {
   AdaDerivationTypeUnion,
   DerivationTypeUnion,
   SignatureSchemeProperty,
+  XrpDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
 import { type GetCredentialFromPK } from "./get-credential-from-p-k.type.js";
@@ -21,6 +22,7 @@ import { type DeriveItemsBatchFromMnemonic } from "./derive-items-batch-from-mne
 import { type DoesPKBelongToMnemonic } from "./does-p-k-belong-to-mnemonic.type.js";
 import type { CommonNetworkPurposeUnion } from "./network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
+import type { DestinationTagProperty } from "@/libs/modules/address/index.js";
 
 type AvaxParameters = {
   derivationType: AvaxDerivationTypeUnion;
@@ -51,6 +53,12 @@ type SuiParameters = {
   keysDerivationInstance: SuiKeyDerivation;
 } & SignatureSchemeProperty;
 
+type XrpParameters = {
+  keysDerivationInstance: CommonBipKeyDerivation;
+  isTestnet: boolean;
+  derivationType: XrpDerivationTypeUnion;
+} & DestinationTagProperty;
+
 type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
   T extends AvaxDerivationTypeUnion
     ? AvaxParameters
@@ -62,7 +70,9 @@ type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
           ? TonParameters
           : T extends DerivationTypeMap["suiBase"]
             ? SuiParameters
-            : { keysDerivationInstance: CommonBipKeyDerivation };
+            : T extends XrpDerivationTypeUnion
+              ? XrpParameters
+              : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;
