@@ -1,4 +1,4 @@
 node_modules
 coverage
 graph.svg
-build
+dist

@@ -2,13 +2,13 @@
   "name": "hd-derivations",
   "version": "1.0.0-beta.1",
   "description": "",
-  "main": "build/src/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
     "start": "tsx src/index.ts",
     "test": "vitest --coverage",
     "build": "tsc --project ./tsconfig.build.json && tsc-alias --project ./tsconfig.build.json && npm run build:copy",
     "build:graph": "npx madge src/ --ts-config ./tsconfig.json --extensions ts,tsx --image graph.svg",
-    "build:copy": "cpy \"./build/**\" \"./build/src\" --parents && del build/* !build/src",
+    "build:copy": "cpy \"./dist/**\" \"./dist/src\" --parents && del dist/* !dist/src",
     "lint:prettify": "prettier ./ --write \"**/*.{ts,json,md}\"",
     "lint:type": "npx tsc --noEmit"
   },
@@ -16,7 +16,7 @@
     "pre-commit": "npm run build:graph"
   },
   "files": [
-    "build"
+    "dist"
   ],
   "keywords": [],
   "author": "",
