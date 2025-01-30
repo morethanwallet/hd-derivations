@@ -43,8 +43,14 @@ class CommonBipKeyDerivation
   public importByPrivateKey({
     privateKey,
   }: PrivateKey<CommonBipDerivationTypeUnion>): CommonKeyPair {
-    const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
-    const { publicKey } = this.getKeyPair(rawPrivateKey);
+    const wifKeyLength = 52;
+    
+    const formattedKey =
+      privateKey.length === wifKeyLength
+        ? privateKey
+        : toUint8Array(Buffer.from(privateKey, "hex"));
+
+    const { publicKey } = this.getKeyPair(formattedKey);
 
     return {
       privateKey,

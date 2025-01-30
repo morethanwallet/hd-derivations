@@ -1,6 +1,6 @@
 import { getAvaxAddress } from "@/libs/modules/address/index.js";
 import {
-  doesPKeyBelongToMnemonic,
+  doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
 } from "@/modules/network/libs/helpers/index.js";
 import {
@@ -8,11 +8,9 @@ import {
   type GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
 import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";
-import { avaxConfig } from "@/modules/network/libs/modules/config/index.js";
 
 function getAvaxDerivationHandlers({
   derivationType,
-  networkPurpose,
   keysDerivationInstance,
 }: GetDerivationHandlersParameters<AvaxDerivationTypeUnion>): GetDerivationHandlersReturnType<AvaxDerivationTypeUnion> {
   const bech32Prefix = keysDerivationInstance.prefixConfig.bech32;
@@ -33,12 +31,11 @@ function getAvaxDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<AvaxDerivationTypeUnion>,
-    doesPKeyBelongToMnemonic(parameters) {
+    doesPKBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (doesPKeyBelongToMnemonic<AvaxDerivationTypeUnion>).call(
+      return (doesPKBelongToMnemonic<AvaxDerivationTypeUnion>).call(
         this,
         parameters,
-        avaxConfig[networkPurpose].avax.derivationPathPrefix,
       );
     },
   };

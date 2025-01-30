@@ -1,15 +1,17 @@
 import type {
   DerivationPath,
+  DerivationTypeMap,
   DerivationTypeUnion,
   SignatureSchemeUnion,
 } from "@/libs/types/index.js";
 import {
-  type DeriveItemsBatchFromMnemonicInnerHandler,
-  type DoesPKBelongToMnemonicInnerHandlerParameters,
+  type DeriveItemsBatchFromMnemonic,
+  type DoesPKBelongToMnemonicParameters,
 } from "../types/index.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../../constants/index.js";
 import { checkHardenedSuffixEnding } from "@/libs/helpers/index.js";
-import { DerivationPathSymbol, SplittedDerivationPathItemIndex } from "@/libs/enums/index.js";
+import { DerivationPathSymbol } from "@/libs/enums/index.js";
+import { doesPKExistInBatch } from "./does-p-k-exist-in-batch.helper.js";
 
 const SEGMENT_INITIAL_VALUE = "0";
 
@@ -17,15 +19,6 @@ type IncreaseDerivationPathDepthParameters = {
   derivationPath: DerivationPath["derivationPath"];
   scheme?: SignatureSchemeUnion;
 };
-
-function getDerivationPathPrefix(
-  derivationPath: DerivationPath["derivationPath"],
-): DerivationPath["derivationPath"] {
-  return derivationPath
-    .split(DerivationPathSymbol.DELIMITER)
-    .slice(SplittedDerivationPathItemIndex.MASTER_START, SplittedDerivationPathItemIndex.COIN_END)
-    .join(DerivationPathSymbol.DELIMITER);
-}
 
 function hardenDerivationPath(
   derivationPath: DerivationPath["derivationPath"],
@@ -41,20 +34,15 @@ function increaseDerivationPathDepth({
   return `${derivationPath}${DerivationPathSymbol.DELIMITER}${SEGMENT_INITIAL_VALUE}${hardenedSuffix}`;
 }
 
-function doesPKeyBelongToMnemonic<T extends DerivationTypeUnion>(
+type SupportedDerivationTypes = Exclude<DerivationTypeUnion, DerivationTypeMap["suiBase"]>;
+
+function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
   this: {
-    deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T>;
+    deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonic<T>;
   },
-  parameters: DoesPKBelongToMnemonicInnerHandlerParameters<T>,
-  derivationPathPrefixToCompare: DerivationPath["derivationPath"],
+  parameters: DoesPKBelongToMnemonicParameters<T>,
   scheme?: SignatureSchemeUnion,
 ): boolean {
-  const derivationPathPrefix = getDerivationPathPrefix(parameters.derivationPathPrefix);
-
-  if (derivationPathPrefix !== derivationPathPrefixToCompare) {
-    return false;
-  }
-
   let updatedDerivationPath = parameters.derivationPathPrefix;
   let derivationPathDepth = updatedDerivationPath.split(DerivationPathSymbol.DELIMITER).length;
 
@@ -64,20 +52,9 @@ function doesPKeyBelongToMnemonic<T extends DerivationTypeUnion>(
       derivationPathPrefix: updatedDerivationPath,
     });
 
-    if (
-      itemsBatch.some((item) => {
-        if ("privateKey" in item && item.privateKey === parameters.privateKey) return true;
-        if (
-          "rewardPrivateKey" in item &&
-          "enterprisePrivateKey" in item &&
-          (item.rewardPrivateKey === parameters.privateKey ||
-            item.enterprisePrivateKey === parameters.privateKey)
-        )
-          return true;
-      })
-    ) {
-      return true;
-    }
+    const { privateKey } = parameters;
+
+    if (doesPKExistInBatch(itemsBatch, privateKey)) return true;
 
     if (!checkHardenedSuffixEnding(updatedDerivationPath)) {
       updatedDerivationPath = hardenDerivationPath(updatedDerivationPath);
@@ -86,6 +63,7 @@ function doesPKeyBelongToMnemonic<T extends DerivationTypeUnion>(
         scheme,
         derivationPath: updatedDerivationPath,
       });
+
       derivationPathDepth++;
     }
   } while (derivationPathDepth <= MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY);
@@ -93,4 +71,4 @@ function doesPKeyBelongToMnemonic<T extends DerivationTypeUnion>(
   return false;
 }
 
-export { doesPKeyBelongToMnemonic };
+export { doesPKBelongToMnemonic };

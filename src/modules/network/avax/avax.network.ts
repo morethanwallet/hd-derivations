@@ -26,7 +26,6 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
 
     const derivationsHandlers: DerivationsHandlers<AvaxDerivationTypeUnion> = {
       avaxX: getAvaxDerivationHandlers({
-        networkPurpose,
         derivationType: "avaxX",
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("avaxX", derivationConfig) ??
@@ -36,7 +35,6 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
         ),
       }),
       avaxP: getAvaxDerivationHandlers({
-        networkPurpose,
         derivationType: "avaxP",
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("avaxP", derivationConfig) ??
@@ -68,10 +66,10 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public doesPKeyBelongToMnemonic(
+  public doesPKBelongToMnemonic(
     parameters: DoesPKBelongToMnemonicParameters<AvaxDerivationTypeUnion>,
   ) {
-    return this.derivationHandlers.doesPKeyBelongToMnemonic(parameters);
+    return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }
 }
 

@@ -1,16 +1,20 @@
 import { Ed25519Keys } from "@/libs/modules/keys/index.js";
-import {
-  type AbstractKeyDerivation,
-  type DeriveFromMnemonicParameters,
+import type {
+  CommonEd25519DerivationTypeUnion,
+  AbstractKeyDerivation,
+  DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import edHd from "ed25519-hd-key";
 import { toHexFromBytes } from "@/libs/helpers/index.js";
 
-class CommonEd25519KeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"tonBase"> {
+class CommonEd25519KeyDerivation
+  extends Ed25519Keys
+  implements AbstractKeyDerivation<CommonEd25519DerivationTypeUnion>
+{
   public deriveFromMnemonic({
     derivationPath,
-  }: DeriveFromMnemonicParameters<"tonBase">): CommonKeyPair {
+  }: DeriveFromMnemonicParameters<CommonEd25519DerivationTypeUnion>): CommonKeyPair {
     const { privateKey, publicKey } = this.getKeyPair(derivationPath);
 
     return {
@@ -19,7 +23,9 @@ class CommonEd25519KeyDerivation extends Ed25519Keys implements AbstractKeyDeriv
     };
   }
 
-  public importByPrivateKey({ privateKey }: PrivateKey<"tonBase">): CommonKeyPair {
+  public importByPrivateKey({
+    privateKey,
+  }: PrivateKey<CommonEd25519DerivationTypeUnion>): CommonKeyPair {
     const rawPrivateKey = Buffer.from(privateKey, "hex");
     const publicKey = this.getPublicKey(rawPrivateKey);
 

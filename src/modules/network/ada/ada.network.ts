@@ -34,17 +34,14 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
     const derivationsHandlers: DerivationsHandlers<AdaDerivationTypeUnion> = {
       adaEnterprise: getEnterpriseDerivationHandlers({
         networkId,
-        networkPurpose,
         keysDerivationInstance: new EnterpriseKeyDerivation(mnemonic),
       }),
       adaReward: getRewardDerivationHandlers({
         networkId,
-        networkPurpose,
         keysDerivationInstance: new RewardKeyDerivation(mnemonic),
       }),
       adaBase: getBaseDerivationHandlers({
         networkId,
-        networkPurpose,
         keysDerivationInstance: new BaseKeyDerivation(mnemonic),
       }),
     };
@@ -70,10 +67,10 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public doesPKeyBelongToMnemonic(
+  public doesPKBelongToMnemonic(
     parameters: DoesPKBelongToMnemonicParameters<AdaDerivationTypeUnion>,
   ) {
-    return this.derivationHandlers.doesPKeyBelongToMnemonic(parameters);
+    return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }
 }
 

@@ -36,7 +36,6 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
 
     const derivationsHandlers: DerivationsHandlers<BtcDerivationTypeUnion> = {
       btcLegacy: getLegacyDerivationHandlers({
-        networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("btcLegacy", derivationConfig) ??
             btcConfig[networkPurpose].btcLegacy.prefixConfig,
@@ -44,7 +43,6 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
         ),
       }),
       btcSegWit: getSegWitDerivationHandlers({
-        networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("btcSegWit", derivationConfig) ??
             btcConfig[networkPurpose].btcSegWit.prefixConfig,
@@ -52,7 +50,6 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
         ),
       }),
       btcNativeSegWit: getNativeSegWitDerivationHandlers({
-        networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("btcNativeSegWit", derivationConfig) ??
             btcConfig[networkPurpose].btcNativeSegWit.prefixConfig,
@@ -60,7 +57,6 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
         ),
       }),
       btcTaproot: getTaprootDerivationHandlers({
-        networkPurpose,
         keysDerivationInstance: new TaprootKeyDerivation(
           findCustomConfig("btcTaproot", derivationConfig) ??
             btcConfig[networkPurpose].btcTaproot.prefixConfig,
@@ -68,7 +64,6 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
         ),
       }),
       btcP2wsh: getP2wshDerivationHandlers({
-        networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("btcP2wsh", derivationConfig) ??
             btcConfig[networkPurpose].btcP2wsh.prefixConfig,
@@ -76,7 +71,6 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
         ),
       }),
       btcP2wshInP2sh: getP2wshInP2shDerivationHandlers({
-        networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("btcP2wshInP2sh", derivationConfig) ??
             btcConfig[networkPurpose].btcP2wshInP2sh.prefixConfig,
@@ -106,10 +100,10 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public doesPKeyBelongToMnemonic(
+  public doesPKBelongToMnemonic(
     parameters: DoesPKBelongToMnemonicParameters<BtcDerivationTypeUnion>,
   ) {
-    return this.derivationHandlers.doesPKeyBelongToMnemonic(parameters);
+    return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }
 }
 

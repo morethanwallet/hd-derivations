@@ -10,9 +10,9 @@ type SuiConfig = {
 
 const suiConfig: SuiConfig = {
   suiBase: {
-    ed25519: { derivationPathPrefix: "m/44'/784'" },
-    secp256k1: { derivationPathPrefix: "m/54'784'" },
-    secp256r1: { derivationPathPrefix: "m/74'784'" },
+    ed25519: { derivationPathPrefix: "m/44'/784'/0'/0'" },
+    secp256k1: { derivationPathPrefix: "m/54'784'/0'/0'" },
+    secp256r1: { derivationPathPrefix: "m/74'784'/0'/0'" },
   },
 };
 

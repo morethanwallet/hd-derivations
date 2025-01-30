@@ -2,6 +2,7 @@ import { type PrefixConfig } from "@/libs/modules/keys/index.js";
 import type {
   AdaDerivationTypeUnion,
   AvaxDerivationTypeUnion,
+  BchDerivationTypeUnion,
   BtcDerivationTypeUnion,
   DerivationTypeMap,
   SignatureSchemeUnion,
@@ -11,6 +12,7 @@ import type {
   CommonNetworkPurposeRegTestExtendedUnion,
   CommonNetworkPurposeUnion,
 } from "./network-purpose-union.type.js";
+import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
 
 type CommonPrefixConfig = { prefixConfig: PrefixConfig };
 
@@ -25,8 +27,8 @@ type AvaxDerivationConfig = {
 } & CommonPrefixConfig;
 
 type BtcDerivationConfig = {
-  derivationType: BtcDerivationTypeUnion;
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
+  derivationType: BtcDerivationTypeUnion;
 } & CommonPrefixConfig;
 
 type TrxDerivationConfig = {
@@ -36,7 +38,7 @@ type TrxDerivationConfig = {
 type TonDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: DerivationTypeMap["tonBase"];
-};
+} & TonAddressDerivationConfig;
 
 type SuiDerivationConfig = {
   scheme: SignatureSchemeUnion;

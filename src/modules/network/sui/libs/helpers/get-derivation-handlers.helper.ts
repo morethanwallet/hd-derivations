@@ -1,9 +1,8 @@
 import { getSuiAddress } from "@/libs/modules/address/index.js";
 import {
-  doesPKeyBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
+  doesPKExistInBatch,
 } from "@/modules/network/libs/helpers/index.js";
-import { suiConfig } from "@/modules/network/libs/modules/config/index.js";
 import {
   type GetDerivationHandlersParameters,
   type GetDerivationHandlersReturnType,
@@ -40,14 +39,13 @@ function getSuiDerivationHandlers({
        scheme
       );
     },
-    doesPKeyBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKeyBelongToMnemonic<"suiBase">).call(
-        this,
-        parameters,
-        suiConfig.suiBase[scheme].derivationPathPrefix,
-        scheme
-      );
+    doesPKBelongToMnemonic(parameters) {
+      const itemsBatch = this.deriveItemsBatchFromMnemonic(parameters);
+      const { privateKey } = parameters;
+
+      if (doesPKExistInBatch(itemsBatch, privateKey)) return true;
+
+      return false;
     },
   };
 }

@@ -1,9 +1,8 @@
 import { getTrxAddress } from "@/libs/modules/address/index.js";
 import {
-  doesPKeyBelongToMnemonic,
+  doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
 } from "@/modules/network/libs/helpers/index.js";
-import { trxConfig } from "@/modules/network/libs/modules/config/index.js";
 import {
   type GetDerivationHandlersParameters,
   type GetDerivationHandlersReturnType,
@@ -26,12 +25,11 @@ function getTrxDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"trxBase">,
-    doesPKeyBelongToMnemonic(parameters) {
+    doesPKBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (doesPKeyBelongToMnemonic<"trxBase">).call(
+      return (doesPKBelongToMnemonic<"trxBase">).call(
         this,
         parameters,
-        trxConfig.trxBase.derivationPathPrefix,
       );
     },
   };

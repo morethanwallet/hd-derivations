@@ -50,10 +50,10 @@ class Sui implements AbstractNetwork<DerivationTypeMap["suiBase"]> {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public doesPKeyBelongToMnemonic(
+  public doesPKBelongToMnemonic(
     parameters: DoesPKBelongToMnemonicParameters<DerivationTypeMap["suiBase"]>,
   ) {
-    return this.derivationHandlers.doesPKeyBelongToMnemonic(parameters);
+    return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }
 }
 

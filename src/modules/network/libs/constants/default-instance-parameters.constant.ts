@@ -12,14 +12,14 @@ import type {
 
 const DEFAULT_ADA_INSTANCE_PARAMETERS: AdaInstanceParameters = {
   network: "ada",
-  networkPurpose: "mainnet",
-  derivationConfig: { derivationType: "adaBase" },
+
+  derivationConfig: { networkPurpose: "mainnet", derivationType: "adaBase" },
 };
 
 const DEFAULT_AVAX_INSTANCE_PARAMETERS: AvaxInstanceParameters = {
   network: "avax",
-  networkPurpose: "mainnet",
   derivationConfig: {
+    networkPurpose: "mainnet",
     derivationType: "avaxX",
     prefixConfig: avaxConfig.mainnet.avax.prefixConfig,
   },
@@ -27,8 +27,9 @@ const DEFAULT_AVAX_INSTANCE_PARAMETERS: AvaxInstanceParameters = {
 
 const DEFAULT_BTC_INSTANCE_PARAMETERS: BtcInstanceParameters = {
   network: "btc",
-  networkPurpose: "mainnet",
+
   derivationConfig: {
+    networkPurpose: "mainnet",
     derivationType: "btcTaproot",
     prefixConfig: btcConfig.mainnet.btcTaproot.prefixConfig,
   },
@@ -41,14 +42,22 @@ const DEFAULT_TRX_INSTANCE_PARAMETERS: TrxInstanceParameters = {
 
 const DEFAULT_TON_INSTANCE_PARAMETERS: TonInstanceParameters = {
   network: "ton",
-  networkPurpose: "mainnet",
-  derivationConfig: { derivationType: "tonBase" },
+  derivationConfig: {
+    networkPurpose: "mainnet",
+    derivationType: "tonBase",
+    contractVersion: "v5r1",
+    isFriendlyFormat: true,
+    workChain: 0,
+    friendlyFormatArguments: {
+      bounceable: false,
+      urlSafe: true,
+    },
+  },
 };
 
 const DEFAULT_SUI_INSTANCE_PARAMETERS: SuiInstanceParameters = {
   network: "sui",
-  derivationConfig: { derivationType: "suiBase" },
-  scheme: "ed25519",
+  derivationConfig: { scheme: "ed25519", derivationType: "suiBase" },
 };
 
 export {

@@ -8,7 +8,7 @@ type AbstractNetwork<TDerivationType extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<TDerivationType>;
   getCredentialFromPK: GetCredentialFromPK<TDerivationType>;
   deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonic<TDerivationType>;
-  doesPKeyBelongToMnemonic: DoesPKBelongToMnemonic<TDerivationType>;
+  doesPKBelongToMnemonic: DoesPKBelongToMnemonic<TDerivationType>;
 };
 
 export { type AbstractNetwork };

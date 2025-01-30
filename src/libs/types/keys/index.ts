@@ -2,5 +2,5 @@ export { type CardanoBaseKeyPair, type CommonKeyPair, type KeyPair } from "./key
 export {
   type PrivateKey,
   type CommonPrivateKey,
-  type CardanoBasePrivateKey,
+  type AdaBasePrivateKey,
 } from "./private-key.type.js";

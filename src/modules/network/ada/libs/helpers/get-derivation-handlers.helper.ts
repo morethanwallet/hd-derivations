@@ -4,10 +4,9 @@ import {
   getRewardAddress,
 } from "@/libs/modules/address/index.js";
 import {
-  doesPKeyBelongToMnemonic,
+  doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
 } from "@/modules/network/libs/helpers/index.js";
-import { adaConfig } from "@/modules/network/libs/modules/config/index.js";
 import {
   type GetDerivationHandlersParameters,
   type GetDerivationHandlersReturnType,
@@ -16,7 +15,6 @@ import {
 function getEnterpriseDerivationHandlers({
   keysDerivationInstance,
   networkId,
-  networkPurpose,
 }: GetDerivationHandlersParameters<"adaEnterprise">): GetDerivationHandlersReturnType<"adaEnterprise"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
@@ -32,12 +30,11 @@ function getEnterpriseDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaEnterprise">,
-    doesPKeyBelongToMnemonic(parameters) {
+    doesPKBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (doesPKeyBelongToMnemonic<"adaEnterprise">).call(
+      return (doesPKBelongToMnemonic<"adaEnterprise">).call(
         this,
         parameters,
-        adaConfig[networkPurpose].adaEnterprise.derivationPathPrefix,
       );
     },
   };
@@ -46,7 +43,6 @@ function getEnterpriseDerivationHandlers({
 function getRewardDerivationHandlers({
   keysDerivationInstance,
   networkId,
-  networkPurpose,
 }: GetDerivationHandlersParameters<"adaReward">): GetDerivationHandlersReturnType<"adaReward"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
@@ -62,12 +58,11 @@ function getRewardDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaReward">,
-    doesPKeyBelongToMnemonic(parameters) {
+    doesPKBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (doesPKeyBelongToMnemonic<"adaReward">).call(
+      return (doesPKBelongToMnemonic<"adaReward">).call(
         this,
         parameters,
-        adaConfig[networkPurpose].adaReward.derivationPathPrefix,
       );
     },
   };
@@ -76,7 +71,6 @@ function getRewardDerivationHandlers({
 function getBaseDerivationHandlers({
   keysDerivationInstance,
   networkId,
-  networkPurpose,
 }: GetDerivationHandlersParameters<"adaBase">): GetDerivationHandlersReturnType<"adaBase"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
@@ -92,12 +86,11 @@ function getBaseDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaBase">,
-    doesPKeyBelongToMnemonic(parameters) {
+    doesPKBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (doesPKeyBelongToMnemonic<"adaBase">).call(
+      return (doesPKBelongToMnemonic<"adaBase">).call(
         this,
         parameters,
-        adaConfig[networkPurpose].adaBase.derivationPathPrefix,
       );
     },
   };

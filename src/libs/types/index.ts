@@ -3,14 +3,14 @@ export {
   type SignatureSchemeProperty,
 } from "./signature-scheme.type.js";
 export { type CustomError } from "./custom-error.type.js";
-export {
-  type DerivationPath,
-  type DerivationTypeUnion,
-  type BtcDerivationTypeUnion,
-  type AdaDerivationTypeUnion,
-  type XrpDerivationTypeUnion,
-  type AvaxDerivationTypeUnion,
-  type DerivationTypeMap,
+export type {
+  DerivationPath,
+  DerivationTypeUnion,
+  BtcDerivationTypeUnion,
+  AdaDerivationTypeUnion,
+  XrpDerivationTypeUnion,
+  AvaxDerivationTypeUnion,
+  DerivationTypeMap,
 } from "./derivation/index.js";
 export {
   type CardanoBaseKeyPair,
@@ -18,5 +18,5 @@ export {
   type KeyPair,
   type PrivateKey,
   type CommonPrivateKey,
-  type CardanoBasePrivateKey,
+  type AdaBasePrivateKey,
 } from "./keys/index.js";

@@ -52,10 +52,10 @@ class Trx implements AbstractNetwork<DerivationTypeMap["trxBase"]> {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public doesPKeyBelongToMnemonic(
+  public doesPKBelongToMnemonic(
     parameters: DoesPKBelongToMnemonicParameters<DerivationTypeMap["trxBase"]>,
   ) {
-    return this.derivationHandlers.doesPKeyBelongToMnemonic(parameters);
+    return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }
 }
 

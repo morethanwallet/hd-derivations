@@ -3,12 +3,12 @@ import { type DerivationTypeUnion } from "../derivation/derivation-type-union.ty
 
 type CommonPrivateKey = { privateKey: string };
 
-type CardanoBasePrivateKey = {
+type AdaBasePrivateKey = {
   enterprisePrivateKey: string;
   rewardPrivateKey: string;
 };
 
 type PrivateKey<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends DerivationTypeMap["adaBase"] ? CardanoBasePrivateKey : CommonPrivateKey;
+  TDerivationType extends DerivationTypeMap["adaBase"] ? AdaBasePrivateKey : CommonPrivateKey;
 
-export { type PrivateKey, type CommonPrivateKey, type CardanoBasePrivateKey };
+export { type PrivateKey, type CommonPrivateKey, type AdaBasePrivateKey };

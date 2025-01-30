@@ -1,26 +1,13 @@
-import type { DerivationTypeUnion, CommonPrivateKey } from "@/libs/types/index.js";
+import type { DerivationTypeUnion, PrivateKey } from "@/libs/types/index.js";
 import { type LookupHandlersCommonParameters } from "./lookup-handlers-common-parameters.type.js";
+import type { ValueOf } from "ts-essentials";
 
-type CommonHandlersParameters<TDerivationType extends DerivationTypeUnion> = CommonPrivateKey &
-  LookupHandlersCommonParameters<TDerivationType>;
+type DoesPKBelongToMnemonicParameters<T extends DerivationTypeUnion> = {
+  privateKey: ValueOf<PrivateKey<T>>;
+} & LookupHandlersCommonParameters<T>;
 
-type DoesPKBelongToMnemonicInnerHandlerParameters<TDerivationType extends DerivationTypeUnion> =
-  CommonHandlersParameters<TDerivationType>;
-
-type DoesPKBelongToMnemonicInnerHandler<TDerivationType extends DerivationTypeUnion> = (
-  parameters: DoesPKBelongToMnemonicInnerHandlerParameters<TDerivationType>,
+type DoesPKBelongToMnemonic<T extends DerivationTypeUnion> = (
+  parameters: DoesPKBelongToMnemonicParameters<T>,
 ) => boolean;
 
-type DoesPKBelongToMnemonicParameters<TDerivationType extends DerivationTypeUnion> =
-  CommonHandlersParameters<TDerivationType>;
-
-type DoesPKBelongToMnemonic<TDerivationType extends DerivationTypeUnion> = (
-  parameters: DoesPKBelongToMnemonicParameters<TDerivationType>,
-) => boolean;
-
-export {
-  type DoesPKBelongToMnemonic,
-  type DoesPKBelongToMnemonicParameters,
-  type DoesPKBelongToMnemonicInnerHandler,
-  type DoesPKBelongToMnemonicInnerHandlerParameters,
-};
+export { type DoesPKBelongToMnemonic, type DoesPKBelongToMnemonicParameters };

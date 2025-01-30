@@ -1,29 +1,10 @@
 import type { PrivateKey, DerivationTypeUnion } from "@/libs/types/index.js";
 import { type DerivedCredential } from "./derived-credential.type.js";
-import { type TonAddressRequiredData } from "@/libs/modules/address/index.js";
-import type { CommonHandlersParameters } from "./common-handlers-parameters.type.js";
 
-type HandlersCommonParameters<TDerivationType extends DerivationTypeUnion> =
-  PrivateKey<TDerivationType> &
-    (TDerivationType extends "tonBase" ? TonAddressRequiredData : Record<string, unknown>);
+type GetCredentialFromPKParameters<T extends DerivationTypeUnion> = PrivateKey<T>;
 
-type GetCredentialFromPKInnerHandlerParameters<TDerivationType extends DerivationTypeUnion> =
-  HandlersCommonParameters<TDerivationType> & CommonHandlersParameters<TDerivationType>;
+type GetCredentialFromPK<T extends DerivationTypeUnion> = (
+  parameters: GetCredentialFromPKParameters<T>,
+) => DerivedCredential<T>;
 
-type GetCredentialFromPKInnerHandler<TDerivationType extends DerivationTypeUnion> = (
-  parameters: GetCredentialFromPKInnerHandlerParameters<TDerivationType>,
-) => DerivedCredential<TDerivationType>;
-
-type GetCredentialFromPKParameters<TDerivationType extends DerivationTypeUnion> =
-  HandlersCommonParameters<TDerivationType>;
-
-type GetCredentialFromPK<TDerivationType extends DerivationTypeUnion> = (
-  parameters: GetCredentialFromPKParameters<TDerivationType>,
-) => DerivedCredential<TDerivationType>;
-
-export {
-  type GetCredentialFromPK,
-  type GetCredentialFromPKParameters,
-  type GetCredentialFromPKInnerHandler,
-  type GetCredentialFromPKInnerHandlerParameters,
-};
+export { type GetCredentialFromPK, type GetCredentialFromPKParameters };
