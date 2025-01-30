@@ -1,205 +1,328 @@
-// import { Mnemonic } from "@/mnemonic/index.js";
-// import { Avax } from "../index.js";
-// import { describe, it, expect } from "vitest";
-// import { EMPTY_MNEMONIC } from "@/keyDerivation/constants/index.js";
+import { getNetwork } from "../../get-network/index.js";
+import { avaxConfig } from "../../libs/modules/config/index.js";
+import { Avax } from "../avax.network.js";
+import { describe, it, expect, beforeAll } from "vitest";
+import { FIRST_ITEM_INDEX, INDEX_LOOKUP_FROM, INDEX_LOOKUP_TO } from "../../constants/index.js";
+import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
+import type { AvaxDerivationTypeUnion } from "@/libs/types/index.js";
 
-// const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
+const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 
-// const MOCK_COMMON_DERIVATION_PATH = "m/44'/9000'/0'/0/0";
+const MOCK_COMMON_DERIVATION_PATH = "m/44'/9000'/0'/0/0";
 
-// const MOCK_COMMON_ADDRESS_DATA = {
-//   native: {
-//     mnemonic: MNEMONIC,
-//     path: MOCK_COMMON_DERIVATION_PATH,
-//     publicKey: "03fe1af122c37da0765c691057f18e3d2810efba796068b2cb710f36710ba8ad3b",
-//     privateKey: "ae1c060b7d334b62797a911a8478a40c20489124c6c5d84c2391ffddf38b3d16",
-//   },
-//   nonNative: {
-//     mnemonic: EMPTY_MNEMONIC,
-//     path: MOCK_COMMON_DERIVATION_PATH,
-//     publicKey: "03db3460d315df5ee81ee8209c53acda36ab567dbc128f1c8313e0a63dd5a29734",
-//     privateKey: "262723ff31600c88d9ba431cd7ff1d59f13359708f7bf9d426c58f3b508b1b83",
-//   },
-// };
+const MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX = "m/44'/9000'/0'/0";
 
-// const MOCK_MAINNET_ADDRESS_DATA = {
-//   native: {
-//     x: {
-//       ...MOCK_COMMON_ADDRESS_DATA.native,
-//       address: "X-avax1ecca9lzv4gj68826c2856ll0zz8aknxfcky982",
-//     },
-//     p: {
-//       ...MOCK_COMMON_ADDRESS_DATA.native,
-//       address: "P-avax1ecca9lzv4gj68826c2856ll0zz8aknxfcky982",
-//     },
-//   },
-//   nonNative: {
-//     x: {
-//       ...MOCK_COMMON_ADDRESS_DATA.nonNative,
-//       address: "X-avax10tkns2y49yy6vpe2reh4hay794yqfmzqxhjtl0",
-//     },
-//     p: {
-//       ...MOCK_COMMON_ADDRESS_DATA.nonNative,
-//       address: "P-avax10tkns2y49yy6vpe2reh4hay794yqfmzqxhjtl0",
-//     },
-//   },
-// };
+const MOCK_COMMON_MAINNET_CREDENTIAL = {
+  privateKey: "ae1c060b7d334b62797a911a8478a40c20489124c6c5d84c2391ffddf38b3d16",
+  publicKey: "03fe1af122c37da0765c691057f18e3d2810efba796068b2cb710f36710ba8ad3b",
+};
 
-// const MOCK_TESTNET_ADDRESS_DATA = {
-//   native: {
-//     x: {
-//       ...MOCK_MAINNET_ADDRESS_DATA.native.x,
-//       address: "X-fuji1ecca9lzv4gj68826c2856ll0zz8aknxf5yq6t4",
-//     },
-//     p: {
-//       ...MOCK_MAINNET_ADDRESS_DATA.native.p,
-//       address: "P-fuji1ecca9lzv4gj68826c2856ll0zz8aknxf5yq6t4",
-//     },
-//   },
-//   nonNative: {
-//     x: {
-//       ...MOCK_MAINNET_ADDRESS_DATA.nonNative.x,
-//       address: "X-fuji10tkns2y49yy6vpe2reh4hay794yqfmzq29k5ns",
-//     },
-//     p: {
-//       ...MOCK_MAINNET_ADDRESS_DATA.nonNative.p,
-//       address: "P-fuji10tkns2y49yy6vpe2reh4hay794yqfmzq29k5ns",
-//     },
-//   },
-// };
+const MOCK_MAINNET_CREDENTIAL = {
+  x: {
+    ...MOCK_COMMON_MAINNET_CREDENTIAL,
+    address: "X-avax1ecca9lzv4gj68826c2856ll0zz8aknxfcky982",
+  },
+  p: {
+    ...MOCK_COMMON_MAINNET_CREDENTIAL,
+    address: "P-avax1ecca9lzv4gj68826c2856ll0zz8aknxfcky982",
+  },
+};
 
-// let mnemonic: Mnemonic;
-// let avaxMainnet: Avax;
-// let avaxTestnet: Avax;
+const MOCK_MAINNET_ITEM = {
+  x: {
+    ...MOCK_MAINNET_CREDENTIAL.x,
+    derivationPath: MOCK_COMMON_DERIVATION_PATH,
+  },
+  p: {
+    ...MOCK_MAINNET_CREDENTIAL.p,
+    derivationPath: MOCK_COMMON_DERIVATION_PATH,
+  },
+};
 
-// beforeEach(() => {
-//   mnemonic = new Mnemonic(MNEMONIC);
-//   avaxMainnet = new Avax(mnemonic, "mainnet");
-//   avaxTestnet = new Avax(mnemonic, "testnet");
-// });
+const MOCK_COMMON_EXTRINSIC_PRIVATE_KEY =
+  "262723ff31600c88d9ba431cd7ff1d59f13359708f7bf9d426c58f3b508b1b83";
 
-// describe("Avax", () => {
-//   describe("mainnet", () => {
-//     describe("derive", () => {
-//       it("Derives correct Avax-X item", () => {
-//         const derivedItem = avaxMainnet.derive(MOCK_MAINNET_ADDRESS_DATA.native.x.path, "X");
+const MOCK_TESTNET_CREDENTIAL = {
+  x: {
+    ...MOCK_MAINNET_CREDENTIAL.x,
+    address: "X-fuji1ecca9lzv4gj68826c2856ll0zz8aknxf5yq6t4",
+  },
+  p: {
+    ...MOCK_MAINNET_CREDENTIAL.p,
+    address: "P-fuji1ecca9lzv4gj68826c2856ll0zz8aknxf5yq6t4",
+  },
+};
 
-//         expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(derivedItem);
-//       });
+const MOCK_TESTNET_ITEM = {
+  x: {
+    ...MOCK_TESTNET_CREDENTIAL.x,
+    derivationPath: MOCK_COMMON_DERIVATION_PATH,
+  },
+  p: {
+    ...MOCK_TESTNET_CREDENTIAL.p,
+    derivationPath: MOCK_COMMON_DERIVATION_PATH,
+  },
+};
 
-//       it("Derives correct Avax-P item", () => {
-//         const derivedItem = avaxMainnet.derive(MOCK_MAINNET_ADDRESS_DATA.native.p.path, "P");
+type NetworksDerivations = {
+  [key in CommonNetworkPurposeUnion]: { [key in AvaxDerivationTypeUnion]: Avax };
+};
 
-//         expect(MOCK_MAINNET_ADDRESS_DATA.native.p).toEqual(derivedItem);
-//       });
-//     });
+let networksDerivations = {} as NetworksDerivations;
 
-//     describe("importByPrivateKey", () => {
-//       describe("Import from a native mnemonic", () => {
-//         it("Imports correct Avax-X item", () => {
-//           const credential = avaxMainnet.importByPrivateKey(
-//             MOCK_MAINNET_ADDRESS_DATA.native.x.path,
-//             MOCK_MAINNET_ADDRESS_DATA.native.x.privateKey,
-//             "X"
-//           );
+beforeAll(() => {
+  const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
+  const derivationTypes: AvaxDerivationTypeUnion[] = ["avaxP", "avaxX"] as const;
 
-//           expect(MOCK_MAINNET_ADDRESS_DATA.native.x).toEqual(credential);
-//         });
+  networksDerivations = networkPurposes.reduce<NetworksDerivations>(
+    (networksDerivations, networkPurpose) => {
+      networksDerivations[networkPurpose] = derivationTypes.reduce<
+        NetworksDerivations[CommonNetworkPurposeUnion]
+      >(
+        (derivations, derivationType) => {
+          derivations[derivationType] = getNetwork({
+            network: "avax",
+            mnemonic: MNEMONIC,
+            derivationConfig: {
+              networkPurpose,
+              derivationType,
+              prefixConfig: avaxConfig[networkPurpose].avax.prefixConfig,
+            },
+          });
 
-//         it("Imports correct Avax-P item", () => {
-//           const credential = avaxMainnet.importByPrivateKey(
-//             MOCK_MAINNET_ADDRESS_DATA.native.p.path,
-//             MOCK_MAINNET_ADDRESS_DATA.native.p.privateKey,
-//             "P"
-//           );
+          return derivations;
+        },
+        {} as NetworksDerivations[CommonNetworkPurposeUnion],
+      );
 
-//           expect(MOCK_MAINNET_ADDRESS_DATA.native.p).toEqual(credential);
-//         });
-//       });
+      return networksDerivations;
+    },
+    {} as NetworksDerivations,
+  );
+});
 
-//       describe("Import from a non-native mnemonic", () => {
-//         it("Imports correct Avax-X item", () => {
-//           const credential = avaxMainnet.importByPrivateKey(
-//             MOCK_MAINNET_ADDRESS_DATA.nonNative.x.path,
-//             MOCK_MAINNET_ADDRESS_DATA.nonNative.x.privateKey,
-//             "X"
-//           );
+describe("Avax", () => {
+  describe("mainnet", () => {
+    describe("deriveItemFromMnemonic", () => {
+      it("Derives correct avax X item", () => {
+        const derivedItem = networksDerivations.mainnet.avaxX.deriveItemFromMnemonic({
+          derivationPath: MOCK_COMMON_DERIVATION_PATH,
+        });
 
-//           expect(MOCK_MAINNET_ADDRESS_DATA.nonNative.x).toEqual(credential);
-//         });
+        expect(MOCK_MAINNET_ITEM.x).toEqual(derivedItem);
+      });
 
-//         it("Imports correct Avax-P item", () => {
-//           const credential = avaxMainnet.importByPrivateKey(
-//             MOCK_MAINNET_ADDRESS_DATA.nonNative.p.path,
-//             MOCK_MAINNET_ADDRESS_DATA.nonNative.p.privateKey,
-//             "P"
-//           );
+      it("Derives correct avax P item", () => {
+        const derivedItem = networksDerivations.mainnet.avaxP.deriveItemFromMnemonic({
+          derivationPath: MOCK_COMMON_DERIVATION_PATH,
+        });
 
-//           expect(MOCK_MAINNET_ADDRESS_DATA.nonNative.p).toEqual(credential);
-//         });
-//       });
-//     });
-//   });
+        expect(MOCK_MAINNET_ITEM.p).toEqual(derivedItem);
+      });
+    });
 
-//   describe("testnet", () => {
-//     describe("derive", () => {
-//       it("Derives correct Avax-X item", () => {
-//         const derivedItem = avaxTestnet.derive(MOCK_TESTNET_ADDRESS_DATA.native.x.path, "X");
+    describe("getCredentialFromPK", () => {
+      it("Derives correct avax X credential", () => {
+        const credential = networksDerivations.mainnet.avaxX.getCredentialFromPK({
+          privateKey: MOCK_MAINNET_CREDENTIAL.x.privateKey,
+        });
 
-//         expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(derivedItem);
-//       });
+        expect(credential).toEqual(MOCK_MAINNET_CREDENTIAL.x);
+      });
 
-//       it("Derives correct Avax-P item", () => {
-//         const derivedItem = avaxTestnet.derive(MOCK_TESTNET_ADDRESS_DATA.native.p.path, "P");
+      it("Derives correct avax P credential", () => {
+        const credential = networksDerivations.mainnet.avaxP.getCredentialFromPK({
+          privateKey: MOCK_MAINNET_CREDENTIAL.p.privateKey,
+        });
 
-//         expect(MOCK_TESTNET_ADDRESS_DATA.native.p).toEqual(derivedItem);
-//       });
-//     });
+        expect(credential).toEqual(MOCK_MAINNET_CREDENTIAL.p);
+      });
+    });
 
-//     describe("importByPrivateKey", () => {
-//       describe("Import from a native mnemonic", () => {
-//         it("Imports correct Avax-X item", () => {
-//           const credential = avaxTestnet.importByPrivateKey(
-//             MOCK_TESTNET_ADDRESS_DATA.native.x.path,
-//             MOCK_TESTNET_ADDRESS_DATA.native.x.privateKey,
-//             "X"
-//           );
+    describe("deriveItemsBatchFromMnemonic", () => {
+      it("Derives correct avax X items batch", () => {
+        const items = networksDerivations.mainnet.avaxX.deriveItemsBatchFromMnemonic({
+          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX,
+          indexLookupFrom: INDEX_LOOKUP_FROM,
+          indexLookupTo: INDEX_LOOKUP_TO,
+        });
 
-//           expect(MOCK_TESTNET_ADDRESS_DATA.native.x).toEqual(credential);
-//         });
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.x);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
+      });
 
-//         it("Imports correct Avax-P item", () => {
-//           const credential = avaxTestnet.importByPrivateKey(
-//             MOCK_TESTNET_ADDRESS_DATA.native.p.path,
-//             MOCK_TESTNET_ADDRESS_DATA.native.p.privateKey,
-//             "P"
-//           );
+      it("Derives correct avax P items batch", () => {
+        const items = networksDerivations.mainnet.avaxP.deriveItemsBatchFromMnemonic({
+          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX,
+          indexLookupFrom: INDEX_LOOKUP_FROM,
+          indexLookupTo: INDEX_LOOKUP_TO,
+        });
 
-//           expect(MOCK_TESTNET_ADDRESS_DATA.native.p).toEqual(credential);
-//         });
-//       });
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.p);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
+      });
+    });
 
-//       describe("Import from a non-native mnemonic", () => {
-//         it("Imports correct Avax-X item", () => {
-//           const credential = avaxTestnet.importByPrivateKey(
-//             MOCK_TESTNET_ADDRESS_DATA.nonNative.x.path,
-//             MOCK_TESTNET_ADDRESS_DATA.nonNative.x.privateKey,
-//             "X"
-//           );
+    describe("doesPKBelongToMnemonic", () => {
+      describe("Validates native private key correctly", () => {
+        it("Returns true for avax X private key", () => {
+          const isNative = networksDerivations.mainnet.avaxX.doesPKBelongToMnemonic({
+            derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_MAINNET_CREDENTIAL.x.privateKey,
+          });
 
-//           expect(MOCK_TESTNET_ADDRESS_DATA.nonNative.x).toEqual(credential);
-//         });
+          expect(isNative).toBe(true);
+        });
 
-//         it("Imports correct Avax-P item", () => {
-//           const credential = avaxTestnet.importByPrivateKey(
-//             MOCK_TESTNET_ADDRESS_DATA.nonNative.p.path,
-//             MOCK_TESTNET_ADDRESS_DATA.nonNative.p.privateKey,
-//             "P"
-//           );
+        it("Returns true for avax P private key", () => {
+          const isNative = networksDerivations.mainnet.avaxP.doesPKBelongToMnemonic({
+            derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_MAINNET_CREDENTIAL.p.privateKey,
+          });
 
-//           expect(MOCK_TESTNET_ADDRESS_DATA.nonNative.p).toEqual(credential);
-//         });
-//       });
-//     });
-//   });
-// });
+          expect(isNative).toBe(true);
+        });
+      });
+
+      describe("Validates extrinsic private key correctly", () => {
+        it("Returns false for avax X private key", () => {
+          const isNative = networksDerivations.mainnet.avaxX.doesPKBelongToMnemonic({
+            derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_COMMON_EXTRINSIC_PRIVATE_KEY,
+          });
+
+          expect(isNative).toBe(false);
+        });
+
+        it("Returns true for avax P private key", () => {
+          const isNative = networksDerivations.mainnet.avaxP.doesPKBelongToMnemonic({
+            derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_COMMON_EXTRINSIC_PRIVATE_KEY,
+          });
+
+          expect(isNative).toBe(false);
+        });
+      });
+    });
+  });
+
+  describe("testnet", () => {
+    describe("deriveItemFromMnemonic", () => {
+      it("Derives correct avax X item", () => {
+        const derivedItem = networksDerivations.testnet.avaxX.deriveItemFromMnemonic({
+          derivationPath: MOCK_COMMON_DERIVATION_PATH,
+        });
+
+        expect(MOCK_TESTNET_ITEM.x).toEqual(derivedItem);
+      });
+
+      it("Derives correct avax P item", () => {
+        const derivedItem = networksDerivations.testnet.avaxP.deriveItemFromMnemonic({
+          derivationPath: MOCK_COMMON_DERIVATION_PATH,
+        });
+
+        expect(MOCK_TESTNET_ITEM.p).toEqual(derivedItem);
+      });
+    });
+
+    describe("getCredentialFromPK", () => {
+      it("Derives correct avax X credential", () => {
+        const credential = networksDerivations.testnet.avaxX.getCredentialFromPK({
+          privateKey: MOCK_TESTNET_CREDENTIAL.x.privateKey,
+        });
+
+        expect(credential).toEqual(MOCK_TESTNET_CREDENTIAL.x);
+      });
+
+      it("Derives correct avax P credential", () => {
+        const credential = networksDerivations.testnet.avaxP.getCredentialFromPK({
+          privateKey: MOCK_TESTNET_CREDENTIAL.p.privateKey,
+        });
+
+        expect(credential).toEqual(MOCK_TESTNET_CREDENTIAL.p);
+      });
+    });
+
+    describe("deriveItemsBatchFromMnemonic", () => {
+      it("Derives correct avax X items batch", () => {
+        const items = networksDerivations.testnet.avaxX.deriveItemsBatchFromMnemonic({
+          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX,
+          indexLookupFrom: INDEX_LOOKUP_FROM,
+          indexLookupTo: INDEX_LOOKUP_TO,
+        });
+
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.x);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
+      });
+
+      it("Derives correct avax P items batch", () => {
+        const items = networksDerivations.testnet.avaxP.deriveItemsBatchFromMnemonic({
+          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX,
+          indexLookupFrom: INDEX_LOOKUP_FROM,
+          indexLookupTo: INDEX_LOOKUP_TO,
+        });
+
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.p);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
+      });
+    });
+
+    describe("doesPKBelongToMnemonic", () => {
+      describe("Validates native private key correctly", () => {
+        it("Returns true for avax X private key", () => {
+          const isNative = networksDerivations.testnet.avaxX.doesPKBelongToMnemonic({
+            derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_MAINNET_CREDENTIAL.x.privateKey,
+          });
+
+          expect(isNative).toBe(true);
+        });
+
+        it("Returns true for avax P private key", () => {
+          const isNative = networksDerivations.testnet.avaxP.doesPKBelongToMnemonic({
+            derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_MAINNET_CREDENTIAL.p.privateKey,
+          });
+
+          expect(isNative).toBe(true);
+        });
+      });
+
+      describe("Validates extrinsic private key correctly", () => {
+        it("Returns false for avax X private key", () => {
+          const isNative = networksDerivations.testnet.avaxX.doesPKBelongToMnemonic({
+            derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_COMMON_EXTRINSIC_PRIVATE_KEY,
+          });
+
+          expect(isNative).toBe(false);
+        });
+
+        it("Returns true for avax P private key", () => {
+          const isNative = networksDerivations.testnet.avaxP.doesPKBelongToMnemonic({
+            derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_COMMON_EXTRINSIC_PRIVATE_KEY,
+          });
+
+          expect(isNative).toBe(false);
+        });
+      });
+    });
+  });
+});
