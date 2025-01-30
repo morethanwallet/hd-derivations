@@ -2,7 +2,7 @@
   "name": "hd-derivations",
   "version": "1.0.0-beta.1",
   "description": "",
-  "main": "build/src/index.ts",
+  "main": "build/src/index.js",
   "scripts": {
     "start": "tsx src/index.ts",
     "test": "vitest --coverage",
