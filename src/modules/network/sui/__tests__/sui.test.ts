@@ -9,14 +9,14 @@ const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil su
 
 const MOCK_DERIVATION_PATH = {
   ed25519: "m/44'/784'/0'/0'/0'",
-  secp2561k: "m/54'/784'/0'/0'/0'",
-  secp2561r: "m/74'/784'/0'/0'/0'",
+  secp256k1: "m/54'/784'/0'/0/0",
+  secp256r1: "m/74'/784'/0'/0/0",
 };
 
 const MOCK_DERIVATION_PATH_BATCH_PREFIX = {
   ed25519: "m/44'/784'/0'/0'",
-  secp2561k: "m/54'/784'/0'/0'",
-  secp2561r: "m/74'/784'/0'/0'",
+  secp256k1: "m/54'/784'/0'/0",
+  secp256r1: "m/74'/784'/0'/0",
 };
 
 const MOCK_CREDENTIAL = {
@@ -25,12 +25,12 @@ const MOCK_CREDENTIAL = {
     publicKey: "AN7p+sLomkIlceWP1nimMFbJYCdt1Xef2h+syKxBpe6I",
     address: "0x2a495a95e243106634b52382e05a71e942fefbb3042c6b29a5de45c68a803f6f",
   },
-  secp2561k: {
+  secp256k1: {
     privateKey: "suiprivkey1qxtv0g86gf4g6rjjelcduumrf9hv26prhej0fz9vd29duuqcwc3vwwjldue",
     publicKey: "AQNz6gItxxNVDzpgeCewTl1GK9YcyjNWB7XTYk0AX458qQ==",
     address: "0x86a80a397d36eebf9efeda9283a161f800e531ab7cc550f81af28b1f2f11f0bd",
   },
-  secp2561r: {
+  secp256r1: {
     privateKey: "suiprivkey1qgz6w0ax4frzlk8jc5dqs0lhtzfwwn6vnhzuespft0jgwyjhrl77y5w744a",
     publicKey: "AgJY++i9Uw0GzfkOTf2foN6Amzv0EyJxiPM2KAbaynprJQ==",
     address: "0x0cbcd132f5e82ccbee3fd7cb2d863fa3aab951244dc31e9b91a6bc9ce53a9ea4",
@@ -42,13 +42,13 @@ const MOCK_ITEM = {
     ...MOCK_CREDENTIAL.ed25519,
     derivationPath: MOCK_DERIVATION_PATH.ed25519,
   },
-  secp2561k: {
-    ...MOCK_CREDENTIAL.secp2561k,
-    derivationPath: MOCK_DERIVATION_PATH.secp2561k,
+  secp256k1: {
+    ...MOCK_CREDENTIAL.secp256k1,
+    derivationPath: MOCK_DERIVATION_PATH.secp256k1,
   },
-  secp2561r: {
-    ...MOCK_CREDENTIAL.secp2561r,
-    derivationPath: MOCK_DERIVATION_PATH.secp2561r,
+  secp256r1: {
+    ...MOCK_CREDENTIAL.secp256r1,
+    derivationPath: MOCK_DERIVATION_PATH.secp256r1,
   },
 };
 
@@ -148,97 +148,127 @@ describe("Sui", () => {
     });
   });
 
-  // describe("secp256k1", () => {
-  //   describe("deriveItemFromMnemonic", () => {
-  //     it("Derives correct item", () => {
-  //       const derivedItem = networksDerivations.secp256k1.suiBase.deriveItemFromMnemonic({
-  //         derivationPath: MOCK_ITEM.ed25519.derivationPath,
-  //       });
+  describe("secp256k1", () => {
+    describe("deriveItemFromMnemonic", () => {
+      it("Derives correct item", () => {
+        const derivedItem = networksDerivations.secp256k1.suiBase.deriveItemFromMnemonic({
+          derivationPath: MOCK_ITEM.secp256k1.derivationPath,
+        });
 
-  //       expect(MOCK_ITEM.ed25519).toEqual(derivedItem);
-  //     });
-  //   });
+        expect(MOCK_ITEM.secp256k1).toEqual(derivedItem);
+      });
+    });
 
-  //   describe("getCredentialFromPK", () => {
-  //     it("Derives correct credential", () => {
-  //       const credential = networksDerivations.secp256k1.suiBase.getCredentialFromPK({
-  //         privateKey: MOCK_CREDENTIAL.ed25519.privateKey,
-  //       });
+    describe("getCredentialFromPK", () => {
+      it("Derives correct credential", () => {
+        const credential = networksDerivations.secp256k1.suiBase.getCredentialFromPK({
+          privateKey: MOCK_CREDENTIAL.secp256k1.privateKey,
+        });
 
-  //       expect(credential).toEqual(MOCK_CREDENTIAL.ed25519);
-  //     });
-  //   });
+        expect(credential).toEqual(MOCK_CREDENTIAL.secp256k1);
+      });
+    });
 
-  //   describe("deriveItemsBatchFromMnemonic", () => {
-  //     it("Derives correct items batch", () => {
-  //       const items = networksDerivations.secp256k1.suiBase.deriveItemsBatchFromMnemonic({
-  //         derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX.mainnet,
-  //         indexLookupFrom: INDEX_LOOKUP_FROM,
-  //         indexLookupTo: INDEX_LOOKUP_TO,
-  //       });
+    describe("deriveItemsBatchFromMnemonic", () => {
+      it("Derives correct items batch", () => {
+        const items = networksDerivations.secp256k1.suiBase.deriveItemsBatchFromMnemonic({
+          derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX.secp256k1,
+          indexLookupFrom: INDEX_LOOKUP_FROM,
+          indexLookupTo: INDEX_LOOKUP_TO,
+        });
 
-  //       expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.ed25519);
-  //     });
-  //   });
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.secp256k1);
+      });
+    });
 
-  //   describe("doesPKBelongToMnemonic", () => {
-  //     it("Validates private key correctly", () => {
-  //       const isNative = networksDerivations.secp256k1.suiBase.doesPKBelongToMnemonic({
-  //         derivationPathPrefix: suiConfig.mainnet.derivationPathPrefix,
-  //         indexLookupFrom: INDEX_LOOKUP_FROM,
-  //         indexLookupTo: INDEX_LOOKUP_TO,
-  //         privateKey: MOCK_CREDENTIAL.ed25519.privateKey,
-  //       });
+    describe("doesPKBelongToMnemonic", () => {
+      describe("Validates native private key correctly", () => {
+        it("Returns true", () => {
+          const isNative = networksDerivations.secp256k1.suiBase.doesPKBelongToMnemonic({
+            derivationPathPrefix: suiConfig.suiBase.secp256k1.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_CREDENTIAL.secp256k1.privateKey,
+          });
 
-  //       expect(isNative).toBe(true);
-  //     });
-  //   });
-  // });
+          expect(isNative).toBe(true);
+        });
+      });
 
-  // describe("secp256r1", () => {
-  //   describe("deriveItemFromMnemonic", () => {
-  //     it("Derives correct item", () => {
-  //       const derivedItem = networksDerivations.secp256r1.suiBase.deriveItemFromMnemonic({
-  //         derivationPath: MOCK_ITEM.ed25519.derivationPath,
-  //       });
+      describe("Validates extrinsic private key correctly", () => {
+        it("Returns false", () => {
+          const isNative = networksDerivations.secp256k1.suiBase.doesPKBelongToMnemonic({
+            derivationPathPrefix: suiConfig.suiBase.secp256k1.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_EXTRINSIC_PRIVATE_KEY,
+          });
 
-  //       expect(MOCK_ITEM.ed25519).toEqual(derivedItem);
-  //     });
-  //   });
+          expect(isNative).toBe(false);
+        });
+      });
+    });
+  });
 
-  //   describe("getCredentialFromPK", () => {
-  //     it("Derives correct credential", () => {
-  //       const credential = networksDerivations.secp256r1.suiBase.getCredentialFromPK({
-  //         privateKey: MOCK_CREDENTIAL.ed25519.privateKey,
-  //       });
+  describe("secp256r1", () => {
+    describe("deriveItemFromMnemonic", () => {
+      it("Derives correct item", () => {
+        const derivedItem = networksDerivations.secp256r1.suiBase.deriveItemFromMnemonic({
+          derivationPath: MOCK_ITEM.secp256r1.derivationPath,
+        });
 
-  //       expect(credential).toEqual(MOCK_CREDENTIAL.ed25519);
-  //     });
-  //   });
+        expect(MOCK_ITEM.secp256r1).toEqual(derivedItem);
+      });
+    });
 
-  //   describe("deriveItemsBatchFromMnemonic", () => {
-  //     it("Derives correct items batch", () => {
-  //       const items = networksDerivations.secp256r1.suiBase.deriveItemsBatchFromMnemonic({
-  //         derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX.mainnet,
-  //         indexLookupFrom: INDEX_LOOKUP_FROM,
-  //         indexLookupTo: INDEX_LOOKUP_TO,
-  //       });
+    describe("getCredentialFromPK", () => {
+      it("Derives correct credential", () => {
+        const credential = networksDerivations.secp256r1.suiBase.getCredentialFromPK({
+          privateKey: MOCK_CREDENTIAL.secp256r1.privateKey,
+        });
 
-  //       expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.ed25519);
-  //     });
-  //   });
+        expect(credential).toEqual(MOCK_CREDENTIAL.secp256r1);
+      });
+    });
 
-  //   describe("doesPKBelongToMnemonic", () => {
-  //     it("Validates private key correctly", () => {
-  //       const isNative = networksDerivations.secp256r1.suiBase.doesPKBelongToMnemonic({
-  //         derivationPathPrefix: suiConfig.mainnet.derivationPathPrefix,
-  //         indexLookupFrom: INDEX_LOOKUP_FROM,
-  //         indexLookupTo: INDEX_LOOKUP_TO,
-  //         privateKey: MOCK_CREDENTIAL.ed25519.privateKey,
-  //       });
+    describe("deriveItemsBatchFromMnemonic", () => {
+      it("Derives correct items batch", () => {
+        const items = networksDerivations.secp256r1.suiBase.deriveItemsBatchFromMnemonic({
+          derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX.secp256r1,
+          indexLookupFrom: INDEX_LOOKUP_FROM,
+          indexLookupTo: INDEX_LOOKUP_TO,
+        });
 
-  //       expect(isNative).toBe(true);
-  //     });
-  //   });
-  // });
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.secp256r1);
+      });
+    });
+
+    describe("doesPKBelongToMnemonic", () => {
+      describe("Validates native private key correctly", () => {
+        it("Returns true", () => {
+          const isNative = networksDerivations.secp256r1.suiBase.doesPKBelongToMnemonic({
+            derivationPathPrefix: suiConfig.suiBase.secp256r1.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_CREDENTIAL.secp256r1.privateKey,
+          });
+
+          expect(isNative).toBe(true);
+        });
+      });
+
+      describe("Validates extrinsic private key correctly", () => {
+        it("Returns false", () => {
+          const isNative = networksDerivations.secp256r1.suiBase.doesPKBelongToMnemonic({
+            derivationPathPrefix: suiConfig.suiBase.secp256r1.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MOCK_EXTRINSIC_PRIVATE_KEY,
+          });
+
+          expect(isNative).toBe(false);
+        });
+      });
+    });
+  });
 });
