@@ -1,16 +1,17 @@
 type DerivationTypeMap = {
   avaxX: "avaxX";
   avaxP: "avaxP";
-  legacy: "legacy";
-  segWit: "segWit";
-  p2wshInP2sh: "p2wshInP2sh";
-  p2wsh: "p2wsh";
-  nativeSegWit: "nativeSegWit";
-  taproot: "taproot";
-  cashAddr: "cashAddr";
+  btcLegacy: "btcLegacy";
+  btcSegWit: "btcSegWit";
+  btcP2wshInP2sh: "btcP2wshInP2sh";
+  btcP2wsh: "btcP2wsh";
+  btcNativeSegWit: "btcNativeSegWit";
+  btcTaproot: "btcTaproot";
+  bchLegacy: "bchLegacy";
+  bchCashAddr: "bchCashAddr";
   adaBase: "adaBase";
-  reward: "reward";
-  enterprise: "enterprise";
+  adaReward: "adaReward";
+  adaEnterprise: "adaEnterprise";
   bnb: "bnb";
   evm: "evm";
   transparent: "transparent";

@@ -17,7 +17,7 @@ function getEnterpriseDerivationHandlers({
   keysDerivationInstance,
   networkId,
   networkPurpose,
-}: GetDerivationHandlersParameters<"enterprise">): GetDerivationHandlersReturnType<"enterprise"> {
+}: GetDerivationHandlersParameters<"adaEnterprise">): GetDerivationHandlersReturnType<"adaEnterprise"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
@@ -31,13 +31,13 @@ function getEnterpriseDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"enterprise">,
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaEnterprise">,
     doesPKeyBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (doesPKeyBelongToMnemonic<"enterprise">).call(
+      return (doesPKeyBelongToMnemonic<"adaEnterprise">).call(
         this,
         parameters,
-        adaConfig[networkPurpose].enterprise.derivationPathPrefix,
+        adaConfig[networkPurpose].adaEnterprise.derivationPathPrefix,
       );
     },
   };
@@ -47,7 +47,7 @@ function getRewardDerivationHandlers({
   keysDerivationInstance,
   networkId,
   networkPurpose,
-}: GetDerivationHandlersParameters<"reward">): GetDerivationHandlersReturnType<"reward"> {
+}: GetDerivationHandlersParameters<"adaReward">): GetDerivationHandlersReturnType<"adaReward"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
@@ -61,13 +61,13 @@ function getRewardDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"reward">,
+    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaReward">,
     doesPKeyBelongToMnemonic(parameters) {
       // prettier-ignore
-      return (doesPKeyBelongToMnemonic<"reward">).call(
+      return (doesPKeyBelongToMnemonic<"adaReward">).call(
         this,
         parameters,
-        adaConfig[networkPurpose].reward.derivationPathPrefix,
+        adaConfig[networkPurpose].adaReward.derivationPathPrefix,
       );
     },
   };

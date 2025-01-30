@@ -29,8 +29,8 @@ const DEFAULT_BTC_INSTANCE_PARAMETERS: BtcInstanceParameters = {
   network: "btc",
   networkPurpose: "mainnet",
   derivationConfig: {
-    derivationType: "taproot",
-    prefixConfig: btcConfig.mainnet.taproot.prefixConfig,
+    derivationType: "btcTaproot",
+    prefixConfig: btcConfig.mainnet.btcTaproot.prefixConfig,
   },
 };
 

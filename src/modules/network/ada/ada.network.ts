@@ -32,12 +32,12 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
     const networkId = getNetworkId(networkPurpose);
 
     const derivationsHandlers: DerivationsHandlers<AdaDerivationTypeUnion> = {
-      enterprise: getEnterpriseDerivationHandlers({
+      adaEnterprise: getEnterpriseDerivationHandlers({
         networkId,
         networkPurpose,
         keysDerivationInstance: new EnterpriseKeyDerivation(mnemonic),
       }),
-      reward: getRewardDerivationHandlers({
+      adaReward: getRewardDerivationHandlers({
         networkId,
         networkPurpose,
         keysDerivationInstance: new RewardKeyDerivation(mnemonic),

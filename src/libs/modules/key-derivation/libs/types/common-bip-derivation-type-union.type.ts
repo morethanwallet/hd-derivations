@@ -1,13 +1,14 @@
 import { type DerivationTypeMap } from "@/libs/types/index.js";
 
 type CommonBipDerivationTypeUnion =
-  | DerivationTypeMap["legacy"]
-  | DerivationTypeMap["segWit"]
-  | DerivationTypeMap["nativeSegWit"]
-  | DerivationTypeMap["taproot"]
-  | DerivationTypeMap["p2wsh"]
-  | DerivationTypeMap["p2wshInP2sh"]
-  | DerivationTypeMap["cashAddr"]
+  | DerivationTypeMap["btcLegacy"]
+  | DerivationTypeMap["btcSegWit"]
+  | DerivationTypeMap["btcNativeSegWit"]
+  | DerivationTypeMap["btcTaproot"]
+  | DerivationTypeMap["btcP2wsh"]
+  | DerivationTypeMap["btcP2wshInP2sh"]
+  | DerivationTypeMap["bchLegacy"]
+  | DerivationTypeMap["bchCashAddr"]
   | DerivationTypeMap["avaxP"]
   | DerivationTypeMap["avaxX"]
   | DerivationTypeMap["xrpBase"]

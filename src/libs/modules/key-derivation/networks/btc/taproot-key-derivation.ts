@@ -9,7 +9,7 @@ import {
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
 
-class TaprootKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"taproot"> {
+class TaprootKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"btcTaproot"> {
   public constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
     super(prefixConfig, mnemonic);
   }
@@ -17,7 +17,7 @@ class TaprootKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"t
   public deriveFromMnemonic({
     derivationPath,
     base58RootKey,
-  }: DeriveFromMnemonicParameters<"taproot">): CommonKeyPair {
+  }: DeriveFromMnemonicParameters<"btcTaproot">): CommonKeyPair {
     const rootKey = base58RootKey ? this.getRootKeyFromBase58(base58RootKey) : this.rootKey;
     const node = rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
@@ -28,7 +28,7 @@ class TaprootKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"t
     };
   }
 
-  public importByPrivateKey({ privateKey }: PrivateKey<"taproot">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"btcTaproot">): CommonKeyPair {
     const { publicKey } = this.getKeyPair(privateKey);
 
     return {

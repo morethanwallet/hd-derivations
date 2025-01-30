@@ -1,5 +1,4 @@
-import { networks } from "bitcoinjs-lib";
-import { getCommonLegacyKeysConfig } from "./libs/helpers/index.js";
+import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 
 const commonSegWitDerivationPathPrefix = {
   mainnet: "m/49'/0'",
@@ -7,91 +6,91 @@ const commonSegWitDerivationPathPrefix = {
 };
 
 const commonTestnetsDerivationPathPrefix = {
-  legacy: "m/44'/1'",
-  segWit: commonSegWitDerivationPathPrefix.testnet,
-  nativeSegWit: "m/84'/1'",
-  taproot: "m/86'/1'",
-  p2wsh: commonSegWitDerivationPathPrefix.testnet,
-  p2wshInP2sh: commonSegWitDerivationPathPrefix.testnet,
+  btcLegacy: "m/44'/1'",
+  btcSegWit: commonSegWitDerivationPathPrefix.testnet,
+  btcNativeSegWit: "m/84'/1'",
+  btcTaproot: "m/86'/1'",
+  btcP2wsh: commonSegWitDerivationPathPrefix.testnet,
+  btcP2wshInP2sh: commonSegWitDerivationPathPrefix.testnet,
 };
 
 const btcConfig = {
   mainnet: {
-    legacy: {
+    btcLegacy: {
       derivationPathPrefix: "m/44'/0'",
-      ...getCommonLegacyKeysConfig("mainnet"),
+      ...getCommonPrefixConfig("mainnet"),
     },
-    segWit: {
+    btcSegWit: {
       derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
-      prefixConfig: networks.bitcoin,
+      ...getCommonPrefixConfig("mainnet"),
     },
-    nativeSegWit: {
+    btcNativeSegWit: {
       derivationPathPrefix: "m/84'/0'",
-      prefixConfig: networks.bitcoin,
+      ...getCommonPrefixConfig("mainnet"),
     },
-    taproot: {
+    btcTaproot: {
       derivationPathPrefix: "m/86'/0'",
-      prefixConfig: networks.bitcoin,
+      ...getCommonPrefixConfig("mainnet"),
     },
-    p2wsh: {
+    btcP2wsh: {
       derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
-      prefixConfig: networks.bitcoin,
+      ...getCommonPrefixConfig("mainnet"),
     },
-    p2wshInP2sh: {
+    btcP2wshInP2sh: {
       derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
-      prefixConfig: networks.bitcoin,
+      ...getCommonPrefixConfig("mainnet"),
     },
   },
   testnet: {
-    legacy: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.legacy,
-      ...getCommonLegacyKeysConfig("testnet"),
+    btcLegacy: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcLegacy,
+      ...getCommonPrefixConfig("testnet"),
     },
-    segWit: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.segWit,
-      prefixConfig: networks.testnet,
+    btcSegWit: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcSegWit,
+      ...getCommonPrefixConfig("testnet"),
     },
-    nativeSegWit: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.nativeSegWit,
-      prefixConfig: networks.testnet,
+    btcNativeSegWit: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcNativeSegWit,
+      ...getCommonPrefixConfig("testnet"),
     },
-    taproot: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.taproot,
-      prefixConfig: networks.testnet,
+    btcTaproot: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcTaproot,
+      ...getCommonPrefixConfig("testnet"),
     },
-    p2wsh: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.p2wsh,
-      prefixConfig: networks.testnet,
+    btcP2wsh: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wsh,
+      ...getCommonPrefixConfig("testnet"),
     },
-    p2wshInP2sh: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.p2wshInP2sh,
-      prefixConfig: networks.testnet,
+    btcP2wshInP2sh: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wshInP2sh,
+      ...getCommonPrefixConfig("testnet"),
     },
   },
   regtest: {
-    legacy: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.legacy,
-      ...getCommonLegacyKeysConfig("regtest"),
+    btcLegacy: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcLegacy,
+      ...getCommonPrefixConfig("regtest"),
     },
-    segWit: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.segWit,
-      prefixConfig: networks.regtest,
+    btcSegWit: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcSegWit,
+      ...getCommonPrefixConfig("regtest"),
     },
-    nativeSegWit: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.nativeSegWit,
-      prefixConfig: networks.regtest,
+    btcNativeSegWit: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcNativeSegWit,
+      ...getCommonPrefixConfig("regtest"),
     },
-    taproot: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.taproot,
-      prefixConfig: networks.regtest,
+    btcTaproot: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcTaproot,
+      ...getCommonPrefixConfig("regtest"),
     },
-    p2wsh: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.p2wsh,
-      prefixConfig: networks.regtest,
+    btcP2wsh: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wsh,
+      ...getCommonPrefixConfig("regtest"),
     },
-    p2wshInP2sh: {
-      derivationPathPrefix: commonTestnetsDerivationPathPrefix.p2wshInP2sh,
-      prefixConfig: networks.regtest,
+    btcP2wshInP2sh: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wshInP2sh,
+      ...getCommonPrefixConfig("regtest"),
     },
   },
 };

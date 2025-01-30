@@ -9,14 +9,14 @@ import {
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import { AdaKeys } from "@/libs/modules/keys/index.js";
 
-class EnterpriseKeyDerivation extends AdaKeys implements AbstractKeyDerivation<"enterprise"> {
+class EnterpriseKeyDerivation extends AdaKeys implements AbstractKeyDerivation<"adaEnterprise"> {
   public constructor(mnemonic: Mnemonic) {
     super(mnemonic);
   }
 
   public deriveFromMnemonic({
     derivationPath,
-  }: DeriveFromMnemonicParameters<"enterprise">): CommonKeyPair {
+  }: DeriveFromMnemonicParameters<"adaEnterprise">): CommonKeyPair {
     const rootKey = this.getRootKey();
     const account = getAccount(rootKey, derivationPath);
     const addressValue = getAddressValue(derivationPath);
@@ -30,7 +30,7 @@ class EnterpriseKeyDerivation extends AdaKeys implements AbstractKeyDerivation<"
     };
   }
 
-  public importByPrivateKey({ privateKey }: PrivateKey<"enterprise">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"adaEnterprise">): CommonKeyPair {
     const rawPublicKey = LibraryPrivateKey.from_hex(privateKey).to_public();
 
     return {

@@ -35,51 +35,51 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
     const { networkPurpose, derivationType } = derivationConfig;
 
     const derivationsHandlers: DerivationsHandlers<BtcDerivationTypeUnion> = {
-      legacy: getLegacyDerivationHandlers({
+      btcLegacy: getLegacyDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("legacy", derivationConfig) ??
-            btcConfig[networkPurpose].legacy.prefixConfig,
+          findCustomConfig("btcLegacy", derivationConfig) ??
+            btcConfig[networkPurpose].btcLegacy.prefixConfig,
           mnemonic,
         ),
       }),
-      segWit: getSegWitDerivationHandlers({
+      btcSegWit: getSegWitDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("segWit", derivationConfig) ??
-            btcConfig[networkPurpose].segWit.prefixConfig,
+          findCustomConfig("btcSegWit", derivationConfig) ??
+            btcConfig[networkPurpose].btcSegWit.prefixConfig,
           mnemonic,
         ),
       }),
-      nativeSegWit: getNativeSegWitDerivationHandlers({
+      btcNativeSegWit: getNativeSegWitDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("nativeSegWit", derivationConfig) ??
-            btcConfig[networkPurpose].nativeSegWit.prefixConfig,
+          findCustomConfig("btcNativeSegWit", derivationConfig) ??
+            btcConfig[networkPurpose].btcNativeSegWit.prefixConfig,
           mnemonic,
         ),
       }),
-      taproot: getTaprootDerivationHandlers({
+      btcTaproot: getTaprootDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new TaprootKeyDerivation(
-          findCustomConfig("taproot", derivationConfig) ??
-            btcConfig[networkPurpose].taproot.prefixConfig,
+          findCustomConfig("btcTaproot", derivationConfig) ??
+            btcConfig[networkPurpose].btcTaproot.prefixConfig,
           mnemonic,
         ),
       }),
-      p2wsh: getP2wshDerivationHandlers({
+      btcP2wsh: getP2wshDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("p2wsh", derivationConfig) ??
-            btcConfig[networkPurpose].p2wsh.prefixConfig,
+          findCustomConfig("btcP2wsh", derivationConfig) ??
+            btcConfig[networkPurpose].btcP2wsh.prefixConfig,
           mnemonic,
         ),
       }),
-      p2wshInP2sh: getP2wshInP2shDerivationHandlers({
+      btcP2wshInP2sh: getP2wshInP2shDerivationHandlers({
         networkPurpose,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("p2wshInP2sh", derivationConfig) ??
-            btcConfig[networkPurpose].p2wshInP2sh.prefixConfig,
+          findCustomConfig("btcP2wshInP2sh", derivationConfig) ??
+            btcConfig[networkPurpose].btcP2wshInP2sh.prefixConfig,
           mnemonic,
         ),
       }),

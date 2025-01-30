@@ -15,42 +15,37 @@ import type {
   DerivationTypeUnion,
   SignatureSchemeProperty,
 } from "@/libs/types/index.js";
-import { type DeriveItemFromMnemonicInnerHandler } from "./derive-item-from-mnemonic.type.js";
-import { type GetCredentialFromPKInnerHandler } from "./get-credential-from-p-k.type.js";
-import { type DeriveItemsBatchFromMnemonicInnerHandler } from "./derive-items-batch-from-mnemonic.type.js";
-import { type DoesPKBelongToMnemonicInnerHandler } from "./does-p-k-belong-to-mnemonic.type.js";
-import type {
-  CommonNetworkPurposeUnion,
-  CommonNetworkPurposeRegTestExtendedUnion,
-  AdaNetworkPurposeUnion,
-} from "./network-purpose-union.type.js";
+import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
+import { type GetCredentialFromPK } from "./get-credential-from-p-k.type.js";
+import { type DeriveItemsBatchFromMnemonic } from "./derive-items-batch-from-mnemonic.type.js";
+import { type DoesPKBelongToMnemonic } from "./does-p-k-belong-to-mnemonic.type.js";
+import type { CommonNetworkPurposeUnion } from "./network-purpose-union.type.js";
+import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
 
 type AvaxParameters = {
-  networkPurpose: CommonNetworkPurposeUnion;
   derivationType: AvaxDerivationTypeUnion;
   keysDerivationInstance: CommonBipKeyDerivation;
 };
 
-type BtcParameters<TDerivationType extends DerivationTypeUnion> = {
-  networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-} & (TDerivationType extends DerivationTypeMap["taproot"]
-  ? { keysDerivationInstance: TaprootKeyDerivation }
-  : { keysDerivationInstance: CommonBipKeyDerivation });
+type BtcParameters<TDerivationType extends DerivationTypeUnion> =
+  TDerivationType extends DerivationTypeMap["btcTaproot"]
+    ? { keysDerivationInstance: TaprootKeyDerivation }
+    : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type AdaParameters<TDerivationType extends DerivationTypeUnion> = {
   networkId: number;
-  networkPurpose: AdaNetworkPurposeUnion;
 } & {
-  keysDerivationInstance: TDerivationType extends DerivationTypeMap["enterprise"]
+  keysDerivationInstance: TDerivationType extends DerivationTypeMap["adaEnterprise"]
     ? EnterpriseKeyDerivation
-    : TDerivationType extends DerivationTypeMap["reward"]
+    : TDerivationType extends DerivationTypeMap["adaReward"]
       ? RewardKeyDerivation
       : BaseKeyDerivation;
 };
 
 type TonParameters = {
   keysDerivationInstance: CommonEd25519KeyDerivation;
-};
+  networkPurpose: CommonNetworkPurposeUnion;
+} & TonAddressDerivationConfig;
 
 type SuiParameters = {
   keysDerivationInstance: SuiKeyDerivation;
@@ -70,10 +65,10 @@ type GetDerivationHandlersParameters<TDerivationType extends DerivationTypeUnion
             : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
-  deriveItemFromMnemonic: DeriveItemFromMnemonicInnerHandler<T>;
-  getCredentialFromPK: GetCredentialFromPKInnerHandler<T>;
-  deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonicInnerHandler<T>;
-  doesPKeyBelongToMnemonic: DoesPKBelongToMnemonicInnerHandler<T>;
+  deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;
+  getCredentialFromPK: GetCredentialFromPK<T>;
+  deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonic<T>;
+  doesPKBelongToMnemonic: DoesPKBelongToMnemonic<T>;
 };
 
 export { type GetDerivationHandlersParameters, type GetDerivationHandlersReturnType };
