@@ -9,17 +9,17 @@ type ContractVersion =
   | "v4r1"
   | "v5r1";
 
-type WorkChain = -1 | 0;
-
-type TonAddressRequiredData = {
-  workChain: WorkChain;
-  contractVersion: ContractVersion;
-  isFriendlyFormat: boolean;
-  friendlyFormatArguments?: {
-    urlSafe?: boolean;
-    bounceable?: boolean;
-    testOnly?: boolean;
-  };
+type TonAddressFriendlyFormatArguments = {
+  urlSafe?: boolean;
+  bounceable?: boolean;
+  testOnly?: boolean;
 };
 
-export { type TonAddressRequiredData };
+type TonAddressRequiredData = {
+  workChain: number;
+  contractVersion: ContractVersion;
+  isFriendlyFormat: boolean;
+  friendlyFormatArguments?: TonAddressFriendlyFormatArguments;
+};
+
+export type { TonAddressRequiredData, TonAddressFriendlyFormatArguments };

@@ -1,4 +1,8 @@
-export type { Address, TonAddressRequiredData } from "./libs/types/index.js";
+export type {
+  Address,
+  TonAddressRequiredData,
+  TonAddressFriendlyFormatArguments,
+} from "./libs/types/index.js";
 export {
   getSegWitAddress,
   getNativeSegWitAddress,
