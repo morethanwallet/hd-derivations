@@ -6,6 +6,7 @@ import type {
   BtcDerivationTypeUnion,
   DerivationTypeMap,
   SignatureSchemeUnion,
+  XrpDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import type {
   AdaNetworkPurposeUnion,
@@ -17,13 +18,13 @@ import type { TonAddressDerivationConfig } from "./ton-address-derivation-config
 type CommonPrefixConfig = { prefixConfig: PrefixConfig };
 
 type AdaDerivationConfig = {
-  derivationType: AdaDerivationTypeUnion;
   networkPurpose: AdaNetworkPurposeUnion;
+  derivationType: AdaDerivationTypeUnion;
 };
 
 type AvaxDerivationConfig = {
-  derivationType: AvaxDerivationTypeUnion;
   networkPurpose: CommonNetworkPurposeUnion;
+  derivationType: AvaxDerivationTypeUnion;
 } & CommonPrefixConfig;
 
 type BtcDerivationConfig = {
@@ -50,6 +51,11 @@ type BchDerivationConfig = {
   derivationType: BchDerivationTypeUnion;
 } & CommonPrefixConfig;
 
+type XrpDerivationConfig = {
+  networkPurpose: CommonNetworkPurposeUnion;
+  derivationType: XrpDerivationTypeUnion;
+} & CommonPrefixConfig;
+
 export type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
@@ -58,4 +64,6 @@ export type {
   TonDerivationConfig,
   SuiDerivationConfig,
   BchDerivationConfig,
+  DotDerivationConfig,
+  XrpDerivationConfig,
 };

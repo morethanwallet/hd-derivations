@@ -7,6 +7,7 @@ import type {
   TrxDerivationConfig,
   SuiDerivationConfig,
   BchDerivationConfig,
+  XrpDerivationConfig,
 } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
 
@@ -45,6 +46,11 @@ type BchInstanceParameters = {
   derivationConfig: BchDerivationConfig;
 } & MnemonicProperty;
 
+type XrpInstanceParameters = {
+  network: NetworkTypeMap["xrp"];
+  derivationConfig: XrpDerivationConfig;
+} & MnemonicProperty;
+
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
@@ -53,4 +59,5 @@ export type {
   TonInstanceParameters,
   SuiInstanceParameters,
   BchInstanceParameters,
+  XrpInstanceParameters,
 };
