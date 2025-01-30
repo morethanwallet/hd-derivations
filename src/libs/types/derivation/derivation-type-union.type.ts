@@ -1,4 +1,4 @@
-import { type ValueOf } from "ts-essentials";
+import type { ValueOf } from "../index.js";
 import { type DerivationTypeMap } from "./derivation-type-map.type.js";
 
 type DerivationTypeUnion = ValueOf<DerivationTypeMap>;

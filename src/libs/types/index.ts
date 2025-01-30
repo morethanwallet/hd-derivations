@@ -21,3 +21,4 @@ export {
   type CommonPrivateKey,
   type AdaBasePrivateKey,
 } from "./keys/index.js";
+export type { ValueOf } from "./value-of.type.js";

@@ -1,6 +1,6 @@
 import type { DerivationTypeUnion, PrivateKey } from "@/libs/types/index.js";
 import { type LookupHandlersCommonParameters } from "./lookup-handlers-common-parameters.type.js";
-import type { ValueOf } from "ts-essentials";
+import type { ValueOf } from "@/libs/types/index.js";
 
 type DoesPKBelongToMnemonicParameters<T extends DerivationTypeUnion> = {
   privateKey: ValueOf<PrivateKey<T>>;
