@@ -14,6 +14,7 @@ import type {
   CommonNetworkPurposeUnion,
 } from "./network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
+import type { DestinationTagProperty } from "@/libs/modules/address/index.js";
 
 type CommonPrefixConfig = { prefixConfig: PrefixConfig };
 
@@ -54,7 +55,8 @@ type BchDerivationConfig = {
 type XrpDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: XrpDerivationTypeUnion;
-} & CommonPrefixConfig;
+} & CommonPrefixConfig &
+  DestinationTagProperty;
 
 export type {
   AdaDerivationConfig,
@@ -64,6 +66,5 @@ export type {
   TonDerivationConfig,
   SuiDerivationConfig,
   BchDerivationConfig,
-  DotDerivationConfig,
   XrpDerivationConfig,
 };

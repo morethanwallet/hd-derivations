@@ -1,14 +1,14 @@
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
 import { type CommonKeyPair, type XrpDerivationTypeUnion } from "@/libs/types/index.js";
 import { Wallet } from "xrpl";
+import type { DestinationTagProperty } from "./libs/types/index.js";
 
 type GetXrpAddressParameters = {
   publicKey: CommonKeyPair["publicKey"];
   privateKey: CommonKeyPair["privateKey"];
   isTestnet: boolean;
   derivationType: XrpDerivationTypeUnion;
-  destinationTag?: number;
-};
+} & DestinationTagProperty;
 
 function getXrpAddress({
   publicKey,

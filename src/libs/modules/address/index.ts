@@ -14,9 +14,11 @@ export {
   getRewardAddress,
   getBaseAddress,
   getXrpAddress,
+  type DestinationTagProperty,
   getLegacyAddress,
   getCashAddrAddress,
   getTrxAddress,
   getTonAddress,
   getSuiAddress,
 } from "./networks/index.js";
+export type { Ss58FormatProperty } from "./networks/dot/libs/types/index.js";

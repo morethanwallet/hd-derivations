@@ -7,7 +7,7 @@ export {
 } from "./btc/index.js";
 export { getAvaxAddress } from "./avax/index.js";
 export { getEnterpriseAddress, getRewardAddress, getBaseAddress } from "./ada/index.js";
-export { getXrpAddress } from "./xrp/index.js";
+export { getXrpAddress, type DestinationTagProperty } from "./xrp/index.js";
 export { getLegacyAddress } from "./common/index.js";
 export { getCashAddrAddress } from "./bch/index.js";
 export { getTrxAddress } from "./trx/get-trx-address.js";
