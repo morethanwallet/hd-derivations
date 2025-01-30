@@ -6,6 +6,7 @@ type NetworkTypeMap = {
   ton: "ton";
   sui: "sui";
   bch: "bch";
+  xrp: "xrp";
 };
 
 export { type NetworkTypeMap };
