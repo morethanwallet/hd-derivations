@@ -7,6 +7,7 @@ import type {
   TrxDerivationConfig,
   SuiDerivationConfig,
   BchDerivationConfig,
+  DotDerivationConfig,
   XrpDerivationConfig,
   CommonDerivationConfig,
 } from "./derivation-config.type.js";
@@ -47,6 +48,11 @@ type BchInstanceParameters = {
   derivationConfig: BchDerivationConfig;
 } & MnemonicProperty;
 
+type DotInstanceParameters = {
+  network: NetworkTypeMap["dot"];
+  derivationConfig: DotDerivationConfig;
+} & MnemonicProperty;
+
 type XrpInstanceParameters = {
   network: NetworkTypeMap["xrp"];
   derivationConfig: XrpDerivationConfig;
@@ -70,6 +76,7 @@ export type {
   TonInstanceParameters,
   SuiInstanceParameters,
   BchInstanceParameters,
+  DotInstanceParameters,
   XrpInstanceParameters,
   BnbInstanceParameters,
   EvmInstanceParameters,

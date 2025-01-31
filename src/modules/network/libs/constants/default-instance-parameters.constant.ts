@@ -7,6 +7,7 @@ import type {
   BchInstanceParameters,
   BnbInstanceParameters,
   BtcInstanceParameters,
+  DotInstanceParameters,
   EvmInstanceParameters,
   SuiInstanceParameters,
   TonInstanceParameters,
@@ -92,6 +93,11 @@ const DEFAULT_EVM_INSTANCE_PARAMETERS: EvmInstanceParameters = {
   derivationConfig: { prefixConfig: evmConfig.prefixConfig },
 };
 
+const DEFAULT_DOT_INSTANCE_PARAMETERS: DotInstanceParameters = {
+  network: "dot",
+  derivationConfig: { ss58Format: 0 },
+};
+
 export {
   DEFAULT_ADA_INSTANCE_PARAMETERS,
   DEFAULT_AVAX_INSTANCE_PARAMETERS,
@@ -103,4 +109,5 @@ export {
   DEFAULT_XRP_INSTANCE_PARAMETERS,
   DEFAULT_BNB_INSTANCE_PARAMETERS,
   DEFAULT_EVM_INSTANCE_PARAMETERS,
+  DEFAULT_DOT_INSTANCE_PARAMETERS,
 };

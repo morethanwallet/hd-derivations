@@ -12,6 +12,7 @@ import { Bch } from "../bch/index.js";
 import { Xrp } from "../xrp/index.js";
 import { Bnb } from "../bnb/index.js";
 import { Evm } from "../evm/index.js";
+import { Dot } from "../dot/index.js";
 
 function getNetwork<T extends NetworkTypeUnion>(
   parameters: GetNetworkParameters<T>,
@@ -78,6 +79,12 @@ function getNetwork<T extends NetworkTypeUnion>(
     case "evm": {
       return new Evm({
         ...(parameters as GetNetworkParameters<"evm">),
+        mnemonic: mnemonicInstance,
+      }) as NetworkNameToNetwork[T];
+    }
+    case "dot": {
+      return new Dot({
+        ...(parameters as GetNetworkParameters<"dot">),
         mnemonic: mnemonicInstance,
       }) as NetworkNameToNetwork[T];
     }

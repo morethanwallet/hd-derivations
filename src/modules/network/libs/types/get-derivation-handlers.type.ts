@@ -24,7 +24,7 @@ import { type DeriveItemsBatchFromMnemonic } from "./derive-items-batch-from-mne
 import { type DoesPKBelongToMnemonic } from "./does-p-k-belong-to-mnemonic.type.js";
 import type { CommonNetworkPurposeUnion } from "./network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
-import type { DestinationTagProperty } from "@/libs/modules/address/index.js";
+import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
 
 type AvaxParameters = {
   derivationType: AvaxDerivationTypeUnion;
@@ -65,6 +65,8 @@ type BnbParameters = { keysDerivationInstance: BnbKeyDerivation };
 
 type EvmParameters = { keysDerivationInstance: EvmKeyDerivation };
 
+type DotParameters = { keysDerivationInstance: CommonEd25519KeyDerivation } & Ss58Format;
+
 type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
   T extends AvaxDerivationTypeUnion
     ? AvaxParameters
@@ -82,7 +84,9 @@ type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
                 ? BnbParameters
                 : T extends DerivationTypeMap["evmBase"]
                   ? EvmParameters
-                  : { keysDerivationInstance: CommonBipKeyDerivation };
+                  : T extends DerivationTypeMap["dotBase"]
+                    ? DotParameters
+                    : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;

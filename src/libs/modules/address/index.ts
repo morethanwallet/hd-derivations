@@ -22,5 +22,6 @@ export {
   getSuiAddress,
   getBnbAddress,
   getEvmAddress,
+  getDotAddress,
+  type Ss58Format,
 } from "./networks/index.js";
-export type { Ss58FormatProperty } from "./networks/dot/libs/types/index.js";

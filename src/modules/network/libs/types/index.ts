@@ -34,6 +34,7 @@ export type {
   XrpInstanceParameters,
   BnbInstanceParameters,
   EvmInstanceParameters,
+  DotInstanceParameters,
 } from "./instance-parameters.type.js";
 export type {
   AdaDerivationConfig,
@@ -50,5 +51,5 @@ export {
   type CommonNetworkPurposeRegTestExtendedUnion,
   type AdaNetworkPurposeUnion,
 } from "./network-purpose-union.type.js";
-export type { NetworkTypeUnion } from "./network-type-union.type.js";
+export type { NetworkTypeUnion, DotNetworkTypeUnion } from "./network-type-union.type.js";
 export type { NetworkTypeMap } from "./network-type-map.type.js";

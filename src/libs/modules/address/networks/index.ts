@@ -15,3 +15,4 @@ export { getTonAddress } from "./ton/index.js";
 export { getSuiAddress } from "./sui/get-sui-address.js";
 export { getBnbAddress } from "./bnb/get-bnb-address.js";
 export { getEvmAddress } from "./evm/get-evm-address.js";
+export { getDotAddress, type Ss58Format } from "./dot/index.js";

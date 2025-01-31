@@ -6,6 +6,7 @@ type NetworkTypeMap = {
   ton: "ton";
   sui: "sui";
   bch: "bch";
+  dot: "dot";
   xrp: "xrp";
   bnb: "bnb";
   evm: "evm";

@@ -14,7 +14,7 @@ import type {
   CommonNetworkPurposeUnion,
 } from "./network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
-import type { DestinationTagProperty, Ss58FormatProperty } from "@/libs/modules/address/index.js";
+import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
 
 type CommonPrefixConfig = { prefixConfig?: PrefixConfig };
 
@@ -52,9 +52,7 @@ type BchDerivationConfig = {
   derivationType: BchDerivationTypeUnion;
 } & CommonPrefixConfig;
 
-type DotDerivationConfig = {
-  networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-} & Ss58FormatProperty;
+type DotDerivationConfig = Ss58Format;
 
 type XrpDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
@@ -70,7 +68,7 @@ export type {
   TonDerivationConfig,
   SuiDerivationConfig,
   BchDerivationConfig,
-  DotDerivationConfig,
   XrpDerivationConfig,
   CommonPrefixConfig as CommonDerivationConfig,
+  DotDerivationConfig,
 };
