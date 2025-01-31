@@ -1,14 +1,12 @@
 import { networks } from "bitcoinjs-lib";
 import type { CommonNetworkPurposeUnion } from "../../types/index.js";
-import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
+import type { Bip32DerivationCommonConfig } from "./libs/types/index.js";
 
 const COMMON_DERIVATION_PATH_PREFIX = "m/44'/9000'";
 
 type AvaxConfig = {
   [key in CommonNetworkPurposeUnion]: {
-    avax: {
-      derivationPathPrefix: string;
-    } & PrefixConfigProperty;
+    avax: Bip32DerivationCommonConfig;
   };
 };
 

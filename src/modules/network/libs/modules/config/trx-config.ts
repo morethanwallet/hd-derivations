@@ -1,10 +1,8 @@
-import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
 import { networks } from "bitcoinjs-lib";
+import type { Bip32DerivationCommonConfig } from "./libs/types/index.js";
 
 type TrxConfig = {
-  trxBase: {
-    derivationPathPrefix: string;
-  } & PrefixConfigProperty;
+  trxBase: Bip32DerivationCommonConfig;
 };
 
 const trxConfig: TrxConfig = {

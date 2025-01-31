@@ -1,9 +1,7 @@
-import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
+import type { Bip32DerivationCommonConfig } from "./libs/types/index.js";
 
-type XrpConfig = {
-  derivationPathPrefix: string;
-} & PrefixConfigProperty;
+type XrpConfig = Bip32DerivationCommonConfig;
 
 const xrpConfig: XrpConfig = {
   ...getCommonPrefixConfig("mainnet"),
