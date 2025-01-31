@@ -39,64 +39,62 @@ beforeAll(() => {
 });
 
 describe("Bnb", () => {
-  describe("mainnet", () => {
-    describe("deriveItemFromMnemonic", () => {
-      it("Derives correct item", () => {
-        const derivedItem = bnbNetworkDerivation.deriveItemFromMnemonic({
-          derivationPath: MOCK_DERIVATION_PATH,
-        });
-
-        expect(MOCK_ITEM).toEqual(derivedItem);
+  describe("deriveItemFromMnemonic", () => {
+    it("Derives correct item", () => {
+      const derivedItem = bnbNetworkDerivation.deriveItemFromMnemonic({
+        derivationPath: MOCK_DERIVATION_PATH,
       });
-    });
 
-    describe("getCredentialFromPK", () => {
-      it("Derives correct credential", () => {
-        const credential = bnbNetworkDerivation.getCredentialFromPK({
+      expect(MOCK_ITEM).toEqual(derivedItem);
+    });
+  });
+
+  describe("getCredentialFromPK", () => {
+    it("Derives correct credential", () => {
+      const credential = bnbNetworkDerivation.getCredentialFromPK({
+        privateKey: MOCK_CREDENTIAL.privateKey,
+      });
+
+      expect(credential).toEqual(MOCK_CREDENTIAL);
+    });
+  });
+
+  describe("deriveItemsBatchFromMnemonic", () => {
+    it("Derives correct items batch", () => {
+      const items = bnbNetworkDerivation.deriveItemsBatchFromMnemonic({
+        derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
+        indexLookupFrom: INDEX_LOOKUP_FROM,
+        indexLookupTo: INDEX_LOOKUP_TO,
+      });
+
+      expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM);
+    });
+  });
+
+  describe("doesPKBelongToMnemonic", () => {
+    describe("Validates native private key correctly", () => {
+      it("Returns true", () => {
+        const isNative = bnbNetworkDerivation.doesPKBelongToMnemonic({
+          derivationPathPrefix: bnbConfig.derivationPathPrefix,
+          indexLookupFrom: INDEX_LOOKUP_FROM,
+          indexLookupTo: INDEX_LOOKUP_TO,
           privateKey: MOCK_CREDENTIAL.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_CREDENTIAL);
+        expect(isNative).toBe(true);
       });
     });
 
-    describe("deriveItemsBatchFromMnemonic", () => {
-      it("Derives correct items batch", () => {
-        const items = bnbNetworkDerivation.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
+    describe("Validates extrinsic private key correctly", () => {
+      it("Returns false", () => {
+        const isNative = bnbNetworkDerivation.doesPKBelongToMnemonic({
+          derivationPathPrefix: bnbConfig.derivationPathPrefix,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
+          privateKey: MOCK_EXTRINSIC_PRIVATE_KEY,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM);
-      });
-    });
-
-    describe("doesPKBelongToMnemonic", () => {
-      describe("Validates native private key correctly", () => {
-        it("Returns true", () => {
-          const isNative = bnbNetworkDerivation.doesPKBelongToMnemonic({
-            derivationPathPrefix: bnbConfig.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_CREDENTIAL.privateKey,
-          });
-
-          expect(isNative).toBe(true);
-        });
-      });
-
-      describe("Validates extrinsic private key correctly", () => {
-        it("Returns false", () => {
-          const isNative = bnbNetworkDerivation.doesPKBelongToMnemonic({
-            derivationPathPrefix: bnbConfig.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_EXTRINSIC_PRIVATE_KEY,
-          });
-
-          expect(isNative).toBe(false);
-        });
+        expect(isNative).toBe(false);
       });
     });
   });
