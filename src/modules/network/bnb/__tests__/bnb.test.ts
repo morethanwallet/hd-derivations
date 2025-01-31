@@ -99,22 +99,3 @@ describe("Bnb", () => {
     });
   });
 });
-
-// const MOCK_MAINNET_ADDRESS_DATA = {
-//   native: {
-//     mnemonic: MNEMONIC,
-//     address: "bnb1np9fcggud8kecg9s20dm6hqev8qzg87c2tja2u",
-//     privateKey: "",
-//     publicKey:
-//       "",
-//     path: MOCK_COMMON_DERIVATION_PATH,
-//   },
-//   nonNative: {
-//     mnemonic: EMPTY_MNEMONIC,
-//     address: "",
-//     privateKey: "",
-//     publicKey:
-//       "04b29940377548d2a48e0b56fa05feacdbd0c32f93759eef6445d2c45e2da393b7b95d4695b474f9a4735285ea7b96cca8fde716a73bbc69497ed7f8bdbaee2327",
-//     path: MOCK_COMMON_DERIVATION_PATH,
-//   },
-// };
