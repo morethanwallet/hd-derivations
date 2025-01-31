@@ -32,6 +32,7 @@ export type {
   SuiInstanceParameters,
   BchInstanceParameters,
   XrpInstanceParameters,
+  BnbInstanceParameters,
 } from "./instance-parameters.type.js";
 export type {
   AdaDerivationConfig,

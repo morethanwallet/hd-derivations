@@ -10,6 +10,7 @@ import { Ton } from "../ton/index.js";
 import { Sui } from "../sui/index.js";
 import { Bch } from "../bch/index.js";
 import { Xrp } from "../xrp/index.js";
+import { Bnb } from "../bnb/index.js";
 
 function getNetwork<T extends NetworkTypeUnion>(
   parameters: GetNetworkParameters<T>,
@@ -64,6 +65,12 @@ function getNetwork<T extends NetworkTypeUnion>(
     case "xrp": {
       return new Xrp({
         ...(parameters as GetNetworkParameters<"xrp">),
+        mnemonic: mnemonicInstance,
+      }) as NetworkNameToNetwork[T];
+    }
+    case "bnb": {
+      return new Bnb({
+        ...(parameters as GetNetworkParameters<"bnb">),
         mnemonic: mnemonicInstance,
       }) as NetworkNameToNetwork[T];
     }
