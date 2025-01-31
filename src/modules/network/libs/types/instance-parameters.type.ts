@@ -8,7 +8,6 @@ import type {
   SuiDerivationConfig,
   BchDerivationConfig,
   XrpDerivationConfig,
-  BnbDerivationConfig,
   CommonDerivationConfig,
 } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
@@ -55,7 +54,7 @@ type XrpInstanceParameters = {
 
 type BnbInstanceParameters = {
   network: NetworkTypeMap["bnb"];
-  derivationConfig: BnbDerivationConfig;
+  derivationConfig: CommonDerivationConfig;
 } & MnemonicProperty;
 
 type EvmInstanceParameters = {

@@ -62,8 +62,6 @@ type XrpDerivationConfig = {
 } & CommonPrefixConfig &
   DestinationTagProperty;
 
-type BnbDerivationConfig = CommonPrefixConfig;
-
 export type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
@@ -74,6 +72,5 @@ export type {
   BchDerivationConfig,
   DotDerivationConfig,
   XrpDerivationConfig,
-  BnbDerivationConfig,
   CommonPrefixConfig as CommonDerivationConfig,
 };

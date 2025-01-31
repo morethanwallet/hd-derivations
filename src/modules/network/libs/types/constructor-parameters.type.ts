@@ -17,7 +17,6 @@ import type {
   SuiInstanceParameters,
   BchInstanceParameters,
   XrpInstanceParameters,
-  BnbInstanceParameters,
 } from "./instance-parameters.type.js";
 import type { CommonDerivationConfig } from "./derivation-config.type.js";
 
@@ -39,9 +38,7 @@ type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
                 ? Pick<BchInstanceParameters, "derivationConfig">
                 : T extends XrpDerivationTypeUnion
                   ? Pick<XrpInstanceParameters, "derivationConfig">
-                  : T extends DerivationTypeMap["bnbBase"]
-                    ? Pick<BnbInstanceParameters, "derivationConfig">
-                    : { derivationConfig: CommonDerivationConfig };
+                  : { derivationConfig: CommonDerivationConfig };
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
   mnemonic: Mnemonic;
