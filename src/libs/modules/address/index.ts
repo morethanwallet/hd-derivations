@@ -21,5 +21,6 @@ export {
   getTonAddress,
   getSuiAddress,
   getBnbAddress,
+  getEvmAddress,
 } from "./networks/index.js";
 export type { Ss58FormatProperty } from "./networks/dot/libs/types/index.js";

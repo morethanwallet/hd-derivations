@@ -7,6 +7,7 @@ import type {
   CommonEd25519KeyDerivation,
   SuiKeyDerivation,
   BnbKeyDerivation,
+  EvmKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
 import type {
   BtcDerivationTypeUnion,
@@ -62,6 +63,8 @@ type XrpParameters = {
 
 type BnbParameters = { keysDerivationInstance: BnbKeyDerivation };
 
+type EvmParameters = { keysDerivationInstance: EvmKeyDerivation };
+
 type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
   T extends AvaxDerivationTypeUnion
     ? AvaxParameters
@@ -77,7 +80,9 @@ type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
               ? XrpParameters
               : T extends DerivationTypeMap["bnbBase"]
                 ? BnbParameters
-                : { keysDerivationInstance: CommonBipKeyDerivation };
+                : T extends DerivationTypeMap["evmBase"]
+                  ? EvmParameters
+                  : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;

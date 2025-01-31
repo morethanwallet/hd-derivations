@@ -7,6 +7,7 @@ import { type Sui } from "@/modules/network/sui/index.js";
 import { type Bch } from "@/modules/network/bch/index.js";
 import { type Xrp } from "@/modules/network/xrp/index.js";
 import { type Bnb } from "@/modules/network/bnb/index.js";
+import { type Evm } from "@/modules/network/evm/index.js";
 
 type NetworkNameToNetwork = {
   btc: Btc;
@@ -18,6 +19,7 @@ type NetworkNameToNetwork = {
   bch: Bch;
   xrp: Xrp;
   bnb: Bnb;
+  evm: Evm;
 };
 
 export type { NetworkNameToNetwork };

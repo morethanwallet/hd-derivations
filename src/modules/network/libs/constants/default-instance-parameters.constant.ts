@@ -1,12 +1,13 @@
 import { avaxConfig } from "../modules/config/avax-config.js";
 import { btcConfig } from "../modules/config/btc-config.js";
-import { bchConfig, bnbConfig, trxConfig, xrpConfig } from "../modules/config/index.js";
+import { bchConfig, bnbConfig, evmConfig, trxConfig, xrpConfig } from "../modules/config/index.js";
 import type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
   BchInstanceParameters,
   BnbInstanceParameters,
   BtcInstanceParameters,
+  EvmInstanceParameters,
   SuiInstanceParameters,
   TonInstanceParameters,
   TrxInstanceParameters,
@@ -86,6 +87,11 @@ const DEFAULT_BNB_INSTANCE_PARAMETERS: BnbInstanceParameters = {
   derivationConfig: { prefixConfig: bnbConfig.prefixConfig },
 };
 
+const DEFAULT_EVM_INSTANCE_PARAMETERS: EvmInstanceParameters = {
+  network: "evm",
+  derivationConfig: { prefixConfig: evmConfig.prefixConfig },
+};
+
 export {
   DEFAULT_ADA_INSTANCE_PARAMETERS,
   DEFAULT_AVAX_INSTANCE_PARAMETERS,
@@ -96,4 +102,5 @@ export {
   DEFAULT_BCH_INSTANCE_PARAMETERS,
   DEFAULT_XRP_INSTANCE_PARAMETERS,
   DEFAULT_BNB_INSTANCE_PARAMETERS,
+  DEFAULT_EVM_INSTANCE_PARAMETERS,
 };

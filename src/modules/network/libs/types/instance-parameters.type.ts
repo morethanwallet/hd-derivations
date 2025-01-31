@@ -9,6 +9,7 @@ import type {
   BchDerivationConfig,
   XrpDerivationConfig,
   BnbDerivationConfig,
+  CommonDerivationConfig,
 } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
 
@@ -57,6 +58,11 @@ type BnbInstanceParameters = {
   derivationConfig: BnbDerivationConfig;
 } & MnemonicProperty;
 
+type EvmInstanceParameters = {
+  network: NetworkTypeMap["evm"];
+  derivationConfig: CommonDerivationConfig;
+} & MnemonicProperty;
+
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
@@ -67,4 +73,5 @@ export type {
   BchInstanceParameters,
   XrpInstanceParameters,
   BnbInstanceParameters,
+  EvmInstanceParameters,
 };

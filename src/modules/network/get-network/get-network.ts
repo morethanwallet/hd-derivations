@@ -11,6 +11,7 @@ import { Sui } from "../sui/index.js";
 import { Bch } from "../bch/index.js";
 import { Xrp } from "../xrp/index.js";
 import { Bnb } from "../bnb/index.js";
+import { Evm } from "../evm/index.js";
 
 function getNetwork<T extends NetworkTypeUnion>(
   parameters: GetNetworkParameters<T>,
@@ -71,6 +72,12 @@ function getNetwork<T extends NetworkTypeUnion>(
     case "bnb": {
       return new Bnb({
         ...(parameters as GetNetworkParameters<"bnb">),
+        mnemonic: mnemonicInstance,
+      }) as NetworkNameToNetwork[T];
+    }
+    case "evm": {
+      return new Evm({
+        ...(parameters as GetNetworkParameters<"evm">),
         mnemonic: mnemonicInstance,
       }) as NetworkNameToNetwork[T];
     }

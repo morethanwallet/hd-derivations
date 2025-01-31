@@ -19,6 +19,7 @@ import type {
   XrpInstanceParameters,
   BnbInstanceParameters,
 } from "./instance-parameters.type.js";
+import type { CommonDerivationConfig } from "./derivation-config.type.js";
 
 // TODO: Try to use mapping here
 type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
@@ -40,7 +41,7 @@ type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
                   ? Pick<XrpInstanceParameters, "derivationConfig">
                   : T extends DerivationTypeMap["bnbBase"]
                     ? Pick<BnbInstanceParameters, "derivationConfig">
-                    : Record<string, unknown>;
+                    : { derivationConfig: CommonDerivationConfig };
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
   mnemonic: Mnemonic;

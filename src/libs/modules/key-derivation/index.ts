@@ -7,3 +7,4 @@ export {
 export { CommonBipKeyDerivation, CommonEd25519KeyDerivation } from "./networks/common/index.js";
 export { SuiKeyDerivation } from "./networks/sui/index.js";
 export { BnbKeyDerivation } from "./networks/bnb/index.js";
+export { EvmKeyDerivation } from "./networks/evm/index.js";

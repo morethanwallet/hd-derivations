@@ -75,4 +75,5 @@ export type {
   DotDerivationConfig,
   XrpDerivationConfig,
   BnbDerivationConfig,
+  CommonPrefixConfig as CommonDerivationConfig,
 };
