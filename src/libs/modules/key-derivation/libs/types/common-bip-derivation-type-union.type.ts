@@ -11,6 +11,7 @@ type CommonBipDerivationTypeUnion =
   | BchDerivationTypeUnion
   | AvaxDerivationTypeUnion
   | XrpDerivationTypeUnion
-  | DerivationTypeMap["trxBase"];
+  | DerivationTypeMap["trxBase"]
+  | DerivationTypeMap["bnbBase"];
 
 export { type CommonBipDerivationTypeUnion };
