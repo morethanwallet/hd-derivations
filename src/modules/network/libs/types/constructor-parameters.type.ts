@@ -17,8 +17,10 @@ import type {
   SuiInstanceParameters,
   BchInstanceParameters,
   XrpInstanceParameters,
+  BnbInstanceParameters,
 } from "./instance-parameters.type.js";
 
+// TODO: Try to use mapping here
 type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
   T extends BtcDerivationTypeUnion
     ? Pick<BtcInstanceParameters, "derivationConfig">
@@ -36,7 +38,9 @@ type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
                 ? Pick<BchInstanceParameters, "derivationConfig">
                 : T extends XrpDerivationTypeUnion
                   ? Pick<XrpInstanceParameters, "derivationConfig">
-                  : Record<string, unknown>;
+                  : T extends DerivationTypeMap["bnbBase"]
+                    ? Pick<BnbInstanceParameters, "derivationConfig">
+                    : Record<string, unknown>;
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
   mnemonic: Mnemonic;
