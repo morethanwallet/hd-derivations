@@ -1,4 +1,4 @@
-import { type PrefixConfig } from "@/libs/modules/keys/index.js";
+import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
 import type {
   AdaDerivationTypeUnion,
   AvaxDerivationTypeUnion,
@@ -16,8 +16,6 @@ import type {
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
 import type { DestinationTagProperty } from "@/libs/modules/address/index.js";
 
-type CommonPrefixConfig = { prefixConfig: PrefixConfig };
-
 type AdaDerivationConfig = {
   networkPurpose: AdaNetworkPurposeUnion;
   derivationType: AdaDerivationTypeUnion;
@@ -26,16 +24,16 @@ type AdaDerivationConfig = {
 type AvaxDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: AvaxDerivationTypeUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type BtcDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
   derivationType: BtcDerivationTypeUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type TrxDerivationConfig = {
   derivationType: DerivationTypeMap["trxBase"];
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type TonDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
@@ -50,12 +48,12 @@ type SuiDerivationConfig = {
 type BchDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
   derivationType: BchDerivationTypeUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type XrpDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: XrpDerivationTypeUnion;
-} & CommonPrefixConfig &
+} & PrefixConfigProperty &
   DestinationTagProperty;
 
 export type {

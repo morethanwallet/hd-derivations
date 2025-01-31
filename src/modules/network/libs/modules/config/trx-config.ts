@@ -1,11 +1,10 @@
-import type { PrefixConfig } from "@/libs/modules/keys/index.js";
+import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
 import { networks } from "bitcoinjs-lib";
 
 type TrxConfig = {
   trxBase: {
     derivationPathPrefix: string;
-    prefixConfig: PrefixConfig;
-  };
+  } & PrefixConfigProperty;
 };
 
 const trxConfig: TrxConfig = {

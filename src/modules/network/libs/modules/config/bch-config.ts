@@ -1,7 +1,7 @@
 import type { BchDerivationTypeUnion } from "@/libs/types/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
-import type { PrefixConfig } from "@/libs/modules/keys/index.js";
+import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
 
 const derivationPathPrefix = {
   mainnet: "m/44'/145'",
@@ -12,8 +12,7 @@ type BchConfig = {
   [key in CommonNetworkPurposeRegTestExtendedUnion]: {
     [key in BchDerivationTypeUnion]: {
       derivationPathPrefix: string;
-      prefixConfig: PrefixConfig;
-    };
+    } & PrefixConfigProperty;
   };
 };
 
