@@ -1,4 +1,4 @@
-import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
+import { BnbKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import type {
   ConstructorParameters,
   AbstractNetwork,
@@ -22,7 +22,7 @@ class Bnb implements AbstractNetwork<"bnbBase"> {
   }: ConstructorParameters<"bnbBase">) {
     const derivationsHandlers: DerivationsHandlers<"bnbBase"> = {
       bnbBase: getBnbDerivationHandlers({
-        keysDerivationInstance: new CommonBipKeyDerivation(
+        keysDerivationInstance: new BnbKeyDerivation(
           prefixConfig ?? bnbConfig.prefixConfig,
           mnemonic,
         ),

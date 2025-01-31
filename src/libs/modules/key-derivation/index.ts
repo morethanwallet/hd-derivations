@@ -6,3 +6,4 @@ export {
 } from "./networks/ada/index.js";
 export { CommonBipKeyDerivation, CommonEd25519KeyDerivation } from "./networks/common/index.js";
 export { SuiKeyDerivation } from "./networks/sui/index.js";
+export { BnbKeyDerivation } from "./networks/bnb/index.js";

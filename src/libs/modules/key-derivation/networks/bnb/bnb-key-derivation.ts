@@ -1,26 +1,31 @@
-import { getPublicKeyFromPrivateKey } from "@binance-chain/javascript-sdk/lib/crypto";
-import { assert, toUint8Array } from "@/libs/helpers/index.js";
-import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
-import { type PrefixConfig, Bip32Keys } from "@/libs/modules/keys/index.js";
 import {
-  type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
+  type AbstractKeyDerivation,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
-import { convertEcBytesPrivateKeyToHexKeyPair } from "@/libs/modules/key-derivation/libs/helpers/index.js";
-import { KeyDerivationError } from "@/libs/exceptions/index.js";
-import { ExceptionMessage } from "@/libs/modules/key-derivation/libs/enums/index.js";
+import { type PrefixConfig, Bip32Keys } from "@/libs/modules/keys/index.js";
+import { type BIP32Interface } from "bip32";
+import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
+import { toUint8Array } from "@/libs/helpers/index.js";
+import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
+import { getPublicKeyFromPrivateKey } from "@binance-chain/javascript-sdk/lib/crypto/index.js";
 
-class BnbKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"bnb"> {
-  public constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
+class BnbKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"bnbBase"> {
+  constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
     super(prefixConfig, mnemonic);
   }
 
   public deriveFromMnemonic({
     derivationPath,
-  }: DeriveFromMnemonicParameters<"bnb">): CommonKeyPair {
+  }: DeriveFromMnemonicParameters<"bnbBase">): CommonKeyPair {
     const node = this.rootKey.derivePath(derivationPath);
-    const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
+
+    return this.getKeyPair(node.privateKey);
+  }
+
+  public importByPrivateKey({ privateKey }: PrivateKey<"bnbBase">): CommonKeyPair {
+    const rawKey = toUint8Array(Buffer.from(privateKey, "hex"));
+    const { publicKey } = this.getKeyPair(rawKey);
 
     return {
       privateKey,
@@ -28,19 +33,13 @@ class BnbKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"bnb">
     };
   }
 
-  public importByPrivateKey({ privateKey }: PrivateKey<"bnb">): CommonKeyPair {
-    const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
-    const { publicKey } = this.getKeyPair(rawPrivateKey);
+  public getKeyPair(source: BIP32Interface | Uint8Array | undefined): CommonKeyPair {
+    const { privateKey } = getKeyPairFromEc({
+      source,
+      isPrivateKeyWifFormatted: false,
+      prefixConfig: this.prefixConfig,
+    });
 
-    return {
-      privateKey,
-      publicKey,
-    };
-  }
-
-  private getKeyPair(rawPrivateKey?: Uint8Array): CommonKeyPair {
-    assert(rawPrivateKey, KeyDerivationError, ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
-    const { privateKey } = convertEcBytesPrivateKeyToHexKeyPair(rawPrivateKey, this.prefixConfig);
     const publicKey = getPublicKeyFromPrivateKey(privateKey);
 
     return { privateKey, publicKey };
