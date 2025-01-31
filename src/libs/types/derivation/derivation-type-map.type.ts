@@ -13,9 +13,7 @@ type DerivationTypeMap = {
   adaReward: "adaReward";
   adaEnterprise: "adaEnterprise";
   bnbBase: "bnbBase";
-  evm: "evm";
-  transparent: "transparent";
-  sol: "sol";
+  evmBase: "evmBase";
   xrpBase: "xrpBase";
   xrpX: "xrpX";
   trxBase: "trxBase";
