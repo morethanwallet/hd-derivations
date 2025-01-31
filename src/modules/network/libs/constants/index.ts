@@ -8,3 +8,4 @@ export {
   DEFAULT_BCH_INSTANCE_PARAMETERS,
   DEFAULT_XRP_INSTANCE_PARAMETERS,
 } from "./default-instance-parameters.constant.js";
+export { INDEX_LOOKUP_FROM, INDEX_LOOKUP_TO, FIRST_ITEM_INDEX } from "./__tests__/index.js";

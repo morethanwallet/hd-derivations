@@ -1,9 +1,13 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { getNetwork } from "../../get-network/index.js";
 import type { AdaNetworkPurposeUnion } from "../../libs/types/index.js";
 import type { AdaDerivationTypeUnion } from "@/libs/types/index.js";
 import { Ada } from "../ada.network.js";
-import { FIRST_ITEM_INDEX, INDEX_LOOKUP_FROM, INDEX_LOOKUP_TO } from "../../constants/index.js";
+import {
+  FIRST_ITEM_INDEX,
+  INDEX_LOOKUP_FROM,
+  INDEX_LOOKUP_TO,
+} from "../../libs/constants/index.js";
 import { adaConfig } from "../../libs/modules/config/index.js";
 
 const MNEMONIC =

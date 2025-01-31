@@ -2,7 +2,11 @@ import { getNetwork } from "../../get-network/index.js";
 import { avaxConfig } from "../../libs/modules/config/index.js";
 import { Avax } from "../avax.network.js";
 import { describe, it, expect, beforeAll } from "vitest";
-import { FIRST_ITEM_INDEX, INDEX_LOOKUP_FROM, INDEX_LOOKUP_TO } from "../../constants/index.js";
+import {
+  FIRST_ITEM_INDEX,
+  INDEX_LOOKUP_FROM,
+  INDEX_LOOKUP_TO,
+} from "../../libs/constants/index.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
 import type { AvaxDerivationTypeUnion } from "@/libs/types/index.js";
 

@@ -2,7 +2,11 @@ import { getNetwork } from "../../get-network/index.js";
 import { trxConfig } from "../../libs/modules/config/index.js";
 import { Trx } from "../trx.network.js";
 import { describe, it, expect, beforeAll } from "vitest";
-import { FIRST_ITEM_INDEX, INDEX_LOOKUP_FROM, INDEX_LOOKUP_TO } from "../../constants/index.js";
+import {
+  FIRST_ITEM_INDEX,
+  INDEX_LOOKUP_FROM,
+  INDEX_LOOKUP_TO,
+} from "../../libs/constants/index.js";
 import type { DerivationTypeMap } from "@/libs/types/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";

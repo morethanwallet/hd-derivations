@@ -1,10 +1,14 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { Bch } from "../bch.network.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
 import type { BchDerivationTypeUnion } from "@/libs/types/index.js";
 import { getNetwork } from "../../get-network/index.js";
 import { bchConfig } from "../../libs/modules/config/index.js";
-import { FIRST_ITEM_INDEX, INDEX_LOOKUP_FROM, INDEX_LOOKUP_TO } from "../../constants/index.js";
+import {
+  FIRST_ITEM_INDEX,
+  INDEX_LOOKUP_FROM,
+  INDEX_LOOKUP_TO,
+} from "../../libs/constants/index.js";
 
 const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 
