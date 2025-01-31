@@ -6,3 +6,4 @@ export { tonConfig } from "./ton-config.js";
 export { suiConfig } from "./sui-config.js";
 export { bchConfig } from "./bch-config.js";
 export { xrpConfig } from "./xrp-config.js";
+export { bnbConfig } from "./bnb-config.js";
