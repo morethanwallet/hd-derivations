@@ -12,7 +12,6 @@ import type {
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { getTrxDerivationHandlers } from "./libs/helpers/index.js";
-import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
 import type { DerivationTypeMap } from "@/libs/types/index.js";
 
 class Trx implements AbstractNetwork<DerivationTypeMap["trxBase"]> {
@@ -20,18 +19,21 @@ class Trx implements AbstractNetwork<DerivationTypeMap["trxBase"]> {
     DerivationTypeMap["trxBase"]
   >[DerivationTypeMap["trxBase"]];
 
-  public constructor({ derivationConfig, mnemonic }: ConstructorParameters<"trxBase">) {
+  public constructor({
+    mnemonic,
+    derivationConfig: { derivationType, prefixConfig },
+  }: ConstructorParameters<"trxBase">) {
     const derivationsHandlers: DerivationsHandlers<"trxBase"> = {
       trxBase: getTrxDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomPrefixConfig("trxBase", derivationConfig) ?? trxConfig.trxBase.prefixConfig,
+          prefixConfig ?? trxConfig.trxBase.prefixConfig,
           mnemonic,
           false,
         ),
       }),
     };
 
-    this.derivationHandlers = derivationsHandlers[derivationConfig.derivationType];
+    this.derivationHandlers = derivationsHandlers[derivationType];
   }
 
   public deriveItemFromMnemonic(
