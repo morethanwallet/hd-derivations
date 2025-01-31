@@ -25,14 +25,10 @@ class Ton implements AbstractNetwork<DerivationTypeMap["tonBase"]> {
   }: ConstructorParameters<DerivationTypeMap["tonBase"]>) {
     const { derivationType, ...addressParameters } = derivationConfig;
 
-    const derivationsHandlers: DerivationsHandlers<DerivationTypeMap["tonBase"]> = {
-      tonBase: getTonDerivationHandlers({
-        ...addressParameters,
-        keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic),
-      }),
-    };
-
-    this.derivationHandlers = derivationsHandlers[derivationType];
+    this.derivationHandlers = getTonDerivationHandlers({
+      ...addressParameters,
+      keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic),
+    });
   }
 
   public deriveItemFromMnemonic(

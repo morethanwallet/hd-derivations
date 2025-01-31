@@ -21,19 +21,15 @@ class Trx implements AbstractNetwork<DerivationTypeMap["trxBase"]> {
 
   public constructor({
     mnemonic,
-    derivationConfig: { derivationType, prefixConfig },
+    derivationConfig: { prefixConfig },
   }: ConstructorParameters<"trxBase">) {
-    const derivationsHandlers: DerivationsHandlers<"trxBase"> = {
-      trxBase: getTrxDerivationHandlers({
-        keysDerivationInstance: new CommonBipKeyDerivation(
-          prefixConfig ?? trxConfig.trxBase.prefixConfig,
-          mnemonic,
-          false,
-        ),
-      }),
-    };
-
-    this.derivationHandlers = derivationsHandlers[derivationType];
+    this.derivationHandlers = getTrxDerivationHandlers({
+      keysDerivationInstance: new CommonBipKeyDerivation(
+        prefixConfig ?? trxConfig.trxBase.prefixConfig,
+        mnemonic,
+        false,
+      ),
+    });
   }
 
   public deriveItemFromMnemonic(

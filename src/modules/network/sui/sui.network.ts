@@ -20,16 +20,12 @@ class Sui implements AbstractNetwork<DerivationTypeMap["suiBase"]> {
 
   public constructor({
     mnemonic,
-    derivationConfig: { derivationType, scheme },
+    derivationConfig: { scheme },
   }: ConstructorParameters<DerivationTypeMap["suiBase"]>) {
-    const derivationsHandlers: DerivationsHandlers<DerivationTypeMap["suiBase"]> = {
-      suiBase: getSuiDerivationHandlers({
-        scheme,
-        keysDerivationInstance: new SuiKeyDerivation(mnemonic),
-      }),
-    };
-
-    this.derivationHandlers = derivationsHandlers[derivationType];
+    this.derivationHandlers = getSuiDerivationHandlers({
+      scheme,
+      keysDerivationInstance: new SuiKeyDerivation(mnemonic),
+    });
   }
 
   public deriveItemFromMnemonic(

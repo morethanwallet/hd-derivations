@@ -20,16 +20,12 @@ class Bnb implements AbstractNetwork<"bnbBase"> {
     mnemonic,
     derivationConfig: { prefixConfig },
   }: ConstructorParameters<"bnbBase">) {
-    const derivationsHandlers: DerivationsHandlers<"bnbBase"> = {
-      bnbBase: getBnbDerivationHandlers({
-        keysDerivationInstance: new BnbKeyDerivation(
-          prefixConfig ?? bnbConfig.prefixConfig,
-          mnemonic,
-        ),
-      }),
-    };
-
-    this.derivationHandlers = derivationsHandlers.bnbBase;
+    this.derivationHandlers = getBnbDerivationHandlers({
+      keysDerivationInstance: new BnbKeyDerivation(
+        prefixConfig ?? bnbConfig.prefixConfig,
+        mnemonic,
+      ),
+    });
   }
 
   public deriveItemFromMnemonic(
