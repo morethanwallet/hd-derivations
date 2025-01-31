@@ -6,11 +6,10 @@ import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
   INDEX_LOOKUP_TO,
+  MNEMONIC,
 } from "../../libs/constants/index.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
 import type { AvaxDerivationTypeUnion } from "@/libs/types/index.js";
-
-const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 
 const MOCK_COMMON_DERIVATION_PATH = "m/44'/9000'/0'/0/0";
 

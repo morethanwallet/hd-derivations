@@ -6,11 +6,10 @@ import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
   INDEX_LOOKUP_TO,
+  MNEMONIC,
 } from "../../libs/constants/index.js";
 import type { TonAddressRequiredData } from "@/libs/modules/address/index.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
-
-const MNEMONIC = "drill exotic title fall ivory boy praise unfold search foil surge tip";
 
 const MOCK_DERIVATION_PATH = "m/44'/607'/0'";
 
