@@ -21,7 +21,7 @@ import type {
 import type { CommonDerivationConfig } from "./derivation-config.type.js";
 
 // TODO: Try to use mapping here
-type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
+type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
   T extends BtcDerivationTypeUnion
     ? Pick<BtcInstanceParameters, "derivationConfig">
     : T extends AdaDerivationTypeUnion
@@ -42,6 +42,6 @@ type ConstructorInconsistentParameters<T extends DerivationTypeUnion> =
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
   mnemonic: Mnemonic;
-} & ConstructorInconsistentParameters<TDerivationType>;
+} & ConstructorDerivationConfigParameters<TDerivationType>;
 
 export { type ConstructorParameters };
