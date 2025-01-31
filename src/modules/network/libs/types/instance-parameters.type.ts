@@ -8,9 +8,9 @@ import type {
   SuiDerivationConfig,
   BchDerivationConfig,
   XrpDerivationConfig,
+  BnbDerivationConfig,
 } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
-import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
 
 type AdaInstanceParameters = {
   network: NetworkTypeMap["ada"];
@@ -54,7 +54,7 @@ type XrpInstanceParameters = {
 
 type BnbInstanceParameters = {
   network: NetworkTypeMap["bnb"];
-  derivationConfig: PrefixConfigProperty;
+  derivationConfig: BnbDerivationConfig;
 } & MnemonicProperty;
 
 export type {

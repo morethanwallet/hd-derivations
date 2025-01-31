@@ -1,4 +1,4 @@
-import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
+import type { PrefixConfig } from "@/libs/modules/keys/index.js";
 import type {
   AdaDerivationTypeUnion,
   AvaxDerivationTypeUnion,
@@ -14,7 +14,9 @@ import type {
   CommonNetworkPurposeUnion,
 } from "./network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
-import type { DestinationTagProperty } from "@/libs/modules/address/index.js";
+import type { DestinationTagProperty, Ss58FormatProperty } from "@/libs/modules/address/index.js";
+
+type CommonPrefixConfig = { prefixConfig?: PrefixConfig };
 
 type AdaDerivationConfig = {
   networkPurpose: AdaNetworkPurposeUnion;
@@ -24,16 +26,16 @@ type AdaDerivationConfig = {
 type AvaxDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: AvaxDerivationTypeUnion;
-} & PrefixConfigProperty;
+} & CommonPrefixConfig;
 
 type BtcDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
   derivationType: BtcDerivationTypeUnion;
-} & PrefixConfigProperty;
+} & CommonPrefixConfig;
 
 type TrxDerivationConfig = {
   derivationType: DerivationTypeMap["trxBase"];
-} & PrefixConfigProperty;
+} & CommonPrefixConfig;
 
 type TonDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
@@ -48,13 +50,19 @@ type SuiDerivationConfig = {
 type BchDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
   derivationType: BchDerivationTypeUnion;
-} & PrefixConfigProperty;
+} & CommonPrefixConfig;
+
+type DotDerivationConfig = {
+  networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
+} & Ss58FormatProperty;
 
 type XrpDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: XrpDerivationTypeUnion;
-} & PrefixConfigProperty &
+} & CommonPrefixConfig &
   DestinationTagProperty;
+
+type BnbDerivationConfig = CommonPrefixConfig;
 
 export type {
   AdaDerivationConfig,
@@ -64,5 +72,7 @@ export type {
   TonDerivationConfig,
   SuiDerivationConfig,
   BchDerivationConfig,
+  DotDerivationConfig,
   XrpDerivationConfig,
+  BnbDerivationConfig,
 };
