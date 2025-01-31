@@ -8,12 +8,13 @@ import {
   type DeriveItemsBatchFromMnemonic,
   type DoesPKBelongToMnemonicParameters,
 } from "../types/index.js";
-import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../../constants/index.js";
 import { checkHardenedSuffixEnding } from "@/libs/helpers/index.js";
 import { DerivationPathSymbol } from "@/libs/enums/index.js";
 import { doesPKExistInBatch } from "./does-p-k-exist-in-batch.helper.js";
 
 const SEGMENT_INITIAL_VALUE = "0";
+
+const MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY = 6;
 
 type IncreaseDerivationPathDepthParameters = {
   derivationPath: DerivationPath["derivationPath"];
