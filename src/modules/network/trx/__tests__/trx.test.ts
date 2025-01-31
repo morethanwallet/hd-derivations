@@ -28,14 +28,14 @@ const MOCK_EXTRINSIC_PRIVATE_KEY =
 
 type TrxDerivationTypeUnion = DerivationTypeMap["trxBase"];
 
-type NetworksDerivations = {
+type NetworkDerivationsInstances = {
   [key in TrxDerivationTypeUnion]: Trx;
 };
 
-let networksDerivations = {} as NetworksDerivations;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
-  networksDerivations["trxBase"] = getNetwork({
+  networkDerivationsInstances["trxBase"] = getNetwork({
     network: "trx",
     mnemonic: MNEMONIC,
     derivationConfig: {
@@ -48,7 +48,7 @@ beforeAll(() => {
 describe("Trx", () => {
   describe("deriveItemFromMnemonic", () => {
     it("Derives correct trx base item", () => {
-      const derivedItem = networksDerivations.trxBase.deriveItemFromMnemonic({
+      const derivedItem = networkDerivationsInstances.trxBase.deriveItemFromMnemonic({
         derivationPath: MOCK_ITEM.derivationPath,
       });
 
@@ -58,7 +58,7 @@ describe("Trx", () => {
 
   describe("getCredentialFromPK", () => {
     it("Derives correct trx base credential", () => {
-      const credential = networksDerivations.trxBase.getCredentialFromPK({
+      const credential = networkDerivationsInstances.trxBase.getCredentialFromPK({
         privateKey: MOCK_CREDENTIAL.privateKey,
       });
 
@@ -68,7 +68,7 @@ describe("Trx", () => {
 
   describe("deriveItemsBatchFromMnemonic", () => {
     it("Derives correct trx base items batch", () => {
-      const items = networksDerivations.trxBase.deriveItemsBatchFromMnemonic({
+      const items = networkDerivationsInstances.trxBase.deriveItemsBatchFromMnemonic({
         derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
         indexLookupFrom: INDEX_LOOKUP_FROM,
         indexLookupTo: INDEX_LOOKUP_TO,
@@ -82,7 +82,7 @@ describe("Trx", () => {
   describe("doesPKBelongToMnemonic", () => {
     describe("Validates native private key correctly", () => {
       it("Returns true for trx base private key", () => {
-        const isNative = networksDerivations.trxBase.doesPKBelongToMnemonic({
+        const isNative = networkDerivationsInstances.trxBase.doesPKBelongToMnemonic({
           derivationPathPrefix: trxConfig.trxBase.derivationPathPrefix,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -95,7 +95,7 @@ describe("Trx", () => {
 
     describe("Validates extrinsic private key correctly", () => {
       it("Returns false for trx base private key", () => {
-        const isNative = networksDerivations.trxBase.doesPKBelongToMnemonic({
+        const isNative = networkDerivationsInstances.trxBase.doesPKBelongToMnemonic({
           derivationPathPrefix: trxConfig.trxBase.derivationPathPrefix,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,

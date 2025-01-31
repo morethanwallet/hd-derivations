@@ -124,13 +124,13 @@ const MOCK_TESTNET_PREPROD_CREDENTIAL = { ...MOCK_TESTNET_PREVIEW_CREDENTIAL };
 
 const MOCK_TESTNET_PREPROD_ITEM = { ...MOCK_TESTNET_PREVIEW_ITEM };
 
-type NetworksDerivations = {
+type NetworkDerivationsInstances = {
   [key in AdaNetworkPurposeUnion]: {
     [key in AdaDerivationTypeUnion]: Ada;
   };
 };
 
-let networksDerivations = {} as NetworksDerivations;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
   const networkPurposes: AdaNetworkPurposeUnion[] = [
@@ -145,10 +145,10 @@ beforeAll(() => {
     "adaReward",
   ] as const;
 
-  networksDerivations = networkPurposes.reduce<NetworksDerivations>(
-    (networksDerivations, networkPurpose) => {
-      networksDerivations[networkPurpose] = derivationTypes.reduce<
-        NetworksDerivations[AdaNetworkPurposeUnion]
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
+        NetworkDerivationsInstances[AdaNetworkPurposeUnion]
       >(
         (derivations, derivationType) => {
           derivations[derivationType] = getNetwork({
@@ -162,12 +162,12 @@ beforeAll(() => {
 
           return derivations;
         },
-        {} as NetworksDerivations[AdaNetworkPurposeUnion],
+        {} as NetworkDerivationsInstances[AdaNetworkPurposeUnion],
       );
 
-      return networksDerivations;
+      return networkDerivationsInstances;
     },
-    {} as NetworksDerivations,
+    {} as NetworkDerivationsInstances,
   );
 });
 
@@ -175,15 +175,16 @@ describe("Ada", () => {
   describe("mainnet", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct enterprise item", () => {
-        const derivedItem = networksDerivations.mainnet.adaEnterprise.deriveItemFromMnemonic({
-          derivationPath: MOCK_MAINNET_ITEM.adaEnterprise.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.mainnet.adaEnterprise.deriveItemFromMnemonic({
+            derivationPath: MOCK_MAINNET_ITEM.adaEnterprise.derivationPath,
+          });
 
         expect(MOCK_MAINNET_ITEM.adaEnterprise).toEqual(derivedItem);
       });
 
       it("Derives correct reward item", () => {
-        const derivedItem = networksDerivations.mainnet.adaReward.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.mainnet.adaReward.deriveItemFromMnemonic({
           derivationPath: MOCK_MAINNET_ITEM.adaReward.derivationPath,
         });
 
@@ -191,7 +192,7 @@ describe("Ada", () => {
       });
 
       it("Derives correct base item", () => {
-        const derivedItem = networksDerivations.mainnet.adaBase.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.mainnet.adaBase.deriveItemFromMnemonic({
           derivationPath: MOCK_MAINNET_ITEM.adaBase.derivationPath,
         });
 
@@ -201,7 +202,7 @@ describe("Ada", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct enterprise credential", () => {
-        const derivedItem = networksDerivations.mainnet.adaEnterprise.getCredentialFromPK({
+        const derivedItem = networkDerivationsInstances.mainnet.adaEnterprise.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.adaEnterprise.privateKey,
         });
 
@@ -209,7 +210,7 @@ describe("Ada", () => {
       });
 
       it("Derives correct reward credential", () => {
-        const derivedItem = networksDerivations.mainnet.adaReward.getCredentialFromPK({
+        const derivedItem = networkDerivationsInstances.mainnet.adaReward.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.adaReward.privateKey,
         });
 
@@ -217,7 +218,7 @@ describe("Ada", () => {
       });
 
       it("Derives correct base credential", () => {
-        const derivedItem = networksDerivations.mainnet.adaBase.getCredentialFromPK({
+        const derivedItem = networkDerivationsInstances.mainnet.adaBase.getCredentialFromPK({
           enterprisePrivateKey: MOCK_MAINNET_CREDENTIAL.adaBase.enterprisePrivateKey,
           rewardPrivateKey: MOCK_MAINNET_CREDENTIAL.adaBase.rewardPrivateKey,
         });
@@ -228,18 +229,19 @@ describe("Ada", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct enterprise items batch", () => {
-        const items = networksDerivations.mainnet.adaEnterprise.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaEnterprise,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.mainnet.adaEnterprise.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaEnterprise,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.adaEnterprise);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct reward items batch", () => {
-        const items = networksDerivations.mainnet.adaReward.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.mainnet.adaReward.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaReward,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -250,7 +252,7 @@ describe("Ada", () => {
       });
 
       it("Derives correct base items batch", () => {
-        const items = networksDerivations.mainnet.adaBase.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.mainnet.adaBase.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaEnterprise,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -264,18 +266,20 @@ describe("Ada", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for enterprise private key", () => {
-          const isNative = networksDerivations.mainnet.adaEnterprise.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.mainnet.adaEnterprise.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.adaEnterprise.privateKey,
-          });
+          const isNative = networkDerivationsInstances.mainnet.adaEnterprise.doesPKBelongToMnemonic(
+            {
+              derivationPathPrefix: adaConfig.mainnet.adaEnterprise.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_CREDENTIAL.adaEnterprise.privateKey,
+            },
+          );
 
           expect(isNative).toBe(true);
         });
 
         it("Returns true for reward private key", () => {
-          const isNative = networksDerivations.mainnet.adaReward.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.adaReward.doesPKBelongToMnemonic({
             derivationPathPrefix: adaConfig.mainnet.adaReward.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -286,19 +290,21 @@ describe("Ada", () => {
         });
 
         it("Returns true for base private key", () => {
-          const isEnterpriseKeyNative = networksDerivations.mainnet.adaBase.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.mainnet.adaBase.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.adaBase.enterprisePrivateKey,
-          });
+          const isEnterpriseKeyNative =
+            networkDerivationsInstances.mainnet.adaBase.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.mainnet.adaBase.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_CREDENTIAL.adaBase.enterprisePrivateKey,
+            });
 
-          const isRewardKeyNative = networksDerivations.mainnet.adaBase.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.mainnet.adaBase.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.adaBase.rewardPrivateKey,
-          });
+          const isRewardKeyNative =
+            networkDerivationsInstances.mainnet.adaBase.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.mainnet.adaBase.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_CREDENTIAL.adaBase.rewardPrivateKey,
+            });
 
           expect(isEnterpriseKeyNative).toBe(true);
           expect(isRewardKeyNative).toBe(true);
@@ -307,18 +313,20 @@ describe("Ada", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false for enterprise private key", () => {
-          const isNative = networksDerivations.mainnet.adaEnterprise.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.mainnet.adaEnterprise.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.adaEnterprise.privateKey,
-          });
+          const isNative = networkDerivationsInstances.mainnet.adaEnterprise.doesPKBelongToMnemonic(
+            {
+              derivationPathPrefix: adaConfig.mainnet.adaEnterprise.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.adaEnterprise.privateKey,
+            },
+          );
 
           expect(isNative).toBe(false);
         });
 
         it("Returns true for reward private key", () => {
-          const isNative = networksDerivations.mainnet.adaReward.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.adaReward.doesPKBelongToMnemonic({
             derivationPathPrefix: adaConfig.mainnet.adaReward.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -329,19 +337,21 @@ describe("Ada", () => {
         });
 
         it("Returns true for base private key", () => {
-          const isEnterpriseKeyNative = networksDerivations.mainnet.adaBase.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.mainnet.adaBase.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.adaEnterprise.privateKey,
-          });
+          const isEnterpriseKeyNative =
+            networkDerivationsInstances.mainnet.adaBase.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.mainnet.adaBase.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.adaEnterprise.privateKey,
+            });
 
-          const isRewardKeyNative = networksDerivations.mainnet.adaBase.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.mainnet.adaBase.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.adaReward.privateKey,
-          });
+          const isRewardKeyNative =
+            networkDerivationsInstances.mainnet.adaBase.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.mainnet.adaBase.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.adaReward.privateKey,
+            });
 
           expect(isEnterpriseKeyNative).toBe(false);
           expect(isRewardKeyNative).toBe(false);
@@ -353,27 +363,28 @@ describe("Ada", () => {
   describe("testnet preview", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct enterprise item", () => {
-        const derivedItem = networksDerivations.testnetPreview.adaEnterprise.deriveItemFromMnemonic(
-          {
+        const derivedItem =
+          networkDerivationsInstances.testnetPreview.adaEnterprise.deriveItemFromMnemonic({
             derivationPath: MOCK_TESTNET_PREVIEW_ITEM.adaEnterprise.derivationPath,
-          },
-        );
+          });
 
         expect(MOCK_TESTNET_PREVIEW_ITEM.adaEnterprise).toEqual(derivedItem);
       });
 
       it("Derives correct reward item", () => {
-        const derivedItem = networksDerivations.testnetPreview.adaReward.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_PREVIEW_ITEM.adaReward.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.testnetPreview.adaReward.deriveItemFromMnemonic({
+            derivationPath: MOCK_TESTNET_PREVIEW_ITEM.adaReward.derivationPath,
+          });
 
         expect(MOCK_TESTNET_PREVIEW_ITEM.adaReward).toEqual(derivedItem);
       });
 
       it("Derives correct base item", () => {
-        const derivedItem = networksDerivations.testnetPreview.adaBase.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_PREVIEW_ITEM.adaBase.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.testnetPreview.adaBase.deriveItemFromMnemonic({
+            derivationPath: MOCK_TESTNET_PREVIEW_ITEM.adaBase.derivationPath,
+          });
 
         expect(MOCK_TESTNET_PREVIEW_ITEM.adaBase).toEqual(derivedItem);
       });
@@ -381,23 +392,25 @@ describe("Ada", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct enterprise credential", () => {
-        const derivedItem = networksDerivations.testnetPreview.adaEnterprise.getCredentialFromPK({
-          privateKey: MOCK_TESTNET_PREVIEW_CREDENTIAL.adaEnterprise.privateKey,
-        });
+        const derivedItem =
+          networkDerivationsInstances.testnetPreview.adaEnterprise.getCredentialFromPK({
+            privateKey: MOCK_TESTNET_PREVIEW_CREDENTIAL.adaEnterprise.privateKey,
+          });
 
         expect(MOCK_TESTNET_PREVIEW_CREDENTIAL.adaEnterprise).toEqual(derivedItem);
       });
 
       it("Derives correct reward credential", () => {
-        const derivedItem = networksDerivations.testnetPreview.adaReward.getCredentialFromPK({
-          privateKey: MOCK_TESTNET_PREVIEW_CREDENTIAL.adaReward.privateKey,
-        });
+        const derivedItem =
+          networkDerivationsInstances.testnetPreview.adaReward.getCredentialFromPK({
+            privateKey: MOCK_TESTNET_PREVIEW_CREDENTIAL.adaReward.privateKey,
+          });
 
         expect(MOCK_TESTNET_PREVIEW_CREDENTIAL.adaReward).toEqual(derivedItem);
       });
 
       it("Derives correct base credential", () => {
-        const derivedItem = networksDerivations.testnetPreview.adaBase.getCredentialFromPK({
+        const derivedItem = networkDerivationsInstances.testnetPreview.adaBase.getCredentialFromPK({
           enterprisePrivateKey: MOCK_TESTNET_PREVIEW_CREDENTIAL.adaBase.enterprisePrivateKey,
           rewardPrivateKey: MOCK_TESTNET_PREVIEW_CREDENTIAL.adaBase.rewardPrivateKey,
         });
@@ -408,35 +421,36 @@ describe("Ada", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct enterprise items batch", () => {
-        const items = networksDerivations.testnetPreview.adaEnterprise.deriveItemsBatchFromMnemonic(
-          {
+        const items =
+          networkDerivationsInstances.testnetPreview.adaEnterprise.deriveItemsBatchFromMnemonic({
             derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaEnterprise,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-          },
-        );
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_PREVIEW_ITEM.adaEnterprise);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct reward items batch", () => {
-        const items = networksDerivations.testnetPreview.adaReward.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaReward,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.testnetPreview.adaReward.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaReward,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_PREVIEW_ITEM.adaReward);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct base items batch", () => {
-        const items = networksDerivations.testnetPreview.adaBase.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaEnterprise,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.testnetPreview.adaBase.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaEnterprise,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_PREVIEW_ITEM.adaBase);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
@@ -446,30 +460,32 @@ describe("Ada", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for enterprise private key", () => {
-          const isNative = networksDerivations.testnetPreview.adaEnterprise.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.testnetPreview.adaEnterprise.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_PREVIEW_CREDENTIAL.adaEnterprise.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnetPreview.adaEnterprise.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.testnetPreview.adaEnterprise.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_PREVIEW_CREDENTIAL.adaEnterprise.privateKey,
+            });
 
           expect(isNative).toBe(true);
         });
 
         it("Returns true for reward private key", () => {
-          const isNative = networksDerivations.testnetPreview.adaReward.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.testnetPreview.adaReward.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_PREVIEW_CREDENTIAL.adaReward.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnetPreview.adaReward.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.testnetPreview.adaReward.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_PREVIEW_CREDENTIAL.adaReward.privateKey,
+            });
 
           expect(isNative).toBe(true);
         });
 
         it("Returns true for base private key", () => {
           const isEnterpriseKeyNative =
-            networksDerivations.testnetPreview.adaBase.doesPKBelongToMnemonic({
+            networkDerivationsInstances.testnetPreview.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreview.adaBase.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -477,7 +493,7 @@ describe("Ada", () => {
             });
 
           const isRewardKeyNative =
-            networksDerivations.testnetPreview.adaBase.doesPKBelongToMnemonic({
+            networkDerivationsInstances.testnetPreview.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreview.adaBase.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -491,30 +507,32 @@ describe("Ada", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false for enterprise private key", () => {
-          const isNative = networksDerivations.testnetPreview.adaEnterprise.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.testnetPreview.adaEnterprise.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_PREVIEW_EXTRINSIC_PRIVATE_KEY.adaEnterprise.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnetPreview.adaEnterprise.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.testnetPreview.adaEnterprise.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_PREVIEW_EXTRINSIC_PRIVATE_KEY.adaEnterprise.privateKey,
+            });
 
           expect(isNative).toBe(false);
         });
 
         it("Returns true for reward private key", () => {
-          const isNative = networksDerivations.testnetPreview.adaReward.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.testnetPreview.adaReward.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_PREVIEW_EXTRINSIC_PRIVATE_KEY.adaReward.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnetPreview.adaReward.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.testnetPreview.adaReward.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_PREVIEW_EXTRINSIC_PRIVATE_KEY.adaReward.privateKey,
+            });
 
           expect(isNative).toBe(false);
         });
 
         it("Returns true for base private key", () => {
           const isEnterpriseKeyNative =
-            networksDerivations.testnetPreview.adaBase.doesPKBelongToMnemonic({
+            networkDerivationsInstances.testnetPreview.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreview.adaBase.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -522,7 +540,7 @@ describe("Ada", () => {
             });
 
           const isRewardKeyNative =
-            networksDerivations.testnetPreview.adaBase.doesPKBelongToMnemonic({
+            networkDerivationsInstances.testnetPreview.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreview.adaBase.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -539,27 +557,28 @@ describe("Ada", () => {
   describe("testnet preprod", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct enterprise item", () => {
-        const derivedItem = networksDerivations.testnetPreprod.adaEnterprise.deriveItemFromMnemonic(
-          {
+        const derivedItem =
+          networkDerivationsInstances.testnetPreprod.adaEnterprise.deriveItemFromMnemonic({
             derivationPath: MOCK_TESTNET_PREPROD_ITEM.adaEnterprise.derivationPath,
-          },
-        );
+          });
 
         expect(MOCK_TESTNET_PREPROD_ITEM.adaEnterprise).toEqual(derivedItem);
       });
 
       it("Derives correct reward item", () => {
-        const derivedItem = networksDerivations.testnetPreprod.adaReward.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_PREPROD_ITEM.adaReward.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.testnetPreprod.adaReward.deriveItemFromMnemonic({
+            derivationPath: MOCK_TESTNET_PREPROD_ITEM.adaReward.derivationPath,
+          });
 
         expect(MOCK_TESTNET_PREPROD_ITEM.adaReward).toEqual(derivedItem);
       });
 
       it("Derives correct base item", () => {
-        const derivedItem = networksDerivations.testnetPreprod.adaBase.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_PREPROD_ITEM.adaBase.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.testnetPreprod.adaBase.deriveItemFromMnemonic({
+            derivationPath: MOCK_TESTNET_PREPROD_ITEM.adaBase.derivationPath,
+          });
 
         expect(MOCK_TESTNET_PREPROD_ITEM.adaBase).toEqual(derivedItem);
       });
@@ -567,23 +586,25 @@ describe("Ada", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct enterprise credential", () => {
-        const derivedItem = networksDerivations.testnetPreprod.adaEnterprise.getCredentialFromPK({
-          privateKey: MOCK_TESTNET_PREPROD_CREDENTIAL.adaEnterprise.privateKey,
-        });
+        const derivedItem =
+          networkDerivationsInstances.testnetPreprod.adaEnterprise.getCredentialFromPK({
+            privateKey: MOCK_TESTNET_PREPROD_CREDENTIAL.adaEnterprise.privateKey,
+          });
 
         expect(MOCK_TESTNET_PREPROD_CREDENTIAL.adaEnterprise).toEqual(derivedItem);
       });
 
       it("Derives correct reward credential", () => {
-        const derivedItem = networksDerivations.testnetPreprod.adaReward.getCredentialFromPK({
-          privateKey: MOCK_TESTNET_PREPROD_CREDENTIAL.adaReward.privateKey,
-        });
+        const derivedItem =
+          networkDerivationsInstances.testnetPreprod.adaReward.getCredentialFromPK({
+            privateKey: MOCK_TESTNET_PREPROD_CREDENTIAL.adaReward.privateKey,
+          });
 
         expect(MOCK_TESTNET_PREPROD_CREDENTIAL.adaReward).toEqual(derivedItem);
       });
 
       it("Derives correct base credential", () => {
-        const derivedItem = networksDerivations.testnetPreprod.adaBase.getCredentialFromPK({
+        const derivedItem = networkDerivationsInstances.testnetPreprod.adaBase.getCredentialFromPK({
           enterprisePrivateKey: MOCK_TESTNET_PREPROD_CREDENTIAL.adaBase.enterprisePrivateKey,
           rewardPrivateKey: MOCK_TESTNET_PREPROD_CREDENTIAL.adaBase.rewardPrivateKey,
         });
@@ -594,35 +615,36 @@ describe("Ada", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct enterprise items batch", () => {
-        const items = networksDerivations.testnetPreprod.adaEnterprise.deriveItemsBatchFromMnemonic(
-          {
+        const items =
+          networkDerivationsInstances.testnetPreprod.adaEnterprise.deriveItemsBatchFromMnemonic({
             derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaEnterprise,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-          },
-        );
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_PREPROD_ITEM.adaEnterprise);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct reward items batch", () => {
-        const items = networksDerivations.testnetPreprod.adaReward.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaReward,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.testnetPreprod.adaReward.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaReward,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_PREPROD_ITEM.adaReward);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct base items batch", () => {
-        const items = networksDerivations.testnetPreprod.adaBase.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaEnterprise,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.testnetPreprod.adaBase.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.adaEnterprise,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_PREPROD_ITEM.adaBase);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
@@ -632,30 +654,32 @@ describe("Ada", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for enterprise private key", () => {
-          const isNative = networksDerivations.testnetPreprod.adaEnterprise.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.testnetPreprod.adaEnterprise.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_PREPROD_CREDENTIAL.adaEnterprise.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnetPreprod.adaEnterprise.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.testnetPreprod.adaEnterprise.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_PREPROD_CREDENTIAL.adaEnterprise.privateKey,
+            });
 
           expect(isNative).toBe(true);
         });
 
         it("Returns true for reward private key", () => {
-          const isNative = networksDerivations.testnetPreprod.adaReward.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.testnetPreprod.adaReward.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_PREPROD_CREDENTIAL.adaReward.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnetPreprod.adaReward.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.testnetPreprod.adaReward.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_PREPROD_CREDENTIAL.adaReward.privateKey,
+            });
 
           expect(isNative).toBe(true);
         });
 
         it("Returns true for base private key", () => {
           const isEnterpriseKeyNative =
-            networksDerivations.testnetPreprod.adaBase.doesPKBelongToMnemonic({
+            networkDerivationsInstances.testnetPreprod.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreprod.adaBase.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -663,7 +687,7 @@ describe("Ada", () => {
             });
 
           const isRewardKeyNative =
-            networksDerivations.testnetPreprod.adaBase.doesPKBelongToMnemonic({
+            networkDerivationsInstances.testnetPreprod.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreprod.adaBase.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -677,30 +701,32 @@ describe("Ada", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false for enterprise private key", () => {
-          const isNative = networksDerivations.testnetPreprod.adaEnterprise.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.testnetPreprod.adaEnterprise.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_PREPROD_EXTRINSIC_PRIVATE_KEY.adaEnterprise.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnetPreprod.adaEnterprise.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.testnetPreprod.adaEnterprise.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_PREPROD_EXTRINSIC_PRIVATE_KEY.adaEnterprise.privateKey,
+            });
 
           expect(isNative).toBe(false);
         });
 
         it("Returns true for reward private key", () => {
-          const isNative = networksDerivations.testnetPreprod.adaReward.doesPKBelongToMnemonic({
-            derivationPathPrefix: adaConfig.testnetPreprod.adaReward.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_PREPROD_EXTRINSIC_PRIVATE_KEY.adaReward.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnetPreprod.adaReward.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.testnetPreprod.adaReward.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_PREPROD_EXTRINSIC_PRIVATE_KEY.adaReward.privateKey,
+            });
 
           expect(isNative).toBe(false);
         });
 
         it("Returns true for base private key", () => {
           const isEnterpriseKeyNative =
-            networksDerivations.testnetPreprod.adaBase.doesPKBelongToMnemonic({
+            networkDerivationsInstances.testnetPreprod.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreprod.adaBase.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -708,7 +734,7 @@ describe("Ada", () => {
             });
 
           const isRewardKeyNative =
-            networksDerivations.testnetPreprod.adaBase.doesPKBelongToMnemonic({
+            networkDerivationsInstances.testnetPreprod.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreprod.adaBase.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,

@@ -45,22 +45,22 @@ const MOCK_TESTNET_ITEM = {
 
 type TestContractVersion = Extract<TonAddressRequiredData["contractVersion"], "v4r1" | "v5r1">;
 
-type NetworksDerivations = {
+type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeUnion]: {
     [key in TestContractVersion]: Ton;
   };
 };
 
-let networksDerivations = {} as NetworksDerivations;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
   const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
   const contractVersions: TestContractVersion[] = ["v4r1", "v5r1"] as const;
 
-  networksDerivations = networkPurposes.reduce<NetworksDerivations>(
-    (networksDerivations, networkPurpose) => {
-      networksDerivations[networkPurpose] = contractVersions.reduce<
-        NetworksDerivations[CommonNetworkPurposeUnion]
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = contractVersions.reduce<
+        NetworkDerivationsInstances[CommonNetworkPurposeUnion]
       >(
         (contractVersions, contractVersion) => {
           contractVersions[contractVersion] = getNetwork({
@@ -81,12 +81,12 @@ beforeAll(() => {
 
           return contractVersions;
         },
-        {} as NetworksDerivations[CommonNetworkPurposeUnion],
+        {} as NetworkDerivationsInstances[CommonNetworkPurposeUnion],
       );
 
-      return networksDerivations;
+      return networkDerivationsInstances;
     },
-    {} as NetworksDerivations,
+    {} as NetworkDerivationsInstances,
   );
 });
 
@@ -94,7 +94,7 @@ describe("Ton", () => {
   describe("mainnet", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct v4r1 item", () => {
-        const derivedItem = networksDerivations.mainnet.v4r1.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.mainnet.v4r1.deriveItemFromMnemonic({
           derivationPath: MOCK_MAINNET_ITEM.v4r1.derivationPath,
         });
 
@@ -104,7 +104,7 @@ describe("Ton", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct v4r1 credential", () => {
-        const credential = networksDerivations.mainnet.v4r1.getCredentialFromPK({
+        const credential = networkDerivationsInstances.mainnet.v4r1.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.v4r1.privateKey,
         });
 
@@ -114,7 +114,7 @@ describe("Ton", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct v4r1 items batch", () => {
-        const items = networksDerivations.mainnet.v4r1.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.mainnet.v4r1.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -128,7 +128,7 @@ describe("Ton", () => {
     describe("doesPKeyBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true", () => {
-          const isNative = networksDerivations.mainnet.v4r1.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.v4r1.doesPKBelongToMnemonic({
             derivationPathPrefix: tonConfig.tonBase.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -141,7 +141,7 @@ describe("Ton", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false", () => {
-          const isNative = networksDerivations.mainnet.v4r1.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.v4r1.doesPKBelongToMnemonic({
             derivationPathPrefix: tonConfig.tonBase.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -157,7 +157,7 @@ describe("Ton", () => {
   describe("testnet", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct v5r1 item", () => {
-        const derivedItem = networksDerivations.testnet.v5r1.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.testnet.v5r1.deriveItemFromMnemonic({
           derivationPath: MOCK_TESTNET_ITEM.v5r1.derivationPath,
         });
 
@@ -167,7 +167,7 @@ describe("Ton", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct v5r1 credential", () => {
-        const credential = networksDerivations.testnet.v5r1.getCredentialFromPK({
+        const credential = networkDerivationsInstances.testnet.v5r1.getCredentialFromPK({
           privateKey: MOCK_TESTNET_CREDENTIAL.v5r1.privateKey,
         });
 
@@ -177,7 +177,7 @@ describe("Ton", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct v5r1 items batch", () => {
-        const items = networksDerivations.testnet.v5r1.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.testnet.v5r1.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -191,7 +191,7 @@ describe("Ton", () => {
     describe("doesPKeyBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true", () => {
-          const isNative = networksDerivations.testnet.v5r1.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.v5r1.doesPKBelongToMnemonic({
             derivationPathPrefix: tonConfig.tonBase.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -204,7 +204,7 @@ describe("Ton", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false", () => {
-          const isNative = networksDerivations.testnet.v5r1.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.v5r1.doesPKBelongToMnemonic({
             derivationPathPrefix: tonConfig.tonBase.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,

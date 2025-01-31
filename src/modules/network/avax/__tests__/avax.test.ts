@@ -67,20 +67,20 @@ const MOCK_TESTNET_ITEM = {
   },
 };
 
-type NetworksDerivations = {
+type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeUnion]: { [key in AvaxDerivationTypeUnion]: Avax };
 };
 
-let networksDerivations = {} as NetworksDerivations;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
   const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
   const derivationTypes: AvaxDerivationTypeUnion[] = ["avaxP", "avaxX"] as const;
 
-  networksDerivations = networkPurposes.reduce<NetworksDerivations>(
-    (networksDerivations, networkPurpose) => {
-      networksDerivations[networkPurpose] = derivationTypes.reduce<
-        NetworksDerivations[CommonNetworkPurposeUnion]
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
+        NetworkDerivationsInstances[CommonNetworkPurposeUnion]
       >(
         (derivations, derivationType) => {
           derivations[derivationType] = getNetwork({
@@ -95,12 +95,12 @@ beforeAll(() => {
 
           return derivations;
         },
-        {} as NetworksDerivations[CommonNetworkPurposeUnion],
+        {} as NetworkDerivationsInstances[CommonNetworkPurposeUnion],
       );
 
-      return networksDerivations;
+      return networkDerivationsInstances;
     },
-    {} as NetworksDerivations,
+    {} as NetworkDerivationsInstances,
   );
 });
 
@@ -108,7 +108,7 @@ describe("Avax", () => {
   describe("mainnet", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct avax X item", () => {
-        const derivedItem = networksDerivations.mainnet.avaxX.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.mainnet.avaxX.deriveItemFromMnemonic({
           derivationPath: MOCK_COMMON_DERIVATION_PATH,
         });
 
@@ -116,7 +116,7 @@ describe("Avax", () => {
       });
 
       it("Derives correct avax P item", () => {
-        const derivedItem = networksDerivations.mainnet.avaxP.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.mainnet.avaxP.deriveItemFromMnemonic({
           derivationPath: MOCK_COMMON_DERIVATION_PATH,
         });
 
@@ -126,7 +126,7 @@ describe("Avax", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct avax X credential", () => {
-        const credential = networksDerivations.mainnet.avaxX.getCredentialFromPK({
+        const credential = networkDerivationsInstances.mainnet.avaxX.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.x.privateKey,
         });
 
@@ -134,7 +134,7 @@ describe("Avax", () => {
       });
 
       it("Derives correct avax P credential", () => {
-        const credential = networksDerivations.mainnet.avaxP.getCredentialFromPK({
+        const credential = networkDerivationsInstances.mainnet.avaxP.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.p.privateKey,
         });
 
@@ -144,7 +144,7 @@ describe("Avax", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct avax X items batch", () => {
-        const items = networksDerivations.mainnet.avaxX.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.mainnet.avaxX.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -155,7 +155,7 @@ describe("Avax", () => {
       });
 
       it("Derives correct avax P items batch", () => {
-        const items = networksDerivations.mainnet.avaxP.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.mainnet.avaxP.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -169,7 +169,7 @@ describe("Avax", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for avax X private key", () => {
-          const isNative = networksDerivations.mainnet.avaxX.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.avaxX.doesPKBelongToMnemonic({
             derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -180,7 +180,7 @@ describe("Avax", () => {
         });
 
         it("Returns true for avax P private key", () => {
-          const isNative = networksDerivations.mainnet.avaxP.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.avaxP.doesPKBelongToMnemonic({
             derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -193,7 +193,7 @@ describe("Avax", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false for avax X private key", () => {
-          const isNative = networksDerivations.mainnet.avaxX.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.avaxX.doesPKBelongToMnemonic({
             derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -204,7 +204,7 @@ describe("Avax", () => {
         });
 
         it("Returns true for avax P private key", () => {
-          const isNative = networksDerivations.mainnet.avaxP.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.avaxP.doesPKBelongToMnemonic({
             derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -220,7 +220,7 @@ describe("Avax", () => {
   describe("testnet", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct avax X item", () => {
-        const derivedItem = networksDerivations.testnet.avaxX.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.testnet.avaxX.deriveItemFromMnemonic({
           derivationPath: MOCK_COMMON_DERIVATION_PATH,
         });
 
@@ -228,7 +228,7 @@ describe("Avax", () => {
       });
 
       it("Derives correct avax P item", () => {
-        const derivedItem = networksDerivations.testnet.avaxP.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.testnet.avaxP.deriveItemFromMnemonic({
           derivationPath: MOCK_COMMON_DERIVATION_PATH,
         });
 
@@ -238,7 +238,7 @@ describe("Avax", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct avax X credential", () => {
-        const credential = networksDerivations.testnet.avaxX.getCredentialFromPK({
+        const credential = networkDerivationsInstances.testnet.avaxX.getCredentialFromPK({
           privateKey: MOCK_TESTNET_CREDENTIAL.x.privateKey,
         });
 
@@ -246,7 +246,7 @@ describe("Avax", () => {
       });
 
       it("Derives correct avax P credential", () => {
-        const credential = networksDerivations.testnet.avaxP.getCredentialFromPK({
+        const credential = networkDerivationsInstances.testnet.avaxP.getCredentialFromPK({
           privateKey: MOCK_TESTNET_CREDENTIAL.p.privateKey,
         });
 
@@ -256,7 +256,7 @@ describe("Avax", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct avax X items batch", () => {
-        const items = networksDerivations.testnet.avaxX.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.testnet.avaxX.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -267,7 +267,7 @@ describe("Avax", () => {
       });
 
       it("Derives correct avax P items batch", () => {
-        const items = networksDerivations.testnet.avaxP.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.testnet.avaxP.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -281,7 +281,7 @@ describe("Avax", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for avax X private key", () => {
-          const isNative = networksDerivations.testnet.avaxX.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.avaxX.doesPKBelongToMnemonic({
             derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -292,7 +292,7 @@ describe("Avax", () => {
         });
 
         it("Returns true for avax P private key", () => {
-          const isNative = networksDerivations.testnet.avaxP.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.avaxP.doesPKBelongToMnemonic({
             derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -305,7 +305,7 @@ describe("Avax", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false for avax X private key", () => {
-          const isNative = networksDerivations.testnet.avaxX.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.avaxX.doesPKBelongToMnemonic({
             derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -316,7 +316,7 @@ describe("Avax", () => {
         });
 
         it("Returns true for avax P private key", () => {
-          const isNative = networksDerivations.testnet.avaxP.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.avaxP.doesPKBelongToMnemonic({
             derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,

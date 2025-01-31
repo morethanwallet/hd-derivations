@@ -60,18 +60,18 @@ const MOCK_EXTRINSIC_PRIVATE_KEY =
 
 type TrxDerivationTypeUnion = DerivationTypeMap["suiBase"];
 
-type NetworksDerivations = {
+type NetworkDerivationsInstances = {
   [key in SignatureSchemeUnion]: { [key in TrxDerivationTypeUnion]: Sui };
 };
 
-let networksDerivations = {} as NetworksDerivations;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
   const signatureSchemes: SignatureSchemeUnion[] = ["ed25519", "secp256k1", "secp256r1"] as const;
 
-  networksDerivations = signatureSchemes.reduce<NetworksDerivations>(
-    (networksDerivations, signatureScheme) => {
-      networksDerivations[signatureScheme] = {
+  networkDerivationsInstances = signatureSchemes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, signatureScheme) => {
+      networkDerivationsInstances[signatureScheme] = {
         suiBase: getNetwork({
           network: "sui",
           mnemonic: MNEMONIC,
@@ -82,9 +82,9 @@ beforeAll(() => {
         }),
       };
 
-      return networksDerivations;
+      return networkDerivationsInstances;
     },
-    {} as NetworksDerivations,
+    {} as NetworkDerivationsInstances,
   );
 });
 
@@ -92,7 +92,7 @@ describe("Sui", () => {
   describe("ed25519", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct item", () => {
-        const derivedItem = networksDerivations.ed25519.suiBase.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.ed25519.suiBase.deriveItemFromMnemonic({
           derivationPath: MOCK_ITEM.ed25519.derivationPath,
         });
 
@@ -102,7 +102,7 @@ describe("Sui", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct credential", () => {
-        const credential = networksDerivations.ed25519.suiBase.getCredentialFromPK({
+        const credential = networkDerivationsInstances.ed25519.suiBase.getCredentialFromPK({
           privateKey: MOCK_CREDENTIAL.ed25519.privateKey,
         });
 
@@ -112,7 +112,7 @@ describe("Sui", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct items batch", () => {
-        const items = networksDerivations.ed25519.suiBase.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.ed25519.suiBase.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX.ed25519,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -125,7 +125,7 @@ describe("Sui", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true", () => {
-          const isNative = networksDerivations.ed25519.suiBase.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.ed25519.suiBase.doesPKBelongToMnemonic({
             derivationPathPrefix: suiConfig.suiBase.ed25519.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -138,7 +138,7 @@ describe("Sui", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false", () => {
-          const isNative = networksDerivations.ed25519.suiBase.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.ed25519.suiBase.doesPKBelongToMnemonic({
             derivationPathPrefix: suiConfig.suiBase.ed25519.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -154,7 +154,7 @@ describe("Sui", () => {
   describe("secp256k1", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct item", () => {
-        const derivedItem = networksDerivations.secp256k1.suiBase.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.secp256k1.suiBase.deriveItemFromMnemonic({
           derivationPath: MOCK_ITEM.secp256k1.derivationPath,
         });
 
@@ -164,7 +164,7 @@ describe("Sui", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct credential", () => {
-        const credential = networksDerivations.secp256k1.suiBase.getCredentialFromPK({
+        const credential = networkDerivationsInstances.secp256k1.suiBase.getCredentialFromPK({
           privateKey: MOCK_CREDENTIAL.secp256k1.privateKey,
         });
 
@@ -174,7 +174,7 @@ describe("Sui", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct items batch", () => {
-        const items = networksDerivations.secp256k1.suiBase.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.secp256k1.suiBase.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX.secp256k1,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -187,7 +187,7 @@ describe("Sui", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true", () => {
-          const isNative = networksDerivations.secp256k1.suiBase.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.secp256k1.suiBase.doesPKBelongToMnemonic({
             derivationPathPrefix: suiConfig.suiBase.secp256k1.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -200,7 +200,7 @@ describe("Sui", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false", () => {
-          const isNative = networksDerivations.secp256k1.suiBase.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.secp256k1.suiBase.doesPKBelongToMnemonic({
             derivationPathPrefix: suiConfig.suiBase.secp256k1.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -216,7 +216,7 @@ describe("Sui", () => {
   describe("secp256r1", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct item", () => {
-        const derivedItem = networksDerivations.secp256r1.suiBase.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.secp256r1.suiBase.deriveItemFromMnemonic({
           derivationPath: MOCK_ITEM.secp256r1.derivationPath,
         });
 
@@ -226,7 +226,7 @@ describe("Sui", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct credential", () => {
-        const credential = networksDerivations.secp256r1.suiBase.getCredentialFromPK({
+        const credential = networkDerivationsInstances.secp256r1.suiBase.getCredentialFromPK({
           privateKey: MOCK_CREDENTIAL.secp256r1.privateKey,
         });
 
@@ -236,7 +236,7 @@ describe("Sui", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct items batch", () => {
-        const items = networksDerivations.secp256r1.suiBase.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.secp256r1.suiBase.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX.secp256r1,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -249,7 +249,7 @@ describe("Sui", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true", () => {
-          const isNative = networksDerivations.secp256r1.suiBase.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.secp256r1.suiBase.doesPKBelongToMnemonic({
             derivationPathPrefix: suiConfig.suiBase.secp256r1.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -262,7 +262,7 @@ describe("Sui", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false", () => {
-          const isNative = networksDerivations.secp256r1.suiBase.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.secp256r1.suiBase.doesPKBelongToMnemonic({
             derivationPathPrefix: suiConfig.suiBase.secp256r1.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
