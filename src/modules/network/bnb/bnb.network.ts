@@ -1,70 +1,58 @@
-// import { type Mnemonic } from "@/mnemonic/index.js";
-// import {
-//   type DerivedCredential,
-//   type DerivedItem,
-//   type DeriveItemFromMnemonicParameters,
-//   type GetCredentialFromPKParameters,
-//   type AbstractNetwork,
-//   type DerivedKeyPair,
-// } from "@/families/types/index.js";
-// import { config } from "./config/index.js";
-// import { Keys } from "@/keys/bip32/index.js";
-// import { assert, toHexFromBytes, toUint8Array } from "@/helpers/index.js";
-// import { NetworkError, ExceptionMessage } from "../enums/index.js";
-// import { ecPair, type ECPairInterface } from "@/ecc/index.js";
-// import {
-//   getAddressFromPrivateKey,
-//   getPublicKeyFromPrivateKey,
-// } from "@binance-chain/javascript-sdk/lib/crypto/index.js";
+import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
+import type {
+  ConstructorParameters,
+  AbstractNetwork,
+  DerivationsHandlers,
+  DerivedCredential,
+  DerivedItem,
+  DeriveItemFromMnemonicParameters,
+  DeriveItemsBatchFromMnemonicParameters,
+  DoesPKBelongToMnemonicParameters,
+  GetCredentialFromPKParameters,
+} from "../libs/types/index.js";
+import { getBnbDerivationHandlers } from "./libs/helpers/index.js";
+import { bnbConfig } from "../libs/modules/config/index.js";
 
-// const HRP = "bnb";
+class Bnb implements AbstractNetwork<"bnbBase"> {
+  private derivationHandlers: DerivationsHandlers<"bnbBase">["bnbBase"];
 
-// class Bnb extends Keys implements AbstractNetwork<"bnb"> {
-//   public constructor(mnemonic: Mnemonic) {
-//     super(config.prefixConfig, mnemonic);
-//   }
+  public constructor({
+    mnemonic,
+    derivationConfig: { prefixConfig },
+  }: ConstructorParameters<"bnbBase">) {
+    const derivationsHandlers: DerivationsHandlers<"bnbBase"> = {
+      bnbBase: getBnbDerivationHandlers({
+        keysDerivationInstance: new CommonBipKeyDerivation(
+          prefixConfig ?? bnbConfig.prefixConfig,
+          mnemonic,
+        ),
+      }),
+    };
 
-//   public deriveItemFromMnemonic({
-//     derivationPath,
-//   }: DeriveItemFromMnemonicParameters<"bnb">): DerivedItem<"bnb"> {
-//     const node = this.rootKey.derivePath(derivationPath);
-//     const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
-//     const address = this.getAddress(privateKey);
+    this.derivationHandlers = derivationsHandlers.bnbBase;
+  }
 
-//     return {
-//       privateKey,
-//       publicKey,
-//       address,
-//       derivationPath,
-//     };
-//   }
+  public deriveItemFromMnemonic(
+    parameters: DeriveItemFromMnemonicParameters<"bnbBase">,
+  ): DerivedItem<"bnbBase"> {
+    return this.derivationHandlers.deriveItemFromMnemonic(parameters);
+  }
 
-//   public getCredentialFromPK({
-//     privateKey,
-//   }: GetCredentialFromPKParameters<"bnb">): DerivedCredential<"bnb"> {
-//     const rawPrivateKey = toUint8Array(Buffer.from(privateKey, "hex"));
-//     const { publicKey } = this.getKeyPair(rawPrivateKey);
-//     const address = this.getAddress(privateKey);
+  public getCredentialFromPK(
+    parameters: GetCredentialFromPKParameters<"bnbBase">,
+  ): DerivedCredential<"bnbBase"> {
+    return this.derivationHandlers.getCredentialFromPK(parameters);
+  }
 
-//     return {
-//       privateKey,
-//       publicKey,
-//       address,
-//     };
-//   }
+  public deriveItemsBatchFromMnemonic(
+    parameters: DeriveItemsBatchFromMnemonicParameters<"bnbBase">,
+  ) {
+    return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
+  }
 
-//   private getAddress(privateKey: DerivedKeyPair["privateKey"]): string {
-//     return getAddressFromPrivateKey(privateKey, HRP);
-//   }
+  public doesPKBelongToMnemonic(parameters: DoesPKBelongToMnemonicParameters<"bnbBase">) {
+    return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
+  }
+}
 
-//   private getKeyPair(rawPrivateKey?: Uint8Array): DerivedKeyPair {
-//     assert(rawPrivateKey, NetworkError, ExceptionMessage.BNB_PRIVATE_KEY_GENERATION_FAILED);
-//     const keyPair: ECPairInterface = ecPair.fromPrivateKey(rawPrivateKey);
-//     const privateKey = toHexFromBytes(keyPair.privateKey);
-//     const publicKey = getPublicKeyFromPrivateKey(privateKey);
-
-//     return { privateKey, publicKey };
-//   }
-// }
-
-// export { Bnb };
+export { Bnb };
