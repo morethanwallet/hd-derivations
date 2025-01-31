@@ -33,6 +33,7 @@ class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("bchLegacy", derivationConfig) ?? xrpConfig.prefixConfig,
           mnemonic,
+          false,
         ),
       }),
       xrpX: geXrpDerivationHandlers({
@@ -42,6 +43,7 @@ class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomConfig("bchCashAddr", derivationConfig) ?? xrpConfig.prefixConfig,
           mnemonic,
+          false,
         ),
       }),
     };
