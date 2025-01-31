@@ -13,3 +13,4 @@ export { getCashAddrAddress } from "./bch/index.js";
 export { getTrxAddress } from "./trx/get-trx-address.js";
 export { getTonAddress } from "./ton/index.js";
 export { getSuiAddress } from "./sui/get-sui-address.js";
+export { getBnbAddress } from "./bnb/get-bnb-address.js";
