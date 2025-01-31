@@ -12,7 +12,7 @@ import type {
 import type { XrpDerivationTypeUnion } from "@/libs/types/index.js";
 import { geXrpDerivationHandlers } from "./libs/helpers/index.js";
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
-import { findCustomConfig } from "../libs/helpers/index.js";
+import { findCustomPrefixConfig } from "../libs/helpers/index.js";
 import { xrpConfig } from "../libs/modules/config/index.js";
 
 class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
@@ -31,7 +31,7 @@ class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
         isTestnet,
         destinationTag,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("bchLegacy", derivationConfig) ?? xrpConfig.prefixConfig,
+          findCustomPrefixConfig("bchLegacy", derivationConfig) ?? xrpConfig.prefixConfig,
           mnemonic,
           false,
         ),
@@ -41,7 +41,7 @@ class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
         isTestnet,
         destinationTag,
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("bchCashAddr", derivationConfig) ?? xrpConfig.prefixConfig,
+          findCustomPrefixConfig("bchCashAddr", derivationConfig) ?? xrpConfig.prefixConfig,
           mnemonic,
           false,
         ),

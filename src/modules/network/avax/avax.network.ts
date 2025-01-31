@@ -11,7 +11,7 @@ import type {
 } from "@/modules/network/libs/types/index.js";
 import { getAvaxDerivationHandlers } from "./libs/helpers/index.js";
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
-import { findCustomConfig } from "@/modules/network/libs/helpers/index.js";
+import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
 import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";
 import { avaxConfig } from "@/modules/network/libs/modules/config/index.js";
 
@@ -28,7 +28,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
       avaxX: getAvaxDerivationHandlers({
         derivationType: "avaxX",
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("avaxX", derivationConfig) ??
+          findCustomPrefixConfig("avaxX", derivationConfig) ??
             avaxConfig[networkPurpose].avax.prefixConfig,
           mnemonic,
           false,
@@ -37,7 +37,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
       avaxP: getAvaxDerivationHandlers({
         derivationType: "avaxP",
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("avaxP", derivationConfig) ??
+          findCustomPrefixConfig("avaxP", derivationConfig) ??
             avaxConfig[networkPurpose].avax.prefixConfig,
           mnemonic,
           false,

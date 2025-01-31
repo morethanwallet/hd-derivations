@@ -22,7 +22,7 @@ import {
   getP2wshDerivationHandlers,
   getP2wshInP2shDerivationHandlers,
 } from "./libs/helpers/index.js";
-import { findCustomConfig } from "@/modules/network/libs/helpers/index.js";
+import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
 import { type BtcDerivationTypeUnion } from "@/libs/types/index.js";
 
 class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
@@ -37,42 +37,42 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
     const derivationsHandlers: DerivationsHandlers<BtcDerivationTypeUnion> = {
       btcLegacy: getLegacyDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("btcLegacy", derivationConfig) ??
+          findCustomPrefixConfig("btcLegacy", derivationConfig) ??
             btcConfig[networkPurpose].btcLegacy.prefixConfig,
           mnemonic,
         ),
       }),
       btcSegWit: getSegWitDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("btcSegWit", derivationConfig) ??
+          findCustomPrefixConfig("btcSegWit", derivationConfig) ??
             btcConfig[networkPurpose].btcSegWit.prefixConfig,
           mnemonic,
         ),
       }),
       btcNativeSegWit: getNativeSegWitDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("btcNativeSegWit", derivationConfig) ??
+          findCustomPrefixConfig("btcNativeSegWit", derivationConfig) ??
             btcConfig[networkPurpose].btcNativeSegWit.prefixConfig,
           mnemonic,
         ),
       }),
       btcTaproot: getTaprootDerivationHandlers({
         keysDerivationInstance: new TaprootKeyDerivation(
-          findCustomConfig("btcTaproot", derivationConfig) ??
+          findCustomPrefixConfig("btcTaproot", derivationConfig) ??
             btcConfig[networkPurpose].btcTaproot.prefixConfig,
           mnemonic,
         ),
       }),
       btcP2wsh: getP2wshDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("btcP2wsh", derivationConfig) ??
+          findCustomPrefixConfig("btcP2wsh", derivationConfig) ??
             btcConfig[networkPurpose].btcP2wsh.prefixConfig,
           mnemonic,
         ),
       }),
       btcP2wshInP2sh: getP2wshInP2shDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("btcP2wshInP2sh", derivationConfig) ??
+          findCustomPrefixConfig("btcP2wshInP2sh", derivationConfig) ??
             btcConfig[networkPurpose].btcP2wshInP2sh.prefixConfig,
           mnemonic,
         ),

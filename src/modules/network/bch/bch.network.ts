@@ -15,7 +15,7 @@ import {
   getLegacyDerivationHandlers,
 } from "./libs/helpers/index.js";
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
-import { findCustomConfig } from "../libs/helpers/index.js";
+import { findCustomPrefixConfig } from "../libs/helpers/index.js";
 import { bchConfig } from "../libs/modules/config/index.js";
 
 class Bch implements AbstractNetwork<BchDerivationTypeUnion> {
@@ -30,14 +30,14 @@ class Bch implements AbstractNetwork<BchDerivationTypeUnion> {
     const derivationsHandlers: DerivationsHandlers<BchDerivationTypeUnion> = {
       bchLegacy: getLegacyDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("bchLegacy", derivationConfig) ??
+          findCustomPrefixConfig("bchLegacy", derivationConfig) ??
             bchConfig[networkPurpose].bchLegacy.prefixConfig,
           mnemonic,
         ),
       }),
       bchCashAddr: getCashAddrDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
-          findCustomConfig("bchCashAddr", derivationConfig) ??
+          findCustomPrefixConfig("bchCashAddr", derivationConfig) ??
             bchConfig[networkPurpose].bchCashAddr.prefixConfig,
           mnemonic,
         ),
