@@ -9,36 +9,37 @@ import type {
 } from "@/libs/types/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import type {
-  AdaInstanceParameters,
-  AvaxInstanceParameters,
-  BtcInstanceParameters,
-  TonInstanceParameters,
-  TrxInstanceParameters,
-  SuiInstanceParameters,
-  BchInstanceParameters,
-  XrpInstanceParameters,
-} from "./instance-parameters.type.js";
-import type { CommonDerivationConfig } from "./derivation-config.type.js";
+  AdaDerivationConfig,
+  AvaxDerivationConfig,
+  BchDerivationConfig,
+  BtcDerivationConfig,
+  CommonDerivationConfig,
+  SuiDerivationConfig,
+  TonDerivationConfig,
+  TrxDerivationConfig,
+  XrpDerivationConfig,
+} from "./derivation-config.type.js";
 
 // TODO: Try to use mapping here
-type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
-  T extends BtcDerivationTypeUnion
-    ? Pick<BtcInstanceParameters, "derivationConfig">
+type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> = {
+  derivationConfig: T extends BtcDerivationTypeUnion
+    ? BtcDerivationConfig
     : T extends AdaDerivationTypeUnion
-      ? Pick<AdaInstanceParameters, "derivationConfig">
+      ? AdaDerivationConfig
       : T extends AvaxDerivationTypeUnion
-        ? Pick<AvaxInstanceParameters, "derivationConfig">
+        ? AvaxDerivationConfig
         : T extends DerivationTypeMap["trxBase"]
-          ? Pick<TrxInstanceParameters, "derivationConfig">
+          ? TrxDerivationConfig
           : T extends DerivationTypeMap["tonBase"]
-            ? Pick<TonInstanceParameters, "derivationConfig">
+            ? TonDerivationConfig
             : T extends DerivationTypeMap["suiBase"]
-              ? Pick<SuiInstanceParameters, "derivationConfig">
+              ? SuiDerivationConfig
               : T extends BchDerivationTypeUnion
-                ? Pick<BchInstanceParameters, "derivationConfig">
+                ? BchDerivationConfig
                 : T extends XrpDerivationTypeUnion
-                  ? Pick<XrpInstanceParameters, "derivationConfig">
-                  : { derivationConfig: CommonDerivationConfig };
+                  ? XrpDerivationConfig
+                  : CommonDerivationConfig;
+};
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
   mnemonic: Mnemonic;
