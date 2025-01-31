@@ -5,8 +5,8 @@ import bs58check from "bs58check";
 
 function getTrxAddress(publicKey: CommonKeyPair["publicKey"], prefix: number): Address["address"] {
   const addressPrefixBytes = Buffer.from([prefix]);
-  const addressBytes = getEvmAddressBuffer(publicKey);
-  const addressBufferWithPrefix = Buffer.concat([addressPrefixBytes, addressBytes]);
+  const addressBuffer = getEvmAddressBuffer(publicKey);
+  const addressBufferWithPrefix = Buffer.concat([addressPrefixBytes, addressBuffer]);
 
   return bs58check.encode(addressBufferWithPrefix);
 }
