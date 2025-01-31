@@ -33,6 +33,7 @@ export type {
   BchInstanceParameters,
   XrpInstanceParameters,
   BnbInstanceParameters,
+  EvmInstanceParameters,
 } from "./instance-parameters.type.js";
 export type {
   AdaDerivationConfig,
