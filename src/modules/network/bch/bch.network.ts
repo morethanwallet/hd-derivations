@@ -36,6 +36,7 @@ class Bch implements AbstractNetwork<BchDerivationTypeUnion> {
         ),
       }),
       bchCashAddr: getCashAddrDerivationHandlers({
+        isRegtest: networkPurpose === "regtest",
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomPrefixConfig("bchCashAddr", derivationConfig) ??
             bchConfig[networkPurpose].bchCashAddr.prefixConfig,

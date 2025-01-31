@@ -67,6 +67,8 @@ type EvmParameters = { keysDerivationInstance: EvmKeyDerivation };
 
 type DotParameters = { keysDerivationInstance: CommonEd25519KeyDerivation } & Ss58Format;
 
+type BchParameters = { keysDerivationInstance: CommonBipKeyDerivation; isRegtest: boolean };
+
 type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
   T extends AvaxDerivationTypeUnion
     ? AvaxParameters
@@ -86,7 +88,9 @@ type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
                   ? EvmParameters
                   : T extends DerivationTypeMap["dotBase"]
                     ? DotParameters
-                    : { keysDerivationInstance: CommonBipKeyDerivation };
+                    : T extends DerivationTypeMap["bchCashAddr"]
+                      ? BchParameters
+                      : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;

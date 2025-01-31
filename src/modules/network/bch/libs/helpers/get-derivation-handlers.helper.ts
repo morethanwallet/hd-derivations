@@ -37,17 +37,26 @@ function getLegacyDerivationHandlers({
 
 function getCashAddrDerivationHandlers({
   keysDerivationInstance,
+  isRegtest,
 }: GetDerivationHandlersParameters<"bchCashAddr">): GetDerivationHandlersReturnType<"bchCashAddr"> {
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getCashAddrAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
+      const address = getCashAddrAddress({
+        publicKey: keys.publicKey,
+        prefixConfig: keysDerivationInstance.prefixConfig,
+        isRegtest,
+      });
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getCashAddrAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
+      const address = getCashAddrAddress({
+        publicKey: keys.publicKey,
+        prefixConfig: keysDerivationInstance.prefixConfig,
+        isRegtest,
+      });
 
       return { ...keys, address };
     },

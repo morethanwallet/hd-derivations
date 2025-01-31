@@ -11,10 +11,17 @@ const REGTEST_PREFIX = "bchreg";
 const HRP_DELIMITER = ":";
 const ADDRESS_INDEX = 1;
 
-function getCashAddrAddress(
-  publicKey: CommonKeyPair["publicKey"],
-  prefixConfig: PrefixConfig,
-): Address["address"] {
+type GetCashAddrAddress = {
+  publicKey: CommonKeyPair["publicKey"];
+  prefixConfig: PrefixConfig;
+  isRegtest: boolean;
+};
+
+function getCashAddrAddress({
+  isRegtest,
+  prefixConfig,
+  publicKey,
+}: GetCashAddrAddress): Address["address"] {
   const rawPublicKey = toUint8Array(Buffer.from(publicKey, "hex"));
 
   const { address } = payments.p2pkh({
@@ -24,7 +31,7 @@ function getCashAddrAddress(
   assert(address, AddressError, ExceptionMessage.ADDRESS_GENERATION_FAILED);
   const formattedAddress = toCashAddress(address);
 
-  if (prefixConfig.bech32 === "bcrt") {
+  if (isRegtest) {
     return REGTEST_PREFIX.concat(
       HRP_DELIMITER,
       String(formattedAddress.split(HRP_DELIMITER)[ADDRESS_INDEX]),
