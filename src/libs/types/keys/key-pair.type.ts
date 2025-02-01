@@ -4,12 +4,12 @@ import { type AdaBasePrivateKey, type CommonPrivateKey } from "./private-key.typ
 
 type CommonKeyPair = { publicKey: string } & CommonPrivateKey;
 
-type CardanoBaseKeyPair = {
+type AdaBaseKeyPair = {
   enterprisePublicKey: string;
   rewardPublicKey: string;
 } & AdaBasePrivateKey;
 
 type KeyPair<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends DerivationTypeMap["adaBase"] ? CardanoBaseKeyPair : CommonKeyPair;
+  TDerivationType extends DerivationTypeMap["adaBase"] ? AdaBaseKeyPair : CommonKeyPair;
 
-export { type CommonKeyPair, type CardanoBaseKeyPair, type KeyPair };
+export { type CommonKeyPair, type AdaBaseKeyPair, type KeyPair };

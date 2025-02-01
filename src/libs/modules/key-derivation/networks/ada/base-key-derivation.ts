@@ -6,7 +6,7 @@ import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import { type PrivateKey, type CardanoBaseKeyPair } from "@/libs/types/index.js";
+import { type PrivateKey, type AdaBaseKeyPair } from "@/libs/types/index.js";
 import { AdaKeys } from "@/libs/modules/keys/index.js";
 
 class BaseKeyDerivation extends AdaKeys implements AbstractKeyDerivation<"adaBase"> {
@@ -23,7 +23,7 @@ class BaseKeyDerivation extends AdaKeys implements AbstractKeyDerivation<"adaBas
   public deriveFromMnemonic({
     derivationPath,
     networkPurpose,
-  }: DeriveFromMnemonicParameters<"adaBase">): CardanoBaseKeyPair {
+  }: DeriveFromMnemonicParameters<"adaBase">): AdaBaseKeyPair {
     const derivedEnterpriseItem = this.enterpriseAddress.deriveFromMnemonic({
       derivationPath,
       networkPurpose,
@@ -45,7 +45,7 @@ class BaseKeyDerivation extends AdaKeys implements AbstractKeyDerivation<"adaBas
   public importByPrivateKey({
     enterprisePrivateKey,
     rewardPrivateKey,
-  }: PrivateKey<"adaBase">): CardanoBaseKeyPair {
+  }: PrivateKey<"adaBase">): AdaBaseKeyPair {
     const enterprisePublicKey = LibraryPrivateKey.from_hex(enterprisePrivateKey)
       .to_public()
       .to_hex();
