@@ -1,4 +1,4 @@
-export { type DerivationPath } from "./derivation-path.type.js";
+export type { DerivationPath } from "./derivation-path.type.js";
 export type {
   DerivationTypeUnion,
   BtcDerivationTypeUnion,

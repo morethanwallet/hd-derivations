@@ -256,13 +256,13 @@ const MOCK_REGTEST_ITEM = {
   },
 };
 
-type NetworksDerivations = {
+type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeRegTestExtendedUnion]: {
     [key in BtcDerivationTypeUnion]: Btc;
   };
 };
 
-let networksDerivations = {} as NetworksDerivations;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
   const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
@@ -280,10 +280,10 @@ beforeAll(() => {
     "btcP2wshInP2sh",
   ] as const;
 
-  networksDerivations = networkPurposes.reduce<NetworksDerivations>(
-    (networksDerivations, networkPurpose) => {
-      networksDerivations[networkPurpose] = derivationTypes.reduce<
-        NetworksDerivations[CommonNetworkPurposeRegTestExtendedUnion]
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
+        NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]
       >(
         (derivations, derivationType) => {
           derivations[derivationType] = getNetwork({
@@ -298,12 +298,12 @@ beforeAll(() => {
 
           return derivations;
         },
-        {} as NetworksDerivations[CommonNetworkPurposeRegTestExtendedUnion],
+        {} as NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion],
       );
 
-      return networksDerivations;
+      return networkDerivationsInstances;
     },
-    {} as NetworksDerivations,
+    {} as NetworkDerivationsInstances,
   );
 });
 
@@ -311,7 +311,7 @@ describe("Btc", () => {
   describe("mainnet", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct legacy item", () => {
-        const derivedItem = networksDerivations.mainnet.btcLegacy.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.mainnet.btcLegacy.deriveItemFromMnemonic({
           derivationPath: MOCK_MAINNET_ITEM.btcLegacy.derivationPath,
         });
 
@@ -319,7 +319,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct segWit item", () => {
-        const derivedItem = networksDerivations.mainnet.btcSegWit.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.mainnet.btcSegWit.deriveItemFromMnemonic({
           derivationPath: MOCK_MAINNET_ITEM.btcSegWit.derivationPath,
         });
 
@@ -327,15 +327,16 @@ describe("Btc", () => {
       });
 
       it("Derives correct native segWit item", () => {
-        const derivedItem = networksDerivations.mainnet.btcNativeSegWit.deriveItemFromMnemonic({
-          derivationPath: MOCK_MAINNET_ITEM.btcNativeSegWit.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.mainnet.btcNativeSegWit.deriveItemFromMnemonic({
+            derivationPath: MOCK_MAINNET_ITEM.btcNativeSegWit.derivationPath,
+          });
 
         expect(MOCK_MAINNET_ITEM.btcNativeSegWit).toEqual(derivedItem);
       });
 
       it("Derives correct taproot item", () => {
-        const derivedItem = networksDerivations.mainnet.btcTaproot.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.mainnet.btcTaproot.deriveItemFromMnemonic({
           derivationPath: MOCK_MAINNET_ITEM.btcTaproot.derivationPath,
         });
 
@@ -343,7 +344,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) item", () => {
-        const derivedItem = networksDerivations.mainnet.btcP2wsh.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.mainnet.btcP2wsh.deriveItemFromMnemonic({
           derivationPath: MOCK_MAINNET_ITEM.btcP2wsh.derivationPath,
         });
 
@@ -351,9 +352,10 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) item", () => {
-        const derivedItem = networksDerivations.mainnet.btcP2wshInP2sh.deriveItemFromMnemonic({
-          derivationPath: MOCK_MAINNET_ITEM.btcP2wshInP2sh.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.mainnet.btcP2wshInP2sh.deriveItemFromMnemonic({
+            derivationPath: MOCK_MAINNET_ITEM.btcP2wshInP2sh.derivationPath,
+          });
 
         expect(MOCK_MAINNET_ITEM.btcP2wshInP2sh).toEqual(derivedItem);
       });
@@ -361,7 +363,7 @@ describe("Btc", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct legacy credential", () => {
-        const credential = networksDerivations.mainnet.btcLegacy.getCredentialFromPK({
+        const credential = networkDerivationsInstances.mainnet.btcLegacy.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.btcLegacy.privateKey,
         });
 
@@ -369,7 +371,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct segWit credential", () => {
-        const credential = networksDerivations.mainnet.btcSegWit.getCredentialFromPK({
+        const credential = networkDerivationsInstances.mainnet.btcSegWit.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.btcSegWit.privateKey,
         });
 
@@ -377,7 +379,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct native segWit credential", () => {
-        const credential = networksDerivations.mainnet.btcNativeSegWit.getCredentialFromPK({
+        const credential = networkDerivationsInstances.mainnet.btcNativeSegWit.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.btcNativeSegWit.privateKey,
         });
 
@@ -385,7 +387,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct taproot credential", () => {
-        const credential = networksDerivations.mainnet.btcTaproot.getCredentialFromPK({
+        const credential = networkDerivationsInstances.mainnet.btcTaproot.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.btcTaproot.privateKey,
         });
 
@@ -393,7 +395,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) credential", () => {
-        const credential = networksDerivations.mainnet.btcP2wsh.getCredentialFromPK({
+        const credential = networkDerivationsInstances.mainnet.btcP2wsh.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.btcP2wsh.privateKey,
         });
 
@@ -401,7 +403,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) credential", () => {
-        const credential = networksDerivations.mainnet.btcP2wshInP2sh.getCredentialFromPK({
+        const credential = networkDerivationsInstances.mainnet.btcP2wshInP2sh.getCredentialFromPK({
           privateKey: MOCK_MAINNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
         });
 
@@ -411,7 +413,7 @@ describe("Btc", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct legacy items batch", () => {
-        const items = networksDerivations.mainnet.btcLegacy.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.mainnet.btcLegacy.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcLegacy,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -422,7 +424,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct segWit items batch", () => {
-        const items = networksDerivations.mainnet.btcSegWit.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.mainnet.btcSegWit.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcSegWit,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -433,18 +435,19 @@ describe("Btc", () => {
       });
 
       it("Derives correct native segWit items batch", () => {
-        const items = networksDerivations.mainnet.btcNativeSegWit.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcNativeSegWit,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.mainnet.btcNativeSegWit.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcNativeSegWit,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.btcNativeSegWit);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct taproot items batch", () => {
-        const items = networksDerivations.mainnet.btcTaproot.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.mainnet.btcTaproot.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcTaproot,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -455,7 +458,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) items batch", () => {
-        const items = networksDerivations.mainnet.btcP2wsh.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.mainnet.btcP2wsh.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcSegWit,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -466,11 +469,12 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) items batch", () => {
-        const items = networksDerivations.mainnet.btcP2wshInP2sh.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcSegWit,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.mainnet.btcP2wshInP2sh.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcSegWit,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.btcP2wshInP2sh);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
@@ -480,7 +484,7 @@ describe("Btc", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for legacy private key", () => {
-          const isNative = networksDerivations.mainnet.btcLegacy.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.btcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -491,7 +495,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for segWit private key", () => {
-          const isNative = networksDerivations.mainnet.btcSegWit.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.btcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -502,18 +506,19 @@ describe("Btc", () => {
         });
 
         it("Returns true for native segWit private key", () => {
-          const isNative = networksDerivations.mainnet.btcNativeSegWit.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.mainnet.btcNativeSegWit.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.btcNativeSegWit.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.mainnet.btcNativeSegWit.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.mainnet.btcNativeSegWit.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_CREDENTIAL.btcNativeSegWit.privateKey,
+            });
 
           expect(isNative).toBe(true);
         });
 
         it("Returns true for taproot private key", () => {
-          const isNative = networksDerivations.mainnet.btcTaproot.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.btcTaproot.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -524,7 +529,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.mainnet.btcP2wsh.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.btcP2wsh.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -535,12 +540,13 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.mainnet.btcP2wshInP2sh.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.mainnet.btcP2wshInP2sh.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.mainnet.btcP2wshInP2sh.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.mainnet.btcP2wshInP2sh.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
+            });
 
           expect(isNative).toBe(true);
         });
@@ -548,7 +554,7 @@ describe("Btc", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns true for legacy private key", () => {
-          const isNative = networksDerivations.mainnet.btcLegacy.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.btcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -559,7 +565,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for segWit private key", () => {
-          const isNative = networksDerivations.mainnet.btcSegWit.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.btcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -570,18 +576,19 @@ describe("Btc", () => {
         });
 
         it("Returns true for native segWit private key", () => {
-          const isNative = networksDerivations.mainnet.btcNativeSegWit.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.mainnet.btcNativeSegWit.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.mainnet.btcNativeSegWit.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.mainnet.btcNativeSegWit.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
+            });
 
           expect(isNative).toBe(false);
         });
 
         it("Returns true for taproot private key", () => {
-          const isNative = networksDerivations.mainnet.btcTaproot.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.btcTaproot.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -592,7 +599,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.mainnet.btcP2wsh.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.btcP2wsh.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -603,12 +610,13 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.mainnet.btcP2wshInP2sh.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.mainnet.btcP2wshInP2sh.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.mainnet.btcP2wshInP2sh.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.mainnet.btcP2wshInP2sh.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
+            });
 
           expect(isNative).toBe(false);
         });
@@ -619,7 +627,7 @@ describe("Btc", () => {
   describe("testnet", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct legacy item", () => {
-        const derivedItem = networksDerivations.testnet.btcLegacy.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.testnet.btcLegacy.deriveItemFromMnemonic({
           derivationPath: MOCK_TESTNET_ITEM.btcLegacy.derivationPath,
         });
 
@@ -627,7 +635,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct segWit item", () => {
-        const derivedItem = networksDerivations.testnet.btcSegWit.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.testnet.btcSegWit.deriveItemFromMnemonic({
           derivationPath: MOCK_TESTNET_ITEM.btcSegWit.derivationPath,
         });
 
@@ -635,15 +643,16 @@ describe("Btc", () => {
       });
 
       it("Derives correct native segWit item", () => {
-        const derivedItem = networksDerivations.testnet.btcNativeSegWit.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_ITEM.btcNativeSegWit.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.testnet.btcNativeSegWit.deriveItemFromMnemonic({
+            derivationPath: MOCK_TESTNET_ITEM.btcNativeSegWit.derivationPath,
+          });
 
         expect(MOCK_TESTNET_ITEM.btcNativeSegWit).toEqual(derivedItem);
       });
 
       it("Derives correct taproot item", () => {
-        const derivedItem = networksDerivations.testnet.btcTaproot.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.testnet.btcTaproot.deriveItemFromMnemonic({
           derivationPath: MOCK_TESTNET_ITEM.btcTaproot.derivationPath,
         });
 
@@ -651,7 +660,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) item", () => {
-        const derivedItem = networksDerivations.testnet.btcP2wsh.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.testnet.btcP2wsh.deriveItemFromMnemonic({
           derivationPath: MOCK_TESTNET_ITEM.btcP2wsh.derivationPath,
         });
 
@@ -659,9 +668,10 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) item", () => {
-        const derivedItem = networksDerivations.testnet.btcP2wshInP2sh.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_ITEM.btcP2wshInP2sh.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.testnet.btcP2wshInP2sh.deriveItemFromMnemonic({
+            derivationPath: MOCK_TESTNET_ITEM.btcP2wshInP2sh.derivationPath,
+          });
 
         expect(MOCK_TESTNET_ITEM.btcP2wshInP2sh).toEqual(derivedItem);
       });
@@ -669,7 +679,7 @@ describe("Btc", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct legacy credential", () => {
-        const credential = networksDerivations.testnet.btcLegacy.getCredentialFromPK({
+        const credential = networkDerivationsInstances.testnet.btcLegacy.getCredentialFromPK({
           privateKey: MOCK_TESTNET_CREDENTIAL.btcLegacy.privateKey,
         });
 
@@ -677,7 +687,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct segWit credential", () => {
-        const credential = networksDerivations.testnet.btcSegWit.getCredentialFromPK({
+        const credential = networkDerivationsInstances.testnet.btcSegWit.getCredentialFromPK({
           privateKey: MOCK_TESTNET_CREDENTIAL.btcSegWit.privateKey,
         });
 
@@ -685,7 +695,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct native segWit credential", () => {
-        const credential = networksDerivations.testnet.btcNativeSegWit.getCredentialFromPK({
+        const credential = networkDerivationsInstances.testnet.btcNativeSegWit.getCredentialFromPK({
           privateKey: MOCK_TESTNET_CREDENTIAL.btcNativeSegWit.privateKey,
         });
 
@@ -693,7 +703,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct taproot credential", () => {
-        const credential = networksDerivations.testnet.btcTaproot.getCredentialFromPK({
+        const credential = networkDerivationsInstances.testnet.btcTaproot.getCredentialFromPK({
           privateKey: MOCK_TESTNET_CREDENTIAL.btcTaproot.privateKey,
         });
 
@@ -701,7 +711,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) credential", () => {
-        const credential = networksDerivations.testnet.btcP2wsh.getCredentialFromPK({
+        const credential = networkDerivationsInstances.testnet.btcP2wsh.getCredentialFromPK({
           privateKey: MOCK_TESTNET_CREDENTIAL.btcP2wsh.privateKey,
         });
 
@@ -709,7 +719,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) credential", () => {
-        const credential = networksDerivations.testnet.btcP2wshInP2sh.getCredentialFromPK({
+        const credential = networkDerivationsInstances.testnet.btcP2wshInP2sh.getCredentialFromPK({
           privateKey: MOCK_TESTNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
         });
 
@@ -719,7 +729,7 @@ describe("Btc", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct legacy items batch", () => {
-        const items = networksDerivations.testnet.btcLegacy.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.testnet.btcLegacy.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcLegacy,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -730,7 +740,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct segWit items batch", () => {
-        const items = networksDerivations.testnet.btcSegWit.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.testnet.btcSegWit.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -741,18 +751,19 @@ describe("Btc", () => {
       });
 
       it("Derives correct native segWit items batch", () => {
-        const items = networksDerivations.testnet.btcNativeSegWit.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcNativeSegWit,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.testnet.btcNativeSegWit.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcNativeSegWit,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.btcNativeSegWit);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct taproot items batch", () => {
-        const items = networksDerivations.testnet.btcTaproot.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.testnet.btcTaproot.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcTaproot,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -763,7 +774,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) items batch", () => {
-        const items = networksDerivations.testnet.btcP2wsh.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.testnet.btcP2wsh.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -774,11 +785,12 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) items batch", () => {
-        const items = networksDerivations.testnet.btcP2wshInP2sh.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.testnet.btcP2wshInP2sh.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.btcP2wshInP2sh);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
@@ -788,7 +800,7 @@ describe("Btc", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for legacy private key", () => {
-          const isNative = networksDerivations.testnet.btcLegacy.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.btcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -799,7 +811,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for segWit private key", () => {
-          const isNative = networksDerivations.testnet.btcSegWit.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.btcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -810,18 +822,19 @@ describe("Btc", () => {
         });
 
         it("Returns true for native segWit private key", () => {
-          const isNative = networksDerivations.testnet.btcNativeSegWit.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.testnet.btcNativeSegWit.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_CREDENTIAL.btcNativeSegWit.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnet.btcNativeSegWit.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.testnet.btcNativeSegWit.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_CREDENTIAL.btcNativeSegWit.privateKey,
+            });
 
           expect(isNative).toBe(true);
         });
 
         it("Returns true for taproot private key", () => {
-          const isNative = networksDerivations.testnet.btcTaproot.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.btcTaproot.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -832,7 +845,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.testnet.btcP2wsh.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.btcP2wsh.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -843,12 +856,13 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.testnet.btcP2wshInP2sh.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.testnet.btcP2wshInP2sh.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnet.btcP2wshInP2sh.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.testnet.btcP2wshInP2sh.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
+            });
 
           expect(isNative).toBe(true);
         });
@@ -856,7 +870,7 @@ describe("Btc", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns true for legacy private key", () => {
-          const isNative = networksDerivations.testnet.btcLegacy.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.btcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -867,7 +881,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for segWit private key", () => {
-          const isNative = networksDerivations.testnet.btcSegWit.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.btcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -878,18 +892,19 @@ describe("Btc", () => {
         });
 
         it("Returns true for native segWit private key", () => {
-          const isNative = networksDerivations.testnet.btcNativeSegWit.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.testnet.btcNativeSegWit.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnet.btcNativeSegWit.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.testnet.btcNativeSegWit.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
+            });
 
           expect(isNative).toBe(false);
         });
 
         it("Returns true for taproot private key", () => {
-          const isNative = networksDerivations.testnet.btcTaproot.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.btcTaproot.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -900,7 +915,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.testnet.btcP2wsh.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.testnet.btcP2wsh.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -911,12 +926,13 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.testnet.btcP2wshInP2sh.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.testnet.btcP2wshInP2sh.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.testnet.btcP2wshInP2sh.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.testnet.btcP2wshInP2sh.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
+            });
 
           expect(isNative).toBe(false);
         });
@@ -927,7 +943,7 @@ describe("Btc", () => {
   describe("regtest", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct legacy item", () => {
-        const derivedItem = networksDerivations.regtest.btcLegacy.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.regtest.btcLegacy.deriveItemFromMnemonic({
           derivationPath: MOCK_REGTEST_ITEM.btcLegacy.derivationPath,
         });
 
@@ -935,7 +951,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct segWit item", () => {
-        const derivedItem = networksDerivations.regtest.btcSegWit.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.regtest.btcSegWit.deriveItemFromMnemonic({
           derivationPath: MOCK_REGTEST_ITEM.btcSegWit.derivationPath,
         });
 
@@ -943,15 +959,16 @@ describe("Btc", () => {
       });
 
       it("Derives correct native segWit item", () => {
-        const derivedItem = networksDerivations.regtest.btcNativeSegWit.deriveItemFromMnemonic({
-          derivationPath: MOCK_REGTEST_ITEM.btcNativeSegWit.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.regtest.btcNativeSegWit.deriveItemFromMnemonic({
+            derivationPath: MOCK_REGTEST_ITEM.btcNativeSegWit.derivationPath,
+          });
 
         expect(MOCK_REGTEST_ITEM.btcNativeSegWit).toEqual(derivedItem);
       });
 
       it("Derives correct taproot item", () => {
-        const derivedItem = networksDerivations.regtest.btcTaproot.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.regtest.btcTaproot.deriveItemFromMnemonic({
           derivationPath: MOCK_REGTEST_ITEM.btcTaproot.derivationPath,
         });
 
@@ -959,7 +976,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) item", () => {
-        const derivedItem = networksDerivations.regtest.btcP2wsh.deriveItemFromMnemonic({
+        const derivedItem = networkDerivationsInstances.regtest.btcP2wsh.deriveItemFromMnemonic({
           derivationPath: MOCK_REGTEST_ITEM.btcP2wsh.derivationPath,
         });
 
@@ -967,9 +984,10 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) item", () => {
-        const derivedItem = networksDerivations.regtest.btcP2wshInP2sh.deriveItemFromMnemonic({
-          derivationPath: MOCK_REGTEST_ITEM.btcP2wshInP2sh.derivationPath,
-        });
+        const derivedItem =
+          networkDerivationsInstances.regtest.btcP2wshInP2sh.deriveItemFromMnemonic({
+            derivationPath: MOCK_REGTEST_ITEM.btcP2wshInP2sh.derivationPath,
+          });
 
         expect(MOCK_REGTEST_ITEM.btcP2wshInP2sh).toEqual(derivedItem);
       });
@@ -977,7 +995,7 @@ describe("Btc", () => {
 
     describe("getCredentialFromPK", () => {
       it("Derives correct legacy credential", () => {
-        const credential = networksDerivations.regtest.btcLegacy.getCredentialFromPK({
+        const credential = networkDerivationsInstances.regtest.btcLegacy.getCredentialFromPK({
           privateKey: MOCK_REGTEST_CREDENTIAL.btcLegacy.privateKey,
         });
 
@@ -985,7 +1003,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct segWit credential", () => {
-        const credential = networksDerivations.regtest.btcSegWit.getCredentialFromPK({
+        const credential = networkDerivationsInstances.regtest.btcSegWit.getCredentialFromPK({
           privateKey: MOCK_REGTEST_CREDENTIAL.btcSegWit.privateKey,
         });
 
@@ -993,7 +1011,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct native segWit credential", () => {
-        const credential = networksDerivations.regtest.btcNativeSegWit.getCredentialFromPK({
+        const credential = networkDerivationsInstances.regtest.btcNativeSegWit.getCredentialFromPK({
           privateKey: MOCK_REGTEST_CREDENTIAL.btcNativeSegWit.privateKey,
         });
 
@@ -1001,7 +1019,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct taproot credential", () => {
-        const credential = networksDerivations.regtest.btcTaproot.getCredentialFromPK({
+        const credential = networkDerivationsInstances.regtest.btcTaproot.getCredentialFromPK({
           privateKey: MOCK_REGTEST_CREDENTIAL.btcTaproot.privateKey,
         });
 
@@ -1009,7 +1027,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) credential", () => {
-        const credential = networksDerivations.regtest.btcP2wsh.getCredentialFromPK({
+        const credential = networkDerivationsInstances.regtest.btcP2wsh.getCredentialFromPK({
           privateKey: MOCK_REGTEST_CREDENTIAL.btcP2wsh.privateKey,
         });
 
@@ -1017,7 +1035,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) credential", () => {
-        const credential = networksDerivations.regtest.btcP2wshInP2sh.getCredentialFromPK({
+        const credential = networkDerivationsInstances.regtest.btcP2wshInP2sh.getCredentialFromPK({
           privateKey: MOCK_REGTEST_CREDENTIAL.btcP2wshInP2sh.privateKey,
         });
 
@@ -1027,7 +1045,7 @@ describe("Btc", () => {
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct legacy items batch", () => {
-        const items = networksDerivations.regtest.btcLegacy.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.regtest.btcLegacy.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcLegacy,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -1038,7 +1056,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct segWit items batch", () => {
-        const items = networksDerivations.regtest.btcSegWit.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.regtest.btcSegWit.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -1049,18 +1067,19 @@ describe("Btc", () => {
       });
 
       it("Derives correct native segWit items batch", () => {
-        const items = networksDerivations.regtest.btcNativeSegWit.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcNativeSegWit,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.regtest.btcNativeSegWit.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcNativeSegWit,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_REGTEST_ITEM.btcNativeSegWit);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct taproot items batch", () => {
-        const items = networksDerivations.regtest.btcTaproot.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.regtest.btcTaproot.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcTaproot,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -1071,7 +1090,7 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) items batch", () => {
-        const items = networksDerivations.regtest.btcP2wsh.deriveItemsBatchFromMnemonic({
+        const items = networkDerivationsInstances.regtest.btcP2wsh.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -1082,11 +1101,12 @@ describe("Btc", () => {
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) items batch", () => {
-        const items = networksDerivations.regtest.btcP2wshInP2sh.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+        const items =
+          networkDerivationsInstances.regtest.btcP2wshInP2sh.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_REGTEST_ITEM.btcP2wshInP2sh);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
@@ -1096,7 +1116,7 @@ describe("Btc", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for legacy private key", () => {
-          const isNative = networksDerivations.regtest.btcLegacy.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.regtest.btcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -1107,7 +1127,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for segWit private key", () => {
-          const isNative = networksDerivations.regtest.btcSegWit.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.regtest.btcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -1118,18 +1138,19 @@ describe("Btc", () => {
         });
 
         it("Returns true for native segWit private key", () => {
-          const isNative = networksDerivations.regtest.btcNativeSegWit.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.regtest.btcNativeSegWit.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_REGTEST_CREDENTIAL.btcNativeSegWit.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.regtest.btcNativeSegWit.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.regtest.btcNativeSegWit.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_REGTEST_CREDENTIAL.btcNativeSegWit.privateKey,
+            });
 
           expect(isNative).toBe(true);
         });
 
         it("Returns true for taproot private key", () => {
-          const isNative = networksDerivations.regtest.btcTaproot.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.regtest.btcTaproot.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -1140,7 +1161,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.regtest.btcP2wsh.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.regtest.btcP2wsh.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -1151,12 +1172,13 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.regtest.btcP2wshInP2sh.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.regtest.btcP2wshInP2sh.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_REGTEST_CREDENTIAL.btcP2wshInP2sh.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.regtest.btcP2wshInP2sh.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.regtest.btcP2wshInP2sh.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_REGTEST_CREDENTIAL.btcP2wshInP2sh.privateKey,
+            });
 
           expect(isNative).toBe(true);
         });
@@ -1164,7 +1186,7 @@ describe("Btc", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns true for legacy private key", () => {
-          const isNative = networksDerivations.regtest.btcLegacy.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.regtest.btcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -1175,7 +1197,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for segWit private key", () => {
-          const isNative = networksDerivations.regtest.btcSegWit.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.regtest.btcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -1186,18 +1208,19 @@ describe("Btc", () => {
         });
 
         it("Returns true for native segWit private key", () => {
-          const isNative = networksDerivations.regtest.btcNativeSegWit.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.regtest.btcNativeSegWit.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.regtest.btcNativeSegWit.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.regtest.btcNativeSegWit.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
+            });
 
           expect(isNative).toBe(false);
         });
 
         it("Returns true for taproot private key", () => {
-          const isNative = networksDerivations.regtest.btcTaproot.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.regtest.btcTaproot.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -1208,7 +1231,7 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.regtest.btcP2wsh.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.regtest.btcP2wsh.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -1219,12 +1242,13 @@ describe("Btc", () => {
         });
 
         it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
-          const isNative = networksDerivations.regtest.btcP2wshInP2sh.doesPKBelongToMnemonic({
-            derivationPathPrefix: btcConfig.regtest.btcP2wshInP2sh.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
-          });
+          const isNative =
+            networkDerivationsInstances.regtest.btcP2wshInP2sh.doesPKBelongToMnemonic({
+              derivationPathPrefix: btcConfig.regtest.btcP2wshInP2sh.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
+            });
 
           expect(isNative).toBe(false);
         });
