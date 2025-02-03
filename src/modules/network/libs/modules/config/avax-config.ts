@@ -1,12 +1,12 @@
 import { networks } from "bitcoinjs-lib";
 import type { CommonNetworkPurposeUnion } from "../../types/index.js";
-import type { Bip32DerivationCommonConfig } from "./libs/types/index.js";
+import type { CommonBip32DerivationConfig } from "./libs/types/index.js";
 
 const COMMON_DERIVATION_PATH_PREFIX = "m/44'/9000'";
 
 type AvaxConfig = {
   [key in CommonNetworkPurposeUnion]: {
-    avax: Bip32DerivationCommonConfig;
+    avax: CommonBip32DerivationConfig;
   };
 };
 

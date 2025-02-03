@@ -1,7 +1,7 @@
 import type { BchDerivationTypeUnion } from "@/libs/types/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
-import type { Bip32DerivationCommonConfig } from "./libs/types/index.js";
+import type { CommonBip32DerivationConfig } from "./libs/types/index.js";
 
 const derivationPathPrefix = {
   mainnet: "m/44'/145'",
@@ -10,7 +10,7 @@ const derivationPathPrefix = {
 
 type BchConfig = {
   [key in CommonNetworkPurposeRegTestExtendedUnion]: {
-    [key in BchDerivationTypeUnion]: Bip32DerivationCommonConfig;
+    [key in BchDerivationTypeUnion]: CommonBip32DerivationConfig;
   };
 };
 

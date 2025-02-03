@@ -1,8 +1,8 @@
 import { networks } from "bitcoinjs-lib";
-import type { Bip32DerivationCommonConfig } from "./libs/types/index.js";
+import type { CommonBip32DerivationConfig } from "./libs/types/index.js";
 
 type TrxConfig = {
-  trxBase: Bip32DerivationCommonConfig;
+  trxBase: CommonBip32DerivationConfig;
 };
 
 const trxConfig: TrxConfig = {

@@ -1,1 +1,1 @@
-export type { Bip32DerivationCommonConfig } from "./bip32-derivation-common-config.type.js";
+export type { CommonBip32DerivationConfig } from "./common-bip32-derivation-config.type.js";
