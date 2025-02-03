@@ -11,6 +11,7 @@ type NetworkTypeMap = {
   bnb: "bnb";
   evm: "evm";
   sol: "sol";
+  doge: "doge";
 };
 
 export { type NetworkTypeMap };

@@ -14,6 +14,7 @@ import { Bnb } from "../bnb/index.js";
 import { Evm } from "../evm/index.js";
 import { Dot } from "../dot/index.js";
 import { Sol } from "../sol/index.js";
+import { Doge } from "../doge/index.js";
 
 function getNetwork<T extends NetworkTypeUnion>(
   parameters: GetNetworkParameters<T>,
@@ -92,6 +93,12 @@ function getNetwork<T extends NetworkTypeUnion>(
     case "sol": {
       return new Sol({
         ...(parameters as GetNetworkParameters<"sol">),
+        mnemonic: mnemonicInstance,
+      }) as NetworkNameToNetwork[T];
+    }
+    case "doge": {
+      return new Doge({
+        ...(parameters as GetNetworkParameters<"doge">),
         mnemonic: mnemonicInstance,
       }) as NetworkNameToNetwork[T];
     }

@@ -10,6 +10,7 @@ import type {
   DotDerivationConfig,
   XrpDerivationConfig,
   CommonDerivationConfig,
+  DogeDerivationConfig,
 } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
 
@@ -72,6 +73,11 @@ type SolInstanceParameters = {
   network: NetworkTypeMap["sol"];
 } & MnemonicProperty;
 
+type DogeInstanceParameters = {
+  network: NetworkTypeMap["doge"];
+  derivationConfig: DogeDerivationConfig;
+} & MnemonicProperty;
+
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
@@ -85,4 +91,5 @@ export type {
   BnbInstanceParameters,
   EvmInstanceParameters,
   SolInstanceParameters,
+  DogeInstanceParameters,
 };

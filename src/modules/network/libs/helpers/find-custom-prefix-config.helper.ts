@@ -4,6 +4,7 @@ import type {
   AvaxDerivationConfig,
   BchDerivationConfig,
   BtcDerivationConfig,
+  DogeDerivationConfig,
   TrxDerivationConfig,
   XrpDerivationConfig,
 } from "../types/index.js";
@@ -13,7 +14,8 @@ type DerivationConfigUnion =
   | BtcDerivationConfig
   | TrxDerivationConfig
   | BchDerivationConfig
-  | XrpDerivationConfig;
+  | XrpDerivationConfig
+  | DogeDerivationConfig;
 
 function findCustomPrefixConfig(
   derivationType: DerivationTypeUnion,

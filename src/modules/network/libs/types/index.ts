@@ -36,6 +36,7 @@ export type {
   EvmInstanceParameters,
   DotInstanceParameters,
   SolInstanceParameters,
+  DogeInstanceParameters,
 } from "./instance-parameters.type.js";
 export type {
   AdaDerivationConfig,
@@ -46,6 +47,7 @@ export type {
   SuiDerivationConfig,
   BchDerivationConfig,
   XrpDerivationConfig,
+  DogeDerivationConfig,
 } from "./derivation-config.type.js";
 export {
   type CommonNetworkPurposeUnion,

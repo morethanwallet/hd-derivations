@@ -14,6 +14,7 @@ import type {
   BchDerivationConfig,
   BtcDerivationConfig,
   CommonDerivationConfig,
+  DogeDerivationConfig,
   DotDerivationConfig,
   SuiDerivationConfig,
   TonDerivationConfig,
@@ -44,7 +45,9 @@ type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
                         ? DotDerivationConfig
                         : T extends XrpDerivationTypeUnion
                           ? XrpDerivationConfig
-                          : CommonDerivationConfig;
+                          : T extends DerivationTypeMap["dogeLegacy"]
+                            ? DogeDerivationConfig
+                            : CommonDerivationConfig;
       };
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {

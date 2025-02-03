@@ -60,6 +60,11 @@ type XrpDerivationConfig = {
 } & CommonPrefixConfig &
   DestinationTagProperty;
 
+type DogeDerivationConfig = {
+  derivationType: DerivationTypeMap["dogeLegacy"];
+  networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
+} & CommonPrefixConfig;
+
 export type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
@@ -71,4 +76,5 @@ export type {
   XrpDerivationConfig,
   CommonPrefixConfig as CommonDerivationConfig,
   DotDerivationConfig,
+  DogeDerivationConfig,
 };
