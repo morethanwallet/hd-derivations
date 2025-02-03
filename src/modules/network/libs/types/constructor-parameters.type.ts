@@ -20,6 +20,7 @@ import type {
   TonDerivationConfig,
   TrxDerivationConfig,
   XrpDerivationConfig,
+  ZecDerivationConfig,
 } from "./derivation-config.type.js";
 
 // TODO: Try to use mapping here
@@ -47,7 +48,9 @@ type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
                           ? XrpDerivationConfig
                           : T extends DerivationTypeMap["dogeLegacy"]
                             ? DogeDerivationConfig
-                            : CommonDerivationConfig;
+                            : T extends DerivationTypeMap["zecTransparent"]
+                              ? ZecDerivationConfig
+                              : CommonDerivationConfig;
       };
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {

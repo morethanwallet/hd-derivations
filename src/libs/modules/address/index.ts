@@ -24,4 +24,5 @@ export {
   getEvmAddress,
   getDotAddress,
   type Ss58Format,
+  getTransparentAddress,
 } from "./networks/index.js";

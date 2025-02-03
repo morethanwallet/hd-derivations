@@ -11,6 +11,7 @@ import { type Evm } from "@/modules/network/evm/index.js";
 import { type Dot } from "@/modules/network/dot/index.js";
 import { type Sol } from "@/modules/network/sol/index.js";
 import { type Doge } from "@/modules/network/doge/index.js";
+import { type Zec } from "@/modules/network/zec/index.js";
 
 type NetworkNameToNetwork = {
   btc: Btc;
@@ -26,6 +27,7 @@ type NetworkNameToNetwork = {
   dot: Dot;
   sol: Sol;
   doge: Doge;
+  zec: Zec;
 };
 
 export type { NetworkNameToNetwork };

@@ -65,6 +65,11 @@ type DogeDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
 } & CommonPrefixConfig;
 
+type ZecDerivationConfig = {
+  derivationType: DerivationTypeMap["zecTransparent"];
+  networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
+} & CommonPrefixConfig;
+
 export type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
@@ -77,4 +82,5 @@ export type {
   CommonPrefixConfig as CommonDerivationConfig,
   DotDerivationConfig,
   DogeDerivationConfig,
+  ZecDerivationConfig,
 };

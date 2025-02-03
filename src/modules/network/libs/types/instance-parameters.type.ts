@@ -11,6 +11,7 @@ import type {
   XrpDerivationConfig,
   CommonDerivationConfig,
   DogeDerivationConfig,
+  ZecDerivationConfig,
 } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
 
@@ -78,6 +79,11 @@ type DogeInstanceParameters = {
   derivationConfig: DogeDerivationConfig;
 } & MnemonicProperty;
 
+type ZecInstanceParameters = {
+  network: NetworkTypeMap["zec"];
+  derivationConfig: ZecDerivationConfig;
+} & MnemonicProperty;
+
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
@@ -92,4 +98,5 @@ export type {
   EvmInstanceParameters,
   SolInstanceParameters,
   DogeInstanceParameters,
+  ZecInstanceParameters,
 };

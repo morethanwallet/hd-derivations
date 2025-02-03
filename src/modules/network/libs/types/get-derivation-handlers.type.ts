@@ -9,6 +9,7 @@ import type {
   BnbKeyDerivation,
   EvmKeyDerivation,
   SolKeyDerivation,
+  TransparentKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
 import type {
   BtcDerivationTypeUnion,
@@ -72,6 +73,8 @@ type BchParameters = { keysDerivationInstance: CommonBipKeyDerivation; isRegtest
 
 type SolParameters = { keysDerivationInstance: SolKeyDerivation };
 
+type ZecParameters = { keysDerivationInstance: TransparentKeyDerivation };
+
 type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
   T extends AvaxDerivationTypeUnion
     ? AvaxParameters
@@ -95,7 +98,9 @@ type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
                       ? BchParameters
                       : T extends DerivationTypeMap["solBase"]
                         ? SolParameters
-                        : { keysDerivationInstance: CommonBipKeyDerivation };
+                        : T extends DerivationTypeMap["zecTransparent"]
+                          ? ZecParameters
+                          : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;

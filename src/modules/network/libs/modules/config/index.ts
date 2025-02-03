@@ -11,3 +11,4 @@ export { bnbConfig } from "./bnb-config.js";
 export { evmConfig } from "./evm-config.js";
 export { solConfig } from "./sol-config.js";
 export { dogeConfig } from "./doge-config.js";
+export { zecConfig } from "./zec-config.js";

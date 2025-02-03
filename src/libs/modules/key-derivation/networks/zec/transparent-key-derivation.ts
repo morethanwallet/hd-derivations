@@ -14,14 +14,17 @@ import { KeyDerivationError } from "@/libs/exceptions/index.js";
 import { ExceptionMessage } from "@/libs/modules/key-derivation/libs/enums/index.js";
 import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
 
-class TransparentKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"transparent"> {
+class TransparentKeyDerivation
+  extends Bip32Keys
+  implements AbstractKeyDerivation<"zecTransparent">
+{
   public constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
     super(prefixConfig, mnemonic);
   }
 
   public deriveFromMnemonic({
     derivationPath,
-  }: DeriveFromMnemonicParameters<"transparent">): CommonKeyPair {
+  }: DeriveFromMnemonicParameters<"zecTransparent">): CommonKeyPair {
     const node = this.rootKey.derivePath(derivationPath);
     const { privateKey, publicKey } = this.getKeyPair(node);
 
@@ -31,7 +34,7 @@ class TransparentKeyDerivation extends Bip32Keys implements AbstractKeyDerivatio
     };
   }
 
-  public importByPrivateKey({ privateKey }: PrivateKey<"transparent">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"zecTransparent">): CommonKeyPair {
     const { publicKey } = this.getKeyPair(privateKey);
 
     return {

@@ -7,6 +7,7 @@ import type {
   DogeDerivationConfig,
   TrxDerivationConfig,
   XrpDerivationConfig,
+  ZecDerivationConfig,
 } from "../types/index.js";
 
 type DerivationConfigUnion =
@@ -15,7 +16,8 @@ type DerivationConfigUnion =
   | TrxDerivationConfig
   | BchDerivationConfig
   | XrpDerivationConfig
-  | DogeDerivationConfig;
+  | DogeDerivationConfig
+  | ZecDerivationConfig;
 
 function findCustomPrefixConfig(
   derivationType: DerivationTypeUnion,

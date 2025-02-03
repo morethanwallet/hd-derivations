@@ -21,6 +21,8 @@ type DerivationTypeMap = {
   suiBase: "suiBase";
   dotBase: "dotBase";
   solBase: "solBase";
+  dogeLegacy: "dogeLegacy";
+  zecTransparent: "zecTransparent";
 };
 
 export { type DerivationTypeMap };
