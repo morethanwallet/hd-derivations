@@ -7,10 +7,10 @@ import {
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import edHd from "ed25519-hd-key";
 
-class SolanaKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sol"> {
+class SolKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"solBase"> {
   public deriveFromMnemonic({
     derivationPath,
-  }: DeriveFromMnemonicParameters<"sol">): CommonKeyPair {
+  }: DeriveFromMnemonicParameters<"solBase">): CommonKeyPair {
     const rawPrivateKey = edHd.derivePath(derivationPath, this.getHexSeed()).key;
     const rawPublicKey = this.getRawPublicKey(rawPrivateKey);
     const privateKey = base58.encode(Buffer.concat([rawPrivateKey, rawPublicKey]));
@@ -19,7 +19,7 @@ class SolanaKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"
     return { privateKey, publicKey };
   }
 
-  public importByPrivateKey({ privateKey }: PrivateKey<"sol">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"solBase">): CommonKeyPair {
     const rawPrivateKeyStartIndex = 0;
     const rawPrivateKeyEndIndex = 32;
     const concatenatedRawPKeys = Buffer.from(base58.decode(privateKey));
@@ -44,4 +44,4 @@ class SolanaKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"
   }
 }
 
-export { SolanaKeyDerivation };
+export { SolKeyDerivation };

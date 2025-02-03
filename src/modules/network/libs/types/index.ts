@@ -35,6 +35,7 @@ export type {
   BnbInstanceParameters,
   EvmInstanceParameters,
   DotInstanceParameters,
+  SolInstanceParameters,
 } from "./instance-parameters.type.js";
 export type {
   AdaDerivationConfig,

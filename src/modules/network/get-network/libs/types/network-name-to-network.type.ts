@@ -9,6 +9,7 @@ import { type Xrp } from "@/modules/network/xrp/index.js";
 import { type Bnb } from "@/modules/network/bnb/index.js";
 import { type Evm } from "@/modules/network/evm/index.js";
 import { type Dot } from "@/modules/network/dot/index.js";
+import { type Sol } from "@/modules/network/sol/index.js";
 
 type NetworkNameToNetwork = {
   btc: Btc;
@@ -22,6 +23,7 @@ type NetworkNameToNetwork = {
   bnb: Bnb;
   evm: Evm;
   dot: Dot;
+  sol: Sol;
 };
 
 export type { NetworkNameToNetwork };

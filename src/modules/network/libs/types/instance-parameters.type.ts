@@ -68,6 +68,10 @@ type EvmInstanceParameters = {
   derivationConfig: CommonDerivationConfig;
 } & MnemonicProperty;
 
+type SolInstanceParameters = {
+  network: NetworkTypeMap["sol"];
+} & MnemonicProperty;
+
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
@@ -80,4 +84,5 @@ export type {
   XrpInstanceParameters,
   BnbInstanceParameters,
   EvmInstanceParameters,
+  SolInstanceParameters,
 };

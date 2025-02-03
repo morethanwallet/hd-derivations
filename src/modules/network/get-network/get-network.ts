@@ -13,6 +13,7 @@ import { Xrp } from "../xrp/index.js";
 import { Bnb } from "../bnb/index.js";
 import { Evm } from "../evm/index.js";
 import { Dot } from "../dot/index.js";
+import { Sol } from "../sol/index.js";
 
 function getNetwork<T extends NetworkTypeUnion>(
   parameters: GetNetworkParameters<T>,
@@ -85,6 +86,12 @@ function getNetwork<T extends NetworkTypeUnion>(
     case "dot": {
       return new Dot({
         ...(parameters as GetNetworkParameters<"dot">),
+        mnemonic: mnemonicInstance,
+      }) as NetworkNameToNetwork[T];
+    }
+    case "sol": {
+      return new Sol({
+        ...(parameters as GetNetworkParameters<"sol">),
         mnemonic: mnemonicInstance,
       }) as NetworkNameToNetwork[T];
     }

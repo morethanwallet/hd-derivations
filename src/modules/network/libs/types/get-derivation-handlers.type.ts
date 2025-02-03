@@ -8,6 +8,7 @@ import type {
   SuiKeyDerivation,
   BnbKeyDerivation,
   EvmKeyDerivation,
+  SolKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
 import type {
   BtcDerivationTypeUnion,
@@ -69,6 +70,8 @@ type DotParameters = { keysDerivationInstance: CommonEd25519KeyDerivation } & Ss
 
 type BchParameters = { keysDerivationInstance: CommonBipKeyDerivation; isRegtest: boolean };
 
+type SolParameters = { keysDerivationInstance: SolKeyDerivation };
+
 type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
   T extends AvaxDerivationTypeUnion
     ? AvaxParameters
@@ -90,7 +93,9 @@ type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
                     ? DotParameters
                     : T extends DerivationTypeMap["bchCashAddr"]
                       ? BchParameters
-                      : { keysDerivationInstance: CommonBipKeyDerivation };
+                      : T extends DerivationTypeMap["solBase"]
+                        ? SolParameters
+                        : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;

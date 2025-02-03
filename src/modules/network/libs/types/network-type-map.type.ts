@@ -10,6 +10,7 @@ type NetworkTypeMap = {
   xrp: "xrp";
   bnb: "bnb";
   evm: "evm";
+  sol: "sol";
 };
 
 export { type NetworkTypeMap };

@@ -20,6 +20,7 @@ type DerivationTypeMap = {
   tonBase: "tonBase";
   suiBase: "suiBase";
   dotBase: "dotBase";
+  solBase: "solBase";
 };
 
 export { type DerivationTypeMap };
