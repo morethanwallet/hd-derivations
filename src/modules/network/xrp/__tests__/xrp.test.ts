@@ -145,6 +145,7 @@ describe("Xrp", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.xrpBase);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct x items batch", () => {
@@ -155,6 +156,7 @@ describe("Xrp", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.xrpX);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
 
@@ -255,6 +257,7 @@ describe("Xrp", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.xrpBase);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct x items batch", () => {
@@ -265,6 +268,7 @@ describe("Xrp", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.xrpX);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
 

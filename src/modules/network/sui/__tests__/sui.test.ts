@@ -119,6 +119,7 @@ describe("Sui", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.ed25519);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
 
@@ -181,6 +182,7 @@ describe("Sui", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.secp256k1);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
 
@@ -243,6 +245,7 @@ describe("Sui", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.secp256r1);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
 

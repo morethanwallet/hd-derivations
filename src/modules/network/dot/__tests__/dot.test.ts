@@ -178,6 +178,7 @@ describe("Dot", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.dot);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct ksm items batch", () => {
@@ -188,6 +189,7 @@ describe("Dot", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.ksm);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct aca items batch", () => {
@@ -198,6 +200,7 @@ describe("Dot", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.aca);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
 
@@ -304,6 +307,7 @@ describe("Dot", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
 

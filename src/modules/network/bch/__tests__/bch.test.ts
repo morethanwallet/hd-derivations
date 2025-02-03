@@ -188,6 +188,7 @@ describe("Bch", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.bchLegacy);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct cashAddr items batch", () => {
@@ -198,6 +199,7 @@ describe("Bch", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.bchCashAddr);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
 
@@ -298,6 +300,7 @@ describe("Bch", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.bchLegacy);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct cashAddr items batch", () => {
@@ -308,6 +311,7 @@ describe("Bch", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.bchCashAddr);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
 
@@ -408,6 +412,7 @@ describe("Bch", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_REGTEST_ITEM.bchLegacy);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct cashAddr items batch", () => {
@@ -418,6 +423,7 @@ describe("Bch", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_REGTEST_ITEM.bchCashAddr);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
 

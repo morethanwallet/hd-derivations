@@ -148,6 +148,7 @@ describe("Evm", () => {
       });
 
       expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.eth);
+      expect(items.length).toBe(INDEX_LOOKUP_TO);
     });
 
     it("Derives correct etc items batch", () => {
@@ -158,6 +159,7 @@ describe("Evm", () => {
       });
 
       expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.etc);
+      expect(items.length).toBe(INDEX_LOOKUP_TO);
     });
 
     it("Derives correct coinomiEth items batch", () => {
@@ -168,6 +170,7 @@ describe("Evm", () => {
       });
 
       expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.coinomiEth);
+      expect(items.length).toBe(INDEX_LOOKUP_TO);
     });
 
     it("Derives correct coinomiEtc items batch", () => {
@@ -178,6 +181,7 @@ describe("Evm", () => {
       });
 
       expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM.coinomiEtc);
+      expect(items.length).toBe(INDEX_LOOKUP_TO);
     });
   });
 

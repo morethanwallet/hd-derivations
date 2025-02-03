@@ -68,6 +68,7 @@ describe("Bnb", () => {
       });
 
       expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_ITEM);
+      expect(items.length).toBe(INDEX_LOOKUP_TO);
     });
   });
 
