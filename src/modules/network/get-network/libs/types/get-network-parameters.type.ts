@@ -10,6 +10,7 @@ import type {
   BchInstanceParameters,
   XrpInstanceParameters,
   BnbInstanceParameters,
+  EvmInstanceParameters,
   DotInstanceParameters,
 } from "@/modules/network/libs/types/index.js";
 
@@ -33,13 +34,15 @@ type GetNetworkParameters<T extends NetworkTypeUnion> = {
                 ? XrpInstanceParameters
                 : T extends NetworkTypeMap["bnb"]
                   ? BnbInstanceParameters
-                  : T extends NetworkTypeMap["dot"]
-                    ? DotInstanceParameters
-                    : {
-                        networkPurpose: null;
-                        derivationConfigs: {};
-                        mnemonic: null;
-                        scheme: null;
-                      });
+                  : T extends NetworkTypeMap["evm"]
+                    ? EvmInstanceParameters
+                    : T extends NetworkTypeMap["dot"]
+                      ? DotInstanceParameters
+                      : {
+                          networkPurpose: null;
+                          derivationConfigs: {};
+                          mnemonic: null;
+                          scheme: null;
+                        });
 
 export type { GetNetworkParameters };
