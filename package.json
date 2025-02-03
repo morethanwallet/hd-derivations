@@ -8,7 +8,7 @@
     "start": "tsx src/index.ts",
     "test": "vitest --coverage",
     "build": "tsc --project ./tsconfig.build.json && tsc-alias --project ./tsconfig.build.json && npm run build:copy",
-    "build:graph": "npx madge src/ --ts-config ./tsconfig.json --extensions ts,tsx --image graph.svg",
+    "build:graph": "npx madge src/ --ts-config ./tsconfig.json --warning --extensions ts,tsx --image graph.svg",
     "build:copy": "cpy \"./dist/**\" \"./dist/src\" --parents && del dist/* !dist/src",
     "lint:prettify": "prettier ./ --write \"**/*.{ts,json,md}\"",
     "lint:type": "npx tsc --noEmit"
