@@ -203,7 +203,7 @@ describe("Bch", () => {
       });
     });
 
-    describe("doesPKeyBelongToMnemonic", () => {
+    describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for legacy private key", () => {
           const isNative = networkDerivationsInstances.mainnet.bchLegacy.doesPKBelongToMnemonic({
@@ -315,7 +315,7 @@ describe("Bch", () => {
       });
     });
 
-    describe("doesPKeyBelongToMnemonic", () => {
+    describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for legacy private key", () => {
           const isNative = networkDerivationsInstances.testnet.bchLegacy.doesPKBelongToMnemonic({
@@ -427,7 +427,7 @@ describe("Bch", () => {
       });
     });
 
-    describe("doesPKeyBelongToMnemonic", () => {
+    describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for legacy private key", () => {
           const isNative = networkDerivationsInstances.regtest.bchLegacy.doesPKBelongToMnemonic({

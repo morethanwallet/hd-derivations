@@ -125,7 +125,7 @@ describe("Ton", () => {
       });
     });
 
-    describe("doesPKeyBelongToMnemonic", () => {
+    describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true", () => {
           const isNative = networkDerivationsInstances.mainnet.v4r1.doesPKBelongToMnemonic({
@@ -188,7 +188,7 @@ describe("Ton", () => {
       });
     });
 
-    describe("doesPKeyBelongToMnemonic", () => {
+    describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true", () => {
           const isNative = networkDerivationsInstances.testnet.v5r1.doesPKBelongToMnemonic({
