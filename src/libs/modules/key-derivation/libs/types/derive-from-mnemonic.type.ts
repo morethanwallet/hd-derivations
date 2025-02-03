@@ -2,13 +2,13 @@ import type { CommonBipDerivationTypeUnion } from "./common-bip-derivation-type-
 import type { DerivationPath, DerivationTypeUnion, KeyPair } from "@/libs/types/index.js";
 import type { CommonHandlersParameters } from "./common-handlers-parameters.type.js";
 
-type DeriveFromMnemonicParameters<TDerivationType extends DerivationTypeUnion> = DerivationPath &
-  (TDerivationType extends CommonBipDerivationTypeUnion
+type DeriveFromMnemonicParameters<T extends DerivationTypeUnion> = DerivationPath<T> &
+  (T extends CommonBipDerivationTypeUnion
     ? { base58RootKey?: string }
-    : CommonHandlersParameters<TDerivationType>);
+    : CommonHandlersParameters<T>);
 
-type DeriveFromMnemonic<TDerivationType extends DerivationTypeUnion> = (
-  parameters: DeriveFromMnemonicParameters<TDerivationType>,
-) => KeyPair<TDerivationType>;
+type DeriveFromMnemonic<T extends DerivationTypeUnion> = (
+  parameters: DeriveFromMnemonicParameters<T>,
+) => KeyPair<T>;
 
 export { type DeriveFromMnemonic, type DeriveFromMnemonicParameters };
