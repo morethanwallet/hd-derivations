@@ -10,6 +10,7 @@ import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/ind
 import { toUint8Array } from "@/libs/helpers/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
+
 class CommonBipKeyDerivation
   extends Bip32Keys
   implements AbstractKeyDerivation<CommonBipDerivationTypeUnion>
@@ -44,7 +45,7 @@ class CommonBipKeyDerivation
     privateKey,
   }: PrivateKey<CommonBipDerivationTypeUnion>): CommonKeyPair {
     const wifKeyLength = 52;
-    
+
     const formattedKey =
       privateKey.length === wifKeyLength
         ? privateKey

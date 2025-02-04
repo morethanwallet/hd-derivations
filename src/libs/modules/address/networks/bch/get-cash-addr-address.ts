@@ -7,6 +7,7 @@ import { toCashAddress } from "bchaddrjs";
 import { payments } from "bitcoinjs-lib";
 import type { CommonKeyPair } from "@/libs/types/index.js";
 
+
 const REGTEST_PREFIX = "bchreg";
 const HRP_DELIMITER = ":";
 const ADDRESS_INDEX = 1;

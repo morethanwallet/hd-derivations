@@ -5,6 +5,7 @@ import {
   mnemonicToSeedSync,
   wordlists,
 } from "bip39";
+import { type Buffer } from "buffer";
 
 class Mnemonic {
   private mnemonic: string;

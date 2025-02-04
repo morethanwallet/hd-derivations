@@ -13,6 +13,6 @@ vitest.config.ts
 node_modules/**
 misc/**
 **/*.tgz
-dist/*.gz
+build/*.gz
 src
-
+.env

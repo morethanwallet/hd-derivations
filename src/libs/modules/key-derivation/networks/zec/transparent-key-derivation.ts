@@ -66,6 +66,10 @@ class TransparentKeyDerivation
         network: networks.bitcoin,
       });
 
+      if (!keyPair.privateKey) {
+        throw new KeyDerivationError(ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
+      }
+
       return {
         privateKey: toHexFromBytes(keyPair.privateKey),
         publicKey: toHexFromBytes(keyPair.publicKey),

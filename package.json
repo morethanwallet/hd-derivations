@@ -1,24 +1,38 @@
 {
   "name": "hd-derivations",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.6",
   "description": "",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "main": "./build/node/index.js",
+  "browser": "./build/browser/index.js",
+  "files": [
+    "build"
+  ],
+  "exports": {
+    ".": {
+      "import": "./build/node/index.js",
+      "types": "./build/node/index.d.ts"
+    },
+    "./browser": {
+      "import": "./build/browser/index.js",
+      "types": "./build/browser/index.d.ts"
+    },
+    "./node": {
+      "import": "./build/node/index.js",
+      "types": "./build/node/index.d.ts"
+    }
+  },
   "scripts": {
     "start": "tsx src/index.ts",
     "test": "vitest --coverage",
-    "build": "tsc --project ./tsconfig.build.json && tsc-alias --project ./tsconfig.build.json && npm run build:copy",
+    "build": "vite build && npm run build:post",
+    "build:post": "cpy \"./readme.md\" \"./build\" && tsx ./post-build.ts",
     "build:graph": "npx madge src/ --ts-config ./tsconfig.json --warning --extensions ts,tsx --image graph.svg",
-    "build:copy": "cpy \"./dist/**\" \"./dist/src\" --parents && del dist/* !dist/src",
     "lint:prettify": "prettier ./ --write \"**/*.{ts,json,md}\"",
     "lint:type": "npx tsc --noEmit"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run build:graph"
   },
-  "files": [
-    "dist"
-  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -28,28 +42,34 @@
     "@types/tiny-secp256k1": "^2.0.1",
     "@vitest/coverage-istanbul": "^2.1.8",
     "cpy-cli": "^5.0.0",
-    "del-cli": "^6.0.0",
+    "glob": "^11.0.1",
     "prettier": "^3.4.2",
     "tsc-alias": "^1.8.10",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3",
+    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-node-polyfills": "^0.23.0",
+    "vite-plugin-wasm": "^3.4.1",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^2.1.8"
   },
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.2.2",
-    "@emurgo/cardano-serialization-lib-nodejs": "^13.2.1",
+    "@emurgo/cardano-serialization-lib-browser": "^14.0.0",
+    "@emurgo/cardano-serialization-lib-nodejs": "^14.0.0",
     "@mysten/sui": "^1.20.0",
+    "@noble/hashes": "^1.7.1",
     "@polkadot/util-crypto": "^13.3.1",
-    "@ton/core": "^0.59.1",
+    "@ton/core": "^0.60.0",
     "@ton/crypto": "^3.3.0",
-    "@ton/ton": "^15.1.0",
+    "@ton/ton": "^15.2.0",
     "bchaddrjs": "^0.5.2",
     "bech32": "^2.0.0",
     "bip32": "^5.0.0-rc.0",
     "bip39": "^3.1.0",
     "bitcoinjs-lib": "^7.0.0-rc.0",
     "bs58": "^6.0.0",
+    "bs58check": "^4.0.0",
     "buffer": "^6.0.3",
     "ecpair": "^3.0.0-rc.0",
     "ed25519-hd-key": "^1.3.0",

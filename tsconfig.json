@@ -2,16 +2,21 @@
   "include": ["src"],
   "exclude": ["node_modules"],
   "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "baseUrl": ".",
     "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
     "paths": {
       "@/*": ["./src/*"]
     }

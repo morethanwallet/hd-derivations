@@ -9,6 +9,7 @@ import {
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 
+
 class EvmKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"evmBase"> {
   public constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
     super(prefixConfig, mnemonic);

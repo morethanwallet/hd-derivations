@@ -10,6 +10,7 @@ import { toUint8Array } from "@/libs/helpers/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { getPublicKeyFromPrivateKey } from "@binance-chain/javascript-sdk/lib/crypto/index.js";
 
+
 class BnbKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"bnbBase"> {
   constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
     super(prefixConfig, mnemonic);
