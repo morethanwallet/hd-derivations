@@ -1,6 +1,6 @@
 {
   "name": "hd-derivations",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0-beta.7",
   "description": "",
   "main": "./build/node/index.js",
   "browser": "./build/browser/index.js",
@@ -24,8 +24,8 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "test": "vitest --coverage",
-    "build": "vite build && npm run build:post",
-    "build:post": "cpy \"./readme.md\" \"./build\" && tsx ./post-build.ts",
+    "build": "vite build",
+    "publish": "tsx ./publish-package.ts",
     "build:graph": "npx madge src/ --ts-config ./tsconfig.json --warning --extensions ts,tsx --image graph.svg",
     "lint:prettify": "prettier ./ --write \"**/*.{ts,json,md}\"",
     "lint:type": "npx tsc --noEmit"

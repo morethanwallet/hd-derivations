@@ -5,7 +5,7 @@ import wasm from "vite-plugin-wasm";
 import dts from "vite-plugin-dts";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { globSync } from "glob";
-// TODO: Add "rollup-plugin-typescript2" plugin when get network is fixed
+// TODO: Add "rollup-plugin-typescript2" plugin when typing is fixed
 // import typescript from "rollup-plugin-typescript2";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
