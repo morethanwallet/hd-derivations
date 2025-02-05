@@ -1,11 +1,11 @@
 import type { PrivateKey, KeyPair, DerivationTypeUnion } from "@/libs/types/index.js";
-import type { CommonHandlersParameters } from "./common-handlers-parameters.type.js";
+import type { HandlersCommonParameters } from "./handlers-common-parameters.type.js";
 
-type ImportByPrivateKeyParameters<TDerivationType extends DerivationTypeUnion> =
-  PrivateKey<TDerivationType> & CommonHandlersParameters<TDerivationType>;
+type ImportByPrivateKeyParameters<T extends DerivationTypeUnion> = PrivateKey<T> &
+  HandlersCommonParameters<T>;
 
-type ImportByPrivateKey<TDerivationType extends DerivationTypeUnion> = (
-  parameters: ImportByPrivateKeyParameters<TDerivationType>,
-) => KeyPair<TDerivationType>;
+type ImportByPrivateKey<T extends DerivationTypeUnion> = (
+  parameters: ImportByPrivateKeyParameters<T>,
+) => KeyPair<T>;
 
 export type { ImportByPrivateKey, ImportByPrivateKeyParameters };
