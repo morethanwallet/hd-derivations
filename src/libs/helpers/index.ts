@@ -6,5 +6,5 @@ export { hardenDerivationPathValue } from "./harden-derivation-path-value.helper
 export { getDerivationPathSegmentsArray } from "./get-derivation-path-segments-array.helper.js";
 export { checkHardenedSuffixEnding } from "./check-hardened-suffix-ending.helper.js";
 export { toXOnlyPublicKey } from "./to-x-only-public-key.helper.js";
-export { checkAndRemoveEvmPublicKeyHexPrefix } from "./check-and-remove-evm-public-key-hex-prefix.helper.js";
+export { checkAndRemoveHexPrefix } from "./check-and-remove-hex-prefix.helper.js";
 export { appendAddressToDerivationPath } from "./append-address-to-derivation-path.helper.js";
