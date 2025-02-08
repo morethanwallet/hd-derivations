@@ -77,7 +77,7 @@ const network = getNetwork(DEFAULT_BCH_INSTANCE_PARAMETERS);
 #### Derive Item From Mnemonic
 
 ```ts
-const item = network.deriveItemFromMnemonic({ derivationPath: "m/44'/145'/0'/0/0" });`
+const item = network.deriveItemFromMnemonic({ derivationPath: "m/44'/145'/0'/0/0" });
 ```
 
 ##### Output:
