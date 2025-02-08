@@ -143,7 +143,7 @@ const items = network.deriveItemsBatchFromMnemonic({
 ```ts
 const doesPKBelongToMnemonic = network.doesPKBelongToMnemonic({
   privateKey: "KxUYbZfVLLEFehzKcNXJSJvmBjbYswf9ZEsasfH5vFbdvvwS1F31",
-  derivationPathPrefix: "m/44'/145'/0'/0",
+  derivationPathPrefix: "m/44'/145'",
   indexLookupFrom: 0,
   indexLookupTo: 2,
 });
