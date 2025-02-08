@@ -3,12 +3,13 @@ import { readFileSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "node:url";
 
+const BUNDLED_DEPENDENCY = "@emurgo/cardano-serialization-lib-browser";
 const PACKAGE_JSON = "package.json";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageJsonPath = resolve(__dirname, PACKAGE_JSON);
 const oldPackageJsonContent = JSON.parse(readFileSync(packageJsonPath, "utf8"));
 const updatedPackageJsonContent = { ...oldPackageJsonContent };
-delete updatedPackageJsonContent.dependencies;
+delete updatedPackageJsonContent.dependencies[BUNDLED_DEPENDENCY];
 delete updatedPackageJsonContent.devDependencies;
 writeFileSync(packageJsonPath, JSON.stringify(updatedPackageJsonContent, null, 2), "utf8");
 const args = process.argv.slice(2).join(" ");
