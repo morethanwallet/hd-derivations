@@ -8,7 +8,7 @@ import {
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
-import type { DerivationTypeMap, SignatureSchemeUnion } from "@/libs/types/index.js";
+import type { DerivationTypeMap, EllipticCurveAlgorithmUnion } from "@/libs/types/index.js";
 
 const MOCK_DERIVATION_PATH = {
   ed25519: "m/44'/784'/0'/0'/0'",
@@ -61,23 +61,27 @@ const MOCK_EXTRINSIC_PRIVATE_KEY =
 type TrxDerivationTypeUnion = DerivationTypeMap["suiBase"];
 
 type NetworkDerivationsInstances = {
-  [key in SignatureSchemeUnion]: { [key in TrxDerivationTypeUnion]: Sui };
+  [key in EllipticCurveAlgorithmUnion]: { [key in TrxDerivationTypeUnion]: Sui };
 };
 
 let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
-  const signatureSchemes: SignatureSchemeUnion[] = ["ed25519", "secp256k1", "secp256r1"] as const;
+  const ellipticCurveAlgorithms: EllipticCurveAlgorithmUnion[] = [
+    "ed25519",
+    "secp256k1",
+    "secp256r1",
+  ] as const;
 
-  networkDerivationsInstances = signatureSchemes.reduce<NetworkDerivationsInstances>(
-    (networkDerivationsInstances, signatureScheme) => {
-      networkDerivationsInstances[signatureScheme] = {
+  networkDerivationsInstances = ellipticCurveAlgorithms.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, ellipticCurveAlgorithm) => {
+      networkDerivationsInstances[ellipticCurveAlgorithm] = {
         suiBase: getNetwork({
           network: "sui",
           mnemonic: MNEMONIC,
           derivationConfig: {
             derivationType: "suiBase",
-            scheme: signatureScheme,
+            algorithm: ellipticCurveAlgorithm,
           },
         }),
       };

@@ -3,7 +3,7 @@ import type {
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import type { CommonKeyPair, SignatureSchemeUnion } from "@/libs/types/index.js";
+import type { CommonKeyPair, EllipticCurveAlgorithmUnion } from "@/libs/types/index.js";
 import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
 import { Secp256r1Keypair } from "@mysten/sui/keypairs/secp256r1";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
@@ -15,9 +15,9 @@ import { Ed25519Keys } from "@/libs/modules/keys/index.js";
 class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"suiBase"> {
   public deriveFromMnemonic({
     derivationPath,
-    scheme,
+    algorithm,
   }: DeriveFromMnemonicParameters<"suiBase">): CommonKeyPair {
-    const keyPairHandler = this.getKeyPairHandler(scheme);
+    const keyPairHandler = this.getKeyPairHandler(algorithm);
     const keyPair = keyPairHandler.deriveKeypair(this.mnemonic.getMnemonic(), derivationPath);
 
     return this.getKeyPair(keyPair);
@@ -25,9 +25,9 @@ class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sui
 
   public importByPrivateKey({
     privateKey,
-    scheme,
+    algorithm,
   }: ImportByPrivateKeyParameters<"suiBase">): CommonKeyPair {
-    const keyPairHandler = this.getKeyPairHandler(scheme);
+    const keyPairHandler = this.getKeyPairHandler(algorithm);
     const keyPair = keyPairHandler.fromSecretKey(privateKey);
     const publicKey = this.getPublicKey(keyPair);
 
@@ -45,8 +45,8 @@ class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sui
     return keyPair.getPublicKey().toSuiPublicKey();
   }
 
-  private getKeyPairHandler(scheme: SignatureSchemeUnion): KeyPairUnion {
-    switch (scheme) {
+  private getKeyPairHandler(algorithm: EllipticCurveAlgorithmUnion): KeyPairUnion {
+    switch (algorithm) {
       case "secp256k1":
         return Secp256k1Keypair;
       case "secp256r1":
@@ -54,7 +54,7 @@ class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sui
       case "ed25519":
         return Ed25519Keypair;
       default:
-        throw new KeyDerivationError(ExceptionMessage.INVALID_SCHEME);
+        throw new KeyDerivationError(ExceptionMessage.INVALID_ALGORITHM);
     }
   }
 }

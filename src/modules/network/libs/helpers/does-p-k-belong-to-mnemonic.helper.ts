@@ -1,51 +1,33 @@
 import type {
-  DerivationPath,
+  AptDerivationTypeUnion,
   DerivationTypeMap,
   DerivationTypeUnion,
-  SignatureSchemeUnion,
 } from "@/libs/types/index.js";
-import {
-  type DeriveItemsBatchFromMnemonic,
-  type DoesPKBelongToMnemonicParameters,
+import type {
+  DeriveItemsBatchFromMnemonic,
+  DoesPKBelongToMnemonicParameters,
 } from "../types/index.js";
 import { checkHardenedSuffixEnding } from "@/libs/helpers/index.js";
 import { DerivationPathSymbol } from "@/libs/enums/index.js";
 import { doesPKExistInBatch } from "./does-p-k-exist-in-batch.helper.js";
+import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/index.js";
+import { increaseDerivationPathDepth } from "./increase-derivation-path-depth.helper.js";
+import { getDerivationPathDepth } from "./get-derivation-path-depth.helper.js";
 
-const SEGMENT_INITIAL_VALUE = "0";
-
-const MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY = 6;
-
-type IncreaseDerivationPathDepthParameters = {
-  derivationPath: DerivationPath["derivationPath"];
-  scheme?: SignatureSchemeUnion;
-};
-
-function hardenDerivationPath(
-  derivationPath: DerivationPath["derivationPath"],
-): DerivationPath["derivationPath"] {
-  return derivationPath.concat(DerivationPathSymbol.HARDENED_SUFFIX);
-}
-
-function increaseDerivationPathDepth({
-  derivationPath,
-  scheme = "secp256k1",
-}: IncreaseDerivationPathDepthParameters): DerivationPath["derivationPath"] {
-  const hardenedSuffix = scheme === "ed25519" ? DerivationPathSymbol.HARDENED_SUFFIX : "";
-  return `${derivationPath}${DerivationPathSymbol.DELIMITER}${SEGMENT_INITIAL_VALUE}${hardenedSuffix}`;
-}
-
-type SupportedDerivationTypes = Exclude<DerivationTypeUnion, DerivationTypeMap["suiBase"]>;
+type SupportedDerivationTypes = Exclude<
+  DerivationTypeUnion,
+  DerivationTypeMap["suiBase"] | DerivationTypeMap["adaBase"] | AptDerivationTypeUnion
+>;
 
 function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
   this: {
-    deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonic<T>;
+    deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonic<SupportedDerivationTypes>;
   },
   parameters: DoesPKBelongToMnemonicParameters<T>,
-  scheme?: SignatureSchemeUnion,
+  shouldHarden?: boolean,
 ): boolean {
   let updatedDerivationPath = parameters.derivationPathPrefix;
-  let derivationPathDepth = updatedDerivationPath.split(DerivationPathSymbol.DELIMITER).length;
+  let derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
 
   do {
     const itemsBatch = this.deriveItemsBatchFromMnemonic({
@@ -57,17 +39,41 @@ function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
 
     if (doesPKExistInBatch(itemsBatch, privateKey)) return true;
 
-    if (!checkHardenedSuffixEnding(updatedDerivationPath)) {
-      updatedDerivationPath = hardenDerivationPath(updatedDerivationPath);
-    } else {
+    if (derivationPathDepth < MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY) {
       updatedDerivationPath = increaseDerivationPathDepth({
-        scheme,
+        shouldHarden,
         derivationPath: updatedDerivationPath,
       });
 
       derivationPathDepth++;
+      continue;
     }
-  } while (derivationPathDepth <= MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY);
+
+    if (derivationPathDepth === MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY) {
+      const derivationPathHardenedPart = updatedDerivationPath
+        .split(DerivationPathSymbol.DELIMITER)
+        .filter(
+          (part) =>
+            part.includes(DerivationPathSymbol.HARDENED_SUFFIX) ||
+            part === DerivationPathSymbol.MASTER_KEY,
+        )
+        .join(DerivationPathSymbol.DELIMITER);
+
+      updatedDerivationPath = increaseDerivationPathDepth({
+        shouldHarden: true,
+        derivationPath: derivationPathHardenedPart,
+      });
+
+      derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
+    }
+
+    if (
+      derivationPathDepth > MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY &&
+      checkHardenedSuffixEnding(updatedDerivationPath)
+    ) {
+      break;
+    }
+  } while (true);
 
   return false;
 }

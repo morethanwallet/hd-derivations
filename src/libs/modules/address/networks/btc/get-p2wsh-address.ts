@@ -1,4 +1,4 @@
-import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/modules/address/libs/constants/index.js";
+import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants/index.js";
 import { ExceptionMessage } from "@/libs/modules/address/libs/enums/index.js";
 import { AddressError } from "@/libs/exceptions/index.js";
 import { type Address } from "@/libs/modules/address/libs/types/index.js";

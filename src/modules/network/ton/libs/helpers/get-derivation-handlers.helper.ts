@@ -48,7 +48,7 @@ function getTonDerivationHandlers({
       return (deriveItemsBatchFromMnemonic<"tonBase">).call(
         this,
         parameters,
-       "ed25519"
+      true
       );
     },
     doesPKBelongToMnemonic(parameters) {
@@ -56,7 +56,7 @@ function getTonDerivationHandlers({
       return (doesPKBelongToMnemonic<"tonBase">).call(
         this,
         parameters,
-        "ed25519"
+       true
       );
     },
   };

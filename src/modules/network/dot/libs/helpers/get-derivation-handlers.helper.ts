@@ -30,7 +30,7 @@ function getDotDerivationHandlers({
       return (deriveItemsBatchFromMnemonic<"dotBase">).call(
         this,
         parameters,
-       "ed25519"
+      true
       );
     },
     doesPKBelongToMnemonic(parameters) {
@@ -38,7 +38,7 @@ function getDotDerivationHandlers({
       return (doesPKBelongToMnemonic<"dotBase">).call(
         this,
         parameters,
-        "ed25519"
+       true
       );
     },
   };

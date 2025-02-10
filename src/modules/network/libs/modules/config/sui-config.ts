@@ -1,8 +1,8 @@
-import type { SignatureSchemeUnion } from "@/libs/types/index.js";
+import type { EllipticCurveAlgorithmUnion } from "@/libs/types/index.js";
 
 type SuiConfig = {
   suiBase: {
-    [key in SignatureSchemeUnion]: {
+    [key in EllipticCurveAlgorithmUnion]: {
       derivationPathPrefix: string;
     };
   };

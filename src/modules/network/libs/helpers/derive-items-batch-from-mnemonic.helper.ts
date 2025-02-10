@@ -1,4 +1,4 @@
-import type { DerivationTypeUnion, SignatureSchemeUnion } from "@/libs/types/index.js";
+import type { DerivationTypeMap, DerivationTypeUnion } from "@/libs/types/index.js";
 import {
   type DerivedItem,
   type DeriveItemFromMnemonicParameters,
@@ -6,18 +6,22 @@ import {
 } from "../types/index.js";
 import { appendAddressToDerivationPath } from "@/libs/helpers/index.js";
 
-function deriveItemsBatchFromMnemonic<T extends DerivationTypeUnion>(
+type SupportedDerivationTypes = Exclude<DerivationTypeUnion, DerivationTypeMap["adaBase"]>;
+
+function deriveItemsBatchFromMnemonic<T extends SupportedDerivationTypes>(
   this: {
-    deriveItemFromMnemonic: (parameters: DeriveItemFromMnemonicParameters<T>) => DerivedItem<T>;
+    deriveItemFromMnemonic: (
+      parameters: DeriveItemFromMnemonicParameters<SupportedDerivationTypes>,
+    ) => DerivedItem<T>;
   },
   parameters: DeriveItemsBatchFromMnemonicParameters<T>,
-  scheme?: SignatureSchemeUnion,
+  shouldHarden?: boolean,
 ) {
   let batch: DerivedItem<T>[] = [];
 
   for (let i = parameters.indexLookupFrom; i < parameters.indexLookupTo; i++) {
     const derivationPathWithAddressIndex = appendAddressToDerivationPath({
-      scheme,
+      shouldHarden,
       derivationPath: parameters.derivationPathPrefix,
       addressIndex: i,
     });

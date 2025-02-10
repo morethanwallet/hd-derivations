@@ -7,7 +7,6 @@ import {
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import { derivePath, getPublicKey } from "ed25519-hd-key";
 
-
 class SolKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"solBase"> {
   public deriveFromMnemonic({
     derivationPath,

@@ -26,7 +26,7 @@ function getSolDerivationHandlers({
       return (deriveItemsBatchFromMnemonic<"solBase">).call(
         this,
         parameters,
-       "ed25519"
+       true
       );
     },
     doesPKBelongToMnemonic(parameters) {
@@ -34,7 +34,7 @@ function getSolDerivationHandlers({
       return (doesPKBelongToMnemonic<"solBase">).call(
         this,
         parameters,
-        "ed25519"
+        true
       );
     },
   };

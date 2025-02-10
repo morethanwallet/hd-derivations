@@ -1,19 +1,19 @@
-import type { DerivationPath, SignatureSchemeUnion } from "@/libs/types/index.js";
+import type { CommonDerivationPath } from "@/libs/types/index.js";
 import { DerivationPathSymbol } from "../enums/index.js";
 
 type AppendAddressToDerivationPathParameters = {
-  derivationPath: DerivationPath["derivationPath"];
+  derivationPath: CommonDerivationPath["derivationPath"];
   addressIndex: number;
-  scheme?: SignatureSchemeUnion;
+  shouldHarden?: boolean;
 };
 
 function appendAddressToDerivationPath({
   derivationPath,
   addressIndex,
-  scheme = "secp256k1",
-}: AppendAddressToDerivationPathParameters): DerivationPath["derivationPath"] {
+  shouldHarden = false,
+}: AppendAddressToDerivationPathParameters): CommonDerivationPath["derivationPath"] {
   const createdSegment = `${addressIndex}${
-    scheme === "ed25519" ? DerivationPathSymbol.HARDENED_SUFFIX : ""
+    shouldHarden ? DerivationPathSymbol.HARDENED_SUFFIX : ""
   }`;
 
   return `${derivationPath}${DerivationPathSymbol.DELIMITER}${createdSegment}`;

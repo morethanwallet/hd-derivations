@@ -10,42 +10,39 @@ import {
 
 function getSuiDerivationHandlers({
   keysDerivationInstance,
-  scheme,
+  algorithm,
 }: GetDerivationHandlersParameters<"suiBase">): GetDerivationHandlersReturnType<"suiBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({
         derivationPath,
-        scheme,
+        algorithm,
       });
-      const address = getSuiAddress(keys.publicKey, scheme);
+      const address = getSuiAddress(keys.publicKey, algorithm);
 
       return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: ({ privateKey }) => {
       const keys = keysDerivationInstance.importByPrivateKey({
         privateKey,
-        scheme,
+        algorithm,
       });
-      const address = getSuiAddress(keys.publicKey, scheme);
+      const address = getSuiAddress(keys.publicKey, algorithm);
 
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic(parameters) {
-      // prettier-ignore
       return (deriveItemsBatchFromMnemonic<"suiBase">).call(
         this,
         parameters,
-       scheme
+        algorithm === "ed25519",
       );
     },
     doesPKBelongToMnemonic(parameters) {
       const itemsBatch = this.deriveItemsBatchFromMnemonic(parameters);
       const { privateKey } = parameters;
 
-      if (doesPKExistInBatch(itemsBatch, privateKey)) return true;
-
-      return false;
+      return doesPKExistInBatch(itemsBatch, privateKey);
     },
   };
 }

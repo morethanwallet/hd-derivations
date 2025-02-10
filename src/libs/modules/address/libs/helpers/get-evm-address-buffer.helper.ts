@@ -1,4 +1,5 @@
-import { checkAndRemoveHexPrefix, toUint8Array } from "@/libs/helpers/index.js";
+import { toUint8Array } from "@/libs/helpers/index.js";
+import { checkAndRemoveHexPrefix } from "@/libs/utils/index.js";
 import { type CommonKeyPair } from "@/libs/types/index.js";
 import { importPublic, publicToAddress } from "ethereumjs-util";
 
