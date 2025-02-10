@@ -23,6 +23,8 @@ type DerivationTypeMap = {
   solBase: "solBase";
   dogeLegacy: "dogeLegacy";
   zecTransparent: "zecTransparent";
+  aptBase: "aptBase";
+  aptLegacy: "aptLegacy";
 };
 
 export { type DerivationTypeMap };

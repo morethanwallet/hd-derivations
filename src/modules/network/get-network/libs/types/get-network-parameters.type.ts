@@ -15,6 +15,7 @@ import type {
   SolInstanceParameters,
   DogeInstanceParameters,
   ZecInstanceParameters,
+  AptInstanceParameters,
 } from "@/modules/network/libs/types/index.js";
 
 type GetNetworkParameters<T extends NetworkTypeUnion> = {
@@ -47,11 +48,13 @@ type GetNetworkParameters<T extends NetworkTypeUnion> = {
                           ? DogeInstanceParameters
                           : T extends NetworkTypeMap["zec"]
                             ? ZecInstanceParameters
-                            : {
-                                networkPurpose: null;
-                                derivationConfigs: {};
-                                mnemonic: null;
-                                scheme: null;
-                              });
+                            : T extends NetworkTypeMap["apt"]
+                              ? AptInstanceParameters
+                              : {
+                                  networkPurpose: null;
+                                  derivationConfigs: {};
+                                  mnemonic: null;
+                                  scheme: null;
+                                });
 
 export type { GetNetworkParameters };

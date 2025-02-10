@@ -25,4 +25,5 @@ export {
   getDotAddress,
   type Ss58Format,
   getTransparentAddress,
+  getAptAddress,
 } from "./networks/index.js";

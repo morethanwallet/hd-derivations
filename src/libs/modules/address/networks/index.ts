@@ -17,3 +17,4 @@ export { getBnbAddress } from "./bnb/get-bnb-address.js";
 export { getEvmAddress } from "./evm/get-evm-address.js";
 export { getDotAddress, type Ss58Format } from "./dot/index.js";
 export { getTransparentAddress } from "./zec/index.js";
+export { getAptAddress } from "./apt/index.js";

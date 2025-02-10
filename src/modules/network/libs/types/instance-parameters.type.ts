@@ -12,6 +12,7 @@ import type {
   CommonDerivationConfig,
   DogeDerivationConfig,
   ZecDerivationConfig,
+  AptDerivationConfig,
 } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
 
@@ -84,6 +85,11 @@ type ZecInstanceParameters = {
   derivationConfig: ZecDerivationConfig;
 } & MnemonicProperty;
 
+type AptInstanceParameters = {
+  network: NetworkTypeMap["apt"];
+  derivationConfig: AptDerivationConfig;
+} & MnemonicProperty;
+
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
@@ -99,4 +105,5 @@ export type {
   SolInstanceParameters,
   DogeInstanceParameters,
   ZecInstanceParameters,
+  AptInstanceParameters,
 };

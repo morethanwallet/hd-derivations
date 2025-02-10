@@ -22,6 +22,8 @@ type AvaxDerivationTypeUnion = DerivationTypeMap["avaxX"] | DerivationTypeMap["a
 
 type BchDerivationTypeUnion = DerivationTypeMap["bchLegacy"] | DerivationTypeMap["bchCashAddr"];
 
+type AptDerivationTypeUnion = DerivationTypeMap["aptBase"] | DerivationTypeMap["aptLegacy"];
+
 export type {
   DerivationTypeUnion,
   BtcDerivationTypeUnion,
@@ -29,4 +31,5 @@ export type {
   XrpDerivationTypeUnion,
   AvaxDerivationTypeUnion,
   BchDerivationTypeUnion,
+  AptDerivationTypeUnion,
 };

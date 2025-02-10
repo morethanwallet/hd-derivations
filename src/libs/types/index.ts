@@ -1,9 +1,8 @@
-export {
-  type SignatureSchemeUnion,
-  type SignatureSchemeProperty,
-} from "./signature-scheme.type.js";
+export type { AuthSchemeUnion } from "./auth-scheme-union.type.js";
 export { type CustomError } from "./custom-error.type.js";
 export type {
+  CommonDerivationPath,
+  AdaBaseDerivationPath,
   DerivationPath,
   DerivationTypeUnion,
   BtcDerivationTypeUnion,
@@ -12,9 +11,10 @@ export type {
   AvaxDerivationTypeUnion,
   DerivationTypeMap,
   BchDerivationTypeUnion,
+  AptDerivationTypeUnion,
 } from "./derivation/index.js";
 export {
-  type CardanoBaseKeyPair,
+  type AdaBaseKeyPair,
   type CommonKeyPair,
   type KeyPair,
   type PrivateKey,
@@ -22,3 +22,4 @@ export {
   type AdaBasePrivateKey,
 } from "./keys/index.js";
 export type { ValueOf } from "./value-of.type.js";
+export type { EllipticCurveAlgorithmUnion } from "./elliptic-curve-algorithm-union.type.js";

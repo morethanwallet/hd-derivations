@@ -11,6 +11,7 @@ import {
 } from "../modules/config/index.js";
 import type {
   AdaInstanceParameters,
+  AptInstanceParameters,
   AvaxInstanceParameters,
   BchInstanceParameters,
   BnbInstanceParameters,
@@ -73,7 +74,7 @@ const DEFAULT_TON_INSTANCE_PARAMETERS: TonInstanceParameters = {
 
 const DEFAULT_SUI_INSTANCE_PARAMETERS: SuiInstanceParameters = {
   network: "sui",
-  derivationConfig: { scheme: "ed25519", derivationType: "suiBase" },
+  derivationConfig: { algorithm: "ed25519", derivationType: "suiBase" },
 };
 
 const DEFAULT_BCH_INSTANCE_PARAMETERS: BchInstanceParameters = {
@@ -131,6 +132,14 @@ const DEFAULT_ZEC_INSTANCE_PARAMETERS: ZecInstanceParameters = {
   },
 };
 
+const DEFAULT_APT_INSTANCE_PARAMETERS: AptInstanceParameters = {
+  network: "apt",
+  derivationConfig: {
+    algorithm: "ed25519",
+    derivationType: "aptLegacy",
+  },
+};
+
 export {
   DEFAULT_ADA_INSTANCE_PARAMETERS,
   DEFAULT_AVAX_INSTANCE_PARAMETERS,
@@ -146,4 +155,5 @@ export {
   DEFAULT_SOL_INSTANCE_PARAMETERS,
   DEFAULT_DOGE_INSTANCE_PARAMETERS,
   DEFAULT_ZEC_INSTANCE_PARAMETERS,
+  DEFAULT_APT_INSTANCE_PARAMETERS,
 };

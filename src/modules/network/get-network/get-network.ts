@@ -16,6 +16,7 @@ import { Dot } from "../dot/index.js";
 import { Sol } from "../sol/index.js";
 import { Doge } from "../doge/index.js";
 import { Zec } from "../zec/index.js";
+import { Apt } from "../apt/index.js";
 
 function getNetwork<T extends NetworkTypeUnion>(
   parameters: GetNetworkParameters<T>,
@@ -106,6 +107,12 @@ function getNetwork<T extends NetworkTypeUnion>(
     case "zec": {
       return new Zec({
         ...(parameters as GetNetworkParameters<"zec">),
+        mnemonic: mnemonicInstance,
+      }) as NetworkNameToNetwork[T];
+    }
+    case "apt": {
+      return new Apt({
+        ...(parameters as GetNetworkParameters<"apt">),
         mnemonic: mnemonicInstance,
       }) as NetworkNameToNetwork[T];
     }

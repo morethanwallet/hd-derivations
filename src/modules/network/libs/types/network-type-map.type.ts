@@ -13,6 +13,7 @@ type NetworkTypeMap = {
   sol: "sol";
   doge: "doge";
   zec: "zec";
+  apt: "apt";
 };
 
 export { type NetworkTypeMap };

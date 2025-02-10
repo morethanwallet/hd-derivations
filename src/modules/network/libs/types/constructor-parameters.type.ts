@@ -6,10 +6,12 @@ import type {
   DerivationTypeMap,
   BchDerivationTypeUnion,
   XrpDerivationTypeUnion,
+  AptDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import type {
   AdaDerivationConfig,
+  AptDerivationConfig,
   AvaxDerivationConfig,
   BchDerivationConfig,
   BtcDerivationConfig,
@@ -50,7 +52,9 @@ type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
                             ? DogeDerivationConfig
                             : T extends DerivationTypeMap["zecTransparent"]
                               ? ZecDerivationConfig
-                              : CommonDerivationConfig;
+                              : T extends AptDerivationTypeUnion
+                                ? AptDerivationConfig
+                                : CommonDerivationConfig;
       };
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {

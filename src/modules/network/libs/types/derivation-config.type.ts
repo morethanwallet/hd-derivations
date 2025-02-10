@@ -1,11 +1,13 @@
 import type { PrefixConfig } from "@/libs/modules/keys/index.js";
 import type {
   AdaDerivationTypeUnion,
+  AptDerivationTypeUnion,
+  AuthSchemeUnion,
   AvaxDerivationTypeUnion,
   BchDerivationTypeUnion,
   BtcDerivationTypeUnion,
   DerivationTypeMap,
-  SignatureSchemeUnion,
+  EllipticCurveAlgorithmUnion,
   XrpDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import type {
@@ -43,7 +45,7 @@ type TonDerivationConfig = {
 } & TonAddressDerivationConfig;
 
 type SuiDerivationConfig = {
-  scheme: SignatureSchemeUnion;
+  algorithm: EllipticCurveAlgorithmUnion;
   derivationType: DerivationTypeMap["suiBase"];
 };
 
@@ -70,6 +72,12 @@ type ZecDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
 } & CommonPrefixConfig;
 
+type AptDerivationConfig = {
+  derivationType: AptDerivationTypeUnion;
+  authenticationScheme?: AuthSchemeUnion;
+  algorithm: EllipticCurveAlgorithmUnion;
+};
+
 export type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
@@ -83,4 +91,5 @@ export type {
   DotDerivationConfig,
   DogeDerivationConfig,
   ZecDerivationConfig,
+  AptDerivationConfig,
 };

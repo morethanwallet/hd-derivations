@@ -1,14 +1,32 @@
 import type { CommonBipDerivationTypeUnion } from "./common-bip-derivation-type-union.type.js";
-import type { DerivationPath, DerivationTypeUnion, KeyPair } from "@/libs/types/index.js";
+import type {
+  AptDerivationTypeUnion,
+  DerivationPath,
+  DerivationTypeUnion,
+  KeyPair,
+  EllipticCurveAlgorithmUnion,
+} from "@/libs/types/index.js";
 import type { HandlersCommonParameters } from "./handlers-common-parameters.type.js";
 
-type DeriveFromMnemonicParameters<T extends DerivationTypeUnion> = DerivationPath &
+type AptDeriveFromMnemonicParameters = {
+  isLegacy: boolean;
+  algorithm: EllipticCurveAlgorithmUnion;
+  isMultiSig?: boolean;
+};
+
+type DeriveFromMnemonicParameters<T extends DerivationTypeUnion> = DerivationPath<T> &
   (T extends CommonBipDerivationTypeUnion
     ? { base58RootKey?: string }
-    : HandlersCommonParameters<T>);
+    : T extends AptDerivationTypeUnion
+      ? AptDeriveFromMnemonicParameters
+      : HandlersCommonParameters<T>);
 
 type DeriveFromMnemonic<T extends DerivationTypeUnion> = (
   parameters: DeriveFromMnemonicParameters<T>,
 ) => KeyPair<T>;
 
-export { type DeriveFromMnemonic, type DeriveFromMnemonicParameters };
+export {
+  type DeriveFromMnemonic,
+  type DeriveFromMnemonicParameters,
+  type AptDeriveFromMnemonicParameters,
+};

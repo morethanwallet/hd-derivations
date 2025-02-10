@@ -1,10 +1,12 @@
 import type {
   DerivationTypeMap,
   DerivationTypeUnion,
-  SignatureSchemeProperty,
+  EllipticCurveAlgorithmUnion,
 } from "@/libs/types/index.js";
 
 type HandlersCommonParameters<T extends DerivationTypeUnion> =
-  T extends DerivationTypeMap["suiBase"] ? SignatureSchemeProperty : Record<string, unknown>;
+  T extends DerivationTypeMap["suiBase"]
+    ? { algorithm: EllipticCurveAlgorithmUnion }
+    : Record<string, string>;
 
 export type { HandlersCommonParameters };
