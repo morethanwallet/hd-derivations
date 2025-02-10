@@ -1,7 +1,7 @@
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import type { CommonBip32DerivationConfig } from "./libs/types/index.js";
 
-const commonDerivationPathPrefix = {
+const derivationPathPrefix = {
   mainnet: "m/44'/3'",
   testnet: "m/44'/1'",
 };
@@ -15,7 +15,7 @@ type DogeConfig = {
 const dogeConfig: DogeConfig = {
   mainnet: {
     dogeLegacy: {
-      derivationPathPrefix: commonDerivationPathPrefix.mainnet,
+      derivationPathPrefix: derivationPathPrefix.mainnet,
       prefixConfig: {
         messagePrefix: "\x19Dogecoin Signed Message:\n",
         bech32: "doge",
@@ -31,7 +31,7 @@ const dogeConfig: DogeConfig = {
   },
   testnet: {
     dogeLegacy: {
-      derivationPathPrefix: commonDerivationPathPrefix.testnet,
+      derivationPathPrefix: derivationPathPrefix.testnet,
       prefixConfig: {
         messagePrefix: "\x19Dogecoin Signed Message:\n",
         bech32: "doge",
@@ -47,7 +47,7 @@ const dogeConfig: DogeConfig = {
   },
   regtest: {
     dogeLegacy: {
-      derivationPathPrefix: commonDerivationPathPrefix.testnet,
+      derivationPathPrefix: derivationPathPrefix.testnet,
       prefixConfig: {
         messagePrefix: "\x19Dogecoin Signed Message:\n",
         bech32: "dcrt",
