@@ -1,8 +1,3 @@
-import {
-  BaseKeyDerivation,
-  EnterpriseKeyDerivation,
-  RewardKeyDerivation,
-} from "@/libs/modules/key-derivation/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
   AbstractNetwork,
@@ -21,6 +16,7 @@ import {
   getBaseDerivationHandlers,
 } from "./libs/helpers/index.js";
 import type { AdaDerivationTypeUnion } from "@/libs/types/index.js";
+import { AdaKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 
 class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
   private derivationHandlers: DerivationsHandlers<AdaDerivationTypeUnion>[AdaDerivationTypeUnion];
@@ -30,19 +26,20 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
     derivationConfig: { derivationType, networkPurpose },
   }: ConstructorParameters<AdaDerivationTypeUnion>) {
     const networkId = getNetworkId(networkPurpose);
+    const keysDerivationInstance = new AdaKeyDerivation(mnemonic);
 
     const derivationsHandlers: DerivationsHandlers<AdaDerivationTypeUnion> = {
       adaEnterprise: getEnterpriseDerivationHandlers({
         networkId,
-        keysDerivationInstance: new EnterpriseKeyDerivation(mnemonic),
+        keysDerivationInstance,
       }),
       adaReward: getRewardDerivationHandlers({
         networkId,
-        keysDerivationInstance: new RewardKeyDerivation(mnemonic),
+        keysDerivationInstance,
       }),
       adaBase: getBaseDerivationHandlers({
         networkId,
-        keysDerivationInstance: new BaseKeyDerivation(mnemonic),
+        keysDerivationInstance,
       }),
     };
 

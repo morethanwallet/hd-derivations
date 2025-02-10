@@ -1,4 +1,4 @@
-import type { DerivationPath } from "@/libs/types/index.js";
+import type { CommonDerivationPath } from "@/libs/types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
 
@@ -6,7 +6,7 @@ type EvmNetworkTypeUnion = "eth" | "etc";
 
 type EvmConfig = {
   derivationPathPrefix: {
-    [key in EvmNetworkTypeUnion]: DerivationPath["derivationPath"];
+    [key in EvmNetworkTypeUnion]: CommonDerivationPath["derivationPath"];
   };
 } & PrefixConfigProperty;
 

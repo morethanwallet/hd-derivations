@@ -1,11 +1,11 @@
-import type { DerivationPath } from "@/libs/types/index.js";
+import type { CommonDerivationPath } from "@/libs/types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
 import type { DotNetworkTypeUnion } from "../../types/index.js";
 
 type DotConfig = {
   derivationPathPrefix: {
-    [key in DotNetworkTypeUnion]: DerivationPath["derivationPath"];
+    [key in DotNetworkTypeUnion]: CommonDerivationPath["derivationPath"];
   };
 } & PrefixConfigProperty;
 
