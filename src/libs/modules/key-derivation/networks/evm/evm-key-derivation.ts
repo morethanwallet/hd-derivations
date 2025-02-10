@@ -1,5 +1,6 @@
-import { addHexPrefix, bufferToHex } from "ethereumjs-util";
-import { checkAndRemoveHexPrefix, toUint8Array } from "@/libs/helpers/index.js";
+import { bufferToHex } from "ethereumjs-util";
+import { toUint8Array } from "@/libs/helpers/index.js";
+import { checkAndRemoveHexPrefix, addHexPrefix } from "@/libs/utils/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { type PrefixConfig, Bip32Keys } from "@/libs/modules/keys/index.js";
 import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
