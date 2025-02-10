@@ -1,8 +1,8 @@
-import { stripHexPrefix } from "ethereumjs-util";
-import { isHexPrefixed } from "./index.js";
+import { isHexPrefixed } from "./is-hex-prefixed.util.js";
+import { removeHexPrefix } from "./remove-hex-prefix.util.js";
 
 function checkAndRemoveHexPrefix(string: string): string {
-  return isHexPrefixed(string) ? stripHexPrefix(string) : string;
+  return isHexPrefixed(string) ? removeHexPrefix(string) : string;
 }
 
 export { checkAndRemoveHexPrefix };
