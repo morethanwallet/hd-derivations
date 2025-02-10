@@ -1,5 +1,5 @@
 import type { PrivateKey, DerivationTypeUnion } from "@/libs/types/index.js";
-import { type DerivedCredential } from "./derived-credential.type.js";
+import { type DerivedCredential } from "../derived-credential.type.js";
 
 type GetCredentialFromPKParameters<T extends DerivationTypeUnion> = PrivateKey<T>;
 
