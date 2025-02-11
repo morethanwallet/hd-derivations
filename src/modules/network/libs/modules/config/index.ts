@@ -12,3 +12,4 @@ export { evmConfig } from "./evm-config.js";
 export { solConfig } from "./sol-config.js";
 export { dogeConfig } from "./doge-config.js";
 export { zecConfig } from "./zec-config.js";
+export { ltcConfig } from "./ltc-config.js";

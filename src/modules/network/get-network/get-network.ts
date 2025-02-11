@@ -17,6 +17,7 @@ import { Sol } from "../sol/index.js";
 import { Doge } from "../doge/index.js";
 import { Zec } from "../zec/index.js";
 import { Apt } from "../apt/index.js";
+import { Ltc } from "../ltc/index.js";
 
 function getNetwork<T extends NetworkTypeUnion>(
   parameters: GetNetworkParameters<T>,
@@ -113,6 +114,12 @@ function getNetwork<T extends NetworkTypeUnion>(
     case "apt": {
       return new Apt({
         ...(parameters as GetNetworkParameters<"apt">),
+        mnemonic: mnemonicInstance,
+      }) as NetworkNameToNetwork[T];
+    }
+    case "ltc": {
+      return new Ltc({
+        ...(parameters as GetNetworkParameters<"ltc">),
         mnemonic: mnemonicInstance,
       }) as NetworkNameToNetwork[T];
     }

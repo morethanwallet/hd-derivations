@@ -4,6 +4,7 @@ import type {
   BtcDerivationTypeUnion,
   BchDerivationTypeUnion,
   AvaxDerivationTypeUnion,
+  LtcDerivationTypeUnion,
 } from "@/libs/types/index.js";
 
 type CommonBipDerivationTypeUnion =
@@ -12,6 +13,7 @@ type CommonBipDerivationTypeUnion =
   | AvaxDerivationTypeUnion
   | XrpDerivationTypeUnion
   | DerivationTypeMap["trxBase"]
-  | DerivationTypeMap["dogeLegacy"];
+  | DerivationTypeMap["dogeLegacy"]
+  | LtcDerivationTypeUnion;
 
 export { type CommonBipDerivationTypeUnion };

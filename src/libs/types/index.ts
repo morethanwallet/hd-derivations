@@ -12,6 +12,7 @@ export type {
   DerivationTypeMap,
   BchDerivationTypeUnion,
   AptDerivationTypeUnion,
+  LtcDerivationTypeUnion,
 } from "./derivation/index.js";
 export {
   type AdaBaseKeyPair,

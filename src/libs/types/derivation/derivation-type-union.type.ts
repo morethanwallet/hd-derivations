@@ -24,6 +24,11 @@ type BchDerivationTypeUnion = DerivationTypeMap["bchLegacy"] | DerivationTypeMap
 
 type AptDerivationTypeUnion = DerivationTypeMap["aptBase"] | DerivationTypeMap["aptLegacy"];
 
+type LtcDerivationTypeUnion =
+  | DerivationTypeMap["ltcLegacy"]
+  | DerivationTypeMap["ltcSegWit"]
+  | DerivationTypeMap["ltcNativeSegWit"];
+
 export type {
   DerivationTypeUnion,
   BtcDerivationTypeUnion,
@@ -32,4 +37,5 @@ export type {
   AvaxDerivationTypeUnion,
   BchDerivationTypeUnion,
   AptDerivationTypeUnion,
+  LtcDerivationTypeUnion,
 };

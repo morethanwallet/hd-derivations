@@ -14,6 +14,7 @@ type NetworkTypeMap = {
   doge: "doge";
   zec: "zec";
   apt: "apt";
+  ltc: "ltc";
 };
 
 export { type NetworkTypeMap };

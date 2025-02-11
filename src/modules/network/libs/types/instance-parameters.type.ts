@@ -13,6 +13,7 @@ import type {
   DogeDerivationConfig,
   ZecDerivationConfig,
   AptDerivationConfig,
+  LtcDerivationConfig,
 } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
 
@@ -63,12 +64,12 @@ type XrpInstanceParameters = {
 
 type BnbInstanceParameters = {
   network: NetworkTypeMap["bnb"];
-  derivationConfig: CommonDerivationConfig;
+  derivationConfig?: CommonDerivationConfig;
 } & MnemonicProperty;
 
 type EvmInstanceParameters = {
   network: NetworkTypeMap["evm"];
-  derivationConfig: CommonDerivationConfig;
+  derivationConfig?: CommonDerivationConfig;
 } & MnemonicProperty;
 
 type SolInstanceParameters = {
@@ -90,6 +91,11 @@ type AptInstanceParameters = {
   derivationConfig: AptDerivationConfig;
 } & MnemonicProperty;
 
+type LtcInstanceParameters = {
+  network: NetworkTypeMap["ltc"];
+  derivationConfig: LtcDerivationConfig;
+} & MnemonicProperty;
+
 export type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
@@ -106,4 +112,5 @@ export type {
   DogeInstanceParameters,
   ZecInstanceParameters,
   AptInstanceParameters,
+  LtcInstanceParameters,
 };

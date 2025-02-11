@@ -8,6 +8,7 @@ import type {
   BtcDerivationTypeUnion,
   DerivationTypeMap,
   EllipticCurveAlgorithmUnion,
+  LtcDerivationTypeUnion,
   XrpDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import type {
@@ -78,6 +79,11 @@ type AptDerivationConfig = {
   algorithm: EllipticCurveAlgorithmUnion;
 };
 
+type LtcDerivationConfig = {
+  networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
+  derivationType: LtcDerivationTypeUnion;
+} & PrefixConfigProperty;
+
 export type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
@@ -92,4 +98,5 @@ export type {
   DogeDerivationConfig,
   ZecDerivationConfig,
   AptDerivationConfig,
+  LtcDerivationConfig,
 };

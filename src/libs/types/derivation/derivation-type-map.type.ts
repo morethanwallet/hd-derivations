@@ -25,6 +25,9 @@ type DerivationTypeMap = {
   zecTransparent: "zecTransparent";
   aptBase: "aptBase";
   aptLegacy: "aptLegacy";
+  ltcLegacy: "ltcLegacy";
+  ltcSegWit: "ltcSegWit";
+  ltcNativeSegWit: "ltcNativeSegWit";
 };
 
 export { type DerivationTypeMap };

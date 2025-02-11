@@ -12,7 +12,8 @@ import { type Dot } from "@/modules/network/dot/index.js";
 import { type Sol } from "@/modules/network/sol/index.js";
 import { type Doge } from "@/modules/network/doge/index.js";
 import { type Zec } from "@/modules/network/zec/index.js";
-import { Apt } from "@/modules/network/apt/index.js";
+import { type Apt } from "@/modules/network/apt/index.js";
+import { type Ltc } from "@/modules/network/ltc/index.js";
 
 type NetworkNameToNetwork = {
   btc: Btc;
@@ -30,6 +31,7 @@ type NetworkNameToNetwork = {
   doge: Doge;
   zec: Zec;
   apt: Apt;
+  ltc: Ltc;
 };
 
 export type { NetworkNameToNetwork };

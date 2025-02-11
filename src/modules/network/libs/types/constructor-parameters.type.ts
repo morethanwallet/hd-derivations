@@ -7,6 +7,7 @@ import type {
   BchDerivationTypeUnion,
   XrpDerivationTypeUnion,
   AptDerivationTypeUnion,
+  LtcDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import type {
@@ -18,6 +19,7 @@ import type {
   CommonDerivationConfig,
   DogeDerivationConfig,
   DotDerivationConfig,
+  LtcDerivationConfig,
   SuiDerivationConfig,
   TonDerivationConfig,
   TrxDerivationConfig,
@@ -54,7 +56,9 @@ type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
                               ? ZecDerivationConfig
                               : T extends AptDerivationTypeUnion
                                 ? AptDerivationConfig
-                                : CommonDerivationConfig;
+                                : T extends LtcDerivationTypeUnion
+                                  ? LtcDerivationConfig
+                                  : CommonDerivationConfig;
       };
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
