@@ -178,7 +178,6 @@ beforeAll(() => {
             derivationConfig: {
               networkPurpose,
               derivationType,
-              prefixConfig: ltcConfig[networkPurpose][derivationType].prefixConfig,
             },
           });
 

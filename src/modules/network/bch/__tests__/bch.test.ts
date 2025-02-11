@@ -126,7 +126,6 @@ beforeAll(() => {
             derivationConfig: {
               networkPurpose,
               derivationType,
-              prefixConfig: bchConfig[networkPurpose][derivationType].prefixConfig,
             },
           });
 

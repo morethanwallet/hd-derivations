@@ -87,7 +87,6 @@ beforeAll(() => {
           derivationConfig: {
             networkPurpose,
             derivationType: "dogeLegacy",
-            prefixConfig: dogeConfig[networkPurpose].dogeLegacy.prefixConfig,
           },
         }),
       };

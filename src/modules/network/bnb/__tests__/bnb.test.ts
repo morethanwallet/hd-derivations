@@ -33,7 +33,6 @@ let bnbNetworkDerivation: Bnb;
 beforeAll(() => {
   bnbNetworkDerivation = getNetwork({
     network: "bnb",
-    derivationConfig: { prefixConfig: bnbConfig.prefixConfig },
     mnemonic: MNEMONIC,
   });
 });

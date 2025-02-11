@@ -75,7 +75,6 @@ beforeAll(() => {
           derivationConfig: {
             networkPurpose,
             derivationType: "zecTransparent",
-            prefixConfig: zecConfig[networkPurpose].zecTransparent.prefixConfig,
           },
         }),
       };

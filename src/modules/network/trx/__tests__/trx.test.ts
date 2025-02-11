@@ -40,7 +40,6 @@ beforeAll(() => {
     mnemonic: MNEMONIC,
     derivationConfig: {
       derivationType: "trxBase",
-      prefixConfig: trxConfig.trxBase.prefixConfig,
     },
   });
 });
