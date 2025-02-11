@@ -28,7 +28,7 @@
     "build:browser": "vite build",
     "build:node": "tsc --project ./tsconfig.build.json && npx tsc-alias --project ./tsconfig.build.json",
     "publish:package": "tsx ./publish-package.ts",
-    "build:graph": "npx madge src/ --ts-config ./tsconfig.json --warning --extensions ts,tsx --image graph.svg",
+    "build:graph": "npx madge src/ --ts-config ./tsconfig.json --warning --extensions ts,tsx --image dependency-graph.svg",
     "lint:prettify": "prettier ./ --write \"**/*.{ts,json,md}\"",
     "lint:type": "npx tsc --noEmit"
   },
