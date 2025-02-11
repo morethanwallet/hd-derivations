@@ -1,4 +1,4 @@
-import { getLegacyAddress } from "@/libs/modules/address/index.js";
+import { getBtcLegacyAddress } from "@/libs/modules/address/index.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
@@ -15,13 +15,13 @@ function getLegacyDerivationHandlers({
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
+      const address = getBtcLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
+      const address = getBtcLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address };
     },

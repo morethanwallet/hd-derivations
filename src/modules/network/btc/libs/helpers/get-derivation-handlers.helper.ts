@@ -1,9 +1,9 @@
 import {
-  getLegacyAddress,
-  getNativeSegWitAddress,
+  getBtcLegacyAddress,
+  getBtcNativeSegWitAddress,
   getP2wshAddress,
   getP2wshInP2shAddress,
-  getSegWitAddress,
+  getBtcSegWitAddress,
   getTaprootAddress,
 } from "@/libs/modules/address/index.js";
 import {
@@ -21,13 +21,13 @@ function getLegacyDerivationHandlers({
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
+      const address = getBtcLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
+      const address = getBtcLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address };
     },
@@ -48,13 +48,13 @@ function getSegWitDerivationHandlers({
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
+      const address = getBtcSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
+      const address = getBtcSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address };
     },
@@ -75,13 +75,19 @@ function getNativeSegWitDerivationHandlers({
   return {
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
-      const address = getNativeSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
+      const address = getBtcNativeSegWitAddress(
+        keys.publicKey,
+        keysDerivationInstance.prefixConfig,
+      );
 
       return { ...keys, address, derivationPath: parameters.derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
-      const address = getNativeSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
+      const address = getBtcNativeSegWitAddress(
+        keys.publicKey,
+        keysDerivationInstance.prefixConfig,
+      );
 
       return { ...keys, address };
     },

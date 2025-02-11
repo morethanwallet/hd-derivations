@@ -1,6 +1,6 @@
 export {
-  getSegWitAddress,
-  getNativeSegWitAddress,
+  getBtcSegWitAddress,
+  getBtcNativeSegWitAddress,
   getTaprootAddress,
   getP2wshAddress,
   getP2wshInP2shAddress,
@@ -8,7 +8,7 @@ export {
 export { getAvaxAddress } from "./avax/index.js";
 export { getEnterpriseAddress, getRewardAddress, getBaseAddress } from "./ada/index.js";
 export { getXrpAddress, type DestinationTagProperty } from "./xrp/index.js";
-export { getLegacyAddress } from "./common/index.js";
+export { getBtcLegacyAddress } from "./common/index.js";
 export { getCashAddrAddress } from "./bch/index.js";
 export { getTrxAddress } from "./trx/get-trx-address.js";
 export { getTonAddress } from "./ton/index.js";

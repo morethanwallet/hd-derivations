@@ -6,18 +6,20 @@ import { type CommonKeyPair } from "@/libs/types/index.js";
 import { type PrefixConfig } from "@/libs/modules/keys/index.js";
 import { payments } from "bitcoinjs-lib";
 
-function getNativeSegWitAddress(
+function getBtcLegacyAddress(
   publicKey: CommonKeyPair["publicKey"],
   prefixConfig: PrefixConfig,
 ): Address["address"] {
   const rawPublicKey = toUint8Array(Buffer.from(publicKey, "hex"));
-  const { address } = payments.p2wpkh({
+
+  const { address } = payments.p2pkh({
     network: prefixConfig,
     pubkey: rawPublicKey,
   });
+
   assert(address, AddressError, ExceptionMessage.ADDRESS_GENERATION_FAILED);
 
   return address;
 }
 
-export { getNativeSegWitAddress };
+export { getBtcLegacyAddress };
