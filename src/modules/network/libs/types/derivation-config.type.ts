@@ -18,7 +18,7 @@ import type {
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
 import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
 
-type CommonPrefixConfig = { prefixConfig?: PrefixConfig };
+type PrefixConfigProperty = { prefixConfig?: PrefixConfig };
 
 type AdaDerivationConfig = {
   networkPurpose: AdaNetworkPurposeUnion;
@@ -28,16 +28,16 @@ type AdaDerivationConfig = {
 type AvaxDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: AvaxDerivationTypeUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type BtcDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
   derivationType: BtcDerivationTypeUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type TrxDerivationConfig = {
   derivationType: DerivationTypeMap["trxBase"];
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type TonDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
@@ -52,25 +52,25 @@ type SuiDerivationConfig = {
 type BchDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
   derivationType: BchDerivationTypeUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type DotDerivationConfig = Ss58Format;
 
 type XrpDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: XrpDerivationTypeUnion;
-} & CommonPrefixConfig &
+} & PrefixConfigProperty &
   DestinationTagProperty;
 
 type DogeDerivationConfig = {
   derivationType: DerivationTypeMap["dogeLegacy"];
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type ZecDerivationConfig = {
   derivationType: DerivationTypeMap["zecTransparent"];
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type AptDerivationConfig = {
   derivationType: AptDerivationTypeUnion;
@@ -87,7 +87,7 @@ export type {
   SuiDerivationConfig,
   BchDerivationConfig,
   XrpDerivationConfig,
-  CommonPrefixConfig as CommonDerivationConfig,
+  PrefixConfigProperty as CommonDerivationConfig,
   DotDerivationConfig,
   DogeDerivationConfig,
   ZecDerivationConfig,
