@@ -1,30 +1,41 @@
 # HD Derivations
 
-## General info
+## Table of Contents 📃
+- [General Info](#general-info)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#how-to-use)
+  - [Importing](#1-import-utilities)
+  - [Getting a Network Instance](#2-get-network-instance-by)
+  - [Derivation Methods](#3-use-the-instance-methods)
+- [Folder Structure](#folder-structure)
+- [Contributing](#contributing)
+- [Quality Criteria](#quality-criteria)
+
+## General Info ℹ️
 
 hd-derivations is a powerful and flexible hierarchical deterministic (HD) key derivation library designed for seamless multi-chain support. It allows users to derive private keys, public keys, and addresses from mnemonics or private keys, ensuring compatibility with various blockchain networks. The library is built to handle standard and non-standard derivation paths, making it ideal for restoring accounts from custom wallet setups.
 
 With support for multiple key types and derivation schemes, `hd-derivations` is a reliable solution for developers working with Bitcoin, Ethereum-compatible chains, Cardano, and more. Whether you are generating wallets, recovering accounts, or working with advanced key management, this package simplifies the process while maintaining security and flexibility.
 
-## Features
+## Features ✨
 
-- Mnemonic-Based Derivation – Generate private keys, public keys, and addresses from a mnemonic phrase
-- Private Key-Based Derivation – Derive public keys and addresses directly from a private key
-- Batch Derivation – Derive multiple key sets from a mnemonic in a single operation
-- Mnemonic Verification – Check if a private key was derived from a given mnemonic
-- Custom Derivation Paths – Support non-standard derivation paths for wallet recovery and custom setups
-- Multi-Network Compatibility – Works with Bitcoin, EVM chains (Ethereum, Binance Smart Chain, etc.), Cardano, and more
-- Extensible & Secure – Designed for easy integration with different blockchain clients while maintaining strong security principles
+- **Mnemonic-Based Derivation** – Generate private keys, public keys, and addresses from a mnemonic phrase.
+- **Private Key-Based Derivation** – Derive public keys and addresses directly from a private key.
+- **Batch Derivation** – Derive multiple key sets from a mnemonic in a single operation.
+- **Mnemonic Verification** – Verify if a private key was derived from a given mnemonic.
+- **Custom Derivation Paths** – Support non-standard paths for wallet recovery and custom setups.
+- **Multi-Network Compatibility** – Works with Bitcoin, EVM chains (Ethereum, Binance Smart Chain, etc.), Cardano, and more.
+- **Extensible & Secure** – Designed for easy integration with blockchain clients while maintaining strong security principles.
 
-## How to use
-
-### 1. Install the package
-
-```ts
+## Installation ⚙️
+```
 npm install hd-derivations
 ```
 
-### 2. Import utilities:
+## How to use 🚀
+
+### 1. Import utilities:
 
 - Node JS:
 
@@ -38,7 +49,7 @@ import { getNetwork } from "hd-derivations/node";
 import { getNetwork } from "hd-derivations/browser";
 ```
 
-### 3. Get network instance by:
+### 2. Get network instance by:
 
 - Manually passing the required parameters:
 
@@ -72,7 +83,7 @@ import { DEFAULT_BCH_INSTANCE_PARAMETERS } from "hd-derivations/node"; // Or "hd
 const network = getNetwork(DEFAULT_BCH_INSTANCE_PARAMETERS);
 ```
 
-### 4. Use the instance methods:
+### 3. Use the instance methods:
 
 #### Derive Item From Mnemonic
 
@@ -154,3 +165,48 @@ const doesPKBelongToMnemonic = network.doesPKBelongToMnemonic({
 ```ts
 false
 ```
+
+#### Parameters
+
+Networks parameters are defined in the [`instance-parameters.type.ts`](src/modules/network/libs/types/instance-parameters.type.ts) file.
+
+Networks methods parameters are defined in the [`abstract-network.type.ts`](src/modules/network/libs/types/abstract-network.type.ts) file.
+
+## Folder Structure 📁
+
+1. The `libs` directory contains the reusable utilities throughout the package and it consists of the following entities:
+- `constants`
+- `enums`
+- `exceptions`
+- `helpers` - contains helper functions with more complex and less abstract logic that depends on other parts of the package
+- `modules` - contains separate entities
+- `types`
+- `utils` - contains simple utilities that don't depend on any part of the package
+
+> **If the needed entity is local for some directory the `libs` structure is also duplicated in that directory**
+
+2. The `modules` directory contains the main package entities
+
+## Contributing 🤝
+
+### How to Add a New Network
+
+> **Adapt or reuse any existing module if possible**
+
+- ✅ Implement extended key logic in the [`keys`](src/libs/modules/keys/index.ts)
+- ✅ Implement credentials logic in [`key-derivation`](src/libs/modules/key-derivation/index.ts)
+- ✅ Implement address logic in [`address`](src/libs/modules/address/index.ts)
+- ✅ Add the network derivation types to [`DerivationTypeMap`](src/libs/types/derivation/derivation-type-map.type.ts)
+- ✅ Add the network to [`NetworkTypeMap`](src/modules/network/libs/types/network-type-map.type.ts)
+- ✅ Adapt [`AbstractNetwork`](src/modules/network/libs/types/abstract-network.type.ts) to support the network
+- ✅ Adapt [`ConstructorParameters`](src/modules/network/libs/types/constructor-parameters.type.ts) for the network
+- ✅ Implement derivation handlers in `src/modules/network/{network}/libs/helpers/get-derivation-handlers.helper.ts`
+- ✅ Add `derivationHandlers` field to the network class
+- ✅ Implement `deriveItemFromMnemonic`, `getCredentialFromPK`, `deriveItemsBatchFromMnemonic` and `doesPKBelongToMnemonic` methods
+- ✅ Extend the [`getNetwork`](src/modules/network/get-network/get-network.ts) function
+
+### Quality Criteria 🏆
+1. For full guidelines, see [`quality-criteria.md`](quality-criteria.md).
+
+2. Make sure you're not causing any circular dependencies and confused structure in the dependency graph:
+![dependency-graph](./dependency-graph.svg)
