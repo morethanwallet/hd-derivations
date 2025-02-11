@@ -16,7 +16,7 @@ class CommonBipKeyDerivation
 {
   private isPrivateKeyWifFormatted: boolean;
 
-  constructor(
+  public constructor(
     prefixConfig: PrefixConfig,
     mnemonic: Mnemonic,
     isPrivateKeyWifFormatted: boolean = true,
