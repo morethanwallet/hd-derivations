@@ -33,7 +33,7 @@ class CommonEd25519KeyDerivation
   }
 
   private getKeyPair(derivationPath: string): CommonKeyPair {
-    const rawPrivateKey = derivePath(derivationPath, this.getHexSeed()).key;
+    const rawPrivateKey = derivePath(derivationPath, this.mnemonic.getHexSeed()).key;
     const publicKey = this.getPublicKey(rawPrivateKey);
     const privateKey = toHexFromBytes(rawPrivateKey);
 

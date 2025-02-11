@@ -6,8 +6,6 @@ class Ed25519Keys {
   public constructor(mnemonic: Mnemonic) {
     this.mnemonic = mnemonic;
   }
-
-  
 }
 
 export { Ed25519Keys };

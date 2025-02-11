@@ -35,7 +35,7 @@ class Mnemonic {
     return this.mnemonic;
   }
 
-  protected getHexSeed(): string {
+  public getHexSeed(): string {
     return this.getSeed().toString("hex");
   }
 }

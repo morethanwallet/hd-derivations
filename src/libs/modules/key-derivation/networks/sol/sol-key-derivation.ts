@@ -11,7 +11,7 @@ class SolKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sol
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"solBase">): CommonKeyPair {
-    const rawPrivateKey = derivePath(derivationPath, this.getHexSeed()).key;
+    const rawPrivateKey = derivePath(derivationPath, this.mnemonic.getHexSeed()).key;
     const rawPublicKey = this.getRawPublicKey(rawPrivateKey);
     const privateKey = base58.encode(Buffer.concat([rawPrivateKey, rawPublicKey]));
     const publicKey = this.getBase58PublicKey(rawPublicKey);
