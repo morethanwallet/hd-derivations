@@ -12,12 +12,14 @@
 - [Contributing](#contributing)
 - [Quality Criteria](#quality-criteria)
 
+<a id="general-info"></a>
 ## General Info ℹ️
 
 hd-derivations is a powerful and flexible hierarchical deterministic (HD) key derivation library designed for seamless multi-chain support. It allows users to derive private keys, public keys, and addresses from mnemonics or private keys, ensuring compatibility with various blockchain networks. The library is built to handle standard and non-standard derivation paths, making it ideal for restoring accounts from custom wallet setups.
 
 With support for multiple key types and derivation schemes, `hd-derivations` is a reliable solution for developers working with Bitcoin, Ethereum-compatible chains, Cardano, and more. Whether you are generating wallets, recovering accounts, or working with advanced key management, this package simplifies the process while maintaining security and flexibility.
 
+<a id="features"></a>
 ## Features ✨
 
 - **Mnemonic-Based Derivation** – Generate private keys, public keys, and addresses from a mnemonic phrase.
@@ -28,11 +30,13 @@ With support for multiple key types and derivation schemes, `hd-derivations` is 
 - **Multi-Network Compatibility** – Works with Bitcoin, EVM chains (Ethereum, Binance Smart Chain, etc.), Cardano, and more.
 - **Extensible & Secure** – Designed for easy integration with blockchain clients while maintaining strong security principles.
 
+<a id="installation"></a>
 ## Installation ⚙️
 ```
 npm install hd-derivations
 ```
 
+<a id="how-to-use"></a>
 ## How to use 🚀
 
 ### 1. Import utilities:
@@ -172,6 +176,7 @@ Networks parameters are defined in the [`instance-parameters.type.ts`](src/modul
 
 Networks methods parameters are defined in the [`abstract-network.type.ts`](src/modules/network/libs/types/abstract-network.type.ts) file.
 
+<a id="folder-structure"></a>
 ## Folder Structure 📁
 
 1. The `libs` directory contains the reusable utilities throughout the package and it consists of the following entities:
@@ -187,6 +192,7 @@ Networks methods parameters are defined in the [`abstract-network.type.ts`](src/
 
 2. The `modules` directory contains the main package entities
 
+<a id="contributing"></a>
 ## Contributing 🤝
 
 ### How to Add a New Network
@@ -205,7 +211,8 @@ Networks methods parameters are defined in the [`abstract-network.type.ts`](src/
 - ✅ Implement `deriveItemFromMnemonic`, `getCredentialFromPK`, `deriveItemsBatchFromMnemonic` and `doesPKBelongToMnemonic` methods
 - ✅ Extend the [`getNetwork`](src/modules/network/get-network/get-network.ts) function
 
-### Quality Criteria 🏆
+<a id="quality-criteria"></a>
+## Quality Criteria 🏆
 1. For full guidelines, see [`quality-criteria.md`](quality-criteria.md).
 
 2. Make sure you're not causing any circular dependencies and confused structure in the dependency graph:
