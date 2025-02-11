@@ -1,6 +1,5 @@
 export { toUint8Array } from "./to-uint8-array.helper.js";
 export { toHexFromBytes } from "./to-hex-from-bytes.helper.js";
-export { assert } from "./assert.helper.js";
 export { validateDerivationPath } from "./validate-derivation-path.helper.js";
 export { hardenDerivationPathValue } from "./harden-derivation-path-value.helper.js";
 export { getDerivationPathSegmentsArray } from "./get-derivation-path-segments-array.helper.js";

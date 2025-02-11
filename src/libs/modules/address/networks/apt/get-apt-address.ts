@@ -1,6 +1,6 @@
 import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants";
 import { ExceptionMessage } from "@/libs/enums/index.js";
-import { AddressError } from "@/libs/exceptions/index.js";
+import { AddressError } from "@/modules/network/libs/exceptions/index.js";
 import { toHexFromBytes, toUint8Array } from "@/libs/helpers/index.js";
 import type { CommonKeyPair, EllipticCurveAlgorithmUnion } from "@/libs/types/index.js";
 import { addHexPrefix, removeHexPrefix } from "@/libs/utils/index.js";

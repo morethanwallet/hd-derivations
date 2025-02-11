@@ -6,6 +6,8 @@ import {
   wordlists,
 } from "bip39";
 import { type Buffer } from "buffer";
+import { MnemonicError } from "./libs/exceptions/index.js";
+import { ExceptionMessage } from "./libs/enums/index.js";
 
 class Mnemonic {
   private mnemonic: string;
@@ -17,7 +19,7 @@ class Mnemonic {
 
   private validateMnemonic(): void {
     if (!isMnemonicValid(this.mnemonic, wordlists.english)) {
-      throw new Error("Invalid Mnemonic");
+      throw new MnemonicError(ExceptionMessage.INVALID_MNEMONIC);
     }
   }
 
@@ -31,6 +33,10 @@ class Mnemonic {
 
   public getMnemonic(): string {
     return this.mnemonic;
+  }
+
+  protected getHexSeed(): string {
+    return this.getSeed().toString("hex");
   }
 }
 

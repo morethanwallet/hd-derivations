@@ -10,7 +10,7 @@ import {
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
-import { KeyDerivationError } from "@/libs/exceptions/index.js";
+import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import { ExceptionMessage } from "@/libs/modules/key-derivation/libs/enums/index.js";
 import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
 

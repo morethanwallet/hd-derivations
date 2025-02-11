@@ -1,5 +1,5 @@
 import { ExceptionMessage as CommonExceptionMessage } from "@/libs/enums/index.js";
-import { KeyDerivationError } from "@/libs/exceptions/index.js";
+import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import { Ed25519Keys } from "@/libs/modules/keys/index.js";
 import type {
   AptDerivationTypeUnion,

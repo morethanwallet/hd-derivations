@@ -1,7 +1,7 @@
 import { ecPair, type ECPairInterface } from "@/libs/modules/ecc/index.js";
 import { ExceptionMessage } from "../enums/index.js";
-import { KeyDerivationError } from "@/libs/exceptions/index.js";
-import { assert, toHexFromBytes } from "@/libs/helpers/index.js";
+import { KeyDerivationError } from "../exceptions/index.js";
+import { toHexFromBytes } from "@/libs/helpers/index.js";
 import { type BIP32Interface } from "bip32";
 import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
 import { type CommonKeyPair } from "@/libs/types/index.js";
@@ -17,7 +17,7 @@ function getKeyPairFromEc({
   source,
   isPrivateKeyWifFormatted = true,
 }: GetKeyPairFromEcParameters): CommonKeyPair {
-  assert(source, KeyDerivationError, ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
+  if (!source) throw new KeyDerivationError(ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
 
   if (ArrayBuffer.isView(source)) {
     return convertEcBytesPrivateKeyToHexKeyPair(source, prefixConfig);
@@ -34,7 +34,10 @@ function getKeyPairFromEc({
 
   if (isPrivateKeyWifFormatted) return { privateKey: source.toWIF(), publicKey };
 
-  assert(source.privateKey, KeyDerivationError, ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
+  if (!source.privateKey) {
+    throw new KeyDerivationError(ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
+  }
+
   const privateKey = toHexFromBytes(source.privateKey);
 
   return { privateKey, publicKey };

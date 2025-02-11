@@ -1,5 +1,4 @@
 export type { AuthSchemeUnion } from "./auth-scheme-union.type.js";
-export { type CustomError } from "./custom-error.type.js";
 export type {
   CommonDerivationPath,
   AdaBaseDerivationPath,

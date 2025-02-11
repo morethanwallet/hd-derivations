@@ -1,5 +1,5 @@
 import { DerivationPathSymbol } from "@/libs/enums/index.js";
-import { NetworkError } from "@/libs/exceptions/index.js";
+import { NetworkError } from "@/modules/network/libs/exceptions/index.js";
 import { appendAddressToDerivationPath, checkHardenedSuffixEnding } from "@/libs/helpers/index.js";
 import {
   getBaseAddress,

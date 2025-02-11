@@ -8,7 +8,7 @@ import type {
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import type { AdaDerivationTypeUnion, KeyPair } from "@/libs/types/index.js";
 import { AdaKeys } from "@/libs/modules/keys/index.js";
-import { KeyDerivationError } from "@/libs/exceptions/key-derivation-error.exception.js";
+import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import { ExceptionMessage as CommonExceptionMessage } from "@/libs/enums/index.js";
 import { ExceptionMessage } from "../../libs/enums/index.js";
 

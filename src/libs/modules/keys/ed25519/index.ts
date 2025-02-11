@@ -7,9 +7,7 @@ class Ed25519Keys {
     this.mnemonic = mnemonic;
   }
 
-  protected getHexSeed(): string {
-    return this.mnemonic.getSeed().toString("hex");
-  }
+  
 }
 
 export { Ed25519Keys };
