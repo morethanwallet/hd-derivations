@@ -31,35 +31,37 @@ import type {
 type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
   T extends DerivationTypeMap["solBase"]
     ? {}
-    : {
-        derivationConfig: T extends BtcDerivationTypeUnion
-          ? BtcDerivationConfig
-          : T extends AdaDerivationTypeUnion
-            ? AdaDerivationConfig
-            : T extends AvaxDerivationTypeUnion
-              ? AvaxDerivationConfig
-              : T extends DerivationTypeMap["trxBase"]
-                ? TrxDerivationConfig
-                : T extends DerivationTypeMap["tonBase"]
-                  ? TonDerivationConfig
-                  : T extends DerivationTypeMap["suiBase"]
-                    ? SuiDerivationConfig
-                    : T extends BchDerivationTypeUnion
-                      ? BchDerivationConfig
-                      : T extends DerivationTypeMap["dotBase"]
-                        ? DotDerivationConfig
-                        : T extends XrpDerivationTypeUnion
-                          ? XrpDerivationConfig
-                          : T extends DerivationTypeMap["dogeLegacy"]
-                            ? DogeDerivationConfig
-                            : T extends DerivationTypeMap["zecTransparent"]
-                              ? ZecDerivationConfig
-                              : T extends AptDerivationTypeUnion
-                                ? AptDerivationConfig
-                                : T extends LtcDerivationTypeUnion
-                                  ? LtcDerivationConfig
-                                  : CommonDerivationConfig;
-      };
+    : T extends DerivationTypeMap["evmBase"] | DerivationTypeMap["bnbBase"]
+      ? { derivationConfig?: CommonDerivationConfig }
+      : {
+          derivationConfig: T extends BtcDerivationTypeUnion
+            ? BtcDerivationConfig
+            : T extends AdaDerivationTypeUnion
+              ? AdaDerivationConfig
+              : T extends AvaxDerivationTypeUnion
+                ? AvaxDerivationConfig
+                : T extends DerivationTypeMap["trxBase"]
+                  ? TrxDerivationConfig
+                  : T extends DerivationTypeMap["tonBase"]
+                    ? TonDerivationConfig
+                    : T extends DerivationTypeMap["suiBase"]
+                      ? SuiDerivationConfig
+                      : T extends BchDerivationTypeUnion
+                        ? BchDerivationConfig
+                        : T extends DerivationTypeMap["dotBase"]
+                          ? DotDerivationConfig
+                          : T extends XrpDerivationTypeUnion
+                            ? XrpDerivationConfig
+                            : T extends DerivationTypeMap["dogeLegacy"]
+                              ? DogeDerivationConfig
+                              : T extends DerivationTypeMap["zecTransparent"]
+                                ? ZecDerivationConfig
+                                : T extends AptDerivationTypeUnion
+                                  ? AptDerivationConfig
+                                  : T extends LtcDerivationTypeUnion
+                                    ? LtcDerivationConfig
+                                    : CommonDerivationConfig;
+        };
 
 type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
   mnemonic: Mnemonic;

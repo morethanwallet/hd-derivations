@@ -19,7 +19,7 @@ class Bnb implements AbstractNetwork<"bnbBase"> {
   public constructor({ mnemonic, derivationConfig }: ConstructorParameters<"bnbBase">) {
     this.derivationHandlers = getBnbDerivationHandlers({
       keysDerivationInstance: new BnbKeyDerivation(
-        derivationConfig.prefixConfig ?? bnbConfig.prefixConfig,
+        derivationConfig?.prefixConfig ?? bnbConfig.prefixConfig,
         mnemonic,
       ),
     });

@@ -19,7 +19,7 @@ class Evm implements AbstractNetwork<"evmBase"> {
   public constructor({ mnemonic, derivationConfig }: ConstructorParameters<"evmBase">) {
     this.derivationHandlers = getEvmDerivationHandlers({
       keysDerivationInstance: new EvmKeyDerivation(
-        derivationConfig.prefixConfig ?? evmConfig.prefixConfig,
+        derivationConfig?.prefixConfig ?? evmConfig.prefixConfig,
         mnemonic,
       ),
     });
