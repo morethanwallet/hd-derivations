@@ -1,7 +1,7 @@
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
-import type { CommonBip32DerivationConfig } from "./libs/types/index.js";
+import type { Secp256k1DerivationConfig } from "./libs/types/index.js";
 
-type XrpConfig = CommonBip32DerivationConfig;
+type XrpConfig = Secp256k1DerivationConfig;
 
 const xrpConfig: XrpConfig = {
   ...getCommonPrefixConfig("mainnet"),

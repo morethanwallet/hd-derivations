@@ -1,7 +1,7 @@
-import type { CommonBip32DerivationConfig } from "./libs/types/index.js";
+import type { Secp256k1DerivationConfig } from "./libs/types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 
-type BnbConfig = CommonBip32DerivationConfig;
+type BnbConfig = Secp256k1DerivationConfig;
 
 const bnbConfig: BnbConfig = {
   ...getCommonPrefixConfig("mainnet"),
