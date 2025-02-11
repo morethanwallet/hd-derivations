@@ -10,7 +10,7 @@ import {
 import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";
 
 function getAvaxDerivationHandlers({
-  derivationType,
+  prefix,
   keysDerivationInstance,
 }: GetDerivationHandlersParameters<AvaxDerivationTypeUnion>): GetDerivationHandlersReturnType<AvaxDerivationTypeUnion> {
   const bech32Prefix = keysDerivationInstance.prefixConfig.bech32;
@@ -20,13 +20,17 @@ function getAvaxDerivationHandlers({
       const keys = keysDerivationInstance.deriveFromMnemonic({
         derivationPath,
       });
-      const address = getAvaxAddress(keys.publicKey, derivationType, bech32Prefix);
+      const address = getAvaxAddress({
+        prefix,
+        publicKey: keys.publicKey,
+        hrp: bech32Prefix,
+      });
 
       return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: ({ privateKey }) => {
       const keys = keysDerivationInstance.importByPrivateKey({ privateKey });
-      const address = getAvaxAddress(keys.publicKey, derivationType, bech32Prefix);
+      const address = getAvaxAddress({ prefix, publicKey: keys.publicKey, hrp: bech32Prefix });
 
       return { ...keys, address };
     },

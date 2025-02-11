@@ -29,7 +29,7 @@ import type { TonAddressDerivationConfig } from "../ton-address-derivation-confi
 import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
 
 type AvaxParameters = {
-  derivationType: AvaxDerivationTypeUnion;
+  prefix: string;
   keysDerivationInstance: CommonBipKeyDerivation;
 };
 
