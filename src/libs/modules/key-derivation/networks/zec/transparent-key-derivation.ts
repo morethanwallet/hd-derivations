@@ -1,5 +1,4 @@
 import bs58check from "bs58check";
-import { toHexFromBytes } from "@/libs/helpers/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { type BIP32Interface } from "bip32";
 import { ecPair } from "@/libs/modules/ecc/index.js";
@@ -13,6 +12,7 @@ import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import { ExceptionMessage } from "@/libs/modules/key-derivation/libs/enums/index.js";
 import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
+import { convertBytesToHex } from "@/libs/utils/index.js";
 
 class TransparentKeyDerivation
   extends Bip32Keys
@@ -71,8 +71,8 @@ class TransparentKeyDerivation
       }
 
       return {
-        privateKey: toHexFromBytes(keyPair.privateKey),
-        publicKey: toHexFromBytes(keyPair.publicKey),
+        privateKey: convertBytesToHex(keyPair.privateKey),
+        publicKey: convertBytesToHex(keyPair.publicKey),
       };
     }
 

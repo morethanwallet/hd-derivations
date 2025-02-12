@@ -31,13 +31,17 @@ import { HDKey } from "@scure/bip32";
 import { secp256r1 } from "@noble/curves/p256";
 import { VALIDATION_MESSAGE_TO_SIGN } from "./libs/constants/index.js";
 import { sha3_256 } from "@noble/hashes/sha3";
-import { toHexFromBytes } from "@/libs/helpers/index.js";
 import { ExceptionMessage } from "../../libs/enums/index.js";
 import {
   ellipticCurveAlgorithmToPrivateKeyVariant,
   ellipticCurveAlgorithmToSchemeId,
 } from "./libs/maps/index.js";
-import { addHexPrefix, convertHexToBytes, removeHexPrefix } from "@/libs/utils/index.js";
+import {
+  addHexPrefix,
+  convertBytesToHex,
+  convertHexToBytes,
+  removeHexPrefix,
+} from "@/libs/utils/index.js";
 
 class AptKeyDerivation
   extends Ed25519Keys
@@ -137,8 +141,8 @@ class AptKeyDerivation
 
     const publicKeyBytes = secp256r1.getPublicKey(privateKeyBytes, true);
     this.validateSecp256r1KeyPair(privateKeyBytes, publicKeyBytes);
-    const privateKey = addHexPrefix(toHexFromBytes(privateKeyBytes));
-    const publicKey = addHexPrefix(toHexFromBytes(publicKeyBytes));
+    const privateKey = addHexPrefix(convertBytesToHex(privateKeyBytes));
+    const publicKey = addHexPrefix(convertBytesToHex(publicKeyBytes));
 
     return { privateKey, publicKey };
   }
@@ -149,7 +153,7 @@ class AptKeyDerivation
   ): void | never {
     const encoder = new TextEncoder();
     const encodedMessage = encoder.encode(VALIDATION_MESSAGE_TO_SIGN);
-    const messageHash = toHexFromBytes(sha3_256(encodedMessage));
+    const messageHash = convertBytesToHex(sha3_256(encodedMessage));
     const signature = secp256r1.sign(messageHash, privateKeyBytes, { lowS: true });
 
     if (!secp256r1.verify(signature, messageHash, publicKeyBytes, { lowS: true })) {

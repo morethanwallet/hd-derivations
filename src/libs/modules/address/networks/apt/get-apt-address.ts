@@ -1,9 +1,13 @@
 import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants";
 import { ExceptionMessage } from "@/libs/enums/index.js";
 import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
-import { toHexFromBytes } from "@/libs/helpers/index.js";
 import type { CommonKeyPair, EllipticCurveAlgorithmUnion } from "@/libs/types/index.js";
-import { addHexPrefix, convertHexToBytes, removeHexPrefix } from "@/libs/utils/index.js";
+import {
+  addHexPrefix,
+  convertBytesToHex,
+  convertHexToBytes,
+  removeHexPrefix,
+} from "@/libs/utils/index.js";
 import { AnyPublicKey, Ed25519PublicKey, MultiKey, Secp256k1PublicKey } from "@aptos-labs/ts-sdk";
 import { sha3_256 } from "@noble/hashes/sha3";
 
@@ -70,7 +74,7 @@ function getAptAddress(
 
     const publicKeyHash = sha3_256(formattedPublicKeyBuffer);
 
-    return addHexPrefix(toHexFromBytes(publicKeyHash));
+    return addHexPrefix(convertBytesToHex(publicKeyHash));
   }
 
   if (!publicKeyInstance) throw new AddressError(ExceptionMessage.INVALID_ALGORITHM);
