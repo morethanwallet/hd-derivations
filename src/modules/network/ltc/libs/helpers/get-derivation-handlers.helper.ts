@@ -6,6 +6,7 @@ import {
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
+  validateDerivationPath,
 } from "@/modules/network/libs/helpers/index.js";
 import type {
   GetDerivationHandlersParameters,
@@ -16,11 +17,12 @@ function getLegacyDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters<"ltcLegacy">): GetDerivationHandlersReturnType<"ltcLegacy"> {
   return {
-    deriveItemFromMnemonic: (parameters) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getBtcLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
-      return { ...keys, address, derivationPath: parameters.derivationPath };
+      return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
@@ -29,13 +31,7 @@ function getLegacyDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"ltcLegacy">,
-    doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"ltcLegacy">).call(
-        this,
-        parameters,
-      );
-    },
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcLegacy">,
   };
 }
 
@@ -43,11 +39,12 @@ function getSegWitDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters<"ltcSegWit">): GetDerivationHandlersReturnType<"ltcSegWit"> {
   return {
-    deriveItemFromMnemonic: (parameters) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getBtcSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
-      return { ...keys, address, derivationPath: parameters.derivationPath };
+      return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
@@ -56,13 +53,7 @@ function getSegWitDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"ltcSegWit">,
-    doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"ltcSegWit">).call(
-        this,
-        parameters,
-      );
-    },
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcSegWit">,
   };
 }
 
@@ -70,14 +61,15 @@ function getNativeSegWitDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters<"ltcNativeSegWit">): GetDerivationHandlersReturnType<"ltcNativeSegWit"> {
   return {
-    deriveItemFromMnemonic: (parameters) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getBtcNativeSegWitAddress(
         keys.publicKey,
         keysDerivationInstance.prefixConfig,
       );
 
-      return { ...keys, address, derivationPath: parameters.derivationPath };
+      return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
@@ -89,13 +81,7 @@ function getNativeSegWitDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"ltcNativeSegWit">,
-    doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"ltcNativeSegWit">).call(
-        this,
-        parameters,
-      );
-    },
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcNativeSegWit">,
   };
 }
 

@@ -2,6 +2,7 @@ import { getTonAddress } from "@/libs/modules/address/index.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
+  validateDerivationPath,
 } from "@/modules/network/libs/helpers/index.js";
 import {
   type GetDerivationHandlersParameters,
@@ -21,8 +22,9 @@ function getTonDerivationHandlers({
   };
 
   return {
-    deriveItemFromMnemonic: (parameters) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath, true);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
 
       const address = getTonAddress({
         ...addressParameters,
@@ -30,7 +32,7 @@ function getTonDerivationHandlers({
         publicKey: keys.publicKey,
       });
 
-      return { ...keys, address, derivationPath: parameters.derivationPath };
+      return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
@@ -44,20 +46,10 @@ function getTonDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic(parameters) {
-      // prettier-ignore
-      return (deriveItemsBatchFromMnemonic<"tonBase">).call(
-        this,
-        parameters,
-      true
-      );
+      return (deriveItemsBatchFromMnemonic<"tonBase">).call(this, parameters, true);
     },
     doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"tonBase">).call(
-        this,
-        parameters,
-       true
-      );
+      return (doesPKBelongToMnemonic<"tonBase">).call(this, parameters, true);
     },
   };
 }

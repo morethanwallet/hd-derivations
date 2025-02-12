@@ -1,6 +1,7 @@
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
+  validateDerivationPath,
 } from "@/modules/network/libs/helpers/index.js";
 import type {
   GetDerivationHandlersParameters,
@@ -12,6 +13,7 @@ function getSolDerivationHandlers({
 }: GetDerivationHandlersParameters<"solBase">): GetDerivationHandlersReturnType<"solBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath, true);
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
 
       return { ...keys, address: keys.publicKey, derivationPath };
@@ -22,20 +24,10 @@ function getSolDerivationHandlers({
       return { ...keys, address: keys.publicKey };
     },
     deriveItemsBatchFromMnemonic(parameters) {
-      // prettier-ignore
-      return (deriveItemsBatchFromMnemonic<"solBase">).call(
-        this,
-        parameters,
-       true
-      );
+      return (deriveItemsBatchFromMnemonic<"solBase">).call(this, parameters, true);
     },
     doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"solBase">).call(
-        this,
-        parameters,
-        true
-      );
+      return (doesPKBelongToMnemonic<"solBase">).call(this, parameters, true);
     },
   };
 }

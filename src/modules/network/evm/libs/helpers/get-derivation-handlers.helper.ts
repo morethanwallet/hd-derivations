@@ -2,6 +2,7 @@ import { getEvmAddress } from "@/libs/modules/address/index.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
+  validateDerivationPath,
 } from "@/modules/network/libs/helpers/index.js";
 import type {
   GetDerivationHandlersParameters,
@@ -13,6 +14,7 @@ function getEvmDerivationHandlers({
 }: GetDerivationHandlersParameters<"evmBase">): GetDerivationHandlersReturnType<"evmBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getEvmAddress(keys.publicKey);
 
@@ -25,13 +27,7 @@ function getEvmDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"evmBase">,
-    doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"evmBase">).call(
-        this,
-        parameters,
-      );
-    },
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<"evmBase">,
   };
 }
 

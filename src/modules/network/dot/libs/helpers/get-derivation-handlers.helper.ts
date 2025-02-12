@@ -2,6 +2,7 @@ import { getDotAddress } from "@/libs/modules/address/index.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
+  validateDerivationPath,
 } from "@/modules/network/libs/helpers/index.js";
 import {
   type GetDerivationHandlersParameters,
@@ -13,11 +14,12 @@ function getDotDerivationHandlers({
   ss58Format,
 }: GetDerivationHandlersParameters<"dotBase">): GetDerivationHandlersReturnType<"dotBase"> {
   return {
-    deriveItemFromMnemonic: (parameters) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath, true);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getDotAddress(keys.publicKey, ss58Format);
 
-      return { ...keys, address, derivationPath: parameters.derivationPath };
+      return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
@@ -26,20 +28,10 @@ function getDotDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic(parameters) {
-      // prettier-ignore
-      return (deriveItemsBatchFromMnemonic<"dotBase">).call(
-        this,
-        parameters,
-      true
-      );
+      return (deriveItemsBatchFromMnemonic<"dotBase">).call(this, parameters, true);
     },
     doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"dotBase">).call(
-        this,
-        parameters,
-       true
-      );
+      return (doesPKBelongToMnemonic<"dotBase">).call(this, parameters, true);
     },
   };
 }

@@ -13,6 +13,7 @@ import { doesPKExistInBatch } from "./does-p-k-exist-in-batch.helper.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/index.js";
 import { increaseDerivationPathDepth } from "./increase-derivation-path-depth.helper.js";
 import { getDerivationPathDepth } from "./get-derivation-path-depth.helper.js";
+import { validateDerivationPath } from "./validate-derivation-path/index.js";
 
 type SupportedDerivationTypes = Exclude<
   DerivationTypeUnion,
@@ -24,8 +25,9 @@ function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
     deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonic<SupportedDerivationTypes>;
   },
   parameters: DoesPKBelongToMnemonicParameters<T>,
-  shouldHarden?: boolean,
+  isStrictHardened?: boolean,
 ): boolean {
+  validateDerivationPath(parameters.derivationPathPrefix, isStrictHardened);
   let updatedDerivationPath = parameters.derivationPathPrefix;
   let derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
 
@@ -41,7 +43,7 @@ function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
 
     if (derivationPathDepth < MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY) {
       updatedDerivationPath = increaseDerivationPathDepth({
-        shouldHarden,
+        shouldHarden: isStrictHardened,
         derivationPath: updatedDerivationPath,
       });
 

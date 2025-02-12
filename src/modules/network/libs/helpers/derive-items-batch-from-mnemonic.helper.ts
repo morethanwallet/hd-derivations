@@ -5,6 +5,7 @@ import {
   type DeriveItemsBatchFromMnemonicParameters,
 } from "../types/index.js";
 import { appendAddressToDerivationPath } from "@/libs/helpers/index.js";
+import { validateDerivationPath } from "./validate-derivation-path/index.js";
 
 type SupportedDerivationTypes = Exclude<DerivationTypeUnion, DerivationTypeMap["adaBase"]>;
 
@@ -15,13 +16,14 @@ function deriveItemsBatchFromMnemonic<T extends SupportedDerivationTypes>(
     ) => DerivedItem<T>;
   },
   parameters: DeriveItemsBatchFromMnemonicParameters<T>,
-  shouldHarden?: boolean,
+  isStrictHardened?: boolean,
 ) {
+  validateDerivationPath(parameters.derivationPathPrefix, isStrictHardened);
   let batch: DerivedItem<T>[] = [];
 
   for (let i = parameters.indexLookupFrom; i < parameters.indexLookupTo; i++) {
     const derivationPathWithAddressIndex = appendAddressToDerivationPath({
-      shouldHarden,
+      shouldHarden: isStrictHardened,
       derivationPath: parameters.derivationPathPrefix,
       addressIndex: i,
     });

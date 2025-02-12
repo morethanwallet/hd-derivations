@@ -2,6 +2,7 @@ import { getAvaxAddress } from "@/libs/modules/address/index.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
+  validateDerivationPath,
 } from "@/modules/network/libs/helpers/index.js";
 import {
   type GetDerivationHandlersParameters,
@@ -17,6 +18,7 @@ function getAvaxDerivationHandlers({
 
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({
         derivationPath,
       });
@@ -35,13 +37,7 @@ function getAvaxDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<AvaxDerivationTypeUnion>,
-    doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<AvaxDerivationTypeUnion>).call(
-        this,
-        parameters,
-      );
-    },
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<AvaxDerivationTypeUnion>,
   };
 }
 

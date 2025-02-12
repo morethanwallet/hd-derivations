@@ -1,4 +1,3 @@
-export { validateDerivationPath } from "./validate-derivation-path.helper.js";
 export { hardenDerivationPathValue } from "./harden-derivation-path-value.helper.js";
 export { getDerivationPathSegmentsArray } from "./get-derivation-path-segments-array.helper.js";
 export { checkHardenedSuffixEnding } from "./check-hardened-suffix-ending.helper.js";

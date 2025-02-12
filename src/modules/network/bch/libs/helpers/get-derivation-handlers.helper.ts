@@ -2,6 +2,7 @@ import { getCashAddrAddress, getBtcLegacyAddress } from "@/libs/modules/address/
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
+  validateDerivationPath,
 } from "@/modules/network/libs/helpers/index.js";
 import type {
   GetDerivationHandlersParameters,
@@ -12,11 +13,12 @@ function getLegacyDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters<"bchLegacy">): GetDerivationHandlersReturnType<"bchLegacy"> {
   return {
-    deriveItemFromMnemonic: (parameters) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getBtcLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
-      return { ...keys, address, derivationPath: parameters.derivationPath };
+      return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
@@ -25,13 +27,7 @@ function getLegacyDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"bchLegacy">,
-    doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"bchLegacy">).call(
-        this,
-        parameters,
-      );
-    },
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<"bchLegacy">,
   };
 }
 
@@ -40,15 +36,16 @@ function getCashAddrDerivationHandlers({
   isRegtest,
 }: GetDerivationHandlersParameters<"bchCashAddr">): GetDerivationHandlersReturnType<"bchCashAddr"> {
   return {
-    deriveItemFromMnemonic: (parameters) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getCashAddrAddress({
         publicKey: keys.publicKey,
         prefixConfig: keysDerivationInstance.prefixConfig,
         isRegtest,
       });
 
-      return { ...keys, address, derivationPath: parameters.derivationPath };
+      return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
@@ -61,13 +58,7 @@ function getCashAddrDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"bchCashAddr">,
-    doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"bchCashAddr">).call(
-        this,
-        parameters,
-      );
-    },
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<"bchCashAddr">,
   };
 }
 

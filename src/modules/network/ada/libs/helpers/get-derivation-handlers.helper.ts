@@ -14,6 +14,7 @@ import {
   doesPKExistInBatch,
   increaseDerivationPathDepth,
   getDerivationPathDepth,
+  validateDerivationPath,
 } from "@/modules/network/libs/helpers/index.js";
 import type {
   DerivedItem,
@@ -32,6 +33,7 @@ function getEnterpriseDerivationHandlers({
 }: GetDerivationHandlersParameters<"adaEnterprise">): GetDerivationHandlersReturnType<"adaEnterprise"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
 
       if ("publicKey" in keys) {
@@ -137,6 +139,8 @@ function getBaseDerivationHandlers({
       },
       parameters,
     ) {
+      validateDerivationPath(parameters.enterpriseDerivationPathPrefix);
+      validateDerivationPath(parameters.rewardDerivationPathPrefix);
       let batch: DerivedItem<"adaBase">[] = [];
 
       for (let i = parameters.indexLookupFrom; i < parameters.indexLookupTo; i++) {
@@ -164,6 +168,7 @@ function getBaseDerivationHandlers({
       return batch;
     },
     doesPKBelongToMnemonic(parameters) {
+      validateDerivationPath(parameters.derivationPathPrefix);
       const itemsBatch = this.deriveItemsBatchFromMnemonic({
         ...parameters,
         enterpriseDerivationPathPrefix: DERIVATION_PATH_PATTERN.enterprise,
