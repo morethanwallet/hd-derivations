@@ -1,6 +1,5 @@
 import { type BIP32API, BIP32Factory, type BIP32Interface } from "bip32";
 import { type PrefixConfig } from "./libs/types/index.js";
-import { toUint8Array } from "@/libs/helpers/index.js";
 import { ecc } from "@/libs/modules/ecc/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
@@ -20,7 +19,7 @@ class Bip32Keys {
   protected getBip32RootKeyFromSeed(prefixConfig: PrefixConfig): BIP32Interface {
     const seed = this.mnemonic.getSeed();
 
-    return this.bip32.fromSeed(toUint8Array(seed), prefixConfig);
+    return this.bip32.fromSeed(Uint8Array.from(seed), prefixConfig);
   }
 
   protected getRootKeyFromBase58(base58RootKey: string): BIP32Interface {

@@ -1,5 +1,5 @@
 import { ExceptionMessage } from "@/libs/enums/index.js";
-import { AddressError } from "@/modules/network/libs/exceptions/index.js";
+import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
 import type { EllipticCurveAlgorithmUnion } from "@/libs/types/index.js";
 import { Ed25519PublicKey } from "@mysten/sui/keypairs/ed25519";
 import { Secp256k1PublicKey } from "@mysten/sui/keypairs/secp256k1";

@@ -31,13 +31,13 @@ import { HDKey } from "@scure/bip32";
 import { secp256r1 } from "@noble/curves/p256";
 import { VALIDATION_MESSAGE_TO_SIGN } from "./libs/constants/index.js";
 import { sha3_256 } from "@noble/hashes/sha3";
-import { toHexFromBytes, toUint8Array } from "@/libs/helpers/index.js";
+import { toHexFromBytes } from "@/libs/helpers/index.js";
 import { ExceptionMessage } from "../../libs/enums/index.js";
 import {
   ellipticCurveAlgorithmToPrivateKeyVariant,
   ellipticCurveAlgorithmToSchemeId,
 } from "./libs/maps/index.js";
-import { addHexPrefix, removeHexPrefix } from "@/libs/utils/index.js";
+import { addHexPrefix, convertHexToBytes, removeHexPrefix } from "@/libs/utils/index.js";
 
 class AptKeyDerivation
   extends Ed25519Keys
@@ -133,9 +133,7 @@ class AptKeyDerivation
     }
 
     const privateKeyBytes =
-      typeof sourceKey === "string"
-        ? toUint8Array(Buffer.from(removeHexPrefix(sourceKey), "hex"))
-        : sourceKey;
+      typeof sourceKey === "string" ? convertHexToBytes(removeHexPrefix(sourceKey)) : sourceKey;
 
     const publicKeyBytes = secp256r1.getPublicKey(privateKeyBytes, true);
     this.validateSecp256r1KeyPair(privateKeyBytes, publicKeyBytes);

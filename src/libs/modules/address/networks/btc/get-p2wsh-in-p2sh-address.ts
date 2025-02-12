@@ -2,16 +2,17 @@ import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants/ind
 import { ExceptionMessage } from "@/libs/modules/address/libs/enums/index.js";
 import { AddressError } from "../../libs/exceptions/index.js";
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
-import { toUint8Array } from "@/libs/helpers/index.js";
 import { type CommonKeyPair } from "@/libs/types/index.js";
 import { type PrefixConfig } from "@/libs/modules/keys/index.js";
 import { payments } from "bitcoinjs-lib";
+import { convertHexToBytes } from "@/libs/utils/index.js";
 
 function getP2wshInP2shAddress(
   publicKey: CommonKeyPair["publicKey"],
   prefixConfig: PrefixConfig,
 ): Address["address"] {
-  const rawPublicKey = toUint8Array(Buffer.from(publicKey, "hex"));
+  const rawPublicKey = convertHexToBytes(publicKey);
+
   const p2wshRedeem = payments.p2ms({
     m: MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT,
     pubkeys: [rawPublicKey],

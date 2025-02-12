@@ -1,16 +1,16 @@
 import { ExceptionMessage } from "@/libs/modules/address/libs/enums/index.js";
 import { AddressError } from "../../libs/exceptions/index.js";
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
-import { toUint8Array } from "@/libs/helpers/index.js";
 import { type CommonKeyPair } from "@/libs/types/index.js";
 import { type PrefixConfig } from "@/libs/modules/keys/index.js";
 import { payments } from "bitcoinjs-lib";
+import { convertHexToBytes } from "@/libs/utils/index.js";
 
 function getBtcLegacyAddress(
   publicKey: CommonKeyPair["publicKey"],
   prefixConfig: PrefixConfig,
 ): Address["address"] {
-  const rawPublicKey = toUint8Array(Buffer.from(publicKey, "hex"));
+  const rawPublicKey = convertHexToBytes(publicKey);
 
   const { address } = payments.p2pkh({
     network: prefixConfig,
