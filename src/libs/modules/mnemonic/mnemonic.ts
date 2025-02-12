@@ -5,7 +5,6 @@ import {
   mnemonicToSeedSync,
   wordlists,
 } from "bip39";
-import { type Buffer } from "buffer";
 import { MnemonicError } from "./libs/exceptions/index.js";
 import { ExceptionMessage } from "./libs/enums/index.js";
 
