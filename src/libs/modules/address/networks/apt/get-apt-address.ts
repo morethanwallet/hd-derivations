@@ -1,7 +1,7 @@
 import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants";
 import { ExceptionMessage } from "@/libs/enums/index.js";
 import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
-import type { CommonKeyPair, EllipticCurveAlgorithmUnion } from "@/libs/types/index.js";
+import type { CommonKeyPair, GetSignatureSchemeUnion } from "@/libs/types/index.js";
 import {
   addHexPrefix,
   convertBytesToHex,
@@ -17,7 +17,7 @@ const SECP256K1_BYTES_PUBLIC_KEY_START_INDEX = 2;
 function getAptAddress(
   publicKey: CommonKeyPair["publicKey"],
   isLegacy: boolean,
-  algorithm: EllipticCurveAlgorithmUnion,
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
   isMultiSig?: boolean,
 ) {
   const prefixRemovedPublicKey = removeHexPrefix(publicKey);
@@ -26,7 +26,7 @@ function getAptAddress(
   const multiSigAdjustedPublicKeyBytes = isMultiSig ? publicKeyBytes.slice(3, -1) : publicKeyBytes;
   let publicKeyInstance: AnyPublicKey | Ed25519PublicKey | null = null;
 
-  if (algorithm === "ed25519") {
+  if (scheme === "ed25519") {
     const adjustedPublicKeyBytes =
       isMultiSig || isLegacy
         ? multiSigAdjustedPublicKeyBytes
@@ -39,7 +39,7 @@ function getAptAddress(
       : new AnyPublicKey(ed25519PublicKeyInstance);
   }
 
-  if (algorithm === "secp256k1") {
+  if (scheme === "secp256k1") {
     const adjustedPublicKeyBytes = isMultiSig
       ? multiSigAdjustedPublicKeyBytes
       : publicKeyBytes.slice(SECP256K1_BYTES_PUBLIC_KEY_START_INDEX);
@@ -49,7 +49,7 @@ function getAptAddress(
     publicKeyInstance = new AnyPublicKey(secp256k1PublicKeyInstance);
   }
 
-  if (isMultiSig && algorithm !== "secp256r1") {
+  if (isMultiSig && scheme !== "secp256r1") {
     if (!publicKeyInstance) throw new AddressError(ExceptionMessage.INVALID_ALGORITHM);
 
     const multiSigPublicKey = new MultiKey({
@@ -60,7 +60,7 @@ function getAptAddress(
     return multiSigPublicKey.authKey().toString();
   }
 
-  if (algorithm === "secp256r1") {
+  if (scheme === "secp256r1") {
     const publicKeyBytes = convertHexToBytes(prefixRemovedPublicKey);
 
     const secp256r1KeyTypePrefix = 0x02;

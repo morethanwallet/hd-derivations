@@ -33,8 +33,8 @@ import { VALIDATION_MESSAGE_TO_SIGN } from "./libs/constants/index.js";
 import { sha3_256 } from "@noble/hashes/sha3";
 import { ExceptionMessage } from "../../libs/enums/index.js";
 import {
-  ellipticCurveAlgorithmToPrivateKeyVariant,
-  ellipticCurveAlgorithmToSchemeId,
+  signatureSchemeToPrivateKeyVariant,
+  signatureSchemeToSchemeId,
 } from "./libs/maps/index.js";
 import {
   addHexPrefix,
@@ -56,7 +56,7 @@ class AptKeyDerivation
     if (algorithm === "secp256r1") return this.getSecp256r1KeyPairFromMnemonic(derivationPath);
 
     const account = Account.fromDerivationPath({
-      scheme: ellipticCurveAlgorithmToSchemeId[algorithm],
+      scheme: signatureSchemeToSchemeId[algorithm],
       mnemonic: this.mnemonic.getMnemonic(),
       path: derivationPath,
       legacy: isLegacy,
@@ -88,7 +88,7 @@ class AptKeyDerivation
 
     const formattedKey = this.formatPrivateKey(
       privateKey,
-      ellipticCurveAlgorithmToPrivateKeyVariant[algorithm],
+      signatureSchemeToPrivateKeyVariant[algorithm],
     );
 
     const rawKey =

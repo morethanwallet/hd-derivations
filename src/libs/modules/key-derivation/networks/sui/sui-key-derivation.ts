@@ -3,7 +3,7 @@ import type {
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import type { CommonKeyPair, EllipticCurveAlgorithmUnion } from "@/libs/types/index.js";
+import type { CommonKeyPair, GetSignatureSchemeUnion } from "@/libs/types/index.js";
 import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
 import { Secp256r1Keypair } from "@mysten/sui/keypairs/secp256r1";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
@@ -45,7 +45,9 @@ class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sui
     return keyPair.getPublicKey().toSuiPublicKey();
   }
 
-  private getKeyPairHandler(algorithm: EllipticCurveAlgorithmUnion): KeyPairUnion {
+  private getKeyPairHandler(
+    algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
+  ): KeyPairUnion {
     switch (algorithm) {
       case "secp256k1":
         return Secp256k1Keypair;

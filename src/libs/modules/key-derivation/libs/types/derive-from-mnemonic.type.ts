@@ -4,13 +4,13 @@ import type {
   DerivationPath,
   DerivationTypeUnion,
   KeyPair,
-  EllipticCurveAlgorithmUnion,
+  GetSignatureSchemeUnion,
 } from "@/libs/types/index.js";
 import type { HandlersCommonParameters } from "./handlers-common-parameters.type.js";
 
 type AptDeriveFromMnemonicParameters = {
   isLegacy: boolean;
-  algorithm: EllipticCurveAlgorithmUnion;
+  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
   isMultiSig?: boolean;
 };
 

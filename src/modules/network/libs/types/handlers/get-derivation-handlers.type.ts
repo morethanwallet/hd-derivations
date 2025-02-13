@@ -17,7 +17,7 @@ import type {
   AdaDerivationTypeUnion,
   DerivationTypeUnion,
   XrpDerivationTypeUnion,
-  EllipticCurveAlgorithmUnion,
+  GetSignatureSchemeUnion,
   AptDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
@@ -50,7 +50,7 @@ type TonParameters = {
 
 type SuiParameters = {
   keysDerivationInstance: SuiKeyDerivation;
-  algorithm: EllipticCurveAlgorithmUnion;
+  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
 };
 
 type XrpParameters = {
@@ -74,7 +74,7 @@ type ZecParameters = { keysDerivationInstance: TransparentKeyDerivation };
 type AptParameters = {
   keysDerivationInstance: AptKeyDerivation;
   isMultiSig?: boolean;
-  algorithm: EllipticCurveAlgorithmUnion;
+  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
   isLegacy: boolean;
 };
 

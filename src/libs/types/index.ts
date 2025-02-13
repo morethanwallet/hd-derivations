@@ -22,4 +22,4 @@ export {
   type AdaBasePrivateKey,
 } from "./keys/index.js";
 export type { ValueOf } from "./value-of.type.js";
-export type { EllipticCurveAlgorithmUnion } from "./elliptic-curve-algorithm-union.type.js";
+export type { SignatureSchemeUnion } from "./signature-scheme-union.type.js";

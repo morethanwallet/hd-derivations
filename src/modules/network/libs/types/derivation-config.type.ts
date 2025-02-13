@@ -7,7 +7,7 @@ import type {
   BchDerivationTypeUnion,
   BtcDerivationTypeUnion,
   DerivationTypeMap,
-  EllipticCurveAlgorithmUnion,
+  GetSignatureSchemeUnion,
   LtcDerivationTypeUnion,
   XrpDerivationTypeUnion,
 } from "@/libs/types/index.js";
@@ -46,7 +46,7 @@ type TonDerivationConfig = {
 } & TonAddressDerivationConfig;
 
 type SuiDerivationConfig = {
-  algorithm: EllipticCurveAlgorithmUnion;
+  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
   derivationType: DerivationTypeMap["suiBase"];
 };
 
@@ -76,7 +76,7 @@ type ZecDerivationConfig = {
 type AptDerivationConfig = {
   derivationType: AptDerivationTypeUnion;
   authenticationScheme?: AuthSchemeUnion;
-  algorithm: EllipticCurveAlgorithmUnion;
+  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
 };
 
 type LtcDerivationConfig = {

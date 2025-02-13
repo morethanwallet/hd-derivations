@@ -3,13 +3,13 @@ import type {
   KeyPair,
   DerivationTypeUnion,
   AptDerivationTypeUnion,
-  EllipticCurveAlgorithmUnion,
+  GetSignatureSchemeUnion,
 } from "@/libs/types/index.js";
 import type { HandlersCommonParameters } from "./handlers-common-parameters.type.js";
 
 type AptParameters = {
   isLegacy: boolean;
-  algorithm: EllipticCurveAlgorithmUnion;
+  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
 };
 
 type ImportByPrivateKeyParameters<T extends DerivationTypeUnion> = PrivateKey<T> &
