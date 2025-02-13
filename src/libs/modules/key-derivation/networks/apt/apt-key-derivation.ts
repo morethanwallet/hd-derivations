@@ -49,14 +49,14 @@ class AptKeyDerivation
 {
   public deriveFromMnemonic({
     derivationPath,
-    algorithm,
+    scheme,
     isLegacy,
     isMultiSig,
   }: DeriveFromMnemonicParameters<AptDerivationTypeUnion>): CommonKeyPair {
-    if (algorithm === "secp256r1") return this.getSecp256r1KeyPairFromMnemonic(derivationPath);
+    if (scheme === "secp256r1") return this.getSecp256r1KeyPairFromMnemonic(derivationPath);
 
     const account = Account.fromDerivationPath({
-      scheme: signatureSchemeToSchemeId[algorithm],
+      scheme: signatureSchemeToSchemeId[scheme],
       mnemonic: this.mnemonic.getMnemonic(),
       path: derivationPath,
       legacy: isLegacy,
@@ -76,23 +76,23 @@ class AptKeyDerivation
       return this.getKeyPair(account.privateKey, account.publicKey);
     }
 
-    throw new KeyDerivationError(CommonExceptionMessage.INVALID_ALGORITHM);
+    throw new KeyDerivationError(CommonExceptionMessage.INVALID_SCHEME);
   }
 
   public importByPrivateKey({
     privateKey,
-    algorithm,
+    scheme,
     isLegacy,
   }: ImportByPrivateKeyParameters<AptDerivationTypeUnion>): CommonKeyPair {
-    if (algorithm === "secp256r1") return this.getSecp256r1KeyPairFromPrivateKey(privateKey);
+    if (scheme === "secp256r1") return this.getSecp256r1KeyPairFromPrivateKey(privateKey);
 
     const formattedKey = this.formatPrivateKey(
       privateKey,
-      signatureSchemeToPrivateKeyVariant[algorithm],
+      signatureSchemeToPrivateKeyVariant[scheme],
     );
 
     const rawKey =
-      algorithm === "ed25519"
+      scheme === "ed25519"
         ? new Ed25519PrivateKey(formattedKey)
         : new Secp256k1PrivateKey(formattedKey);
 

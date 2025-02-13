@@ -11,7 +11,7 @@ import type {
 
 function getAptDerivationHandlers({
   keysDerivationInstance,
-  algorithm,
+  scheme,
   isMultiSig,
   isLegacy,
 }: GetDerivationHandlersParameters<AptDerivationTypeUnion>): GetDerivationHandlersReturnType<AptDerivationTypeUnion> {
@@ -19,18 +19,18 @@ function getAptDerivationHandlers({
     deriveItemFromMnemonic: ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({
         derivationPath,
-        algorithm,
+        scheme,
         isMultiSig,
         isLegacy,
       });
 
-      const address = getAptAddress(keys.publicKey, isLegacy, algorithm, isMultiSig);
+      const address = getAptAddress(keys.publicKey, isLegacy, scheme, isMultiSig);
 
       return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: ({ privateKey }) => {
-      const keys = keysDerivationInstance.importByPrivateKey({ privateKey, algorithm, isLegacy });
-      const address = getAptAddress(keys.publicKey, isLegacy, algorithm);
+      const keys = keysDerivationInstance.importByPrivateKey({ privateKey, scheme, isLegacy });
+      const address = getAptAddress(keys.publicKey, isLegacy, scheme);
 
       return { ...keys, address };
     },
@@ -38,7 +38,7 @@ function getAptDerivationHandlers({
       return (deriveItemsBatchFromMnemonic<AptDerivationTypeUnion>).call(
         this,
         parameters,
-        algorithm === "ed25519",
+        scheme === "ed25519",
       );
     },
     doesPKBelongToMnemonic(parameters) {

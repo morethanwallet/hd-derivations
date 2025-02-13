@@ -50,7 +50,7 @@ function getAptAddress(
   }
 
   if (isMultiSig && scheme !== "secp256r1") {
-    if (!publicKeyInstance) throw new AddressError(ExceptionMessage.INVALID_ALGORITHM);
+    if (!publicKeyInstance) throw new AddressError(ExceptionMessage.INVALID_SCHEME);
 
     const multiSigPublicKey = new MultiKey({
       publicKeys: [publicKeyInstance],
@@ -77,7 +77,7 @@ function getAptAddress(
     return addHexPrefix(convertBytesToHex(publicKeyHash));
   }
 
-  if (!publicKeyInstance) throw new AddressError(ExceptionMessage.INVALID_ALGORITHM);
+  if (!publicKeyInstance) throw new AddressError(ExceptionMessage.INVALID_SCHEME);
 
   return publicKeyInstance.authKey().toString();
 }

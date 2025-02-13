@@ -61,7 +61,7 @@ const DEFAULT_TON_INSTANCE_PARAMETERS: TonInstanceParameters = {
 
 const DEFAULT_SUI_INSTANCE_PARAMETERS: SuiInstanceParameters = {
   network: "sui",
-  derivationConfig: { algorithm: "ed25519", derivationType: "suiBase" },
+  derivationConfig: { scheme: "ed25519", derivationType: "suiBase" },
 };
 
 const DEFAULT_BCH_INSTANCE_PARAMETERS: BchInstanceParameters = {
@@ -116,7 +116,7 @@ const DEFAULT_ZEC_INSTANCE_PARAMETERS: ZecInstanceParameters = {
 const DEFAULT_APT_INSTANCE_PARAMETERS: AptInstanceParameters = {
   network: "apt",
   derivationConfig: {
-    algorithm: "ed25519",
+    scheme: "ed25519",
     derivationType: "aptLegacy",
   },
 };

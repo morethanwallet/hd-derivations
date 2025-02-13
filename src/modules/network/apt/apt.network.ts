@@ -18,10 +18,10 @@ class Apt implements AbstractNetwork<AptDerivationTypeUnion> {
 
   public constructor({
     mnemonic,
-    derivationConfig: { algorithm, authenticationScheme, derivationType },
+    derivationConfig: { scheme, authenticationScheme, derivationType },
   }: ConstructorParameters<AptDerivationTypeUnion>) {
     this.derivationHandlers = getAptDerivationHandlers({
-      algorithm,
+      scheme,
       isLegacy: derivationType === "aptLegacy",
       isMultiSig: authenticationScheme === "multiSig",
       keysDerivationInstance: new AptKeyDerivation(mnemonic),

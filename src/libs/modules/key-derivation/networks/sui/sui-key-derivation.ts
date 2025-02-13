@@ -15,9 +15,9 @@ import { Ed25519Keys } from "@/libs/modules/keys/index.js";
 class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"suiBase"> {
   public deriveFromMnemonic({
     derivationPath,
-    algorithm,
+    scheme,
   }: DeriveFromMnemonicParameters<"suiBase">): CommonKeyPair {
-    const keyPairHandler = this.getKeyPairHandler(algorithm);
+    const keyPairHandler = this.getKeyPairHandler(scheme);
     const keyPair = keyPairHandler.deriveKeypair(this.mnemonic.getMnemonic(), derivationPath);
 
     return this.getKeyPair(keyPair);
@@ -25,9 +25,9 @@ class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sui
 
   public importByPrivateKey({
     privateKey,
-    algorithm,
+    scheme,
   }: ImportByPrivateKeyParameters<"suiBase">): CommonKeyPair {
-    const keyPairHandler = this.getKeyPairHandler(algorithm);
+    const keyPairHandler = this.getKeyPairHandler(scheme);
     const keyPair = keyPairHandler.fromSecretKey(privateKey);
     const publicKey = this.getPublicKey(keyPair);
 
@@ -46,9 +46,9 @@ class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sui
   }
 
   private getKeyPairHandler(
-    algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
+    scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
   ): KeyPairUnion {
-    switch (algorithm) {
+    switch (scheme) {
       case "secp256k1":
         return Secp256k1Keypair;
       case "secp256r1":
@@ -56,7 +56,7 @@ class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sui
       case "ed25519":
         return Ed25519Keypair;
       default:
-        throw new KeyDerivationError(ExceptionMessage.INVALID_ALGORITHM);
+        throw new KeyDerivationError(ExceptionMessage.INVALID_SCHEME);
     }
   }
 }

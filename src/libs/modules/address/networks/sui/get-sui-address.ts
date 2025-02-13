@@ -5,12 +5,12 @@ import { getPublicKeyHandler } from "./libs/helpers/index.js";
 
 function getSuiAddress(
   publicKey: CommonKeyPair["publicKey"],
-  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
 ): Address["address"] {
   const flagByteEndIndex = 1;
   const decodedKey = fromBase64(publicKey);
   const flagByteStrippedKey = decodedKey.subarray(flagByteEndIndex);
-  const publicKeyKeyHandler = getPublicKeyHandler(algorithm);
+  const publicKeyKeyHandler = getPublicKeyHandler(scheme);
   const ed25519Key = new publicKeyKeyHandler(flagByteStrippedKey);
 
   return ed25519Key.toSuiAddress();

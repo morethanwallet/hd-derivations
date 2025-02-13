@@ -9,7 +9,7 @@ import type { HandlersCommonParameters } from "./handlers-common-parameters.type
 
 type AptParameters = {
   isLegacy: boolean;
-  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
 };
 
 type ImportByPrivateKeyParameters<T extends DerivationTypeUnion> = PrivateKey<T> &

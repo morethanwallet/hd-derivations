@@ -69,18 +69,21 @@ type NetworkDerivationsInstances = {
 let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
-  const ellipticCurveAlgorithms: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">[] =
-    ["ed25519", "secp256k1", "secp256r1"] as const;
+  const signatureSchemes: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">[] = [
+    "ed25519",
+    "secp256k1",
+    "secp256r1",
+  ] as const;
 
-  networkDerivationsInstances = ellipticCurveAlgorithms.reduce<NetworkDerivationsInstances>(
-    (networkDerivationsInstances, ellipticCurveAlgorithm) => {
-      networkDerivationsInstances[ellipticCurveAlgorithm] = {
+  networkDerivationsInstances = signatureSchemes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, signatureScheme) => {
+      networkDerivationsInstances[signatureScheme] = {
         suiBase: getNetwork({
           network: "sui",
           mnemonic: MNEMONIC,
           derivationConfig: {
             derivationType: "suiBase",
-            algorithm: ellipticCurveAlgorithm,
+            scheme: signatureScheme,
           },
         }),
       };

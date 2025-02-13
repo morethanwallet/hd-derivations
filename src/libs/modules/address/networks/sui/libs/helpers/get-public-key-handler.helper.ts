@@ -7,9 +7,9 @@ import { Secp256r1PublicKey } from "@mysten/sui/keypairs/secp256r1";
 import type { PublicKeyHandlerUnion } from "../types/index.js";
 
 function getPublicKeyHandler(
-  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
 ): PublicKeyHandlerUnion {
-  switch (algorithm) {
+  switch (scheme) {
     case "secp256k1":
       return Secp256k1PublicKey;
     case "secp256r1":
@@ -17,7 +17,7 @@ function getPublicKeyHandler(
     case "ed25519":
       return Ed25519PublicKey;
     default:
-      throw new AddressError(ExceptionMessage.INVALID_ALGORITHM);
+      throw new AddressError(ExceptionMessage.INVALID_SCHEME);
   }
 }
 
