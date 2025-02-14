@@ -2,7 +2,6 @@ import type {
   AdaInstanceParameters,
   AvaxInstanceParameters,
   BtcInstanceParameters,
-  NetworkTypeMap,
   NetworkTypeUnion,
   SuiInstanceParameters,
   TonInstanceParameters,
@@ -19,45 +18,27 @@ import type {
   LtcInstanceParameters,
 } from "@/modules/network/libs/types/index.js";
 
+type NetworkToNetworkParameters = {
+  btc: BtcInstanceParameters;
+  ada: AdaInstanceParameters;
+  avax: AvaxInstanceParameters;
+  ton: TonInstanceParameters;
+  trx: TrxInstanceParameters;
+  sui: SuiInstanceParameters;
+  bch: BchInstanceParameters;
+  dot: DotInstanceParameters;
+  xrp: XrpInstanceParameters;
+  bnb: BnbInstanceParameters;
+  evm: EvmInstanceParameters;
+  sol: SolInstanceParameters;
+  doge: DogeInstanceParameters;
+  zec: ZecInstanceParameters;
+  apt: AptInstanceParameters;
+  ltc: LtcInstanceParameters;
+};
+
 type GetNetworkParameters<T extends NetworkTypeUnion> = {
   network: T;
-} & (T extends NetworkTypeMap["btc"]
-  ? BtcInstanceParameters
-  : T extends NetworkTypeMap["ada"]
-    ? AdaInstanceParameters
-    : T extends NetworkTypeMap["avax"]
-      ? AvaxInstanceParameters
-      : T extends NetworkTypeMap["ton"]
-        ? TonInstanceParameters
-        : T extends NetworkTypeMap["trx"]
-          ? TrxInstanceParameters
-          : T extends NetworkTypeMap["sui"]
-            ? SuiInstanceParameters
-            : T extends NetworkTypeMap["bch"]
-              ? BchInstanceParameters
-              : T extends NetworkTypeMap["dot"]
-                ? DotInstanceParameters
-                : T extends NetworkTypeMap["xrp"]
-                  ? XrpInstanceParameters
-                  : T extends NetworkTypeMap["bnb"]
-                    ? BnbInstanceParameters
-                    : T extends NetworkTypeMap["evm"]
-                      ? EvmInstanceParameters
-                      : T extends NetworkTypeMap["sol"]
-                        ? SolInstanceParameters
-                        : T extends NetworkTypeMap["doge"]
-                          ? DogeInstanceParameters
-                          : T extends NetworkTypeMap["zec"]
-                            ? ZecInstanceParameters
-                            : T extends NetworkTypeMap["apt"]
-                              ? AptInstanceParameters
-                              : T extends NetworkTypeMap["ltc"]
-                                ? LtcInstanceParameters
-                                : {
-                                    networkPurpose: null;
-                                    derivationConfigs: {};
-                                    mnemonic: null;
-                                    scheme: null;
-                                  });
+} & NetworkToNetworkParameters[T];
 
 export type { GetNetworkParameters };
