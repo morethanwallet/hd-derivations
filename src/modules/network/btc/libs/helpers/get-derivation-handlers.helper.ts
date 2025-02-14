@@ -33,7 +33,13 @@ function getLegacyDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"btcLegacy">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"btcLegacy">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"btcLegacy">,
   };
 }
@@ -55,7 +61,13 @@ function getSegWitDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"btcSegWit">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"btcSegWit">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"btcSegWit">,
   };
 }
@@ -83,7 +95,13 @@ function getNativeSegWitDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"btcNativeSegWit">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"btcNativeSegWit">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"btcNativeSegWit">,
   };
 }
@@ -105,7 +123,13 @@ function getTaprootDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"btcTaproot">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"btcTaproot">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"btcTaproot">,
   };
 }
@@ -127,7 +151,13 @@ function getP2wshDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"btcP2wsh">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"btcP2wsh">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"btcP2wsh">,
   };
 }
@@ -149,7 +179,13 @@ function getP2wshInP2shDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"btcP2wshInP2sh">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"btcP2wshInP2sh">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"btcP2wshInP2sh">,
   };
 }

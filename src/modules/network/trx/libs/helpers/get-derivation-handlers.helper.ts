@@ -26,7 +26,13 @@ function getTrxDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"trxBase">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"trxBase">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"trxBase">,
   };
 }

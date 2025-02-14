@@ -26,7 +26,13 @@ function getBnbDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"bnbBase">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"bnbBase">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"bnbBase">,
   };
 }

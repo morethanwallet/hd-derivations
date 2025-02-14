@@ -30,7 +30,13 @@ function getLegacyDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"ltcLegacy">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"ltcLegacy">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcLegacy">,
   };
 }
@@ -52,7 +58,13 @@ function getSegWitDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"ltcSegWit">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"ltcSegWit">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcSegWit">,
   };
 }
@@ -80,7 +92,13 @@ function getNativeSegWitDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"ltcNativeSegWit">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"ltcNativeSegWit">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcNativeSegWit">,
   };
 }

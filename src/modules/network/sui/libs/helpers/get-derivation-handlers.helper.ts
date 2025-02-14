@@ -31,8 +31,13 @@ function getSuiDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic(parameters) {
-      return (deriveItemsBatchFromMnemonic<"suiBase">).call(this, parameters, scheme === "ed25519");
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"suiBase">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        scheme === "ed25519",
+      );
     },
     doesPKBelongToMnemonic(parameters) {
       const itemsBatch = this.deriveItemsBatchFromMnemonic(parameters);

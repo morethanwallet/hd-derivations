@@ -55,7 +55,13 @@ function getEnterpriseDerivationHandlers({
 
       throw new NetworkError(ExceptionMessage.CREDENTIAL_GENERATION_FAILED);
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaEnterprise">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"adaEnterprise">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"adaEnterprise">,
   };
 }
@@ -87,7 +93,13 @@ function getRewardDerivationHandlers({
 
       throw new NetworkError(ExceptionMessage.CREDENTIAL_GENERATION_FAILED);
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaReward">,
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"adaReward">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
     doesPKBelongToMnemonic(parameters) {
       const itemsBatch = this.deriveItemsBatchFromMnemonic({
         ...parameters,

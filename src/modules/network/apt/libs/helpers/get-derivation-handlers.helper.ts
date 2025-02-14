@@ -34,10 +34,11 @@ function getAptDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic(parameters) {
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
       return (deriveItemsBatchFromMnemonic<AptDerivationTypeUnion>).call(
         this,
-        parameters,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
         scheme === "ed25519",
       );
     },

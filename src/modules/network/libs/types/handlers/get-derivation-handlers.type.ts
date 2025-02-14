@@ -9,6 +9,7 @@ import type {
   TransparentKeyDerivation,
   AptKeyDerivation,
   AdaKeyDerivation,
+  DotKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
 import type {
   BtcDerivationTypeUnion,
@@ -19,6 +20,7 @@ import type {
   XrpDerivationTypeUnion,
   GetSignatureSchemeUnion,
   AptDerivationTypeUnion,
+  DotDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
 import { type GetCredentialFromPK } from "./get-credential-from-p-k.type.js";
@@ -50,7 +52,7 @@ type TonParameters = {
 
 type SuiParameters = {
   keysDerivationInstance: SuiKeyDerivation;
-  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
 };
 
 type XrpParameters = {
@@ -63,7 +65,13 @@ type BnbParameters = { keysDerivationInstance: BnbKeyDerivation };
 
 type EvmParameters = { keysDerivationInstance: EvmKeyDerivation };
 
-type DotParameters = { keysDerivationInstance: CommonEd25519KeyDerivation } & Ss58Format;
+type DotParameters<T extends DotDerivationTypeUnion> = (T extends DerivationTypeMap["dotStandardHd"]
+  ? { keysDerivationInstance: CommonEd25519KeyDerivation }
+  : {
+      keysDerivationInstance: DotKeyDerivation;
+      scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
+    }) &
+  Ss58Format;
 
 type BchParameters = { keysDerivationInstance: CommonBipKeyDerivation; isRegtest: boolean };
 
@@ -74,7 +82,7 @@ type ZecParameters = { keysDerivationInstance: TransparentKeyDerivation };
 type AptParameters = {
   keysDerivationInstance: AptKeyDerivation;
   isMultiSig?: boolean;
-  algorithm: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
   isLegacy: boolean;
 };
 
@@ -95,8 +103,8 @@ type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
                 ? BnbParameters
                 : T extends DerivationTypeMap["evmBase"]
                   ? EvmParameters
-                  : T extends DerivationTypeMap["dotBase"]
-                    ? DotParameters
+                  : T extends DotDerivationTypeUnion
+                    ? DotParameters<T>
                     : T extends DerivationTypeMap["bchCashAddr"]
                       ? BchParameters
                       : T extends DerivationTypeMap["solBase"]
