@@ -1,4 +1,4 @@
-import { toXOnlyPublicKey } from "@/libs/helpers/index.js";
+import { toXOnlyPublicKey } from "./libs/helpers/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { type BIP32Interface } from "bip32";
 import { type PrefixConfig, Bip32Keys } from "@/libs/modules/keys/index.js";
@@ -39,12 +39,9 @@ class TaprootKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"b
   }
 
   private getKeyPair(source: BIP32Interface | string): CommonKeyPair {
-    const keyPair = getKeyPairFromEc({
-      source,
-      prefixConfig: this.prefixConfig,
-    });
-
-    const publicKey = convertBytesToHex(toXOnlyPublicKey(convertHexToBytes(keyPair.publicKey)));
+    const keyPair = getKeyPairFromEc({ source, prefixConfig: this.prefixConfig });
+    const xOnlyPublicKey = toXOnlyPublicKey(convertHexToBytes(keyPair.publicKey));
+    const publicKey = convertBytesToHex(xOnlyPublicKey);
 
     return { privateKey: keyPair.privateKey, publicKey };
   }
