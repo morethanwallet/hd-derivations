@@ -8,13 +8,13 @@ import type {
   SolKeyDerivation,
   TransparentKeyDerivation,
   AptKeyDerivation,
-  AdaKeyDerivation,
+  AdaBaseKeyDerivation,
+  AdaCommonKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
 import type {
   BtcDerivationTypeUnion,
   DerivationTypeMap,
   AvaxDerivationTypeUnion,
-  AdaDerivationTypeUnion,
   DerivationTypeUnion,
   XrpDerivationTypeUnion,
   EllipticCurveAlgorithmUnion,
@@ -38,9 +38,14 @@ type BtcParameters<TDerivationType extends DerivationTypeUnion> =
     ? { keysDerivationInstance: TaprootKeyDerivation }
     : { keysDerivationInstance: CommonBipKeyDerivation };
 
-type AdaParameters = {
+type AdaBaseParameters = {
   networkId: number;
-  keysDerivationInstance: AdaKeyDerivation;
+  keysDerivationInstance: AdaBaseKeyDerivation;
+};
+
+type AdaCommonParameters = {
+  networkId: number;
+  keysDerivationInstance: AdaCommonKeyDerivation;
 };
 
 type TonParameters = {
@@ -83,29 +88,31 @@ type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
     ? AvaxParameters
     : T extends BtcDerivationTypeUnion
       ? BtcParameters<T>
-      : T extends AdaDerivationTypeUnion
-        ? AdaParameters
-        : T extends DerivationTypeMap["tonBase"]
-          ? TonParameters
-          : T extends DerivationTypeMap["suiBase"]
-            ? SuiParameters
-            : T extends XrpDerivationTypeUnion
-              ? XrpParameters
-              : T extends DerivationTypeMap["bnbBase"]
-                ? BnbParameters
-                : T extends DerivationTypeMap["evmBase"]
-                  ? EvmParameters
-                  : T extends DerivationTypeMap["dotBase"]
-                    ? DotParameters
-                    : T extends DerivationTypeMap["bchCashAddr"]
-                      ? BchParameters
-                      : T extends DerivationTypeMap["solBase"]
-                        ? SolParameters
-                        : T extends DerivationTypeMap["zecTransparent"]
-                          ? ZecParameters
-                          : T extends AptDerivationTypeUnion
-                            ? AptParameters
-                            : { keysDerivationInstance: CommonBipKeyDerivation };
+      : T extends DerivationTypeMap["adaBase"]
+        ? AdaBaseParameters
+        : T extends DerivationTypeMap["adaReward"] | DerivationTypeMap["adaEnterprise"]
+          ? AdaCommonParameters
+          : T extends DerivationTypeMap["tonBase"]
+            ? TonParameters
+            : T extends DerivationTypeMap["suiBase"]
+              ? SuiParameters
+              : T extends XrpDerivationTypeUnion
+                ? XrpParameters
+                : T extends DerivationTypeMap["bnbBase"]
+                  ? BnbParameters
+                  : T extends DerivationTypeMap["evmBase"]
+                    ? EvmParameters
+                    : T extends DerivationTypeMap["dotBase"]
+                      ? DotParameters
+                      : T extends DerivationTypeMap["bchCashAddr"]
+                        ? BchParameters
+                        : T extends DerivationTypeMap["solBase"]
+                          ? SolParameters
+                          : T extends DerivationTypeMap["zecTransparent"]
+                            ? ZecParameters
+                            : T extends AptDerivationTypeUnion
+                              ? AptParameters
+                              : { keysDerivationInstance: CommonBipKeyDerivation };
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;

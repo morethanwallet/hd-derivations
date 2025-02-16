@@ -31,27 +31,21 @@ function getEnterpriseDerivationHandlers({
   networkId,
 }: GetDerivationHandlersParameters<"adaEnterprise">): GetDerivationHandlersReturnType<"adaEnterprise"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+    deriveItemFromMnemonic: (parameters) => {
+      const keys = keysDerivationInstance.deriveFromMnemonic({
+        derivationPath: parameters.derivationPath,
+      });
 
-      if ("publicKey" in keys) {
-        const address = getEnterpriseAddress(keys.publicKey, networkId);
+      const address = getEnterpriseAddress(keys.publicKey, networkId);
 
-        return { ...keys, address, derivationPath };
-      }
-
-      throw new NetworkError(ExceptionMessage.ITEM_GENERATION_FAILED);
+      return { ...keys, address, derivationPath: parameters.derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
 
-      if ("publicKey" in keys) {
-        const address = getEnterpriseAddress(keys.publicKey, networkId);
+      const address = getEnterpriseAddress(keys.publicKey, networkId);
 
-        return { ...keys, address };
-      }
-
-      throw new NetworkError(ExceptionMessage.CREDENTIAL_GENERATION_FAILED);
+      return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaEnterprise">,
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"adaEnterprise">,
@@ -66,24 +60,16 @@ function getRewardDerivationHandlers({
     deriveItemFromMnemonic: ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
 
-      if ("publicKey" in keys) {
-        const address = getRewardAddress(keys.publicKey, networkId);
+      const address = getRewardAddress(keys.publicKey, networkId);
 
-        return { ...keys, address, derivationPath };
-      }
-
-      throw new NetworkError(ExceptionMessage.ITEM_GENERATION_FAILED);
+      return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
 
-      if ("publicKey" in keys) {
-        const address = getRewardAddress(keys.publicKey, networkId);
+      const address = getRewardAddress(keys.publicKey, networkId);
 
-        return { ...keys, address };
-      }
-
-      throw new NetworkError(ExceptionMessage.CREDENTIAL_GENERATION_FAILED);
+      return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"adaReward">,
     doesPKBelongToMnemonic(parameters) {
@@ -107,18 +93,14 @@ function getBaseDerivationHandlers({
     deriveItemFromMnemonic: (parameters) => {
       const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
 
-      if ("enterprisePublicKey" in keys) {
-        const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
+      const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
 
-        return {
-          ...keys,
-          address,
-          enterpriseDerivationPath: parameters.enterpriseDerivationPath,
-          rewardDerivationPath: parameters.rewardDerivationPath,
-        };
-      }
-
-      throw new NetworkError(ExceptionMessage.ITEM_GENERATION_FAILED);
+      return {
+        ...keys,
+        address,
+        enterpriseDerivationPath: parameters.enterpriseDerivationPath,
+        rewardDerivationPath: parameters.rewardDerivationPath,
+      };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);

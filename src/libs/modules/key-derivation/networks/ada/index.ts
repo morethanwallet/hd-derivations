@@ -1,1 +1,1 @@
-export { AdaKeyDerivation } from "./ada-key-derivation";
+export { AdaBaseKeyDerivation, AdaCommonKeyDerivation } from "./ada-key-derivation";
