@@ -13,7 +13,7 @@ import type {
 } from "@/libs/modules/key-derivation/index.js";
 import type {
   BtcDerivationTypeUnion,
-  DerivationTypeMap,
+  GetDerivationTypeUnion,
   AvaxDerivationTypeUnion,
   AdaDerivationTypeUnion,
   DerivationTypeUnion,
@@ -36,7 +36,7 @@ type AvaxParameters = {
 };
 
 type BtcParameters<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends DerivationTypeMap["btcTaproot"]
+  TDerivationType extends GetDerivationTypeUnion<"btcTaproot">
     ? { keysDerivationInstance: TaprootKeyDerivation }
     : { keysDerivationInstance: CommonBipKeyDerivation };
 
@@ -65,13 +65,14 @@ type BnbParameters = { keysDerivationInstance: BnbKeyDerivation };
 
 type EvmParameters = { keysDerivationInstance: EvmKeyDerivation };
 
-type DotParameters<T extends DotDerivationTypeUnion> = (T extends DerivationTypeMap["dotStandardHd"]
-  ? { keysDerivationInstance: CommonEd25519KeyDerivation }
-  : {
-      keysDerivationInstance: DotKeyDerivation;
-      scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
-    }) &
-  Ss58Format;
+type DotParameters<T extends DotDerivationTypeUnion> =
+  (T extends GetDerivationTypeUnion<"dotStandardHd">
+    ? { keysDerivationInstance: CommonEd25519KeyDerivation }
+    : {
+        keysDerivationInstance: DotKeyDerivation;
+        scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
+      }) &
+    Ss58Format;
 
 type BchParameters = { keysDerivationInstance: CommonBipKeyDerivation; isRegtest: boolean };
 
@@ -93,23 +94,23 @@ type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
       ? BtcParameters<T>
       : T extends AdaDerivationTypeUnion
         ? AdaParameters
-        : T extends DerivationTypeMap["tonBase"]
+        : T extends GetDerivationTypeUnion<"tonBase">
           ? TonParameters
-          : T extends DerivationTypeMap["suiBase"]
+          : T extends GetDerivationTypeUnion<"suiBase">
             ? SuiParameters
             : T extends XrpDerivationTypeUnion
               ? XrpParameters
-              : T extends DerivationTypeMap["bnbBase"]
+              : T extends GetDerivationTypeUnion<"bnbBase">
                 ? BnbParameters
-                : T extends DerivationTypeMap["evmBase"]
+                : T extends GetDerivationTypeUnion<"evmBase">
                   ? EvmParameters
                   : T extends DotDerivationTypeUnion
                     ? DotParameters<T>
-                    : T extends DerivationTypeMap["bchCashAddr"]
+                    : T extends GetDerivationTypeUnion<"bchCashAddr">
                       ? BchParameters
-                      : T extends DerivationTypeMap["solBase"]
+                      : T extends GetDerivationTypeUnion<"solBase">
                         ? SolParameters
-                        : T extends DerivationTypeMap["zecTransparent"]
+                        : T extends GetDerivationTypeUnion<"zecTransparent">
                           ? ZecParameters
                           : T extends AptDerivationTypeUnion
                             ? AptParameters

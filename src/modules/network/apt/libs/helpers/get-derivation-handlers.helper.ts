@@ -44,9 +44,8 @@ function getAptDerivationHandlers({
     },
     doesPKBelongToMnemonic(parameters) {
       const itemsBatch = this.deriveItemsBatchFromMnemonic(parameters);
-      const { privateKey } = parameters;
 
-      return doesPKExistInBatch(itemsBatch, privateKey);
+      return doesPKExistInBatch(itemsBatch, parameters.privateKey);
     },
   };
 }

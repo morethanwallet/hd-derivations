@@ -27,11 +27,17 @@ function getLegacyDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
       return (deriveItemsBatchFromMnemonic<"dogeLegacy">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
       );
     },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"dogeLegacy">,

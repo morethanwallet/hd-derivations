@@ -26,11 +26,17 @@ function getEvmDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
       return (deriveItemsBatchFromMnemonic<"evmBase">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
       );
     },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"evmBase">,

@@ -1,7 +1,7 @@
 import type {
   AdaBaseDerivationPath,
   CommonDerivationPath,
-  DerivationTypeMap,
+  GetDerivationTypeUnion,
   DerivationTypeUnion,
 } from "@/libs/types/index.js";
 
@@ -14,8 +14,9 @@ type AdaDerivationPathPrefix = {
   rewardDerivationPathPrefix: AdaBaseDerivationPath["rewardDerivationPath"];
 };
 
-type DerivationPathPrefix<T extends DerivationTypeUnion> = T extends DerivationTypeMap["adaBase"]
-  ? AdaDerivationPathPrefix
-  : CommonDerivationPathPrefix;
+type DerivationPathPrefix<T extends DerivationTypeUnion> =
+  T extends GetDerivationTypeUnion<"adaBase">
+    ? AdaDerivationPathPrefix
+    : CommonDerivationPathPrefix;
 
 export type { DerivationPathPrefix, CommonDerivationPathPrefix };

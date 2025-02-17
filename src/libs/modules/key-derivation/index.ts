@@ -7,3 +7,4 @@ export { EvmKeyDerivation } from "./networks/evm/index.js";
 export { SolKeyDerivation } from "./networks/sol/index.js";
 export { TransparentKeyDerivation } from "./networks/zec/index.js";
 export { AptKeyDerivation } from "./networks/apt/index.js";
+export { DotKeyDerivation } from "./networks/dot/index.js";

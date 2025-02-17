@@ -30,11 +30,17 @@ function getLegacyDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
       return (deriveItemsBatchFromMnemonic<"ltcLegacy">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
       );
     },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcLegacy">,
@@ -58,11 +64,17 @@ function getSegWitDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
       return (deriveItemsBatchFromMnemonic<"ltcSegWit">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
       );
     },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcSegWit">,
@@ -92,11 +104,17 @@ function getNativeSegWitDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
       return (deriveItemsBatchFromMnemonic<"ltcNativeSegWit">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
       );
     },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcNativeSegWit">,

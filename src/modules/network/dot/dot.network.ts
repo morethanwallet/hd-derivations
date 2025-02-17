@@ -1,4 +1,7 @@
-import { CommonEd25519KeyDerivation } from "@/libs/modules/key-derivation/index.js";
+import {
+  CommonEd25519KeyDerivation,
+  DotKeyDerivation,
+} from "@/libs/modules/key-derivation/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
   GetCredentialFromPKParameters,
@@ -10,44 +13,55 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { getDotDerivationHandlers } from "./libs/helpers/index.js";
-import { type DerivationTypeMap } from "@/libs/types/index.js";
+import {
+  getBaseDerivationHandlers,
+  getStandardHdDerivationHandlers,
+} from "./libs/helpers/index.js";
+import type { DotDerivationTypeUnion } from "@/libs/types/index.js";
 
-class Dot implements AbstractNetwork<DerivationTypeMap["dotBase"]> {
-  private derivationHandlers: DerivationsHandlers<
-    DerivationTypeMap["dotBase"]
-  >[DerivationTypeMap["dotBase"]];
+class Dot implements AbstractNetwork<DotDerivationTypeUnion> {
+  private derivationHandlers: DerivationsHandlers<DotDerivationTypeUnion>[DotDerivationTypeUnion];
 
   public constructor({
-    derivationConfig: { ss58Format },
+    derivationConfig: { ss58Format, derivationType, scheme },
     mnemonic,
-  }: ConstructorParameters<DerivationTypeMap["dotBase"]>) {
-    this.derivationHandlers = getDotDerivationHandlers({
-      ss58Format,
-      keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic),
-    });
+    dotMnemonic,
+  }: ConstructorParameters<DotDerivationTypeUnion>) {
+    const derivationHandlers: DerivationsHandlers<DotDerivationTypeUnion> = {
+      dotStandardHd: getStandardHdDerivationHandlers({
+        ss58Format,
+        keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic),
+      }),
+      dotBase: getBaseDerivationHandlers({
+        scheme,
+        ss58Format,
+        keysDerivationInstance: new DotKeyDerivation(dotMnemonic),
+      }),
+    };
+
+    this.derivationHandlers = derivationHandlers[derivationType];
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<DerivationTypeMap["dotBase"]>,
-  ): DerivedItem<DerivationTypeMap["dotBase"]> {
+    parameters: DeriveItemFromMnemonicParameters<DotDerivationTypeUnion>,
+  ): DerivedItem<DotDerivationTypeUnion> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<DerivationTypeMap["dotBase"]>,
-  ): DerivedCredential<DerivationTypeMap["dotBase"]> {
+    parameters: GetCredentialFromPKParameters<DotDerivationTypeUnion>,
+  ): DerivedCredential<DotDerivationTypeUnion> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeMap["dotBase"]>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<DotDerivationTypeUnion>,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeMap["dotBase"]>,
+    parameters: DoesPKBelongToMnemonicParameters<DotDerivationTypeUnion>,
   ) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }

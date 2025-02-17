@@ -28,11 +28,17 @@ function geXrpDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
       return (deriveItemsBatchFromMnemonic<XrpDerivationTypeUnion>).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
       );
     },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<XrpDerivationTypeUnion>,

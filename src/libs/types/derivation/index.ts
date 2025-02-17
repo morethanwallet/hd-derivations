@@ -12,5 +12,6 @@ export type {
   BchDerivationTypeUnion,
   AptDerivationTypeUnion,
   LtcDerivationTypeUnion,
+  DotDerivationTypeUnion,
+  GetDerivationTypeUnion,
 } from "./derivation-type-union.type.js";
-export { type DerivationTypeMap } from "./derivation-type-map.type.js";

@@ -3,13 +3,14 @@ import type {
   AdaDerivationTypeUnion,
   BtcDerivationTypeUnion,
   DerivationTypeUnion,
-  DerivationTypeMap,
+  GetDerivationTypeUnion,
   BchDerivationTypeUnion,
   XrpDerivationTypeUnion,
   AptDerivationTypeUnion,
   LtcDerivationTypeUnion,
+  DotDerivationTypeUnion,
 } from "@/libs/types/index.js";
-import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
+import { DotMnemonic, type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import type {
   AdaDerivationConfig,
   AptDerivationConfig,
@@ -29,9 +30,9 @@ import type {
 
 // TODO: Try to use mapping here
 type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
-  T extends DerivationTypeMap["solBase"]
+  T extends GetDerivationTypeUnion<"solBase">
     ? {}
-    : T extends DerivationTypeMap["evmBase"] | DerivationTypeMap["bnbBase"]
+    : T extends GetDerivationTypeUnion<"evmBase" | "bnbBase">
       ? { derivationConfig?: CommonDerivationConfig }
       : {
           derivationConfig: T extends BtcDerivationTypeUnion
@@ -40,21 +41,21 @@ type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
               ? AdaDerivationConfig
               : T extends AvaxDerivationTypeUnion
                 ? AvaxDerivationConfig
-                : T extends DerivationTypeMap["trxBase"]
+                : T extends GetDerivationTypeUnion<"trxBase">
                   ? TrxDerivationConfig
-                  : T extends DerivationTypeMap["tonBase"]
+                  : T extends GetDerivationTypeUnion<"tonBase">
                     ? TonDerivationConfig
-                    : T extends DerivationTypeMap["suiBase"]
+                    : T extends GetDerivationTypeUnion<"suiBase">
                       ? SuiDerivationConfig
                       : T extends BchDerivationTypeUnion
                         ? BchDerivationConfig
-                        : T extends DerivationTypeMap["dotBase"]
+                        : T extends DotDerivationTypeUnion
                           ? DotDerivationConfig
                           : T extends XrpDerivationTypeUnion
                             ? XrpDerivationConfig
-                            : T extends DerivationTypeMap["dogeLegacy"]
+                            : T extends GetDerivationTypeUnion<"dogeLegacy">
                               ? DogeDerivationConfig
-                              : T extends DerivationTypeMap["zecTransparent"]
+                              : T extends GetDerivationTypeUnion<"zecTransparent">
                                 ? ZecDerivationConfig
                                 : T extends AptDerivationTypeUnion
                                   ? AptDerivationConfig
@@ -63,8 +64,9 @@ type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
                                     : CommonDerivationConfig;
         };
 
-type ConstructorParameters<TDerivationType extends DerivationTypeUnion> = {
+type ConstructorParameters<T extends DerivationTypeUnion> = {
   mnemonic: Mnemonic;
-} & ConstructorDerivationConfigParameters<TDerivationType>;
+} & ConstructorDerivationConfigParameters<T> &
+  (T extends DotDerivationTypeUnion ? { dotMnemonic: DotMnemonic } : {});
 
 export { type ConstructorParameters };

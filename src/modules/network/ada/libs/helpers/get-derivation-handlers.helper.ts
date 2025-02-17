@@ -55,11 +55,17 @@ function getEnterpriseDerivationHandlers({
 
       throw new NetworkError(ExceptionMessage.CREDENTIAL_GENERATION_FAILED);
     },
-    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
       return (deriveItemsBatchFromMnemonic<"adaEnterprise">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
       );
     },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"adaEnterprise">,
@@ -93,11 +99,17 @@ function getRewardDerivationHandlers({
 
       throw new NetworkError(ExceptionMessage.CREDENTIAL_GENERATION_FAILED);
     },
-    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
       return (deriveItemsBatchFromMnemonic<"adaReward">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
       );
     },
     doesPKBelongToMnemonic(parameters) {
@@ -105,6 +117,9 @@ function getRewardDerivationHandlers({
         ...parameters,
         derivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
       });
+      itemsBatch.push(
+        ...this.deriveItemsBatchFromMnemonic({ ...parameters, shouldUseHardenedAddress: true }),
+      );
 
       if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) return true;
 
@@ -149,45 +164,62 @@ function getBaseDerivationHandlers({
       this: {
         deriveItemFromMnemonic: GetDerivationHandlersReturnType<"adaBase">["deriveItemFromMnemonic"];
       },
-      parameters,
+      {
+        enterpriseDerivationPathPrefix,
+        rewardDerivationPathPrefix,
+        indexLookupFrom,
+        indexLookupTo,
+        shouldUseHardenedAddress,
+      },
     ) {
-      validateDerivationPath(parameters.enterpriseDerivationPathPrefix);
-      validateDerivationPath(parameters.rewardDerivationPathPrefix);
-      let batch: DerivedItem<"adaBase">[] = [];
+      validateDerivationPath(enterpriseDerivationPathPrefix);
+      validateDerivationPath(rewardDerivationPathPrefix);
+      let itemsBatch: DerivedItem<"adaBase">[] = [];
 
-      for (let i = parameters.indexLookupFrom; i < parameters.indexLookupTo; i++) {
+      for (let i = indexLookupFrom; i < indexLookupTo; i++) {
         const enterpriseDerivationPathWithAddressIndex = appendAddressToDerivationPath({
-          shouldHarden: false,
-          derivationPath: parameters.enterpriseDerivationPathPrefix,
+          shouldHarden: shouldUseHardenedAddress,
+          derivationPath: enterpriseDerivationPathPrefix,
           addressIndex: i,
         });
 
         const rewardDerivationPathWithAddressIndex = appendAddressToDerivationPath({
-          shouldHarden: false,
-          derivationPath: parameters.rewardDerivationPathPrefix,
+          shouldHarden: shouldUseHardenedAddress,
+          derivationPath: rewardDerivationPathPrefix,
           addressIndex: i,
         });
 
-        batch.push(
+        itemsBatch.push(
           this.deriveItemFromMnemonic({
-            ...parameters,
             enterpriseDerivationPath: enterpriseDerivationPathWithAddressIndex,
             rewardDerivationPath: rewardDerivationPathWithAddressIndex,
           }),
         );
       }
 
-      return batch;
+      return itemsBatch;
     },
     doesPKBelongToMnemonic(parameters) {
       validateDerivationPath(parameters.derivationPathPrefix);
+
       const itemsBatch = this.deriveItemsBatchFromMnemonic({
         ...parameters,
         enterpriseDerivationPathPrefix: DERIVATION_PATH_PATTERN.enterprise,
         rewardDerivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
       });
 
-      if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) return true;
+      itemsBatch.push(
+        ...this.deriveItemsBatchFromMnemonic({
+          ...parameters,
+          enterpriseDerivationPathPrefix: DERIVATION_PATH_PATTERN.enterprise,
+          rewardDerivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
+          shouldUseHardenedAddress: true,
+        }),
+      );
+
+      if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) {
+        return true;
+      }
 
       let updatedDerivationPath = parameters.derivationPathPrefix;
       let derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
@@ -199,9 +231,18 @@ function getBaseDerivationHandlers({
           rewardDerivationPathPrefix: updatedDerivationPath,
         });
 
-        const { privateKey } = parameters;
+        itemsBatch.push(
+          ...this.deriveItemsBatchFromMnemonic({
+            ...parameters,
+            enterpriseDerivationPathPrefix: updatedDerivationPath,
+            rewardDerivationPathPrefix: updatedDerivationPath,
+            shouldUseHardenedAddress: true,
+          }),
+        );
 
-        if (doesPKExistInBatch(itemsBatch, privateKey)) return true;
+        if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) {
+          return true;
+        }
 
         if (derivationPathDepth < MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY) {
           updatedDerivationPath = increaseDerivationPathDepth({
