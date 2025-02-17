@@ -1,5 +1,5 @@
 import { mnemonicToEntropy } from "@polkadot/util-crypto";
-import { Mnemonic } from "../mnemonic.js";
+import { Mnemonic } from "./mnemonic.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
 import { stringToU8a } from "@polkadot/util";
 import { pbkdf2 } from "@noble/hashes/pbkdf2";
