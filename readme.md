@@ -79,6 +79,10 @@ const network = getNetwork({
 });
 ```
 
+> **Refer to the [`instance-parameters.type.ts`](src/modules/network/libs/types/instance-parameters.type.ts) to explore networks parameters.**
+
+> **Dot:** You can find the list of `ss58` formats in the [ss 58 registry](https://github.com/paritytech/ss58-registry/blob/main/ss58-registry.json).
+
 - Using the default parameters:
 
 ```ts
