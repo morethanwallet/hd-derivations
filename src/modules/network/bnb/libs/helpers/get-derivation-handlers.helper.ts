@@ -11,7 +11,7 @@ import type {
 
 function getBnbDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"bnbBase">): GetDerivationHandlersReturnType<"bnbBase"> {
+}: GetDerivationHandlersParameters["bnbBase"]): GetDerivationHandlersReturnType<"bnbBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);

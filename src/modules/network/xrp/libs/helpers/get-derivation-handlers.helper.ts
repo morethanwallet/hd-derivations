@@ -13,7 +13,7 @@ import type {
 function geXrpDerivationHandlers({
   keysDerivationInstance,
   ...parameters
-}: GetDerivationHandlersParameters<XrpDerivationTypeUnion>): GetDerivationHandlersReturnType<XrpDerivationTypeUnion> {
+}: GetDerivationHandlersParameters[XrpDerivationTypeUnion]): GetDerivationHandlersReturnType<XrpDerivationTypeUnion> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);

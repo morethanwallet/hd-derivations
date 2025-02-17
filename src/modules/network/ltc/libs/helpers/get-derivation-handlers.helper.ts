@@ -15,7 +15,7 @@ import type {
 
 function getLegacyDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"ltcLegacy">): GetDerivationHandlersReturnType<"ltcLegacy"> {
+}: GetDerivationHandlersParameters["ltcLegacy"]): GetDerivationHandlersReturnType<"ltcLegacy"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -49,7 +49,7 @@ function getLegacyDerivationHandlers({
 
 function getSegWitDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"ltcSegWit">): GetDerivationHandlersReturnType<"ltcSegWit"> {
+}: GetDerivationHandlersParameters["ltcSegWit"]): GetDerivationHandlersReturnType<"ltcSegWit"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -83,7 +83,7 @@ function getSegWitDerivationHandlers({
 
 function getNativeSegWitDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"ltcNativeSegWit">): GetDerivationHandlersReturnType<"ltcNativeSegWit"> {
+}: GetDerivationHandlersParameters["ltcNativeSegWit"]): GetDerivationHandlersReturnType<"ltcNativeSegWit"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);

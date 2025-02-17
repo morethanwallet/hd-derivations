@@ -14,7 +14,7 @@ function getAptDerivationHandlers({
   scheme,
   isMultiSig,
   isLegacy,
-}: GetDerivationHandlersParameters<AptDerivationTypeUnion>): GetDerivationHandlersReturnType<AptDerivationTypeUnion> {
+}: GetDerivationHandlersParameters[AptDerivationTypeUnion]): GetDerivationHandlersReturnType<AptDerivationTypeUnion> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({

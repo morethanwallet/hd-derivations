@@ -12,7 +12,7 @@ import type {
 // TODO: Remove duplication of similar deriveItemFromMnemonic functions
 function getLegacyDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"dogeLegacy">): GetDerivationHandlersReturnType<"dogeLegacy"> {
+}: GetDerivationHandlersParameters["dogeLegacy"]): GetDerivationHandlersReturnType<"dogeLegacy"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);

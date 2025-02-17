@@ -11,7 +11,7 @@ import {
 function getSuiDerivationHandlers({
   keysDerivationInstance,
   scheme,
-}: GetDerivationHandlersParameters<"suiBase">): GetDerivationHandlersReturnType<"suiBase"> {
+}: GetDerivationHandlersParameters["suiBase"]): GetDerivationHandlersReturnType<"suiBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({

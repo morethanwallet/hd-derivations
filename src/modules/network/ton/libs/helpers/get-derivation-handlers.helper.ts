@@ -13,7 +13,7 @@ function getTonDerivationHandlers({
   keysDerivationInstance,
   networkPurpose,
   ...addressParameters
-}: GetDerivationHandlersParameters<"tonBase">): GetDerivationHandlersReturnType<"tonBase"> {
+}: GetDerivationHandlersParameters["tonBase"]): GetDerivationHandlersReturnType<"tonBase"> {
   const isTestOnly = networkPurpose === "testnet";
 
   const friendlyFormatArguments = {

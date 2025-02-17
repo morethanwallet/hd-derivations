@@ -13,7 +13,7 @@ import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";
 function getAvaxDerivationHandlers({
   prefix,
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<AvaxDerivationTypeUnion>): GetDerivationHandlersReturnType<AvaxDerivationTypeUnion> {
+}: GetDerivationHandlersParameters[AvaxDerivationTypeUnion]): GetDerivationHandlersReturnType<AvaxDerivationTypeUnion> {
   const bech32Prefix = keysDerivationInstance.prefixConfig.bech32;
 
   return {

@@ -18,7 +18,7 @@ import type {
 
 function getLegacyDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"btcLegacy">): GetDerivationHandlersReturnType<"btcLegacy"> {
+}: GetDerivationHandlersParameters["btcLegacy"]): GetDerivationHandlersReturnType<"btcLegacy"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -52,7 +52,7 @@ function getLegacyDerivationHandlers({
 
 function getSegWitDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"btcSegWit">): GetDerivationHandlersReturnType<"btcSegWit"> {
+}: GetDerivationHandlersParameters["btcSegWit"]): GetDerivationHandlersReturnType<"btcSegWit"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -86,7 +86,7 @@ function getSegWitDerivationHandlers({
 
 function getNativeSegWitDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"btcNativeSegWit">): GetDerivationHandlersReturnType<"btcNativeSegWit"> {
+}: GetDerivationHandlersParameters["btcNativeSegWit"]): GetDerivationHandlersReturnType<"btcNativeSegWit"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -126,7 +126,7 @@ function getNativeSegWitDerivationHandlers({
 
 function getTaprootDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"btcTaproot">): GetDerivationHandlersReturnType<"btcTaproot"> {
+}: GetDerivationHandlersParameters["btcTaproot"]): GetDerivationHandlersReturnType<"btcTaproot"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -160,7 +160,7 @@ function getTaprootDerivationHandlers({
 
 function getP2wshDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"btcP2wsh">): GetDerivationHandlersReturnType<"btcP2wsh"> {
+}: GetDerivationHandlersParameters["btcP2wsh"]): GetDerivationHandlersReturnType<"btcP2wsh"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -194,7 +194,7 @@ function getP2wshDerivationHandlers({
 
 function getP2wshInP2shDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"btcP2wshInP2sh">): GetDerivationHandlersReturnType<"btcP2wshInP2sh"> {
+}: GetDerivationHandlersParameters["btcP2wshInP2sh"]): GetDerivationHandlersReturnType<"btcP2wshInP2sh"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);

@@ -11,7 +11,7 @@ import {
 
 function getTrxDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"trxBase">): GetDerivationHandlersReturnType<"trxBase"> {
+}: GetDerivationHandlersParameters["trxBase"]): GetDerivationHandlersReturnType<"trxBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);

@@ -11,7 +11,7 @@ import type {
 
 function getEvmDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"evmBase">): GetDerivationHandlersReturnType<"evmBase"> {
+}: GetDerivationHandlersParameters["evmBase"]): GetDerivationHandlersReturnType<"evmBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);

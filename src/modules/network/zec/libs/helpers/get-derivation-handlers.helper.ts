@@ -11,7 +11,7 @@ import type {
 
 function getTransparentDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"zecTransparent">): GetDerivationHandlersReturnType<"zecTransparent"> {
+}: GetDerivationHandlersParameters["zecTransparent"]): GetDerivationHandlersReturnType<"zecTransparent"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);

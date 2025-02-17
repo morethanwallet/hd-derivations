@@ -16,7 +16,7 @@ import { appendAddressToDerivationPath } from "./append-address-to-derivation-pa
 function getStandardHdDerivationHandlers({
   keysDerivationInstance,
   ss58Format,
-}: GetDerivationHandlersParameters<"dotStandardHd">): GetDerivationHandlersReturnType<"dotStandardHd"> {
+}: GetDerivationHandlersParameters["dotStandardHd"]): GetDerivationHandlersReturnType<"dotStandardHd"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       commonValidateDerivationPath(derivationPath, true);
@@ -49,7 +49,7 @@ function getBaseDerivationHandlers({
   keysDerivationInstance,
   scheme,
   ss58Format,
-}: GetDerivationHandlersParameters<"dotBase">): GetDerivationHandlersReturnType<"dotBase"> {
+}: GetDerivationHandlersParameters["dotBase"]): GetDerivationHandlersReturnType<"dotBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);

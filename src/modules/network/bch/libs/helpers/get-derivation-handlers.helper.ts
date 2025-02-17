@@ -11,7 +11,7 @@ import type {
 
 function getLegacyDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"bchLegacy">): GetDerivationHandlersReturnType<"bchLegacy"> {
+}: GetDerivationHandlersParameters["bchLegacy"]): GetDerivationHandlersReturnType<"bchLegacy"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -46,7 +46,7 @@ function getLegacyDerivationHandlers({
 function getCashAddrDerivationHandlers({
   keysDerivationInstance,
   isRegtest,
-}: GetDerivationHandlersParameters<"bchCashAddr">): GetDerivationHandlersReturnType<"bchCashAddr"> {
+}: GetDerivationHandlersParameters["bchCashAddr"]): GetDerivationHandlersReturnType<"bchCashAddr"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
