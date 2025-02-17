@@ -12,7 +12,7 @@ import {
   schemeToKeyPairDeriver,
   schemeToPublicKeyDeriver,
 } from "./libs/maps/index.js";
-import { DOT_DEV_PHRASE } from "./libs/constants/index.js";
+import { DEV_PHRASE } from "./libs/constants/index.js";
 import { DerivationPathSymbol } from "@/libs/enums/index.js";
 
 class DotKeyDerivation implements AbstractKeyDerivation<"dotBase"> {
@@ -30,7 +30,7 @@ class DotKeyDerivation implements AbstractKeyDerivation<"dotBase"> {
     const uri = `${mnemonic}${derivationPath}`;
 
     const devFormattedUri = uri.startsWith(DerivationPathSymbol.DOT_HARDENED_DELIMITER)
-      ? `${DOT_DEV_PHRASE}${uri}`
+      ? `${DEV_PHRASE}${uri}`
       : uri;
 
     const { path } = keyExtractSuri(devFormattedUri);
@@ -52,9 +52,8 @@ class DotKeyDerivation implements AbstractKeyDerivation<"dotBase"> {
     const derivePublicKey = schemeToPublicKeyDeriver[scheme];
     const privateKeyBytes = convertHexToBytes(privateKey);
     const publicKeyBytes = derivePublicKey(privateKeyBytes);
-    const { publicKey } = this.getHexKeyPair(publicKeyBytes);
 
-    return { privateKey, publicKey };
+    return this.getHexKeyPair(publicKeyBytes, privateKeyBytes);
   }
 
   private getHexKeyPair(publicKeyBytes: Uint8Array, privateKeyBytes?: Uint8Array): CommonKeyPair {
