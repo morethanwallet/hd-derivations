@@ -12,12 +12,9 @@ import type {
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { getTrxDerivationHandlers } from "./libs/helpers/index.js";
-import type { DerivationTypeMap } from "@/libs/types/index.js";
 
-class Trx implements AbstractNetwork<DerivationTypeMap["trxBase"]> {
-  private derivationHandlers: DerivationsHandlers<
-    DerivationTypeMap["trxBase"]
-  >[DerivationTypeMap["trxBase"]];
+class Trx implements AbstractNetwork<"trxBase"> {
+  private derivationHandlers: DerivationsHandlers<"trxBase">["trxBase"];
 
   public constructor({
     mnemonic,
@@ -33,26 +30,24 @@ class Trx implements AbstractNetwork<DerivationTypeMap["trxBase"]> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<DerivationTypeMap["trxBase"]>,
-  ): DerivedItem<DerivationTypeMap["trxBase"]> {
+    parameters: DeriveItemFromMnemonicParameters<"trxBase">,
+  ): DerivedItem<"trxBase"> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<DerivationTypeMap["trxBase"]>,
-  ): DerivedCredential<DerivationTypeMap["trxBase"]> {
+    parameters: GetCredentialFromPKParameters<"trxBase">,
+  ): DerivedCredential<"trxBase"> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeMap["trxBase"]>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<"trxBase">,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeMap["trxBase"]>,
-  ) {
+  public doesPKBelongToMnemonic(parameters: DoesPKBelongToMnemonicParameters<"trxBase">) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }
 }

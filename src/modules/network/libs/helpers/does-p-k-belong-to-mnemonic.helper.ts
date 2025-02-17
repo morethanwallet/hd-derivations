@@ -1,6 +1,6 @@
 import type {
   AptDerivationTypeUnion,
-  DerivationTypeMap,
+  GetDerivationTypeUnion,
   DerivationTypeUnion,
 } from "@/libs/types/index.js";
 import type {
@@ -17,7 +17,7 @@ import { validateDerivationPath } from "./validate-derivation-path/index.js";
 
 type SupportedDerivationTypes = Exclude<
   DerivationTypeUnion,
-  DerivationTypeMap["suiBase"] | DerivationTypeMap["adaBase"] | AptDerivationTypeUnion
+  GetDerivationTypeUnion<"suiBase" | "adaBase" | AptDerivationTypeUnion | "dotBase">
 >;
 
 function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(

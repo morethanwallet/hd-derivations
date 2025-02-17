@@ -1,33 +1,54 @@
-import type { ValueOf } from "../value-of.type.js";
-import { type DerivationTypeMap } from "./derivation-type-map.type.js";
+type DerivationTypeUnion =
+  | "avaxX"
+  | "avaxP"
+  | "btcLegacy"
+  | "btcSegWit"
+  | "btcP2wshInP2sh"
+  | "btcP2wsh"
+  | "btcNativeSegWit"
+  | "btcTaproot"
+  | "bchLegacy"
+  | "bchCashAddr"
+  | "adaBase"
+  | "adaReward"
+  | "adaEnterprise"
+  | "bnbBase"
+  | "evmBase"
+  | "xrpBase"
+  | "xrpX"
+  | "trxBase"
+  | "tonBase"
+  | "suiBase"
+  | "dotBase"
+  | "dotStandardHd"
+  | "solBase"
+  | "dogeLegacy"
+  | "zecTransparent"
+  | "aptBase"
+  | "aptLegacy"
+  | "ltcLegacy"
+  | "ltcSegWit"
+  | "ltcNativeSegWit";
 
-type DerivationTypeUnion = ValueOf<DerivationTypeMap>;
+type GetDerivationTypeUnion<T extends DerivationTypeUnion> = T;
 
-type BtcDerivationTypeUnion =
-  | DerivationTypeMap["btcLegacy"]
-  | DerivationTypeMap["btcSegWit"]
-  | DerivationTypeMap["btcTaproot"]
-  | DerivationTypeMap["btcP2wsh"]
-  | DerivationTypeMap["btcP2wshInP2sh"]
-  | DerivationTypeMap["btcNativeSegWit"];
+type BtcDerivationTypeUnion = GetDerivationTypeUnion<
+  "btcLegacy" | "btcSegWit" | "btcTaproot" | "btcP2wsh" | "btcP2wshInP2sh" | "btcNativeSegWit"
+>;
 
-type AdaDerivationTypeUnion =
-  | DerivationTypeMap["adaEnterprise"]
-  | DerivationTypeMap["adaReward"]
-  | DerivationTypeMap["adaBase"];
+type AdaDerivationTypeUnion = GetDerivationTypeUnion<"adaEnterprise" | "adaReward" | "adaBase">;
 
-type XrpDerivationTypeUnion = DerivationTypeMap["xrpX"] | DerivationTypeMap["xrpBase"];
+type XrpDerivationTypeUnion = GetDerivationTypeUnion<"xrpX" | "xrpBase">;
 
-type AvaxDerivationTypeUnion = DerivationTypeMap["avaxX"] | DerivationTypeMap["avaxP"];
+type AvaxDerivationTypeUnion = GetDerivationTypeUnion<"avaxX" | "avaxP">;
 
-type BchDerivationTypeUnion = DerivationTypeMap["bchLegacy"] | DerivationTypeMap["bchCashAddr"];
+type BchDerivationTypeUnion = GetDerivationTypeUnion<"bchLegacy" | "bchCashAddr">;
 
-type AptDerivationTypeUnion = DerivationTypeMap["aptBase"] | DerivationTypeMap["aptLegacy"];
+type AptDerivationTypeUnion = GetDerivationTypeUnion<"aptBase" | "aptLegacy">;
 
-type LtcDerivationTypeUnion =
-  | DerivationTypeMap["ltcLegacy"]
-  | DerivationTypeMap["ltcSegWit"]
-  | DerivationTypeMap["ltcNativeSegWit"];
+type LtcDerivationTypeUnion = GetDerivationTypeUnion<"ltcLegacy" | "ltcSegWit" | "ltcNativeSegWit">;
+
+type DotDerivationTypeUnion = GetDerivationTypeUnion<"dotBase" | "dotStandardHd">;
 
 export type {
   DerivationTypeUnion,
@@ -38,4 +59,6 @@ export type {
   BchDerivationTypeUnion,
   AptDerivationTypeUnion,
   LtcDerivationTypeUnion,
+  DotDerivationTypeUnion,
+  GetDerivationTypeUnion,
 };

@@ -8,7 +8,7 @@ export type {
   AdaDerivationTypeUnion,
   XrpDerivationTypeUnion,
   AvaxDerivationTypeUnion,
-  DerivationTypeMap,
+  GetDerivationTypeUnion,
   BchDerivationTypeUnion,
   AptDerivationTypeUnion,
   LtcDerivationTypeUnion,

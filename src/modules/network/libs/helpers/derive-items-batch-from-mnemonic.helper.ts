@@ -1,4 +1,4 @@
-import type { DerivationTypeMap, DerivationTypeUnion } from "@/libs/types/index.js";
+import type { GetDerivationTypeUnion, DerivationTypeUnion } from "@/libs/types/index.js";
 import type {
   DeriveItemFromMnemonic,
   DerivedItem,
@@ -10,7 +10,7 @@ import { validateDerivationPath } from "./validate-derivation-path/index.js";
 
 type SupportedDerivationTypes = Exclude<
   DerivationTypeUnion,
-  DerivationTypeMap["adaBase"] | DerivationTypeMap["dotBase"]
+  GetDerivationTypeUnion<"adaBase" | "dotBase">
 >;
 
 type DeriveItemsBatchFromMnemonicParameters<T extends SupportedDerivationTypes> = Omit<

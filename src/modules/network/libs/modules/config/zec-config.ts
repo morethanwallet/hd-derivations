@@ -1,4 +1,4 @@
-import type { DerivationTypeMap } from "@/libs/types/index.js";
+import type { GetDerivationTypeUnion } from "@/libs/types/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import type { Secp256k1Config } from "./libs/types/index.js";
 
@@ -21,7 +21,7 @@ const TESTNET_CONFIG = {
 
 const zecConfig: Secp256k1Config<
   CommonNetworkPurposeRegTestExtendedUnion,
-  DerivationTypeMap["zecTransparent"]
+  GetDerivationTypeUnion<"zecTransparent">
 > = {
   mainnet: {
     zecTransparent: {

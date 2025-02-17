@@ -1,4 +1,4 @@
-import type { DerivationTypeMap } from "@/libs/types/index.js";
+import type { GetDerivationTypeUnion } from "@/libs/types/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import type { Secp256k1Config } from "./libs/types/index.js";
 
@@ -9,7 +9,7 @@ const derivationPathPrefix = {
 
 const dogeConfig: Secp256k1Config<
   CommonNetworkPurposeRegTestExtendedUnion,
-  DerivationTypeMap["dogeLegacy"]
+  GetDerivationTypeUnion<"dogeLegacy">
 > = {
   mainnet: {
     dogeLegacy: {
