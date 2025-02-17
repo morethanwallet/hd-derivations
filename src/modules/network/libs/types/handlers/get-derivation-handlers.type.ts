@@ -15,7 +15,6 @@ import type {
 import type {
   GetDerivationTypeUnion,
   AvaxDerivationTypeUnion,
-  AdaDerivationTypeUnion,
   DerivationTypeUnion,
   XrpDerivationTypeUnion,
   GetSignatureSchemeUnion,
@@ -37,11 +36,14 @@ type AvaxParameters = {
 
 type BtcTaprootParameters = { keysDerivationInstance: TaprootKeyDerivation };
 
-type AdaParameters<T extends AdaDerivationTypeUnion> = {
+type AdaCommonParameters = {
   networkId: number;
-  keysDerivationInstance: T extends GetDerivationTypeUnion<"adaEnterprise" | "adaReward">
-    ? AdaCommonKeyDerivation
-    : AdaBaseKeyDerivation;
+  keysDerivationInstance: AdaCommonKeyDerivation;
+};
+
+type AdaBaseParameters = {
+  networkId: number;
+  keysDerivationInstance: AdaBaseKeyDerivation;
 };
 
 type TonParameters = {
@@ -102,7 +104,8 @@ type CommonBipParametersDerivationTypeUnion = GetDerivationTypeUnion<
 
 type GetDerivationHandlersParameters = Record<AvaxDerivationTypeUnion, AvaxParameters> &
   Record<GetDerivationTypeUnion<"btcTaproot">, BtcTaprootParameters> &
-  Record<AdaDerivationTypeUnion, AdaParameters<AdaDerivationTypeUnion>> &
+  Record<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">, AdaCommonParameters> &
+  Record<GetDerivationTypeUnion<"adaBase">, AdaBaseParameters> &
   Record<GetDerivationTypeUnion<"tonBase">, TonParameters> &
   Record<GetDerivationTypeUnion<"suiBase">, SuiParameters> &
   Record<XrpDerivationTypeUnion, XrpParameters> &
