@@ -1,0 +1,18 @@
+# Ignore TypeScript config and caches
+tsconfig.json
+tsconfig.build.json
+.github/**
+
+# Ignore test cases
+src/**/*.test.ts
+vitest.config.ts
+
+# Ignore random junk
+.DS_Store
+.iterm2-project
+node_modules/**
+misc/**
+**/*.tgz
+build/*.gz
+src
+.env
