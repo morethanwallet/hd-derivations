@@ -20,6 +20,7 @@ import { Zec } from "../zec/index.js";
 import { Apt } from "../apt/index.js";
 import { Ltc } from "../ltc/index.js";
 
+// Initialization is necessary for the @polkadot/util-crypto WASM package to work correctly
 await cryptoWaitReady();
 
 function getNetwork<T extends NetworkTypeUnion>(
