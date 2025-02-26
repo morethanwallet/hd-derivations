@@ -24,26 +24,26 @@ const MOCK_EXTRINSIC_PRIVATE_KEY =
   "894dae5850a4b024d534fc13efd3ca5cd702a4d08942348998e9c2093943506e";
 
 const MOCK_MAINNET_CREDENTIAL = {
-  v4r1: { ...MOCK_COMMON_CREDENTIAL, address: "UQD3OkMP7RtswmW2lih9_yhoNW5T9XoZ3K7fyZJwerb8y0qL" },
+  v4r2: { ...MOCK_COMMON_CREDENTIAL, address: "UQD3OkMP7RtswmW2lih9_yhoNW5T9XoZ3K7fyZJwerb8y0qL" },
   v5r1: { ...MOCK_COMMON_CREDENTIAL, address: "UQA6PIkdOyxOI2WseKE8sFdhLSipfpaRCVehigoOmyw-iSJy" },
 };
 
 const MOCK_MAINNET_ITEM = {
-  v4r1: { ...MOCK_MAINNET_CREDENTIAL.v4r1, derivationPath: MOCK_DERIVATION_PATH },
+  v4r2: { ...MOCK_MAINNET_CREDENTIAL.v4r2, derivationPath: MOCK_DERIVATION_PATH },
   v5r1: { ...MOCK_MAINNET_CREDENTIAL.v5r1, derivationPath: MOCK_DERIVATION_PATH },
 };
 
 const MOCK_TESTNET_CREDENTIAL = {
-  v4r1: { ...MOCK_COMMON_CREDENTIAL, address: "0QD3OkMP7RtswmW2lih9_yhoNW5T9XoZ3K7fyZJwerb8y_EB" },
+  v4r2: { ...MOCK_COMMON_CREDENTIAL, address: "0QD3OkMP7RtswmW2lih9_yhoNW5T9XoZ3K7fyZJwerb8y_EB" },
   v5r1: { ...MOCK_COMMON_CREDENTIAL, address: "0QA6PIkdOyxOI2WseKE8sFdhLSipfpaRCVehigoOmyw-iZn4" },
 };
 
 const MOCK_TESTNET_ITEM = {
-  v4r1: { ...MOCK_TESTNET_CREDENTIAL.v4r1, derivationPath: MOCK_DERIVATION_PATH },
+  v4r2: { ...MOCK_TESTNET_CREDENTIAL.v4r2, derivationPath: MOCK_DERIVATION_PATH },
   v5r1: { ...MOCK_TESTNET_CREDENTIAL.v5r1, derivationPath: MOCK_DERIVATION_PATH },
 };
 
-type TestContractVersion = Extract<TonAddressRequiredData["contractVersion"], "v4r1" | "v5r1">;
+type TestContractVersion = Extract<TonAddressRequiredData["contractVersion"], "v4r2" | "v5r1">;
 
 type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeUnion]: {
@@ -55,7 +55,7 @@ let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
   const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
-  const contractVersions: TestContractVersion[] = ["v4r1", "v5r1"] as const;
+  const contractVersions: TestContractVersion[] = ["v4r2", "v5r1"] as const;
 
   networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
     (networkDerivationsInstances, networkPurpose) => {
@@ -93,34 +93,34 @@ beforeAll(() => {
 describe("Ton", () => {
   describe("mainnet", () => {
     describe("deriveItemFromMnemonic", () => {
-      it("Derives correct v4r1 item", () => {
-        const derivedItem = networkDerivationsInstances.mainnet.v4r1.deriveItemFromMnemonic({
-          derivationPath: MOCK_MAINNET_ITEM.v4r1.derivationPath,
+      it("Derives correct v4r2 item", () => {
+        const derivedItem = networkDerivationsInstances.mainnet.v4r2.deriveItemFromMnemonic({
+          derivationPath: MOCK_MAINNET_ITEM.v4r2.derivationPath,
         });
 
-        expect(MOCK_MAINNET_ITEM.v4r1).toEqual(derivedItem);
+        expect(MOCK_MAINNET_ITEM.v4r2).toEqual(derivedItem);
       });
     });
 
     describe("getCredentialFromPK", () => {
-      it("Derives correct v4r1 credential", () => {
-        const credential = networkDerivationsInstances.mainnet.v4r1.getCredentialFromPK({
-          privateKey: MOCK_MAINNET_CREDENTIAL.v4r1.privateKey,
+      it("Derives correct v4r2 credential", () => {
+        const credential = networkDerivationsInstances.mainnet.v4r2.getCredentialFromPK({
+          privateKey: MOCK_MAINNET_CREDENTIAL.v4r2.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_MAINNET_CREDENTIAL.v4r1);
+        expect(credential).toEqual(MOCK_MAINNET_CREDENTIAL.v4r2);
       });
     });
 
     describe("deriveItemsBatchFromMnemonic", () => {
-      it("Derives correct v4r1 items batch", () => {
-        const items = networkDerivationsInstances.mainnet.v4r1.deriveItemsBatchFromMnemonic({
+      it("Derives correct v4r2 items batch", () => {
+        const items = networkDerivationsInstances.mainnet.v4r2.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.v4r1);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.v4r2);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
@@ -128,11 +128,11 @@ describe("Ton", () => {
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true", () => {
-          const isNative = networkDerivationsInstances.mainnet.v4r1.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.v4r2.doesPKBelongToMnemonic({
             derivationPathPrefix: tonConfig.tonBase.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.v4r1.privateKey,
+            privateKey: MOCK_MAINNET_CREDENTIAL.v4r2.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -141,7 +141,7 @@ describe("Ton", () => {
 
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false", () => {
-          const isNative = networkDerivationsInstances.mainnet.v4r1.doesPKBelongToMnemonic({
+          const isNative = networkDerivationsInstances.mainnet.v4r2.doesPKBelongToMnemonic({
             derivationPathPrefix: tonConfig.tonBase.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,

@@ -25,7 +25,7 @@ const contractVersionToContract: ContractVersionToContract = {
   v2r2: WalletContractV2R2,
   v3r1: WalletContractV3R1,
   v3r2: WalletContractV3R2,
-  v4r1: WalletContractV4,
+  v4r2: WalletContractV4,
   v5r1: WalletContractV5R1,
 };
 
