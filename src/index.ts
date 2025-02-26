@@ -1,13 +1,1 @@
-export {
-  Avax,
-  Bitcoin,
-  BitcoinCash,
-  BitcoinCore,
-  Bnb,
-  Dogecoin,
-  Evm,
-  MultiBitHd,
-  Solana,
-  Xrp,
-  Zcash,
-} from "@/network/index.js";
+export { getNetwork, DEFAULT_INSTANCE_PARAMETERS } from "@/modules/network/index.js";
