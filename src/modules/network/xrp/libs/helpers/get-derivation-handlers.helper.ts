@@ -13,7 +13,7 @@ import type {
 function geXrpDerivationHandlers({
   keysDerivationInstance,
   ...parameters
-}: GetDerivationHandlersParameters<XrpDerivationTypeUnion>): GetDerivationHandlersReturnType<XrpDerivationTypeUnion> {
+}: GetDerivationHandlersParameters[XrpDerivationTypeUnion]): GetDerivationHandlersReturnType<XrpDerivationTypeUnion> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -28,7 +28,19 @@ function geXrpDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<XrpDerivationTypeUnion>,
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<XrpDerivationTypeUnion>).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<XrpDerivationTypeUnion>,
   };
 }

@@ -12,7 +12,7 @@ import type {
 // TODO: Remove duplication of similar deriveItemFromMnemonic functions
 function getLegacyDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"dogeLegacy">): GetDerivationHandlersReturnType<"dogeLegacy"> {
+}: GetDerivationHandlersParameters["dogeLegacy"]): GetDerivationHandlersReturnType<"dogeLegacy"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -27,7 +27,19 @@ function getLegacyDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"dogeLegacy">,
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"dogeLegacy">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"dogeLegacy">,
   };
 }

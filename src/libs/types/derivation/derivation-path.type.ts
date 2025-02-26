@@ -1,4 +1,4 @@
-import type { DerivationTypeUnion } from "./derivation-type-union.type";
+import type { DerivationTypeUnion, GetDerivationTypeUnion } from "./derivation-type-union.type.js";
 
 type CommonDerivationPath = {
   derivationPath: string;
@@ -9,8 +9,7 @@ type AdaBaseDerivationPath = {
   rewardDerivationPath: string;
 };
 
-type DerivationPath<T extends DerivationTypeUnion> = T extends "adaBase"
-  ? AdaBaseDerivationPath
-  : CommonDerivationPath;
+type DerivationPath<T extends DerivationTypeUnion> =
+  T extends GetDerivationTypeUnion<"adaBase"> ? AdaBaseDerivationPath : CommonDerivationPath;
 
 export type { CommonDerivationPath, AdaBaseDerivationPath, DerivationPath };

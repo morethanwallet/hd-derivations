@@ -1,6 +1,6 @@
 import type {
   AptDerivationTypeUnion,
-  DerivationTypeMap,
+  GetDerivationTypeUnion,
   DerivationTypeUnion,
 } from "@/libs/types/index.js";
 import type {
@@ -17,7 +17,7 @@ import { validateDerivationPath } from "./validate-derivation-path/index.js";
 
 type SupportedDerivationTypes = Exclude<
   DerivationTypeUnion,
-  DerivationTypeMap["suiBase"] | DerivationTypeMap["adaBase"] | AptDerivationTypeUnion
+  GetDerivationTypeUnion<"suiBase" | "adaBase" | AptDerivationTypeUnion | "dotBase">
 >;
 
 function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
@@ -27,19 +27,32 @@ function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
   parameters: DoesPKBelongToMnemonicParameters<T>,
   isStrictHardened?: boolean,
 ): boolean {
-  validateDerivationPath(parameters.derivationPathPrefix, isStrictHardened);
   let updatedDerivationPath = parameters.derivationPathPrefix;
+  validateDerivationPath(updatedDerivationPath, isStrictHardened);
   let derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
 
   do {
     const itemsBatch = this.deriveItemsBatchFromMnemonic({
       ...parameters,
       derivationPathPrefix: updatedDerivationPath,
+      shouldUseHardenedAddress: isStrictHardened,
     });
+
+    if (!isStrictHardened) {
+      itemsBatch.push(
+        ...this.deriveItemsBatchFromMnemonic({
+          ...parameters,
+          derivationPathPrefix: updatedDerivationPath,
+          shouldUseHardenedAddress: false,
+        }),
+      );
+    }
 
     const { privateKey } = parameters;
 
-    if (doesPKExistInBatch(itemsBatch, privateKey)) return true;
+    if (doesPKExistInBatch(itemsBatch, privateKey)) {
+      return true;
+    }
 
     if (derivationPathDepth < MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY) {
       updatedDerivationPath = increaseDerivationPathDepth({

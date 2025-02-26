@@ -11,7 +11,7 @@ import type {
 
 function getBnbDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"bnbBase">): GetDerivationHandlersReturnType<"bnbBase"> {
+}: GetDerivationHandlersParameters["bnbBase"]): GetDerivationHandlersReturnType<"bnbBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -26,7 +26,19 @@ function getBnbDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"bnbBase">,
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"bnbBase">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"bnbBase">,
   };
 }

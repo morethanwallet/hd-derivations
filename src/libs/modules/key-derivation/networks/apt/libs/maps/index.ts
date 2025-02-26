@@ -1,2 +1,2 @@
-export { ellipticCurveAlgorithmToSchemeId } from "./elliptic-curve-algorithm-to-scheme-id.map.js";
-export { ellipticCurveAlgorithmToPrivateKeyVariant } from "./elliptic-curve-algorithm-to-private-key-variant.map.js";
+export { signatureSchemeToSchemeId } from "./signature-scheme-to-scheme-id.map.js";
+export { signatureSchemeToPrivateKeyVariant } from "./signature-scheme-to-private-key-variant.map.js";

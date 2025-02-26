@@ -1,4 +1,4 @@
-import { type MnemonicProperty } from "@/libs/modules/mnemonic/index.js";
+import type { Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
@@ -16,6 +16,8 @@ import type {
   LtcDerivationConfig,
 } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
+
+type MnemonicProperty = { mnemonic?: Mnemonic["mnemonic"] };
 
 type AdaInstanceParameters = {
   network: NetworkTypeMap["ada"];

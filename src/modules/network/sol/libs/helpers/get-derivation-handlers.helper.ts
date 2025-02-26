@@ -10,7 +10,7 @@ import type {
 
 function getSolDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"solBase">): GetDerivationHandlersReturnType<"solBase"> {
+}: GetDerivationHandlersParameters["solBase"]): GetDerivationHandlersReturnType<"solBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath, true);
@@ -23,8 +23,13 @@ function getSolDerivationHandlers({
 
       return { ...keys, address: keys.publicKey };
     },
-    deriveItemsBatchFromMnemonic(parameters) {
-      return (deriveItemsBatchFromMnemonic<"solBase">).call(this, parameters, true);
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"solBase">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        true,
+      );
     },
     doesPKBelongToMnemonic(parameters) {
       return (doesPKBelongToMnemonic<"solBase">).call(this, parameters, true);

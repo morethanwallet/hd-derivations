@@ -13,7 +13,7 @@ function getTonDerivationHandlers({
   keysDerivationInstance,
   networkPurpose,
   ...addressParameters
-}: GetDerivationHandlersParameters<"tonBase">): GetDerivationHandlersReturnType<"tonBase"> {
+}: GetDerivationHandlersParameters["tonBase"]): GetDerivationHandlersReturnType<"tonBase"> {
   const isTestOnly = networkPurpose === "testnet";
 
   const friendlyFormatArguments = {
@@ -45,8 +45,13 @@ function getTonDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic(parameters) {
-      return (deriveItemsBatchFromMnemonic<"tonBase">).call(this, parameters, true);
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"tonBase">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        true,
+      );
     },
     doesPKBelongToMnemonic(parameters) {
       return (doesPKBelongToMnemonic<"tonBase">).call(this, parameters, true);

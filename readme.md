@@ -79,6 +79,10 @@ const network = getNetwork({
 });
 ```
 
+> **Refer to the [`instance-parameters.type.ts`](src/modules/network/libs/types/instance-parameters.type.ts) to explore networks parameters.**
+
+> **Dot:** You can find the list of `ss58` formats in the [ss 58 registry](https://github.com/paritytech/ss58-registry/blob/main/ss58-registry.json).
+
 - Using the default parameters:
 
 ```ts
@@ -202,7 +206,7 @@ Networks methods parameters are defined in the [`abstract-network.type.ts`](src/
 - ✅ Implement extended key logic in the [`keys`](src/libs/modules/keys/index.ts)
 - ✅ Implement credentials logic in [`key-derivation`](src/libs/modules/key-derivation/index.ts)
 - ✅ Implement address logic in [`address`](src/libs/modules/address/index.ts)
-- ✅ Add the network derivation types to [`DerivationTypeMap`](src/libs/types/derivation/derivation-type-map.type.ts)
+- ✅ Add the network derivation types to [`DerivationTypeUnion`](src/libs/types/derivation/derivation-type-union.type.ts)
 - ✅ Add the network to [`NetworkTypeMap`](src/modules/network/libs/types/network-type-map.type.ts)
 - ✅ Adapt [`AbstractNetwork`](src/modules/network/libs/types/abstract-network.type.ts) to support the network
 - ✅ Adapt [`ConstructorParameters`](src/modules/network/libs/types/constructor-parameters.type.ts) for the network

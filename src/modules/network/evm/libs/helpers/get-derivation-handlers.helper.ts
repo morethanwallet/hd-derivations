@@ -11,7 +11,7 @@ import type {
 
 function getEvmDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"evmBase">): GetDerivationHandlersReturnType<"evmBase"> {
+}: GetDerivationHandlersParameters["evmBase"]): GetDerivationHandlersReturnType<"evmBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -26,7 +26,19 @@ function getEvmDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"evmBase">,
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"evmBase">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"evmBase">,
   };
 }

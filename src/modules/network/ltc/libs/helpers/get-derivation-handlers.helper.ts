@@ -15,7 +15,7 @@ import type {
 
 function getLegacyDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"ltcLegacy">): GetDerivationHandlersReturnType<"ltcLegacy"> {
+}: GetDerivationHandlersParameters["ltcLegacy"]): GetDerivationHandlersReturnType<"ltcLegacy"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -30,14 +30,26 @@ function getLegacyDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"ltcLegacy">,
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"ltcLegacy">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcLegacy">,
   };
 }
 
 function getSegWitDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"ltcSegWit">): GetDerivationHandlersReturnType<"ltcSegWit"> {
+}: GetDerivationHandlersParameters["ltcSegWit"]): GetDerivationHandlersReturnType<"ltcSegWit"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -52,14 +64,26 @@ function getSegWitDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"ltcSegWit">,
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"ltcSegWit">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcSegWit">,
   };
 }
 
 function getNativeSegWitDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"ltcNativeSegWit">): GetDerivationHandlersReturnType<"ltcNativeSegWit"> {
+}: GetDerivationHandlersParameters["ltcNativeSegWit"]): GetDerivationHandlersReturnType<"ltcNativeSegWit"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -80,7 +104,19 @@ function getNativeSegWitDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"ltcNativeSegWit">,
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"ltcNativeSegWit">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"ltcNativeSegWit">,
   };
 }

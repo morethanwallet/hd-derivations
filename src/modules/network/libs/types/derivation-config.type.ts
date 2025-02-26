@@ -6,8 +6,9 @@ import type {
   AvaxDerivationTypeUnion,
   BchDerivationTypeUnion,
   BtcDerivationTypeUnion,
-  DerivationTypeMap,
-  EllipticCurveAlgorithmUnion,
+  GetDerivationTypeUnion,
+  DotDerivationTypeUnion,
+  GetSignatureSchemeUnion,
   LtcDerivationTypeUnion,
   XrpDerivationTypeUnion,
 } from "@/libs/types/index.js";
@@ -37,17 +38,17 @@ type BtcDerivationConfig = {
 } & PrefixConfigProperty;
 
 type TrxDerivationConfig = {
-  derivationType: DerivationTypeMap["trxBase"];
+  derivationType: GetDerivationTypeUnion<"trxBase">;
 } & PrefixConfigProperty;
 
 type TonDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
-  derivationType: DerivationTypeMap["tonBase"];
+  derivationType: GetDerivationTypeUnion<"tonBase">;
 } & TonAddressDerivationConfig;
 
 type SuiDerivationConfig = {
-  algorithm: EllipticCurveAlgorithmUnion;
-  derivationType: DerivationTypeMap["suiBase"];
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  derivationType: GetDerivationTypeUnion<"suiBase">;
 };
 
 type BchDerivationConfig = {
@@ -55,7 +56,10 @@ type BchDerivationConfig = {
   derivationType: BchDerivationTypeUnion;
 } & PrefixConfigProperty;
 
-type DotDerivationConfig = Ss58Format;
+type DotDerivationConfig = {
+  derivationType: DotDerivationTypeUnion;
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
+} & Ss58Format;
 
 type XrpDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
@@ -64,19 +68,19 @@ type XrpDerivationConfig = {
   DestinationTagProperty;
 
 type DogeDerivationConfig = {
-  derivationType: DerivationTypeMap["dogeLegacy"];
+  derivationType: GetDerivationTypeUnion<"dogeLegacy">;
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
 } & PrefixConfigProperty;
 
 type ZecDerivationConfig = {
-  derivationType: DerivationTypeMap["zecTransparent"];
+  derivationType: GetDerivationTypeUnion<"zecTransparent">;
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
 } & PrefixConfigProperty;
 
 type AptDerivationConfig = {
   derivationType: AptDerivationTypeUnion;
   authenticationScheme?: AuthSchemeUnion;
-  algorithm: EllipticCurveAlgorithmUnion;
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
 };
 
 type LtcDerivationConfig = {

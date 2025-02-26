@@ -11,7 +11,7 @@ import type {
 
 function getLegacyDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"bchLegacy">): GetDerivationHandlersReturnType<"bchLegacy"> {
+}: GetDerivationHandlersParameters["bchLegacy"]): GetDerivationHandlersReturnType<"bchLegacy"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -26,7 +26,19 @@ function getLegacyDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"bchLegacy">,
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"bchLegacy">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"bchLegacy">,
   };
 }
@@ -34,7 +46,7 @@ function getLegacyDerivationHandlers({
 function getCashAddrDerivationHandlers({
   keysDerivationInstance,
   isRegtest,
-}: GetDerivationHandlersParameters<"bchCashAddr">): GetDerivationHandlersReturnType<"bchCashAddr"> {
+}: GetDerivationHandlersParameters["bchCashAddr"]): GetDerivationHandlersReturnType<"bchCashAddr"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -57,7 +69,19 @@ function getCashAddrDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"bchCashAddr">,
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"bchCashAddr">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
+      );
+    },
     doesPKBelongToMnemonic: doesPKBelongToMnemonic<"bchCashAddr">,
   };
 }

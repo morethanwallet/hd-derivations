@@ -48,7 +48,7 @@ class TransparentKeyDerivation
       const decoded = bs58check.decode(source);
       const networkPrefixIndex = 0;
       const privateKeyStartIndex = 1;
-      const isCompressedByteStartIndex = 33;
+      const publicKeyCompressedByteStartIndex = 33;
       const wifCompressedLength = 34;
       const wifCompressedByte = 0x01;
 
@@ -56,10 +56,10 @@ class TransparentKeyDerivation
         throw new KeyDerivationError(ExceptionMessage.ZCASH_INVALID_WIF_PREFIX);
       }
 
-      const privateKey = decoded.slice(privateKeyStartIndex, isCompressedByteStartIndex);
+      const privateKey = decoded.slice(privateKeyStartIndex, publicKeyCompressedByteStartIndex);
       const compressed =
         decoded.length === wifCompressedLength &&
-        decoded[isCompressedByteStartIndex] === wifCompressedByte;
+        decoded[publicKeyCompressedByteStartIndex] === wifCompressedByte;
 
       const keyPair = ecPair.fromPrivateKey(privateKey, {
         compressed,
