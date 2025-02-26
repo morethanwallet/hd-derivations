@@ -2,6 +2,7 @@ import { getBnbAddress } from "@/libs/modules/address/index.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
+  validateDerivationPath,
 } from "@/modules/network/libs/helpers/index.js";
 import type {
   GetDerivationHandlersParameters,
@@ -10,9 +11,10 @@ import type {
 
 function getBnbDerivationHandlers({
   keysDerivationInstance,
-}: GetDerivationHandlersParameters<"bnbBase">): GetDerivationHandlersReturnType<"bnbBase"> {
+}: GetDerivationHandlersParameters["bnbBase"]): GetDerivationHandlersReturnType<"bnbBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getBnbAddress(keys.publicKey);
 
@@ -24,14 +26,20 @@ function getBnbDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic: deriveItemsBatchFromMnemonic<"bnbBase">,
-    doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"bnbBase">).call(
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"bnbBase">).call(
         this,
-        parameters,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
       );
     },
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<"bnbBase">,
   };
 }
 

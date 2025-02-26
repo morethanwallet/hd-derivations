@@ -65,7 +65,6 @@ let evmNetworkDerivation: Evm;
 beforeAll(() => {
   evmNetworkDerivation = getNetwork({
     network: "evm",
-    derivationConfig: { prefixConfig: evmConfig.prefixConfig },
     mnemonic: MNEMONIC,
   });
 });

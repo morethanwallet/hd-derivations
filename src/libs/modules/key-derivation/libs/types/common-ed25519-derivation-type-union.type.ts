@@ -1,5 +1,5 @@
-import { type DerivationTypeMap } from "@/libs/types/index.js";
+import type { GetDerivationTypeUnion } from "@/libs/types/index.js";
 
-type CommonEd25519DerivationTypeUnion = DerivationTypeMap["tonBase"] | DerivationTypeMap["dotBase"];
+type CommonEd25519DerivationTypeUnion = GetDerivationTypeUnion<"tonBase" | "dotStandardHd">;
 
 export type { CommonEd25519DerivationTypeUnion };

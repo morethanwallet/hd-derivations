@@ -83,7 +83,6 @@ beforeAll(() => {
             derivationConfig: {
               networkPurpose,
               derivationType,
-              prefixConfig: xrpConfig.prefixConfig,
             },
           });
 

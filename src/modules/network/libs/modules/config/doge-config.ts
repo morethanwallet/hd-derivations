@@ -1,18 +1,16 @@
+import type { GetDerivationTypeUnion } from "@/libs/types/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
-import type { CommonBip32DerivationConfig } from "./libs/types/index.js";
+import type { Secp256k1Config } from "./libs/types/index.js";
 
 const derivationPathPrefix = {
   mainnet: "m/44'/3'",
   testnet: "m/44'/1'",
 };
 
-type DogeConfig = {
-  [networkPurpose in CommonNetworkPurposeRegTestExtendedUnion]: {
-    dogeLegacy: CommonBip32DerivationConfig;
-  };
-};
-
-const dogeConfig: DogeConfig = {
+const dogeConfig: Secp256k1Config<
+  CommonNetworkPurposeRegTestExtendedUnion,
+  GetDerivationTypeUnion<"dogeLegacy">
+> = {
   mainnet: {
     dogeLegacy: {
       derivationPathPrefix: derivationPathPrefix.mainnet,

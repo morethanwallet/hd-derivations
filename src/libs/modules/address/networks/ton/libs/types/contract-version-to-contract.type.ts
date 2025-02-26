@@ -18,7 +18,7 @@ type ContractVersionToContract = {
   v2r2: typeof WalletContractV2R2;
   v3r1: typeof WalletContractV3R1;
   v3r2: typeof WalletContractV3R2;
-  v4r1: typeof WalletContractV4;
+  v4r2: typeof WalletContractV4;
   v5r1: typeof WalletContractV5R1;
 };
 

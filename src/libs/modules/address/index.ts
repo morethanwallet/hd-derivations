@@ -4,8 +4,8 @@ export type {
   TonAddressFriendlyFormatArguments,
 } from "./libs/types/index.js";
 export {
-  getSegWitAddress,
-  getNativeSegWitAddress,
+  getBtcSegWitAddress,
+  getBtcNativeSegWitAddress,
   getTaprootAddress,
   getP2wshAddress,
   getP2wshInP2shAddress,
@@ -15,7 +15,7 @@ export {
   getBaseAddress,
   getXrpAddress,
   type DestinationTagProperty,
-  getLegacyAddress,
+  getBtcLegacyAddress,
   getCashAddrAddress,
   getTrxAddress,
   getTonAddress,

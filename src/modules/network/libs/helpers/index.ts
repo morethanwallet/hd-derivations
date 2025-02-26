@@ -5,3 +5,4 @@ export { doesPKExistInBatch } from "./does-p-k-exist-in-batch.helper.js";
 export { hardenDerivationPath } from "./harden-derivation-path.helper.js";
 export { increaseDerivationPathDepth } from "./increase-derivation-path-depth.helper.js";
 export { getDerivationPathDepth } from "./get-derivation-path-depth.helper.js";
+export { validateDerivationPath } from "./validate-derivation-path/index.js";

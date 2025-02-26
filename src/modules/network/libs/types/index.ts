@@ -31,6 +31,7 @@ export type {
   DogeInstanceParameters,
   ZecInstanceParameters,
   AptInstanceParameters,
+  LtcInstanceParameters,
 } from "./instance-parameters.type.js";
 export type {
   AdaDerivationConfig,
@@ -43,11 +44,12 @@ export type {
   XrpDerivationConfig,
   DogeDerivationConfig,
   ZecDerivationConfig,
+  LtcDerivationConfig,
 } from "./derivation-config.type.js";
 export {
   type CommonNetworkPurposeUnion,
   type CommonNetworkPurposeRegTestExtendedUnion,
   type AdaNetworkPurposeUnion,
 } from "./network-purpose-union.type.js";
-export type { NetworkTypeUnion, DotNetworkTypeUnion } from "./network-type-union.type.js";
+export type { NetworkTypeUnion } from "./network-type-union.type.js";
 export type { NetworkTypeMap } from "./network-type-map.type.js";

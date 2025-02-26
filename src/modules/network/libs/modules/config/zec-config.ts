@@ -1,5 +1,6 @@
+import type { GetDerivationTypeUnion } from "@/libs/types/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
-import type { CommonBip32DerivationConfig } from "./libs/types/index.js";
+import type { Secp256k1Config } from "./libs/types/index.js";
 
 const TESTNET_CONFIG = {
   zecTransparent: {
@@ -18,13 +19,10 @@ const TESTNET_CONFIG = {
   },
 };
 
-type ZecConfig = {
-  [networkPurpose in CommonNetworkPurposeRegTestExtendedUnion]: {
-    zecTransparent: CommonBip32DerivationConfig;
-  };
-};
-
-const zecConfig: ZecConfig = {
+const zecConfig: Secp256k1Config<
+  CommonNetworkPurposeRegTestExtendedUnion,
+  GetDerivationTypeUnion<"zecTransparent">
+> = {
   mainnet: {
     zecTransparent: {
       prefixConfig: {

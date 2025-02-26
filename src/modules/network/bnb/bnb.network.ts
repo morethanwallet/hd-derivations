@@ -16,13 +16,10 @@ import { bnbConfig } from "../libs/modules/config/index.js";
 class Bnb implements AbstractNetwork<"bnbBase"> {
   private derivationHandlers: DerivationsHandlers<"bnbBase">["bnbBase"];
 
-  public constructor({
-    mnemonic,
-    derivationConfig: { prefixConfig },
-  }: ConstructorParameters<"bnbBase">) {
+  public constructor({ mnemonic, derivationConfig }: ConstructorParameters<"bnbBase">) {
     this.derivationHandlers = getBnbDerivationHandlers({
       keysDerivationInstance: new BnbKeyDerivation(
-        prefixConfig ?? bnbConfig.prefixConfig,
+        derivationConfig?.prefixConfig ?? bnbConfig.prefixConfig,
         mnemonic,
       ),
     });

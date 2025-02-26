@@ -6,7 +6,7 @@ import type {
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import { derivePath, getPublicKey } from "ed25519-hd-key";
-import { toHexFromBytes } from "@/libs/helpers/index.js";
+import { convertBytesToHex } from "@/libs/utils/index.js";
 
 class CommonEd25519KeyDerivation
   extends Ed25519Keys
@@ -33,15 +33,15 @@ class CommonEd25519KeyDerivation
   }
 
   private getKeyPair(derivationPath: string): CommonKeyPair {
-    const rawPrivateKey = derivePath(derivationPath, this.getHexSeed()).key;
+    const rawPrivateKey = derivePath(derivationPath, this.mnemonic.getHexSeed()).key;
     const publicKey = this.getPublicKey(rawPrivateKey);
-    const privateKey = toHexFromBytes(rawPrivateKey);
+    const privateKey = convertBytesToHex(rawPrivateKey);
 
     return { privateKey, publicKey };
   }
 
   private getPublicKey(rawPrivateKey: Buffer): CommonKeyPair["publicKey"] {
-    return toHexFromBytes(getPublicKey(rawPrivateKey, false));
+    return convertBytesToHex(getPublicKey(rawPrivateKey, false));
   }
 }
 

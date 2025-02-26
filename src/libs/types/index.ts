@@ -1,5 +1,4 @@
 export type { AuthSchemeUnion } from "./auth-scheme-union.type.js";
-export { type CustomError } from "./custom-error.type.js";
 export type {
   CommonDerivationPath,
   AdaBaseDerivationPath,
@@ -9,9 +8,11 @@ export type {
   AdaDerivationTypeUnion,
   XrpDerivationTypeUnion,
   AvaxDerivationTypeUnion,
-  DerivationTypeMap,
+  GetDerivationTypeUnion,
   BchDerivationTypeUnion,
   AptDerivationTypeUnion,
+  LtcDerivationTypeUnion,
+  DotDerivationTypeUnion,
 } from "./derivation/index.js";
 export {
   type AdaBaseKeyPair,
@@ -22,4 +23,7 @@ export {
   type AdaBasePrivateKey,
 } from "./keys/index.js";
 export type { ValueOf } from "./value-of.type.js";
-export type { EllipticCurveAlgorithmUnion } from "./elliptic-curve-algorithm-union.type.js";
+export type {
+  SignatureSchemeUnion,
+  GetSignatureSchemeUnion,
+} from "./signature-scheme-union.type.js";

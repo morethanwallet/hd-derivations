@@ -6,10 +6,6 @@ class Ed25519Keys {
   public constructor(mnemonic: Mnemonic) {
     this.mnemonic = mnemonic;
   }
-
-  protected getHexSeed(): string {
-    return this.mnemonic.getSeed().toString("hex");
-  }
 }
 
 export { Ed25519Keys };

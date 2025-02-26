@@ -89,7 +89,6 @@ beforeAll(() => {
             derivationConfig: {
               networkPurpose,
               derivationType,
-              prefixConfig: avaxConfig[networkPurpose].avax.prefixConfig,
             },
           });
 
@@ -170,7 +169,7 @@ describe("Avax", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for avax X private key", () => {
           const isNative = networkDerivationsInstances.mainnet.avaxX.doesPKBelongToMnemonic({
-            derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
+            derivationPathPrefix: avaxConfig.mainnet.avaxX.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
             privateKey: MOCK_MAINNET_CREDENTIAL.x.privateKey,
@@ -181,7 +180,7 @@ describe("Avax", () => {
 
         it("Returns true for avax P private key", () => {
           const isNative = networkDerivationsInstances.mainnet.avaxP.doesPKBelongToMnemonic({
-            derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
+            derivationPathPrefix: avaxConfig.mainnet.avaxP.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
             privateKey: MOCK_MAINNET_CREDENTIAL.p.privateKey,
@@ -194,7 +193,7 @@ describe("Avax", () => {
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false for avax X private key", () => {
           const isNative = networkDerivationsInstances.mainnet.avaxX.doesPKBelongToMnemonic({
-            derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
+            derivationPathPrefix: avaxConfig.mainnet.avaxX.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
             privateKey: MOCK_COMMON_EXTRINSIC_PRIVATE_KEY,
@@ -205,7 +204,7 @@ describe("Avax", () => {
 
         it("Returns true for avax P private key", () => {
           const isNative = networkDerivationsInstances.mainnet.avaxP.doesPKBelongToMnemonic({
-            derivationPathPrefix: avaxConfig.mainnet.avax.derivationPathPrefix,
+            derivationPathPrefix: avaxConfig.mainnet.avaxP.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
             privateKey: MOCK_COMMON_EXTRINSIC_PRIVATE_KEY,
@@ -282,7 +281,7 @@ describe("Avax", () => {
       describe("Validates native private key correctly", () => {
         it("Returns true for avax X private key", () => {
           const isNative = networkDerivationsInstances.testnet.avaxX.doesPKBelongToMnemonic({
-            derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
+            derivationPathPrefix: avaxConfig.testnet.avaxX.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
             privateKey: MOCK_MAINNET_CREDENTIAL.x.privateKey,
@@ -293,7 +292,7 @@ describe("Avax", () => {
 
         it("Returns true for avax P private key", () => {
           const isNative = networkDerivationsInstances.testnet.avaxP.doesPKBelongToMnemonic({
-            derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
+            derivationPathPrefix: avaxConfig.testnet.avaxP.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
             privateKey: MOCK_MAINNET_CREDENTIAL.p.privateKey,
@@ -306,7 +305,7 @@ describe("Avax", () => {
       describe("Validates extrinsic private key correctly", () => {
         it("Returns false for avax X private key", () => {
           const isNative = networkDerivationsInstances.testnet.avaxX.doesPKBelongToMnemonic({
-            derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
+            derivationPathPrefix: avaxConfig.testnet.avaxX.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
             privateKey: MOCK_COMMON_EXTRINSIC_PRIVATE_KEY,
@@ -317,7 +316,7 @@ describe("Avax", () => {
 
         it("Returns true for avax P private key", () => {
           const isNative = networkDerivationsInstances.testnet.avaxP.doesPKBelongToMnemonic({
-            derivationPathPrefix: avaxConfig.testnet.avax.derivationPathPrefix,
+            derivationPathPrefix: avaxConfig.testnet.avaxP.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
             privateKey: MOCK_COMMON_EXTRINSIC_PRIVATE_KEY,

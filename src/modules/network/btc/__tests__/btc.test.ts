@@ -292,7 +292,6 @@ beforeAll(() => {
             derivationConfig: {
               networkPurpose,
               derivationType,
-              prefixConfig: btcConfig[networkPurpose][derivationType].prefixConfig,
             },
           });
 

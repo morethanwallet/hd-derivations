@@ -16,13 +16,10 @@ import { evmConfig } from "../libs/modules/config/index.js";
 class Evm implements AbstractNetwork<"evmBase"> {
   private derivationHandlers: DerivationsHandlers<"evmBase">["evmBase"];
 
-  public constructor({
-    mnemonic,
-    derivationConfig: { prefixConfig },
-  }: ConstructorParameters<"evmBase">) {
+  public constructor({ mnemonic, derivationConfig }: ConstructorParameters<"evmBase">) {
     this.derivationHandlers = getEvmDerivationHandlers({
       keysDerivationInstance: new EvmKeyDerivation(
-        prefixConfig ?? evmConfig.prefixConfig,
+        derivationConfig?.prefixConfig ?? evmConfig.prefixConfig,
         mnemonic,
       ),
     });

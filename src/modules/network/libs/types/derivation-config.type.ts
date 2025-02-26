@@ -6,8 +6,10 @@ import type {
   AvaxDerivationTypeUnion,
   BchDerivationTypeUnion,
   BtcDerivationTypeUnion,
-  DerivationTypeMap,
-  EllipticCurveAlgorithmUnion,
+  GetDerivationTypeUnion,
+  DotDerivationTypeUnion,
+  GetSignatureSchemeUnion,
+  LtcDerivationTypeUnion,
   XrpDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import type {
@@ -18,7 +20,7 @@ import type {
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
 import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
 
-type CommonPrefixConfig = { prefixConfig?: PrefixConfig };
+type PrefixConfigProperty = { prefixConfig?: PrefixConfig };
 
 type AdaDerivationConfig = {
   networkPurpose: AdaNetworkPurposeUnion;
@@ -28,55 +30,63 @@ type AdaDerivationConfig = {
 type AvaxDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: AvaxDerivationTypeUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type BtcDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
   derivationType: BtcDerivationTypeUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type TrxDerivationConfig = {
-  derivationType: DerivationTypeMap["trxBase"];
-} & CommonPrefixConfig;
+  derivationType: GetDerivationTypeUnion<"trxBase">;
+} & PrefixConfigProperty;
 
 type TonDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
-  derivationType: DerivationTypeMap["tonBase"];
+  derivationType: GetDerivationTypeUnion<"tonBase">;
 } & TonAddressDerivationConfig;
 
 type SuiDerivationConfig = {
-  algorithm: EllipticCurveAlgorithmUnion;
-  derivationType: DerivationTypeMap["suiBase"];
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  derivationType: GetDerivationTypeUnion<"suiBase">;
 };
 
 type BchDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
   derivationType: BchDerivationTypeUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
-type DotDerivationConfig = Ss58Format;
+type DotDerivationConfig = {
+  derivationType: DotDerivationTypeUnion;
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
+} & Ss58Format;
 
 type XrpDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
   derivationType: XrpDerivationTypeUnion;
-} & CommonPrefixConfig &
+} & PrefixConfigProperty &
   DestinationTagProperty;
 
 type DogeDerivationConfig = {
-  derivationType: DerivationTypeMap["dogeLegacy"];
+  derivationType: GetDerivationTypeUnion<"dogeLegacy">;
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type ZecDerivationConfig = {
-  derivationType: DerivationTypeMap["zecTransparent"];
+  derivationType: GetDerivationTypeUnion<"zecTransparent">;
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-} & CommonPrefixConfig;
+} & PrefixConfigProperty;
 
 type AptDerivationConfig = {
   derivationType: AptDerivationTypeUnion;
   authenticationScheme?: AuthSchemeUnion;
-  algorithm: EllipticCurveAlgorithmUnion;
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
 };
+
+type LtcDerivationConfig = {
+  networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
+  derivationType: LtcDerivationTypeUnion;
+} & PrefixConfigProperty;
 
 export type {
   AdaDerivationConfig,
@@ -87,9 +97,10 @@ export type {
   SuiDerivationConfig,
   BchDerivationConfig,
   XrpDerivationConfig,
-  CommonPrefixConfig as CommonDerivationConfig,
+  PrefixConfigProperty as CommonDerivationConfig,
   DotDerivationConfig,
   DogeDerivationConfig,
   ZecDerivationConfig,
   AptDerivationConfig,
+  LtcDerivationConfig,
 };

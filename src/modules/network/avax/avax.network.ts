@@ -23,22 +23,23 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
     derivationConfig,
   }: ConstructorParameters<AvaxDerivationTypeUnion>) {
     const { networkPurpose, derivationType } = derivationConfig;
+    const { prefix } = avaxConfig[networkPurpose][derivationType];
 
     const derivationsHandlers: DerivationsHandlers<AvaxDerivationTypeUnion> = {
       avaxX: getAvaxDerivationHandlers({
-        derivationType: "avaxX",
+        prefix,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomPrefixConfig("avaxX", derivationConfig) ??
-            avaxConfig[networkPurpose].avax.prefixConfig,
+            avaxConfig[networkPurpose].avaxX.prefixConfig,
           mnemonic,
           false,
         ),
       }),
       avaxP: getAvaxDerivationHandlers({
-        derivationType: "avaxP",
+        prefix,
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomPrefixConfig("avaxP", derivationConfig) ??
-            avaxConfig[networkPurpose].avax.prefixConfig,
+            avaxConfig[networkPurpose].avaxP.prefixConfig,
           mnemonic,
           false,
         ),

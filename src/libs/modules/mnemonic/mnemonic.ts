@@ -5,19 +5,20 @@ import {
   mnemonicToSeedSync,
   wordlists,
 } from "bip39";
-import { type Buffer } from "buffer";
+import { MnemonicError } from "./libs/exceptions/index.js";
+import { ExceptionMessage } from "./libs/enums/index.js";
 
 class Mnemonic {
-  private mnemonic: string;
+  protected mnemonic: string;
 
   public constructor(mnemonic?: string) {
     this.mnemonic = mnemonic === undefined ? generateMnemonic() : mnemonic;
     this.validateMnemonic();
   }
 
-  private validateMnemonic(): void {
+  protected validateMnemonic(): void {
     if (!isMnemonicValid(this.mnemonic, wordlists.english)) {
-      throw new Error("Invalid Mnemonic");
+      throw new MnemonicError(ExceptionMessage.INVALID_MNEMONIC);
     }
   }
 
@@ -31,6 +32,10 @@ class Mnemonic {
 
   public getMnemonic(): string {
     return this.mnemonic;
+  }
+
+  public getHexSeed(): string {
+    return this.getSeed().toString("hex");
   }
 }
 
