@@ -88,19 +88,19 @@ const networkDerivationsInstances = {
     aptLegacy: getNetwork({
       network: "apt",
       mnemonic: MNEMONIC,
-      derivationConfig: { derivationType: "aptLegacy", algorithm: "ed25519" },
+      derivationConfig: { derivationType: "aptLegacy", scheme: "ed25519" },
     }),
     aptBase: getNetwork({
       network: "apt",
       mnemonic: MNEMONIC,
-      derivationConfig: { derivationType: "aptBase", algorithm: "ed25519" },
+      derivationConfig: { derivationType: "aptBase", scheme: "ed25519" },
     }),
     multiSig: getNetwork({
       network: "apt",
       mnemonic: MNEMONIC,
       derivationConfig: {
         derivationType: "aptBase",
-        algorithm: "ed25519",
+        scheme: "ed25519",
         authenticationScheme: "multiSig",
       },
     }),
@@ -110,7 +110,7 @@ const networkDerivationsInstances = {
     mnemonic: MNEMONIC,
     derivationConfig: {
       derivationType: "aptBase",
-      algorithm: "secp256k1",
+      scheme: "secp256k1",
     },
   }),
   secp256r1: getNetwork({
@@ -118,7 +118,7 @@ const networkDerivationsInstances = {
     mnemonic: MNEMONIC,
     derivationConfig: {
       derivationType: "aptBase",
-      algorithm: "secp256r1",
+      scheme: "secp256r1",
     },
   }),
 };

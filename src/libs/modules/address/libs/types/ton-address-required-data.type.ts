@@ -6,7 +6,7 @@ type ContractVersion =
   | "v2r2"
   | "v3r1"
   | "v3r2"
-  | "v4r1"
+  | "v4r2"
   | "v5r1";
 
 type TonAddressFriendlyFormatArguments = {

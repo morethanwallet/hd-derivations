@@ -2,22 +2,28 @@ import { getDotAddress } from "@/libs/modules/address/index.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
+  validateDerivationPath as commonValidateDerivationPath,
+  doesPKExistInBatch,
 } from "@/modules/network/libs/helpers/index.js";
 import {
+  DerivedItem,
   type GetDerivationHandlersParameters,
   type GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
+import { validateDerivationPath } from "./validate-derivation-path.helper.js";
+import { appendAddressToDerivationPath } from "./append-address-to-derivation-path.helper.js";
 
-function getDotDerivationHandlers({
+function getStandardHdDerivationHandlers({
   keysDerivationInstance,
   ss58Format,
-}: GetDerivationHandlersParameters<"dotBase">): GetDerivationHandlersReturnType<"dotBase"> {
+}: GetDerivationHandlersParameters["dotStandardHd"]): GetDerivationHandlersReturnType<"dotStandardHd"> {
   return {
-    deriveItemFromMnemonic: (parameters) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      commonValidateDerivationPath(derivationPath, true);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getDotAddress(keys.publicKey, ss58Format);
 
-      return { ...keys, address, derivationPath: parameters.derivationPath };
+      return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: (parameters) => {
       const keys = keysDerivationInstance.importByPrivateKey(parameters);
@@ -25,23 +31,77 @@ function getDotDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic(parameters) {
-      // prettier-ignore
-      return (deriveItemsBatchFromMnemonic<"dotBase">).call(
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"dotStandardHd">).call(
         this,
-        parameters,
-      true
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        true,
       );
     },
     doesPKBelongToMnemonic(parameters) {
-      // prettier-ignore
-      return (doesPKBelongToMnemonic<"dotBase">).call(
-        this,
-        parameters,
-       true
-      );
+      return (doesPKBelongToMnemonic<"dotStandardHd">).call(this, parameters, true);
     },
   };
 }
 
-export { getDotDerivationHandlers };
+function getBaseDerivationHandlers({
+  keysDerivationInstance,
+  scheme,
+  ss58Format,
+}: GetDerivationHandlersParameters["dotBase"]): GetDerivationHandlersReturnType<"dotBase"> {
+  return {
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath, scheme });
+      const address = getDotAddress(keys.publicKey, ss58Format);
+
+      return { ...keys, address, derivationPath };
+    },
+    getCredentialFromPK: ({ privateKey }) => {
+      const keys = keysDerivationInstance.importByPrivateKey({ privateKey, scheme });
+      const address = getDotAddress(keys.publicKey, ss58Format);
+
+      return { ...keys, address };
+    },
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      const shouldHarden =
+        scheme === "ed25519" || scheme === "secp256k1" || shouldUseHardenedAddress;
+
+      validateDerivationPath(derivationPathPrefix);
+      let batch: DerivedItem<"dotBase">[] = [];
+
+      if (!derivationPathPrefix) {
+        batch.push(this.deriveItemFromMnemonic({ derivationPath: derivationPathPrefix }));
+      }
+
+      for (let i = indexLookupFrom; i < indexLookupTo; i++) {
+        const derivationPathWithAddressIndex = appendAddressToDerivationPath({
+          shouldHarden,
+          derivationPath: derivationPathPrefix,
+          addressIndex: i,
+        });
+
+        batch.push(this.deriveItemFromMnemonic({ derivationPath: derivationPathWithAddressIndex }));
+      }
+
+      return batch;
+    },
+    doesPKBelongToMnemonic(parameters) {
+      const itemsBatch = this.deriveItemsBatchFromMnemonic(parameters);
+
+      itemsBatch.push(
+        ...this.deriveItemsBatchFromMnemonic({ ...parameters, shouldUseHardenedAddress: true }),
+      );
+
+      return doesPKExistInBatch(itemsBatch, parameters.privateKey);
+    },
+  };
+}
+
+export { getStandardHdDerivationHandlers, getBaseDerivationHandlers };

@@ -1,10 +1,10 @@
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
-import { toUint8Array } from "@/libs/helpers/index.js";
 import { type CommonKeyPair } from "@/libs/types/index.js";
 import { type PrefixConfig } from "@/libs/modules/keys/index.js";
 import { ripemd160 } from "@noble/hashes/ripemd160";
 import { sha256 } from "@noble/hashes/sha256";
 import bs58check from "bs58check";
+import { convertHexToBytes } from "@/libs/utils/index.js";
 
 const HEXADECIMAL_SYSTEM_IDENTIFIER = 16;
 
@@ -23,16 +23,16 @@ function splitPrefixIntoBytesArray(prefix: number): Uint8Array {
     HEXADECIMAL_SYSTEM_IDENTIFIER,
   );
 
-  return toUint8Array(Buffer.from([firstByte, secondByte]));
+  return new Uint8Array(Buffer.from([firstByte, secondByte]));
 }
 
 function getTransparentAddress(
   publicKey: CommonKeyPair["publicKey"],
   prefixConfig: PrefixConfig,
 ): Address["address"] {
-  const hash160 = ripemd160(sha256(toUint8Array(Buffer.from(publicKey, "hex"))));
+  const hash160 = ripemd160(sha256(convertHexToBytes(publicKey)));
   const prefix = splitPrefixIntoBytesArray(prefixConfig.pubKeyHash);
-  const addressBytes = toUint8Array(Buffer.concat([prefix, hash160]));
+  const addressBytes = new Uint8Array(Buffer.concat([prefix, hash160]));
 
   return bs58check.encode(addressBytes);
 }

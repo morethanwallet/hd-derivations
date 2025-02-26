@@ -8,17 +8,18 @@ import type {
   SolKeyDerivation,
   TransparentKeyDerivation,
   AptKeyDerivation,
-  AdaKeyDerivation,
+  AdaBaseKeyDerivation,
+  AdaCommonKeyDerivation,
+  DotKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
 import type {
-  BtcDerivationTypeUnion,
-  DerivationTypeMap,
+  GetDerivationTypeUnion,
   AvaxDerivationTypeUnion,
-  AdaDerivationTypeUnion,
   DerivationTypeUnion,
   XrpDerivationTypeUnion,
-  EllipticCurveAlgorithmUnion,
+  GetSignatureSchemeUnion,
   AptDerivationTypeUnion,
+  LtcDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
 import { type GetCredentialFromPK } from "./get-credential-from-p-k.type.js";
@@ -33,14 +34,16 @@ type AvaxParameters = {
   keysDerivationInstance: CommonBipKeyDerivation;
 };
 
-type BtcParameters<TDerivationType extends DerivationTypeUnion> =
-  TDerivationType extends DerivationTypeMap["btcTaproot"]
-    ? { keysDerivationInstance: TaprootKeyDerivation }
-    : { keysDerivationInstance: CommonBipKeyDerivation };
+type BtcTaprootParameters = { keysDerivationInstance: TaprootKeyDerivation };
 
-type AdaParameters = {
+type AdaCommonParameters = {
   networkId: number;
-  keysDerivationInstance: AdaKeyDerivation;
+  keysDerivationInstance: AdaCommonKeyDerivation;
+};
+
+type AdaBaseParameters = {
+  networkId: number;
+  keysDerivationInstance: AdaBaseKeyDerivation;
 };
 
 type TonParameters = {
@@ -50,7 +53,7 @@ type TonParameters = {
 
 type SuiParameters = {
   keysDerivationInstance: SuiKeyDerivation;
-  algorithm: EllipticCurveAlgorithmUnion;
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
 };
 
 type XrpParameters = {
@@ -63,7 +66,14 @@ type BnbParameters = { keysDerivationInstance: BnbKeyDerivation };
 
 type EvmParameters = { keysDerivationInstance: EvmKeyDerivation };
 
-type DotParameters = { keysDerivationInstance: CommonEd25519KeyDerivation } & Ss58Format;
+type DotStandardHdParameters = {
+  keysDerivationInstance: CommonEd25519KeyDerivation;
+} & Ss58Format;
+
+type DotBaseParameters = {
+  keysDerivationInstance: DotKeyDerivation;
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
+} & Ss58Format;
 
 type BchParameters = { keysDerivationInstance: CommonBipKeyDerivation; isRegtest: boolean };
 
@@ -74,38 +84,40 @@ type ZecParameters = { keysDerivationInstance: TransparentKeyDerivation };
 type AptParameters = {
   keysDerivationInstance: AptKeyDerivation;
   isMultiSig?: boolean;
-  algorithm: EllipticCurveAlgorithmUnion;
+  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
   isLegacy: boolean;
 };
 
-type GetDerivationHandlersParameters<T extends DerivationTypeUnion> =
-  T extends AvaxDerivationTypeUnion
-    ? AvaxParameters
-    : T extends BtcDerivationTypeUnion
-      ? BtcParameters<T>
-      : T extends AdaDerivationTypeUnion
-        ? AdaParameters
-        : T extends DerivationTypeMap["tonBase"]
-          ? TonParameters
-          : T extends DerivationTypeMap["suiBase"]
-            ? SuiParameters
-            : T extends XrpDerivationTypeUnion
-              ? XrpParameters
-              : T extends DerivationTypeMap["bnbBase"]
-                ? BnbParameters
-                : T extends DerivationTypeMap["evmBase"]
-                  ? EvmParameters
-                  : T extends DerivationTypeMap["dotBase"]
-                    ? DotParameters
-                    : T extends DerivationTypeMap["bchCashAddr"]
-                      ? BchParameters
-                      : T extends DerivationTypeMap["solBase"]
-                        ? SolParameters
-                        : T extends DerivationTypeMap["zecTransparent"]
-                          ? ZecParameters
-                          : T extends AptDerivationTypeUnion
-                            ? AptParameters
-                            : { keysDerivationInstance: CommonBipKeyDerivation };
+type CommonBipParameters = { keysDerivationInstance: CommonBipKeyDerivation };
+
+type CommonBipParametersDerivationTypeUnion = GetDerivationTypeUnion<
+  | "bchLegacy"
+  | "btcLegacy"
+  | "btcNativeSegWit"
+  | "btcP2wsh"
+  | "btcP2wshInP2sh"
+  | "btcSegWit"
+  | "dogeLegacy"
+  | LtcDerivationTypeUnion
+  | "trxBase"
+>;
+
+type GetDerivationHandlersParameters = Record<AvaxDerivationTypeUnion, AvaxParameters> &
+  Record<GetDerivationTypeUnion<"btcTaproot">, BtcTaprootParameters> &
+  Record<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">, AdaCommonParameters> &
+  Record<GetDerivationTypeUnion<"adaBase">, AdaBaseParameters> &
+  Record<GetDerivationTypeUnion<"tonBase">, TonParameters> &
+  Record<GetDerivationTypeUnion<"suiBase">, SuiParameters> &
+  Record<XrpDerivationTypeUnion, XrpParameters> &
+  Record<GetDerivationTypeUnion<"bnbBase">, BnbParameters> &
+  Record<GetDerivationTypeUnion<"evmBase">, EvmParameters> &
+  Record<GetDerivationTypeUnion<"dotStandardHd">, DotStandardHdParameters> &
+  Record<GetDerivationTypeUnion<"dotBase">, DotBaseParameters> &
+  Record<GetDerivationTypeUnion<"bchCashAddr">, BchParameters> &
+  Record<GetDerivationTypeUnion<"solBase">, SolParameters> &
+  Record<GetDerivationTypeUnion<"zecTransparent">, ZecParameters> &
+  Record<AptDerivationTypeUnion, AptParameters> &
+  Record<CommonBipParametersDerivationTypeUnion, CommonBipParameters>;
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;

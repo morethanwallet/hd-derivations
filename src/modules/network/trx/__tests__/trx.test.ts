@@ -8,7 +8,7 @@ import {
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
-import type { DerivationTypeMap } from "@/libs/types/index.js";
+import type { GetDerivationTypeUnion } from "@/libs/types/index.js";
 
 const MOCK_DERIVATION_PATH_BATCH_PREFIX = "m/44'/195'/0'/0";
 
@@ -26,7 +26,7 @@ const MOCK_ITEM = {
 const MOCK_EXTRINSIC_PRIVATE_KEY =
   "24f3c25fb405791851bb499dec9797b37ced60a2c7addda8f314374fefe1914a";
 
-type TrxDerivationTypeUnion = DerivationTypeMap["trxBase"];
+type TrxDerivationTypeUnion = GetDerivationTypeUnion<"trxBase">;
 
 type NetworkDerivationsInstances = {
   [key in TrxDerivationTypeUnion]: Trx;

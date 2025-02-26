@@ -7,11 +7,9 @@ import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
   INDEX_LOOKUP_TO,
+  MNEMONIC,
 } from "../../libs/constants/index.js";
 import { adaConfig } from "../../libs/modules/config/index.js";
-
-const MNEMONIC =
-  "relax grief spatial deer glass fish column rifle square license dry jealous water spoon salon";
 
 const DERIVATION_PATH = {
   adaEnterprise: "m/1852'/1815'/0'/0/0",
@@ -37,15 +35,15 @@ const MAINNET_EXTRINSIC_PRIVATE_KEY = {
 const COMMON_MAINNET_CREDENTIAL = {
   adaEnterprise: {
     privateKey:
-      "e064be3c720832a235807601a93d7681a9d802342da100972e748505836cd84d1e2f7a95607e5726e4d95f833d698668b526c361150f925cac0af419c935dfa7",
-    publicKey: "d6d4d074388d31c86b6e348f4218a6e6bd3682c2d89f0ee3b3908486d0b61ea6",
-    address: "addr1vy55py2lewnz4suyqg9jxnk6ra6tnuqlt5yjzhdzyyzk48skpr66m",
+      "787b42151ab18f281a977f1004996a245046756c1961d43f067290983d4f1244017a63d7848a8f409efb7a1a5e104eff76ed943551b8afbea5e9fd4c7291c998",
+    publicKey: "30e5928414c7c1da4e664c4c0546d22aa3551fedfebf2faed61a05be20403b79",
+    address: "addr1vyygp308craka57n2yhsru0n3r6yxu8fyleh4jmq2qrc6hsksfj9u",
   },
   adaReward: {
     privateKey:
-      "d83a9bc8cc31735a679e31a6a1f57ba0f9601049dce1c9367a58fed9876cd84dfacca5ca6455fef78d27a679b86b853f08c4d733cccd59d2d1e759ff31d675a0",
-    publicKey: "6634f8c5e7608e330bac48b22fc400ead26622ce29344507228698960419533e",
-    address: "stake1uxhhajkk9gu4xl8p34hqen7fay2j529h8ynlk0t9yq8ujfg4rqhxx",
+      "d0c8e6c886b1420526a4d3acf79eb9cd4c83dc931bc72f06fe07c4da364f124448c5e25c8acdd5bfa7f88dbbc83f10c09849671bbe2fa2749c42f68bed9dec18",
+    publicKey: "ea60f453c2c9a1bebf3fea99f79786921894150b73aae4fcb6104918a4dfa0ba",
+    address: "stake1uxgww2q7fxf3maz5fwdgma9pef0jwyt25jd4daz092rdteqpx4rss",
   },
 };
 
@@ -58,7 +56,7 @@ const MAINNET_CREDENTIAL = {
     rewardPrivateKey: COMMON_MAINNET_CREDENTIAL.adaReward.privateKey,
     rewardPublicKey: COMMON_MAINNET_CREDENTIAL.adaReward.publicKey,
     address:
-      "addr1qy55py2lewnz4suyqg9jxnk6ra6tnuqlt5yjzhdzyyzk48400m9dv23e2d7wrrtwpn8un6g49g5twwf8lv7k2gq0eyjseme3ur",
+      "addr1qyygp308craka57n2yhsru0n3r6yxu8fyleh4jmq2qrc6h5suu5pujvnrh69gju63h62rjjlyugk4fym2m6y725x6hjq0gkvw0",
   },
 };
 
@@ -83,11 +81,11 @@ const TESTNET_PREVIEW_EXTRINSIC_PRIVATE_KEY = { ...MAINNET_EXTRINSIC_PRIVATE_KEY
 const COMMON_TESTNET_PREVIEW_CREDENTIAL = {
   adaEnterprise: {
     ...COMMON_MAINNET_CREDENTIAL.adaEnterprise,
-    address: "addr_test1vq55py2lewnz4suyqg9jxnk6ra6tnuqlt5yjzhdzyyzk48sdfhx47",
+    address: "addr_test1vqygp308craka57n2yhsru0n3r6yxu8fyleh4jmq2qrc6hsdcaw2e",
   },
   adaReward: {
     ...COMMON_MAINNET_CREDENTIAL.adaReward,
-    address: "stake_test1uzhhajkk9gu4xl8p34hqen7fay2j529h8ynlk0t9yq8ujfgjf24zm",
+    address: "stake_test1uzgww2q7fxf3maz5fwdgma9pef0jwyt25jd4daz092rdteqxvlp5d",
   },
 };
 
@@ -100,7 +98,7 @@ const TESTNET_PREVIEW_CREDENTIAL = {
     rewardPrivateKey: COMMON_TESTNET_PREVIEW_CREDENTIAL.adaReward.privateKey,
     rewardPublicKey: COMMON_TESTNET_PREVIEW_CREDENTIAL.adaReward.publicKey,
     address:
-      "addr_test1qq55py2lewnz4suyqg9jxnk6ra6tnuqlt5yjzhdzyyzk48400m9dv23e2d7wrrtwpn8un6g49g5twwf8lv7k2gq0eyjs6dy3su",
+      "addr_test1qqygp308craka57n2yhsru0n3r6yxu8fyleh4jmq2qrc6h5suu5pujvnrh69gju63h62rjjlyugk4fym2m6y725x6hjqv7tvzs",
   },
 };
 

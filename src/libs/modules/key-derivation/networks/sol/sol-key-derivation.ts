@@ -6,6 +6,7 @@ import {
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import { derivePath, getPublicKey } from "ed25519-hd-key";
+import { ThirtyTwoBytePrivateKeyIndex } from "@/libs/enums";
 
 class SolKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"solBase"> {
   public deriveFromMnemonic({
@@ -20,13 +21,11 @@ class SolKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"sol
   }
 
   public importByPrivateKey({ privateKey }: PrivateKey<"solBase">): CommonKeyPair {
-    const rawPrivateKeyStartIndex = 0;
-    const rawPrivateKeyEndIndex = 32;
     const concatenatedRawPKeys = Buffer.from(base58.decode(privateKey));
 
     const rawPrivateKey = concatenatedRawPKeys.subarray(
-      rawPrivateKeyStartIndex,
-      rawPrivateKeyEndIndex,
+      ThirtyTwoBytePrivateKeyIndex.START,
+      ThirtyTwoBytePrivateKeyIndex.END,
     );
 
     const rawPublicKey = this.getRawPublicKey(rawPrivateKey);

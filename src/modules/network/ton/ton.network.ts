@@ -11,18 +11,12 @@ import type {
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { getTonDerivationHandlers } from "./libs/helpers/index.js";
-import { type DerivationTypeMap } from "@/libs/types/index.js";
 
-class Ton implements AbstractNetwork<DerivationTypeMap["tonBase"]> {
-  private derivationHandlers: DerivationsHandlers<
-    DerivationTypeMap["tonBase"]
-  >[DerivationTypeMap["tonBase"]];
+class Ton implements AbstractNetwork<"tonBase"> {
+  private derivationHandlers: DerivationsHandlers<"tonBase">["tonBase"];
 
   // TODO: Remove derivation type for chains with only 1 derivation type
-  public constructor({
-    derivationConfig,
-    mnemonic,
-  }: ConstructorParameters<DerivationTypeMap["tonBase"]>) {
+  public constructor({ derivationConfig, mnemonic }: ConstructorParameters<"tonBase">) {
     const { derivationType, ...addressParameters } = derivationConfig;
 
     this.derivationHandlers = getTonDerivationHandlers({
@@ -32,26 +26,24 @@ class Ton implements AbstractNetwork<DerivationTypeMap["tonBase"]> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<DerivationTypeMap["tonBase"]>,
-  ): DerivedItem<DerivationTypeMap["tonBase"]> {
+    parameters: DeriveItemFromMnemonicParameters<"tonBase">,
+  ): DerivedItem<"tonBase"> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<DerivationTypeMap["tonBase"]>,
-  ): DerivedCredential<DerivationTypeMap["tonBase"]> {
+    parameters: GetCredentialFromPKParameters<"tonBase">,
+  ): DerivedCredential<"tonBase"> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeMap["tonBase"]>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<"tonBase">,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeMap["tonBase"]>,
-  ) {
+  public doesPKBelongToMnemonic(parameters: DoesPKBelongToMnemonicParameters<"tonBase">) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }
 }

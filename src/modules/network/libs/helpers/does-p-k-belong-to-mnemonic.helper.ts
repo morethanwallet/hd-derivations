@@ -1,6 +1,6 @@
 import type {
   AptDerivationTypeUnion,
-  DerivationTypeMap,
+  GetDerivationTypeUnion,
   DerivationTypeUnion,
 } from "@/libs/types/index.js";
 import type {
@@ -13,10 +13,11 @@ import { doesPKExistInBatch } from "./does-p-k-exist-in-batch.helper.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/index.js";
 import { increaseDerivationPathDepth } from "./increase-derivation-path-depth.helper.js";
 import { getDerivationPathDepth } from "./get-derivation-path-depth.helper.js";
+import { validateDerivationPath } from "./validate-derivation-path/index.js";
 
 type SupportedDerivationTypes = Exclude<
   DerivationTypeUnion,
-  DerivationTypeMap["suiBase"] | DerivationTypeMap["adaBase"] | AptDerivationTypeUnion
+  GetDerivationTypeUnion<"suiBase" | "adaBase" | AptDerivationTypeUnion | "dotBase">
 >;
 
 function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
@@ -24,24 +25,38 @@ function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
     deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonic<SupportedDerivationTypes>;
   },
   parameters: DoesPKBelongToMnemonicParameters<T>,
-  shouldHarden?: boolean,
+  isStrictHardened?: boolean,
 ): boolean {
   let updatedDerivationPath = parameters.derivationPathPrefix;
+  validateDerivationPath(updatedDerivationPath, isStrictHardened);
   let derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
 
   do {
     const itemsBatch = this.deriveItemsBatchFromMnemonic({
       ...parameters,
       derivationPathPrefix: updatedDerivationPath,
+      shouldUseHardenedAddress: isStrictHardened,
     });
+
+    if (!isStrictHardened) {
+      itemsBatch.push(
+        ...this.deriveItemsBatchFromMnemonic({
+          ...parameters,
+          derivationPathPrefix: updatedDerivationPath,
+          shouldUseHardenedAddress: false,
+        }),
+      );
+    }
 
     const { privateKey } = parameters;
 
-    if (doesPKExistInBatch(itemsBatch, privateKey)) return true;
+    if (doesPKExistInBatch(itemsBatch, privateKey)) {
+      return true;
+    }
 
     if (derivationPathDepth < MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY) {
       updatedDerivationPath = increaseDerivationPathDepth({
-        shouldHarden,
+        shouldHarden: isStrictHardened,
         derivationPath: updatedDerivationPath,
       });
 

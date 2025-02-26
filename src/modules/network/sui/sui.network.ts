@@ -11,44 +11,36 @@ import type {
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { getSuiDerivationHandlers } from "./libs/helpers/index.js";
-import { DerivationTypeMap } from "@/libs/types/index.js";
 
-class Sui implements AbstractNetwork<DerivationTypeMap["suiBase"]> {
-  private derivationHandlers: DerivationsHandlers<
-    DerivationTypeMap["suiBase"]
-  >[DerivationTypeMap["suiBase"]];
+class Sui implements AbstractNetwork<"suiBase"> {
+  private derivationHandlers: DerivationsHandlers<"suiBase">["suiBase"];
 
-  public constructor({
-    mnemonic,
-    derivationConfig: { algorithm },
-  }: ConstructorParameters<DerivationTypeMap["suiBase"]>) {
+  public constructor({ mnemonic, derivationConfig: { scheme } }: ConstructorParameters<"suiBase">) {
     this.derivationHandlers = getSuiDerivationHandlers({
-      algorithm,
+      scheme,
       keysDerivationInstance: new SuiKeyDerivation(mnemonic),
     });
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<DerivationTypeMap["suiBase"]>,
-  ): DerivedItem<DerivationTypeMap["suiBase"]> {
+    parameters: DeriveItemFromMnemonicParameters<"suiBase">,
+  ): DerivedItem<"suiBase"> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<DerivationTypeMap["suiBase"]>,
-  ): DerivedCredential<DerivationTypeMap["suiBase"]> {
+    parameters: GetCredentialFromPKParameters<"suiBase">,
+  ): DerivedCredential<"suiBase"> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeMap["suiBase"]>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<"suiBase">,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeMap["suiBase"]>,
-  ) {
+  public doesPKBelongToMnemonic(parameters: DoesPKBelongToMnemonicParameters<"suiBase">) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }
 }

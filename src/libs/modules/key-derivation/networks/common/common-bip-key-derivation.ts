@@ -7,8 +7,8 @@ import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import { type PrefixConfig, Bip32Keys } from "@/libs/modules/keys/index.js";
 import { type BIP32Interface } from "bip32";
 import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
-import { toUint8Array } from "@/libs/helpers/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
+import { convertHexToBytes } from "@/libs/utils/index.js";
 
 class CommonBipKeyDerivation
   extends Bip32Keys
@@ -46,9 +46,7 @@ class CommonBipKeyDerivation
     const wifKeyLength = 52;
 
     const formattedKey =
-      privateKey.length === wifKeyLength
-        ? privateKey
-        : toUint8Array(Buffer.from(privateKey, "hex"));
+      privateKey.length === wifKeyLength ? privateKey : convertHexToBytes(privateKey);
 
     const { publicKey } = this.getKeyPair(formattedKey);
 

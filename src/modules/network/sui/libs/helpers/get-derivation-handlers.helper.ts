@@ -10,32 +10,33 @@ import {
 
 function getSuiDerivationHandlers({
   keysDerivationInstance,
-  algorithm,
-}: GetDerivationHandlersParameters<"suiBase">): GetDerivationHandlersReturnType<"suiBase"> {
+  scheme,
+}: GetDerivationHandlersParameters["suiBase"]): GetDerivationHandlersReturnType<"suiBase"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({
         derivationPath,
-        algorithm,
+        scheme,
       });
-      const address = getSuiAddress(keys.publicKey, algorithm);
+      const address = getSuiAddress(keys.publicKey, scheme);
 
       return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: ({ privateKey }) => {
       const keys = keysDerivationInstance.importByPrivateKey({
         privateKey,
-        algorithm,
+        scheme,
       });
-      const address = getSuiAddress(keys.publicKey, algorithm);
+      const address = getSuiAddress(keys.publicKey, scheme);
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic(parameters) {
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
       return (deriveItemsBatchFromMnemonic<"suiBase">).call(
         this,
-        parameters,
-        algorithm === "ed25519",
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        scheme === "ed25519",
       );
     },
     doesPKBelongToMnemonic(parameters) {

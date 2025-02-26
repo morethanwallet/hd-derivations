@@ -6,9 +6,9 @@ import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import { type PrefixConfig, Bip32Keys } from "@/libs/modules/keys/index.js";
 import { type BIP32Interface } from "bip32";
 import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
-import { toUint8Array } from "@/libs/helpers/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { getPublicKeyFromPrivateKey } from "@binance-chain/javascript-sdk/lib/crypto/index.js";
+import { convertHexToBytes } from "@/libs/utils/index.js";
 
 class BnbKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"bnbBase"> {
   constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
@@ -24,7 +24,7 @@ class BnbKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"bnbBa
   }
 
   public importByPrivateKey({ privateKey }: PrivateKey<"bnbBase">): CommonKeyPair {
-    const rawKey = toUint8Array(Buffer.from(privateKey, "hex"));
+    const rawKey = convertHexToBytes(privateKey);
     const { publicKey } = this.getKeyPair(rawKey);
 
     return {

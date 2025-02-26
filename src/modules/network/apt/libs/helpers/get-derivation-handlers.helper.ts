@@ -11,41 +11,41 @@ import type {
 
 function getAptDerivationHandlers({
   keysDerivationInstance,
-  algorithm,
+  scheme,
   isMultiSig,
   isLegacy,
-}: GetDerivationHandlersParameters<AptDerivationTypeUnion>): GetDerivationHandlersReturnType<AptDerivationTypeUnion> {
+}: GetDerivationHandlersParameters[AptDerivationTypeUnion]): GetDerivationHandlersReturnType<AptDerivationTypeUnion> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({
         derivationPath,
-        algorithm,
+        scheme,
         isMultiSig,
         isLegacy,
       });
 
-      const address = getAptAddress(keys.publicKey, isLegacy, algorithm, isMultiSig);
+      const address = getAptAddress(keys.publicKey, isLegacy, scheme, isMultiSig);
 
       return { ...keys, address, derivationPath };
     },
     getCredentialFromPK: ({ privateKey }) => {
-      const keys = keysDerivationInstance.importByPrivateKey({ privateKey, algorithm, isLegacy });
-      const address = getAptAddress(keys.publicKey, isLegacy, algorithm);
+      const keys = keysDerivationInstance.importByPrivateKey({ privateKey, scheme, isLegacy });
+      const address = getAptAddress(keys.publicKey, isLegacy, scheme);
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic(parameters) {
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
       return (deriveItemsBatchFromMnemonic<AptDerivationTypeUnion>).call(
         this,
-        parameters,
-        algorithm === "ed25519",
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        scheme === "ed25519",
       );
     },
     doesPKBelongToMnemonic(parameters) {
       const itemsBatch = this.deriveItemsBatchFromMnemonic(parameters);
-      const { privateKey } = parameters;
 
-      return doesPKExistInBatch(itemsBatch, privateKey);
+      return doesPKExistInBatch(itemsBatch, parameters.privateKey);
     },
   };
 }
