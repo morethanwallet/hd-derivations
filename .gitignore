@@ -1,2 +1,4 @@
 node_modules
-tests.ts
+coverage
+build
+.env

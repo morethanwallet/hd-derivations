@@ -1,4 +1,1 @@
-import { getAddressInstance } from "@/address/index.js";
-import { CoinomiDerivationPath, CommonDerivationPath } from "@/enums/index.js";
-
-export { getAddressInstance, CoinomiDerivationPath, CommonDerivationPath };
+export { getNetwork, DEFAULT_INSTANCE_PARAMETERS } from "@/modules/network/index.js";
