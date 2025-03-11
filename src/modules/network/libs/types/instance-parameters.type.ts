@@ -98,21 +98,23 @@ type LtcInstanceParameters = {
   derivationConfig: LtcDerivationConfig;
 } & MnemonicProperty;
 
-export type {
-  AdaInstanceParameters,
-  AvaxInstanceParameters,
-  BtcInstanceParameters,
-  TrxInstanceParameters,
-  TonInstanceParameters,
-  SuiInstanceParameters,
-  BchInstanceParameters,
-  DotInstanceParameters,
-  XrpInstanceParameters,
-  BnbInstanceParameters,
-  EvmInstanceParameters,
-  SolInstanceParameters,
-  DogeInstanceParameters,
-  ZecInstanceParameters,
-  AptInstanceParameters,
-  LtcInstanceParameters,
+type InstanceParameters = {
+  ada: AdaInstanceParameters;
+  avax: AvaxInstanceParameters;
+  btc: BtcInstanceParameters;
+  trx: TrxInstanceParameters;
+  ton: TonInstanceParameters;
+  sui: SuiInstanceParameters;
+  bch: BchInstanceParameters;
+  dot: DotInstanceParameters;
+  xrp: XrpInstanceParameters;
+  bnb: BnbInstanceParameters;
+  evm: EvmInstanceParameters;
+  sol: SolInstanceParameters;
+  doge: DogeInstanceParameters;
+  zec: ZecInstanceParameters;
+  apt: AptInstanceParameters;
+  ltc: LtcInstanceParameters;
 };
+
+export type { InstanceParameters };

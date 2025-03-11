@@ -1,1 +1,5 @@
-export { getNetwork, DEFAULT_INSTANCE_PARAMETERS } from "@/modules/network/index.js";
+export {
+  getNetwork,
+  DEFAULT_INSTANCE_PARAMETERS,
+  type InstanceParameters,
+} from "@/modules/network/index.js";

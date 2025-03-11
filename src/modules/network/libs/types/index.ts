@@ -15,24 +15,7 @@ export type {
 export { type ConstructorParameters } from "./constructor-parameters.type.js";
 export { type DerivedItem } from "./derived-item.type.js";
 export { type DerivedCredential } from "./derived-credential.type.js";
-export type {
-  AdaInstanceParameters,
-  AvaxInstanceParameters,
-  BtcInstanceParameters,
-  TrxInstanceParameters,
-  TonInstanceParameters,
-  SuiInstanceParameters,
-  BchInstanceParameters,
-  XrpInstanceParameters,
-  BnbInstanceParameters,
-  EvmInstanceParameters,
-  DotInstanceParameters,
-  SolInstanceParameters,
-  DogeInstanceParameters,
-  ZecInstanceParameters,
-  AptInstanceParameters,
-  LtcInstanceParameters,
-} from "./instance-parameters.type.js";
+export type { InstanceParameters } from "./instance-parameters.type.js";
 export type {
   AdaDerivationConfig,
   AvaxDerivationConfig,
