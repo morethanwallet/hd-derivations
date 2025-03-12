@@ -19,6 +19,7 @@ import { Doge } from "../doge/index.js";
 import { Zec } from "../zec/index.js";
 import { Apt } from "../apt/index.js";
 import { Ltc } from "../ltc/index.js";
+import { NetworkError } from "../libs/exceptions/index.js";
 
 // Initialization is necessary for the @polkadot/util-crypto WASM package to work correctly
 await cryptoWaitReady();
@@ -130,7 +131,7 @@ function getNetwork<T extends NetworkTypeUnion>(
       }) as NetworkNameToNetwork[T];
     }
     default: {
-      throw new Error(ExceptionMessage.NETWORK_IS_NOT_SUPPORTED);
+      throw new NetworkError(ExceptionMessage.NETWORK_IS_NOT_SUPPORTED);
     }
   }
 }
