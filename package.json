@@ -1,6 +1,6 @@
 {
-  "name": "hd-derivations",
-  "version": "1.0.0-beta.14",
+  "name": "@morethanwallet/hd-derivations",
+  "version": "1.0.0-beta.1",
   "description": "",
   "main": "./build/node/index.js",
   "browser": "./build/browser/index.js",
