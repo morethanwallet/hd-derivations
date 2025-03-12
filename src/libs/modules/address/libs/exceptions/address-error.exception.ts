@@ -1,6 +1,7 @@
 class AddressError extends Error {
   public constructor(message: string) {
-    super(`Address Error: ${message}`);
+    super(message);
+    console.error("Address Error:");
     this.name = "AddressError";
   }
 }

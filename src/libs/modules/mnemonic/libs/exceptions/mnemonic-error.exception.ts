@@ -1,6 +1,7 @@
 class MnemonicError extends Error {
   public constructor(message: string) {
-    super(`Mnemonic Error: ${message}`);
+    super(message);
+    console.error("Mnemonic Error:");
     this.name = "MnemonicError";
   }
 }
