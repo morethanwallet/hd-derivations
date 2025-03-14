@@ -1,4 +1,3 @@
-import { cryptoWaitReady } from "@polkadot/util-crypto";
 import type { NetworkTypeUnion } from "../libs/types/index.js";
 import type { GetNetworkParameters, NetworkNameToNetwork } from "./libs/types/index.js";
 import { DotMnemonic, Mnemonic } from "@/libs/modules/mnemonic/index.js";
@@ -21,12 +20,9 @@ import { Apt } from "../apt/index.js";
 import { Ltc } from "../ltc/index.js";
 import { NetworkError } from "../libs/exceptions/index.js";
 
-// Initialization is necessary for the @polkadot/util-crypto WASM package to work correctly
-await cryptoWaitReady();
-
-function getNetwork<T extends NetworkTypeUnion>(
+async function getNetwork<T extends NetworkTypeUnion>(
   parameters: GetNetworkParameters<T>,
-): NetworkNameToNetwork[T] {
+): Promise<NetworkNameToNetwork[T]> {
   const { network, mnemonic } = parameters;
   const mnemonicInstance = new Mnemonic(mnemonic);
 
@@ -94,11 +90,12 @@ function getNetwork<T extends NetworkTypeUnion>(
     }
     case "dot": {
       const dotMnemonicInstance = new DotMnemonic(mnemonic);
-      return new Dot({
+
+      return (await Dot.create({
         ...(parameters as GetNetworkParameters<"dot">),
         mnemonic: mnemonicInstance,
         dotMnemonic: dotMnemonicInstance,
-      }) as NetworkNameToNetwork[T];
+      })) as NetworkNameToNetwork[T];
     }
     case "sol": {
       return new Sol({
