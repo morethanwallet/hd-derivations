@@ -19,10 +19,14 @@ import { Zec } from "../zec/index.js";
 import { Apt } from "../apt/index.js";
 import { Ltc } from "../ltc/index.js";
 import { NetworkError } from "../libs/exceptions/index.js";
+import { cryptoWaitReady } from "@polkadot/util-crypto";
 
-async function getNetwork<T extends NetworkTypeUnion>(
+// Initialization is necessary for the @polkadot/util-crypto WASM package to work correctly
+await cryptoWaitReady();
+
+function getNetwork<T extends NetworkTypeUnion>(
   parameters: GetNetworkParameters<T>,
-): Promise<NetworkNameToNetwork[T]> {
+): NetworkNameToNetwork[T] {
   const { network, mnemonic } = parameters;
   const mnemonicInstance = new Mnemonic(mnemonic);
 
@@ -91,11 +95,11 @@ async function getNetwork<T extends NetworkTypeUnion>(
     case "dot": {
       const dotMnemonicInstance = new DotMnemonic(mnemonic);
 
-      return (await Dot.create({
+      return new Dot({
         ...(parameters as GetNetworkParameters<"dot">),
         mnemonic: mnemonicInstance,
         dotMnemonic: dotMnemonicInstance,
-      })) as NetworkNameToNetwork[T];
+      }) as NetworkNameToNetwork[T];
     }
     case "sol": {
       return new Sol({

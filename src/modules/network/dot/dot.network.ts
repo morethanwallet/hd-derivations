@@ -18,24 +18,8 @@ import {
   getStandardHdDerivationHandlers,
 } from "./libs/helpers/index.js";
 import type { DotDerivationTypeUnion } from "@/libs/types/index.js";
-import { cryptoWaitReady } from "@polkadot/util-crypto";
-import { NetworkError } from "../libs/exceptions/index.js";
-import { ExceptionMessage } from "../libs/enums/index.js";
 
 class Dot implements AbstractNetwork<DotDerivationTypeUnion> {
-  public static async create(
-    parameters: ConstructorParameters<DotDerivationTypeUnion>,
-  ): Promise<Dot> {
-    try {
-      // Initialization is necessary for the @polkadot/util-crypto WASM package to work correctly
-      await cryptoWaitReady();
-      return new Dot(parameters);
-    } catch (error) {
-      console.error("Polkadot WASM initialization failed:", error);
-      throw new NetworkError(ExceptionMessage.NETWORK_INITIALIZATION_FAILED);
-    }
-  }
-
   private derivationHandlers: DerivationsHandlers<DotDerivationTypeUnion>[DotDerivationTypeUnion];
 
   public constructor({
