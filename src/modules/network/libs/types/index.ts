@@ -16,19 +16,7 @@ export { type ConstructorParameters } from "./constructor-parameters.type.js";
 export { type DerivedItem } from "./derived-item.type.js";
 export { type DerivedCredential } from "./derived-credential.type.js";
 export type { InstanceParameters } from "./instance-parameters.type.js";
-export type {
-  AdaDerivationConfig,
-  AvaxDerivationConfig,
-  BtcDerivationConfig,
-  TonDerivationConfig,
-  TrxDerivationConfig,
-  SuiDerivationConfig,
-  BchDerivationConfig,
-  XrpDerivationConfig,
-  DogeDerivationConfig,
-  ZecDerivationConfig,
-  LtcDerivationConfig,
-} from "./derivation-config.type.js";
+export type { GetDerivationConfig, DerivationConfig } from "./derivation-config.type.js";
 export {
   type CommonNetworkPurposeUnion,
   type CommonNetworkPurposeRegTestExtendedUnion,
