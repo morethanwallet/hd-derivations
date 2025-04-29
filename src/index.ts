@@ -4,5 +4,7 @@ export {
   type InstanceParameters,
   type NetworkTypeUnion,
   type DerivedItem,
+  type GetDerivationConfig,
+  type DerivationConfig,
 } from "@/modules/network/index.js";
 export type { DerivationTypeUnion, GetDerivationTypeUnion } from "@/libs/types/index.js";
