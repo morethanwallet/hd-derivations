@@ -23,6 +23,7 @@ function deriveItemsBatchFromMnemonic<T extends SupportedDerivationTypes>(
   parameters: DeriveItemsBatchFromMnemonicParameters<T>,
   deriveItemFromMnemonicParameters: DeriveItemFromMnemonicParameters<T>,
   isStrictHardened?: boolean,
+  addressPosition?: number,
 ) {
   const { derivationPath } = deriveItemFromMnemonicParameters;
   const { indexLookupFrom, indexLookupTo } = parameters;
@@ -34,6 +35,7 @@ function deriveItemsBatchFromMnemonic<T extends SupportedDerivationTypes>(
       derivationPath,
       shouldHarden: isStrictHardened,
       addressIndex: i,
+      addressPosition,
     });
 
     batch.push(

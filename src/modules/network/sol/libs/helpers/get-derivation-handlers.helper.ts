@@ -7,6 +7,7 @@ import type {
   GetDerivationHandlersParameters,
   GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
+import { DEFAULT_ADDRESS_POSITION } from "../constants";
 
 function getSolDerivationHandlers({
   keysDerivationInstance,
@@ -23,12 +24,18 @@ function getSolDerivationHandlers({
 
       return { ...keys, address: keys.publicKey };
     },
-    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      addressPosition = DEFAULT_ADDRESS_POSITION,
+    }) {
       return (deriveItemsBatchFromMnemonic<"solBase">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
         true,
+        addressPosition,
       );
     },
     doesPKBelongToMnemonic(parameters) {

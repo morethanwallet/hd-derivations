@@ -1,22 +1,37 @@
 import type { CommonDerivationPath } from "@/libs/types/index.js";
 import { DerivationPathSymbol } from "../enums/index.js";
+import { getDerivationPathSegmentsArray } from "./get-derivation-path-segments-array.helper.js";
 
 type AppendAddressToDerivationPathParameters = {
   derivationPath: CommonDerivationPath["derivationPath"];
   addressIndex: number;
   shouldHarden?: boolean;
+  addressPosition?: number;
 };
+
+const DELETION_SKIP_COUNT = 0;
 
 function appendAddressToDerivationPath({
   derivationPath,
   addressIndex,
   shouldHarden = false,
+  addressPosition,
 }: AppendAddressToDerivationPathParameters): CommonDerivationPath["derivationPath"] {
   const createdSegment = `${addressIndex}${
     shouldHarden ? DerivationPathSymbol.HARDENED_SUFFIX : ""
   }`;
 
-  return `${derivationPath}${DerivationPathSymbol.DELIMITER}${createdSegment}`;
+  const formattedAddressPosition =
+    addressPosition ?? derivationPath.split(DerivationPathSymbol.DELIMITER).length;
+
+  const splittedDerivationPath = getDerivationPathSegmentsArray(derivationPath);
+  const addressInjectedDerivationPath = splittedDerivationPath.toSpliced(
+    formattedAddressPosition,
+    DELETION_SKIP_COUNT,
+    createdSegment,
+  );
+
+  return addressInjectedDerivationPath.join(DerivationPathSymbol.DELIMITER);
 }
 
 export { appendAddressToDerivationPath };
