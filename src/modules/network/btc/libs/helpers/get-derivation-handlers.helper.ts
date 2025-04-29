@@ -20,9 +20,9 @@ function getLegacyDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["btcLegacy"]): GetDerivationHandlersReturnType<"btcLegacy"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: ({ derivationPath, base58RootKey }) => {
       validateDerivationPath(derivationPath);
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath, base58RootKey });
       const address = getBtcLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath };
