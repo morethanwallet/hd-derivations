@@ -14,23 +14,21 @@ class Mnemonic {
 
   public constructor(mnemonic?: string) {
     this.mnemonic = mnemonic === undefined ? generateMnemonic() : mnemonic;
-    this.validateMnemonic();
+    Mnemonic.validateMnemonic(this.mnemonic);
   }
 
-  protected validateMnemonic(mnemonic?: string): void {
-    const mnemonicToValidate = mnemonic ?? this.mnemonic;
-
-    if (!mnemonicToValidate) {
+  public static validateMnemonic(mnemonic: string): void {
+    if (!mnemonic) {
       throw new MnemonicError(ExceptionMessage.EMPTY_MNEMONIC);
     }
 
-    const mnemonicWordsLength = mnemonicToValidate.split(MNEMONIC_DIVIDER).length;
+    const mnemonicWordsLength = mnemonic.split(MNEMONIC_DIVIDER).length;
 
     if (!ALLOWED_MNEMONIC_LENGTHS.includes(mnemonicWordsLength)) {
       throw new MnemonicError(ExceptionMessage.INVALID_MNEMONIC_LENGTH);
     }
 
-    if (!isMnemonicValid(this.mnemonic, wordlists.english)) {
+    if (!isMnemonicValid(mnemonic, wordlists.english)) {
       throw new MnemonicError(ExceptionMessage.INVALID_MNEMONIC);
     }
   }
