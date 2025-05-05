@@ -38,11 +38,12 @@ function getLegacyDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcLegacy">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
@@ -72,11 +73,12 @@ function getSegWitDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcSegWit">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
@@ -112,11 +114,12 @@ function getNativeSegWitDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcNativeSegWit">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
@@ -146,11 +149,12 @@ function getTaprootDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcTaproot">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
@@ -180,11 +184,12 @@ function getP2wshDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcP2wsh">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
@@ -214,11 +219,12 @@ function getP2wshInP2shDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcP2wshInP2sh">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
