@@ -6,4 +6,5 @@ export type {
   DerivedItem,
   GetDerivationConfig,
   DerivationConfig,
+  GetNetworkTypeUnion,
 } from "./libs/types/index.js";

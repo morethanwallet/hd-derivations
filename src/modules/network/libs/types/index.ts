@@ -22,5 +22,5 @@ export {
   type CommonNetworkPurposeRegTestExtendedUnion,
   type AdaNetworkPurposeUnion,
 } from "./network-purpose-union.type.js";
-export type { NetworkTypeUnion } from "./network-type-union.type.js";
+export type { NetworkTypeUnion, GetNetworkTypeUnion } from "./network-type-union.type.js";
 export type { NetworkTypeMap } from "./network-type-map.type.js";
