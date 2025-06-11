@@ -72,7 +72,7 @@ const DEFAULT_EVM_INSTANCE_PARAMETERS: InstanceParameters["evm"] = {
 
 const DEFAULT_DOT_INSTANCE_PARAMETERS: InstanceParameters["dot"] = {
   network: "dot",
-  derivationConfig: { ss58Format: 0, derivationType: "dotStandardHd", scheme: "ed25519" },
+  derivationConfig: { ss58Format: 0, derivationType: "dotBase", scheme: "sr25519" },
 };
 
 const DEFAULT_SOL_INSTANCE_PARAMETERS: InstanceParameters["sol"] = {
