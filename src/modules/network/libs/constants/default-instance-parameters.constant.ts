@@ -1,29 +1,11 @@
-import type {
-  AdaInstanceParameters,
-  AptInstanceParameters,
-  AvaxInstanceParameters,
-  BchInstanceParameters,
-  BnbInstanceParameters,
-  BtcInstanceParameters,
-  DogeInstanceParameters,
-  DotInstanceParameters,
-  EvmInstanceParameters,
-  LtcInstanceParameters,
-  SolInstanceParameters,
-  SuiInstanceParameters,
-  TonInstanceParameters,
-  TrxInstanceParameters,
-  XrpInstanceParameters,
-  ZecInstanceParameters,
-} from "../types/index.js";
+import type { InstanceParameters } from "../types/index.js";
 
-const DEFAULT_ADA_INSTANCE_PARAMETERS: AdaInstanceParameters = {
+const DEFAULT_ADA_INSTANCE_PARAMETERS: InstanceParameters["ada"] = {
   network: "ada",
-
   derivationConfig: { networkPurpose: "mainnet", derivationType: "adaBase" },
 };
 
-const DEFAULT_AVAX_INSTANCE_PARAMETERS: AvaxInstanceParameters = {
+const DEFAULT_AVAX_INSTANCE_PARAMETERS: InstanceParameters["avax"] = {
   network: "avax",
   derivationConfig: {
     networkPurpose: "mainnet",
@@ -31,7 +13,7 @@ const DEFAULT_AVAX_INSTANCE_PARAMETERS: AvaxInstanceParameters = {
   },
 };
 
-const DEFAULT_BTC_INSTANCE_PARAMETERS: BtcInstanceParameters = {
+const DEFAULT_BTC_INSTANCE_PARAMETERS: InstanceParameters["btc"] = {
   network: "btc",
   derivationConfig: {
     networkPurpose: "mainnet",
@@ -39,12 +21,12 @@ const DEFAULT_BTC_INSTANCE_PARAMETERS: BtcInstanceParameters = {
   },
 };
 
-const DEFAULT_TRX_INSTANCE_PARAMETERS: TrxInstanceParameters = {
+const DEFAULT_TRX_INSTANCE_PARAMETERS: InstanceParameters["trx"] = {
   network: "trx",
   derivationConfig: { derivationType: "trxBase" },
 };
 
-const DEFAULT_TON_INSTANCE_PARAMETERS: TonInstanceParameters = {
+const DEFAULT_TON_INSTANCE_PARAMETERS: InstanceParameters["ton"] = {
   network: "ton",
   derivationConfig: {
     networkPurpose: "mainnet",
@@ -59,12 +41,12 @@ const DEFAULT_TON_INSTANCE_PARAMETERS: TonInstanceParameters = {
   },
 };
 
-const DEFAULT_SUI_INSTANCE_PARAMETERS: SuiInstanceParameters = {
+const DEFAULT_SUI_INSTANCE_PARAMETERS: InstanceParameters["sui"] = {
   network: "sui",
   derivationConfig: { scheme: "ed25519", derivationType: "suiBase" },
 };
 
-const DEFAULT_BCH_INSTANCE_PARAMETERS: BchInstanceParameters = {
+const DEFAULT_BCH_INSTANCE_PARAMETERS: InstanceParameters["bch"] = {
   network: "bch",
   derivationConfig: {
     networkPurpose: "mainnet",
@@ -72,7 +54,7 @@ const DEFAULT_BCH_INSTANCE_PARAMETERS: BchInstanceParameters = {
   },
 };
 
-const DEFAULT_XRP_INSTANCE_PARAMETERS: XrpInstanceParameters = {
+const DEFAULT_XRP_INSTANCE_PARAMETERS: InstanceParameters["xrp"] = {
   network: "xrp",
   derivationConfig: {
     derivationType: "xrpBase",
@@ -80,24 +62,24 @@ const DEFAULT_XRP_INSTANCE_PARAMETERS: XrpInstanceParameters = {
   },
 };
 
-const DEFAULT_BNB_INSTANCE_PARAMETERS: BnbInstanceParameters = {
+const DEFAULT_BNB_INSTANCE_PARAMETERS: InstanceParameters["bnb"] = {
   network: "bnb",
 };
 
-const DEFAULT_EVM_INSTANCE_PARAMETERS: EvmInstanceParameters = {
+const DEFAULT_EVM_INSTANCE_PARAMETERS: InstanceParameters["evm"] = {
   network: "evm",
 };
 
-const DEFAULT_DOT_INSTANCE_PARAMETERS: DotInstanceParameters = {
+const DEFAULT_DOT_INSTANCE_PARAMETERS: InstanceParameters["dot"] = {
   network: "dot",
   derivationConfig: { ss58Format: 0, derivationType: "dotStandardHd", scheme: "ed25519" },
 };
 
-const DEFAULT_SOL_INSTANCE_PARAMETERS: SolInstanceParameters = {
+const DEFAULT_SOL_INSTANCE_PARAMETERS: InstanceParameters["sol"] = {
   network: "sol",
 };
 
-const DEFAULT_DOGE_INSTANCE_PARAMETERS: DogeInstanceParameters = {
+const DEFAULT_DOGE_INSTANCE_PARAMETERS: InstanceParameters["doge"] = {
   network: "doge",
   derivationConfig: {
     derivationType: "dogeLegacy",
@@ -105,7 +87,7 @@ const DEFAULT_DOGE_INSTANCE_PARAMETERS: DogeInstanceParameters = {
   },
 };
 
-const DEFAULT_ZEC_INSTANCE_PARAMETERS: ZecInstanceParameters = {
+const DEFAULT_ZEC_INSTANCE_PARAMETERS: InstanceParameters["zec"] = {
   network: "zec",
   derivationConfig: {
     derivationType: "zecTransparent",
@@ -113,7 +95,7 @@ const DEFAULT_ZEC_INSTANCE_PARAMETERS: ZecInstanceParameters = {
   },
 };
 
-const DEFAULT_APT_INSTANCE_PARAMETERS: AptInstanceParameters = {
+const DEFAULT_APT_INSTANCE_PARAMETERS: InstanceParameters["apt"] = {
   network: "apt",
   derivationConfig: {
     scheme: "ed25519",
@@ -121,7 +103,7 @@ const DEFAULT_APT_INSTANCE_PARAMETERS: AptInstanceParameters = {
   },
 };
 
-const DEFAULT_LTC_INSTANCE_PARAMETERS: LtcInstanceParameters = {
+const DEFAULT_LTC_INSTANCE_PARAMETERS: InstanceParameters["ltc"] = {
   network: "ltc",
   derivationConfig: {
     derivationType: "ltcNativeSegWit",

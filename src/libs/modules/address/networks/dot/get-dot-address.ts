@@ -10,6 +10,7 @@ import {
 
 function getDotAddress(publicKey: string, ss58Format: Ss58Format["ss58Format"]) {
   let publicKeyBytes = convertHexToBytes(publicKey);
+  const numericSs58Format = Number(ss58Format);
 
   if (publicKeyBytes.length === SECP256K1_UNCOMPRESSED_PUBLIC_KEY_LENGTH) {
     publicKeyBytes = secp256k1.ProjectivePoint.fromHex(publicKeyBytes).toRawBytes(true);
@@ -19,7 +20,7 @@ function getDotAddress(publicKey: string, ss58Format: Ss58Format["ss58Format"]) 
     publicKeyBytes = blake2AsU8a(publicKeyBytes, PUBLIC_KEY_HASH_BIT_LENGTH);
   }
 
-  return encodeAddress(publicKeyBytes, ss58Format);
+  return encodeAddress(publicKeyBytes, numericSs58Format);
 }
 
 export { getDotAddress };

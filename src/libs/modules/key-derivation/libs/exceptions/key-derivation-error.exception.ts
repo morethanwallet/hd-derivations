@@ -1,6 +1,7 @@
 class KeyDerivationError extends Error {
   public constructor(message: string) {
-    super(`Key Derivation Error: ${message}`);
+    super(message);
+    console.error("Key Derivation Error:");
     this.name = "KeyDerivationError";
   }
 }

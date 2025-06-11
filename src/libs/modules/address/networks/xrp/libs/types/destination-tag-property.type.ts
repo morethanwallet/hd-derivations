@@ -1,5 +1,5 @@
 type DestinationTagProperty = {
-  destinationTag?: number;
+  destinationTag?: number | string;
 };
 
 export type { DestinationTagProperty };

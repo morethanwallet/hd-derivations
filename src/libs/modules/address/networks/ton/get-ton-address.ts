@@ -42,10 +42,11 @@ function getTonAddress({
 }: GetTonAddressParameters): Address["address"] {
   const publicKeyBuffer = Buffer.from(publicKey, "hex");
   const contract = contractVersionToContract[contractVersion];
+  const numericWorkChain = Number(workChain);
 
   const contractInstance = contract.create({
     publicKey: publicKeyBuffer,
-    workchain: workChain,
+    workchain: numericWorkChain,
   });
 
   return isFriendlyFormat

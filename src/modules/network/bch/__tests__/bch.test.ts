@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import { Bch } from "../bch.network.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
 import type { BchDerivationTypeUnion } from "@/libs/types/index.js";
@@ -103,42 +103,36 @@ type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeRegTestExtendedUnion]: { [key in BchDerivationTypeUnion]: Bch };
 };
 
-let networkDerivationsInstances = {} as NetworkDerivationsInstances;
+const derivationTypes: BchDerivationTypeUnion[] = ["bchCashAddr", "bchLegacy"] as const;
 
-beforeAll(() => {
-  const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
-    "mainnet",
-    "testnet",
-    "regtest",
-  ] as const;
+const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
+  "mainnet",
+  "testnet",
+  "regtest",
+] as const;
 
-  const derivationTypes: BchDerivationTypeUnion[] = ["bchCashAddr", "bchLegacy"] as const;
+const networkDerivationsInstances = await networkPurposes.reduce(
+  async (networkDerivationsInstances, networkPurpose) => {
+    (await networkDerivationsInstances)[networkPurpose] = await derivationTypes.reduce(
+      async (derivations, derivationType) => {
+        (await derivations)[derivationType] = await getNetwork({
+          network: "bch",
+          mnemonic: MNEMONIC,
+          derivationConfig: {
+            networkPurpose,
+            derivationType,
+          },
+        });
 
-  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
-    (networkDerivationsInstances, networkPurpose) => {
-      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
-        NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]
-      >(
-        (derivations, derivationType) => {
-          derivations[derivationType] = getNetwork({
-            network: "bch",
-            mnemonic: MNEMONIC,
-            derivationConfig: {
-              networkPurpose,
-              derivationType,
-            },
-          });
+        return derivations;
+      },
+      {} as Promise<NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]>,
+    );
 
-          return derivations;
-        },
-        {} as NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion],
-      );
-
-      return networkDerivationsInstances;
-    },
-    {} as NetworkDerivationsInstances,
-  );
-});
+    return networkDerivationsInstances;
+  },
+  {} as Promise<NetworkDerivationsInstances>,
+);
 
 describe("Bch", () => {
   describe("mainnet", () => {

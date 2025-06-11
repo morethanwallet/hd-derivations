@@ -1,6 +1,7 @@
 class NetworkError extends Error {
   public constructor(message: string) {
-    super(`Network Error: ${message}`);
+    super(message);
+    console.error("Network Error:");
     this.name = "NetworkError";
   }
 }

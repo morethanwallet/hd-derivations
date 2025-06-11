@@ -1,77 +1,62 @@
 import type { Mnemonic } from "@/libs/modules/mnemonic/index.js";
-import type {
-  AdaDerivationConfig,
-  AvaxDerivationConfig,
-  BtcDerivationConfig,
-  TonDerivationConfig,
-  TrxDerivationConfig,
-  SuiDerivationConfig,
-  BchDerivationConfig,
-  DotDerivationConfig,
-  XrpDerivationConfig,
-  CommonDerivationConfig,
-  DogeDerivationConfig,
-  ZecDerivationConfig,
-  AptDerivationConfig,
-  LtcDerivationConfig,
-} from "./derivation-config.type.js";
+import type { GetDerivationConfig } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
 
 type MnemonicProperty = { mnemonic?: Mnemonic["mnemonic"] };
 
 type AdaInstanceParameters = {
   network: NetworkTypeMap["ada"];
-  derivationConfig: AdaDerivationConfig;
+  derivationConfig: GetDerivationConfig<"ada">;
 } & MnemonicProperty;
 
 type AvaxInstanceParameters = {
   network: NetworkTypeMap["avax"];
-  derivationConfig: AvaxDerivationConfig;
+  derivationConfig: GetDerivationConfig<"avax">;
 } & MnemonicProperty;
 
 type BtcInstanceParameters = {
   network: NetworkTypeMap["btc"];
-  derivationConfig: BtcDerivationConfig;
+  derivationConfig: GetDerivationConfig<"btc">;
 } & MnemonicProperty;
 
 type TrxInstanceParameters = {
   network: NetworkTypeMap["trx"];
-  derivationConfig: TrxDerivationConfig;
+  derivationConfig: GetDerivationConfig<"trx">;
 } & MnemonicProperty;
 
 type TonInstanceParameters = {
   network: NetworkTypeMap["ton"];
-  derivationConfig: TonDerivationConfig;
+  derivationConfig: GetDerivationConfig<"ton">;
 } & MnemonicProperty;
 
 type SuiInstanceParameters = {
   network: NetworkTypeMap["sui"];
-  derivationConfig: SuiDerivationConfig;
+  derivationConfig: GetDerivationConfig<"sui">;
 } & MnemonicProperty;
 
 type BchInstanceParameters = {
   network: NetworkTypeMap["bch"];
-  derivationConfig: BchDerivationConfig;
+  derivationConfig: GetDerivationConfig<"bch">;
 } & MnemonicProperty;
 
 type DotInstanceParameters = {
   network: NetworkTypeMap["dot"];
-  derivationConfig: DotDerivationConfig;
+  derivationConfig: GetDerivationConfig<"dot">;
 } & MnemonicProperty;
 
 type XrpInstanceParameters = {
   network: NetworkTypeMap["xrp"];
-  derivationConfig: XrpDerivationConfig;
+  derivationConfig: GetDerivationConfig<"xrp">;
 } & MnemonicProperty;
 
 type BnbInstanceParameters = {
   network: NetworkTypeMap["bnb"];
-  derivationConfig?: CommonDerivationConfig;
+  derivationConfig?: GetDerivationConfig<"bnb">;
 } & MnemonicProperty;
 
 type EvmInstanceParameters = {
   network: NetworkTypeMap["evm"];
-  derivationConfig?: CommonDerivationConfig;
+  derivationConfig?: GetDerivationConfig<"evm">;
 } & MnemonicProperty;
 
 type SolInstanceParameters = {
@@ -80,39 +65,41 @@ type SolInstanceParameters = {
 
 type DogeInstanceParameters = {
   network: NetworkTypeMap["doge"];
-  derivationConfig: DogeDerivationConfig;
+  derivationConfig: GetDerivationConfig<"doge">;
 } & MnemonicProperty;
 
 type ZecInstanceParameters = {
   network: NetworkTypeMap["zec"];
-  derivationConfig: ZecDerivationConfig;
+  derivationConfig: GetDerivationConfig<"zec">;
 } & MnemonicProperty;
 
 type AptInstanceParameters = {
   network: NetworkTypeMap["apt"];
-  derivationConfig: AptDerivationConfig;
+  derivationConfig: GetDerivationConfig<"apt">;
 } & MnemonicProperty;
 
 type LtcInstanceParameters = {
   network: NetworkTypeMap["ltc"];
-  derivationConfig: LtcDerivationConfig;
+  derivationConfig: GetDerivationConfig<"ltc">;
 } & MnemonicProperty;
 
-export type {
-  AdaInstanceParameters,
-  AvaxInstanceParameters,
-  BtcInstanceParameters,
-  TrxInstanceParameters,
-  TonInstanceParameters,
-  SuiInstanceParameters,
-  BchInstanceParameters,
-  DotInstanceParameters,
-  XrpInstanceParameters,
-  BnbInstanceParameters,
-  EvmInstanceParameters,
-  SolInstanceParameters,
-  DogeInstanceParameters,
-  ZecInstanceParameters,
-  AptInstanceParameters,
-  LtcInstanceParameters,
+type InstanceParameters = {
+  ada: AdaInstanceParameters;
+  avax: AvaxInstanceParameters;
+  btc: BtcInstanceParameters;
+  trx: TrxInstanceParameters;
+  ton: TonInstanceParameters;
+  sui: SuiInstanceParameters;
+  bch: BchInstanceParameters;
+  dot: DotInstanceParameters;
+  xrp: XrpInstanceParameters;
+  bnb: BnbInstanceParameters;
+  evm: EvmInstanceParameters;
+  sol: SolInstanceParameters;
+  doge: DogeInstanceParameters;
+  zec: ZecInstanceParameters;
+  apt: AptInstanceParameters;
+  ltc: LtcInstanceParameters;
 };
+
+export type { InstanceParameters };

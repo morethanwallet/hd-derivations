@@ -19,7 +19,6 @@ export default defineConfig({
       tsconfigPath: "tsconfig.build.json",
     }),
     nodePolyfills(),
-    //  typescript()
   ],
   resolve: {
     alias: [
@@ -34,7 +33,7 @@ export default defineConfig({
     outDir: resolve(__dirname, "build/browser"),
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "hd-derivations",
+      name: "@morethanwallet/hd-derivations",
       formats: ["es"],
     },
     rollupOptions: {

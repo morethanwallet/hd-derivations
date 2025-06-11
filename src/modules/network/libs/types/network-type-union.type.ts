@@ -3,4 +3,6 @@ import type { ValueOf } from "@/libs/types/index.js";
 
 type NetworkTypeUnion = ValueOf<NetworkTypeMap>;
 
-export { type NetworkTypeUnion };
+type GetNetworkTypeUnion<T extends NetworkTypeUnion> = T;
+
+export { type NetworkTypeUnion, type GetNetworkTypeUnion };

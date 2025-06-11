@@ -11,57 +11,42 @@ import type {
   DotDerivationTypeUnion,
 } from "@/libs/types/index.js";
 import { DotMnemonic, type Mnemonic } from "@/libs/modules/mnemonic/index.js";
-import type {
-  AdaDerivationConfig,
-  AptDerivationConfig,
-  AvaxDerivationConfig,
-  BchDerivationConfig,
-  BtcDerivationConfig,
-  CommonDerivationConfig,
-  DogeDerivationConfig,
-  DotDerivationConfig,
-  LtcDerivationConfig,
-  SuiDerivationConfig,
-  TonDerivationConfig,
-  TrxDerivationConfig,
-  XrpDerivationConfig,
-  ZecDerivationConfig,
-} from "./derivation-config.type.js";
+import type { GetDerivationConfig } from "./derivation-config.type.js";
 
 // TODO: Try to use mapping here
 type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
   T extends GetDerivationTypeUnion<"solBase">
     ? {}
     : T extends GetDerivationTypeUnion<"evmBase" | "bnbBase">
-      ? { derivationConfig?: CommonDerivationConfig }
+      ? { derivationConfig?: GetDerivationConfig<"evm" | "bnb"> }
       : {
           derivationConfig: T extends BtcDerivationTypeUnion
-            ? BtcDerivationConfig
+            ? GetDerivationConfig<"btc">
             : T extends AdaDerivationTypeUnion
-              ? AdaDerivationConfig
+              ? GetDerivationConfig<"ada">
               : T extends AvaxDerivationTypeUnion
-                ? AvaxDerivationConfig
+                ? GetDerivationConfig<"avax">
                 : T extends GetDerivationTypeUnion<"trxBase">
-                  ? TrxDerivationConfig
+                  ? GetDerivationConfig<"trx">
                   : T extends GetDerivationTypeUnion<"tonBase">
-                    ? TonDerivationConfig
+                    ? GetDerivationConfig<"ton">
                     : T extends GetDerivationTypeUnion<"suiBase">
-                      ? SuiDerivationConfig
+                      ? GetDerivationConfig<"sui">
                       : T extends BchDerivationTypeUnion
-                        ? BchDerivationConfig
+                        ? GetDerivationConfig<"bch">
                         : T extends DotDerivationTypeUnion
-                          ? DotDerivationConfig
+                          ? GetDerivationConfig<"dot">
                           : T extends XrpDerivationTypeUnion
-                            ? XrpDerivationConfig
+                            ? GetDerivationConfig<"xrp">
                             : T extends GetDerivationTypeUnion<"dogeLegacy">
-                              ? DogeDerivationConfig
+                              ? GetDerivationConfig<"doge">
                               : T extends GetDerivationTypeUnion<"zecTransparent">
-                                ? ZecDerivationConfig
+                                ? GetDerivationConfig<"zec">
                                 : T extends AptDerivationTypeUnion
-                                  ? AptDerivationConfig
+                                  ? GetDerivationConfig<"apt">
                                   : T extends LtcDerivationTypeUnion
-                                    ? LtcDerivationConfig
-                                    : CommonDerivationConfig;
+                                    ? GetDerivationConfig<"ltc">
+                                    : never;
         };
 
 type ConstructorParameters<T extends DerivationTypeUnion> = {
