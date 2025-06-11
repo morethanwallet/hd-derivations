@@ -88,19 +88,24 @@ type LtcDerivationConfig = {
   derivationType: LtcDerivationTypeUnion;
 } & PrefixConfigProperty;
 
-export type {
-  AdaDerivationConfig,
-  AvaxDerivationConfig,
-  BtcDerivationConfig,
-  TrxDerivationConfig,
-  TonDerivationConfig,
-  SuiDerivationConfig,
-  BchDerivationConfig,
-  XrpDerivationConfig,
-  PrefixConfigProperty as CommonDerivationConfig,
-  DotDerivationConfig,
-  DogeDerivationConfig,
-  ZecDerivationConfig,
-  AptDerivationConfig,
-  LtcDerivationConfig,
+type DerivationConfig = {
+  ada: AdaDerivationConfig;
+  avax: AvaxDerivationConfig;
+  btc: BtcDerivationConfig;
+  trx: TrxDerivationConfig;
+  ton: TonDerivationConfig;
+  sui: SuiDerivationConfig;
+  bch: BchDerivationConfig;
+  dot: DotDerivationConfig;
+  xrp: XrpDerivationConfig;
+  doge: DogeDerivationConfig;
+  zec: ZecDerivationConfig;
+  apt: AptDerivationConfig;
+  ltc: LtcDerivationConfig;
+} & {
+  [key in "evm" | "bnb"]: PrefixConfigProperty;
 };
+
+type GetDerivationConfig<T extends keyof DerivationConfig> = DerivationConfig[T];
+
+export type { GetDerivationConfig, DerivationConfig };

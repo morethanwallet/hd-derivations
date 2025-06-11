@@ -1,5 +1,4 @@
-import { describe, it, expect, beforeAll } from "vitest";
-import { Evm } from "../evm.network.js";
+import { describe, it, expect } from "vitest";
 import { getNetwork } from "../../get-network/index.js";
 import { evmConfig } from "../../libs/modules/config/index.js";
 import {
@@ -60,13 +59,9 @@ const MOCK_EXTRINSIC_PRIVATE_KEY = {
   coinomiEtc: { privateKey: "0x32e7c1d1418bb32d5cf0b83b0c19b727c92a12bc0681334ce11b591d2cd42891" },
 };
 
-let evmNetworkDerivation: Evm;
-
-beforeAll(() => {
-  evmNetworkDerivation = getNetwork({
-    network: "evm",
-    mnemonic: MNEMONIC,
-  });
+const evmNetworkDerivation = await getNetwork({
+  network: "evm",
+  mnemonic: MNEMONIC,
 });
 
 describe("Evm", () => {

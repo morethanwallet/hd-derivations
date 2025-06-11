@@ -1,25 +1,10 @@
 import type { PrefixConfig } from "@/libs/modules/keys/index.js";
 import { type DerivationTypeUnion } from "@/libs/types/index.js";
-import type {
-  AvaxDerivationConfig,
-  BchDerivationConfig,
-  BtcDerivationConfig,
-  DogeDerivationConfig,
-  TrxDerivationConfig,
-  XrpDerivationConfig,
-  ZecDerivationConfig,
-  LtcDerivationConfig,
-} from "../types/index.js";
+import type { GetDerivationConfig } from "../types/index.js";
 
-type DerivationConfigUnion =
-  | AvaxDerivationConfig
-  | BtcDerivationConfig
-  | TrxDerivationConfig
-  | BchDerivationConfig
-  | XrpDerivationConfig
-  | DogeDerivationConfig
-  | ZecDerivationConfig
-  | LtcDerivationConfig;
+type DerivationConfigUnion = GetDerivationConfig<
+  "trx" | "avax" | "btc" | "bch" | "xrp" | "doge" | "zec" | "ltc"
+>;
 
 function findCustomPrefixConfig(
   derivationType: DerivationTypeUnion,

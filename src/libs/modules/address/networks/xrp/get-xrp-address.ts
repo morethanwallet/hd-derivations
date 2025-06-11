@@ -18,10 +18,12 @@ function getXrpAddress({
   derivationType,
 }: GetXrpAddressParameters): Address["address"] {
   const wallet = new Wallet(publicKey, privateKey);
+  const stringFormattedDestinationTag =
+    typeof destinationTag === "string" ? Number(destinationTag) : destinationTag;
 
   return derivationType === "xrpBase"
     ? wallet.classicAddress
-    : wallet.getXAddress(destinationTag, isTestnet);
+    : wallet.getXAddress(stringFormattedDestinationTag, isTestnet);
 }
 
 export { getXrpAddress };

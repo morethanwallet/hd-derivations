@@ -7,17 +7,28 @@ import {
 } from "bip39";
 import { MnemonicError } from "./libs/exceptions/index.js";
 import { ExceptionMessage } from "./libs/enums/index.js";
+import { ALLOWED_MNEMONIC_LENGTHS, MNEMONIC_DIVIDER } from "./libs/constants/index.js";
 
 class Mnemonic {
   protected mnemonic: string;
 
   public constructor(mnemonic?: string) {
     this.mnemonic = mnemonic === undefined ? generateMnemonic() : mnemonic;
-    this.validateMnemonic();
+    Mnemonic.validateMnemonic(this.mnemonic);
   }
 
-  protected validateMnemonic(): void {
-    if (!isMnemonicValid(this.mnemonic, wordlists.english)) {
+  public static validateMnemonic(mnemonic: string): void {
+    if (!mnemonic) {
+      throw new MnemonicError(ExceptionMessage.EMPTY_MNEMONIC);
+    }
+
+    const mnemonicWordsLength = mnemonic.split(MNEMONIC_DIVIDER).length;
+
+    if (!ALLOWED_MNEMONIC_LENGTHS.includes(mnemonicWordsLength)) {
+      throw new MnemonicError(ExceptionMessage.INVALID_MNEMONIC_LENGTH);
+    }
+
+    if (!isMnemonicValid(mnemonic, wordlists.english)) {
       throw new MnemonicError(ExceptionMessage.INVALID_MNEMONIC);
     }
   }

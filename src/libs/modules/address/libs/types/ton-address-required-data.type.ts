@@ -16,7 +16,7 @@ type TonAddressFriendlyFormatArguments = {
 };
 
 type TonAddressRequiredData = {
-  workChain: number;
+  workChain: number | string;
   contractVersion: ContractVersion;
   isFriendlyFormat: boolean;
   friendlyFormatArguments?: TonAddressFriendlyFormatArguments;

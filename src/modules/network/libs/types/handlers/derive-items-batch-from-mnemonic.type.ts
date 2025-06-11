@@ -5,7 +5,7 @@ import type { DerivationPathPrefix } from "./derivation-path-prefix.type.js";
 
 type DeriveItemsBatchFromMnemonicParameters<T extends DerivationTypeUnion> =
   LookupHandlersCommonParameters<T> &
-    DerivationPathPrefix<T> & { shouldUseHardenedAddress?: boolean };
+    DerivationPathPrefix<T> & { shouldUseHardenedAddress?: boolean; addressPosition?: number };
 
 type DeriveItemsBatchFromMnemonic<T extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicParameters<T>,

@@ -20,9 +20,9 @@ function getLegacyDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["btcLegacy"]): GetDerivationHandlersReturnType<"btcLegacy"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: ({ derivationPath, base58RootKey }) => {
       validateDerivationPath(derivationPath);
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath, base58RootKey });
       const address = getBtcLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath };
@@ -38,11 +38,12 @@ function getLegacyDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcLegacy">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
@@ -54,9 +55,9 @@ function getSegWitDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["btcSegWit"]): GetDerivationHandlersReturnType<"btcSegWit"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: ({ derivationPath, base58RootKey }) => {
       validateDerivationPath(derivationPath);
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath, base58RootKey });
       const address = getBtcSegWitAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath };
@@ -72,11 +73,12 @@ function getSegWitDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcSegWit">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
@@ -88,9 +90,9 @@ function getNativeSegWitDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["btcNativeSegWit"]): GetDerivationHandlersReturnType<"btcNativeSegWit"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: ({ derivationPath, base58RootKey }) => {
       validateDerivationPath(derivationPath);
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath, base58RootKey });
       const address = getBtcNativeSegWitAddress(
         keys.publicKey,
         keysDerivationInstance.prefixConfig,
@@ -112,11 +114,12 @@ function getNativeSegWitDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcNativeSegWit">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
@@ -128,9 +131,9 @@ function getTaprootDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["btcTaproot"]): GetDerivationHandlersReturnType<"btcTaproot"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: ({ derivationPath, base58RootKey }) => {
       validateDerivationPath(derivationPath);
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath, base58RootKey });
       const address = getTaprootAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath };
@@ -146,11 +149,12 @@ function getTaprootDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcTaproot">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
@@ -162,9 +166,9 @@ function getP2wshDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["btcP2wsh"]): GetDerivationHandlersReturnType<"btcP2wsh"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: ({ derivationPath, base58RootKey }) => {
       validateDerivationPath(derivationPath);
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath, base58RootKey });
       const address = getP2wshAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath };
@@ -180,11 +184,12 @@ function getP2wshDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcP2wsh">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },
@@ -196,9 +201,9 @@ function getP2wshInP2shDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["btcP2wshInP2sh"]): GetDerivationHandlersReturnType<"btcP2wshInP2sh"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: ({ derivationPath, base58RootKey }) => {
       validateDerivationPath(derivationPath);
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath, base58RootKey });
       const address = getP2wshInP2shAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
 
       return { ...keys, address, derivationPath };
@@ -214,11 +219,12 @@ function getP2wshInP2shDerivationHandlers({
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
+      base58RootKey,
     }) {
       return (deriveItemsBatchFromMnemonic<"btcP2wshInP2sh">).call(
         this,
         { indexLookupFrom, indexLookupTo },
-        { derivationPath: derivationPathPrefix },
+        { derivationPath: derivationPathPrefix, base58RootKey },
         shouldUseHardenedAddress,
       );
     },

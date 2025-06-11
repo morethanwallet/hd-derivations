@@ -1,7 +1,7 @@
 import { getNetwork } from "../../get-network/index.js";
 import { suiConfig } from "../../libs/modules/config/index.js";
 import { Sui } from "../sui.network.js";
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
@@ -66,33 +66,29 @@ type NetworkDerivationsInstances = {
   };
 };
 
-let networkDerivationsInstances = {} as NetworkDerivationsInstances;
+const signatureSchemes: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">[] = [
+  "ed25519",
+  "secp256k1",
+  "secp256r1",
+] as const;
 
-beforeAll(() => {
-  const signatureSchemes: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">[] = [
-    "ed25519",
-    "secp256k1",
-    "secp256r1",
-  ] as const;
+const networkDerivationsInstances = await signatureSchemes.reduce(
+  async (networkDerivationsInstances, signatureScheme) => {
+    (await networkDerivationsInstances)[signatureScheme] = {
+      suiBase: await getNetwork({
+        network: "sui",
+        mnemonic: MNEMONIC,
+        derivationConfig: {
+          derivationType: "suiBase",
+          scheme: signatureScheme,
+        },
+      }),
+    };
 
-  networkDerivationsInstances = signatureSchemes.reduce<NetworkDerivationsInstances>(
-    (networkDerivationsInstances, signatureScheme) => {
-      networkDerivationsInstances[signatureScheme] = {
-        suiBase: getNetwork({
-          network: "sui",
-          mnemonic: MNEMONIC,
-          derivationConfig: {
-            derivationType: "suiBase",
-            scheme: signatureScheme,
-          },
-        }),
-      };
-
-      return networkDerivationsInstances;
-    },
-    {} as NetworkDerivationsInstances,
-  );
-});
+    return networkDerivationsInstances;
+  },
+  {} as Promise<NetworkDerivationsInstances>,
+);
 
 describe("Sui", () => {
   describe("ed25519", () => {

@@ -1,7 +1,7 @@
 import { getNetwork } from "../../get-network/index.js";
 import { avaxConfig } from "../../libs/modules/config/index.js";
 import { Avax } from "../avax.network.js";
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
@@ -71,37 +71,31 @@ type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeUnion]: { [key in AvaxDerivationTypeUnion]: Avax };
 };
 
-let networkDerivationsInstances = {} as NetworkDerivationsInstances;
+const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
+const derivationTypes: AvaxDerivationTypeUnion[] = ["avaxP", "avaxX"] as const;
 
-beforeAll(() => {
-  const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
-  const derivationTypes: AvaxDerivationTypeUnion[] = ["avaxP", "avaxX"] as const;
+const networkDerivationsInstances = await networkPurposes.reduce(
+  async (networkDerivationsInstances, networkPurpose) => {
+    (await networkDerivationsInstances)[networkPurpose] = await derivationTypes.reduce(
+      async (derivations, derivationType) => {
+        (await derivations)[derivationType] = await getNetwork({
+          network: "avax",
+          mnemonic: MNEMONIC,
+          derivationConfig: {
+            networkPurpose,
+            derivationType,
+          },
+        });
 
-  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
-    (networkDerivationsInstances, networkPurpose) => {
-      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
-        NetworkDerivationsInstances[CommonNetworkPurposeUnion]
-      >(
-        (derivations, derivationType) => {
-          derivations[derivationType] = getNetwork({
-            network: "avax",
-            mnemonic: MNEMONIC,
-            derivationConfig: {
-              networkPurpose,
-              derivationType,
-            },
-          });
+        return derivations;
+      },
+      {} as Promise<NetworkDerivationsInstances[CommonNetworkPurposeUnion]>,
+    );
 
-          return derivations;
-        },
-        {} as NetworkDerivationsInstances[CommonNetworkPurposeUnion],
-      );
-
-      return networkDerivationsInstances;
-    },
-    {} as NetworkDerivationsInstances,
-  );
-});
+    return networkDerivationsInstances;
+  },
+  {} as Promise<NetworkDerivationsInstances>,
+);
 
 describe("Avax", () => {
   describe("mainnet", () => {

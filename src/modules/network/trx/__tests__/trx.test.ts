@@ -1,14 +1,12 @@
 import { getNetwork } from "../../get-network/index.js";
 import { trxConfig } from "../../libs/modules/config/index.js";
-import { Trx } from "../trx.network.js";
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
-import type { GetDerivationTypeUnion } from "@/libs/types/index.js";
 
 const MOCK_DERIVATION_PATH_BATCH_PREFIX = "m/44'/195'/0'/0";
 
@@ -26,23 +24,15 @@ const MOCK_ITEM = {
 const MOCK_EXTRINSIC_PRIVATE_KEY =
   "24f3c25fb405791851bb499dec9797b37ced60a2c7addda8f314374fefe1914a";
 
-type TrxDerivationTypeUnion = GetDerivationTypeUnion<"trxBase">;
-
-type NetworkDerivationsInstances = {
-  [key in TrxDerivationTypeUnion]: Trx;
-};
-
-let networkDerivationsInstances = {} as NetworkDerivationsInstances;
-
-beforeAll(() => {
-  networkDerivationsInstances["trxBase"] = getNetwork({
+const networkDerivationsInstances = {
+  trxBase: await getNetwork({
     network: "trx",
     mnemonic: MNEMONIC,
     derivationConfig: {
       derivationType: "trxBase",
     },
-  });
-});
+  }),
+};
 
 describe("Trx", () => {
   describe("deriveItemFromMnemonic", () => {

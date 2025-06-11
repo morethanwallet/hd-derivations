@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import { Xrp } from "../xrp.network.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
 import type { XrpDerivationTypeUnion } from "@/libs/types/index.js";
@@ -65,37 +65,31 @@ type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeUnion]: { [key in XrpDerivationTypeUnion]: Xrp };
 };
 
-let networkDerivationsInstances = {} as NetworkDerivationsInstances;
+const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
+const derivationTypes: XrpDerivationTypeUnion[] = ["xrpBase", "xrpX"] as const;
 
-beforeAll(() => {
-  const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
-  const derivationTypes: XrpDerivationTypeUnion[] = ["xrpBase", "xrpX"] as const;
+const networkDerivationsInstances = await networkPurposes.reduce(
+  async (networkDerivationsInstances, networkPurpose) => {
+    (await networkDerivationsInstances)[networkPurpose] = await derivationTypes.reduce(
+      async (derivations, derivationType) => {
+        (await derivations)[derivationType] = await getNetwork({
+          network: "xrp",
+          mnemonic: MNEMONIC,
+          derivationConfig: {
+            networkPurpose,
+            derivationType,
+          },
+        });
 
-  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
-    (networkDerivationsInstances, networkPurpose) => {
-      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
-        NetworkDerivationsInstances[CommonNetworkPurposeUnion]
-      >(
-        (derivations, derivationType) => {
-          derivations[derivationType] = getNetwork({
-            network: "xrp",
-            mnemonic: MNEMONIC,
-            derivationConfig: {
-              networkPurpose,
-              derivationType,
-            },
-          });
+        return derivations;
+      },
+      {} as Promise<NetworkDerivationsInstances[CommonNetworkPurposeUnion]>,
+    );
 
-          return derivations;
-        },
-        {} as NetworkDerivationsInstances[CommonNetworkPurposeUnion],
-      );
-
-      return networkDerivationsInstances;
-    },
-    {} as NetworkDerivationsInstances,
-  );
-});
+    return networkDerivationsInstances;
+  },
+  {} as Promise<NetworkDerivationsInstances>,
+);
 
 describe("Xrp", () => {
   describe("mainnet", () => {
