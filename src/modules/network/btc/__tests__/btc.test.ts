@@ -3,7 +3,7 @@ import { getNetwork } from "../../get-network/index.js";
 import { btcConfig } from "../../libs/modules/config/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
 import { Btc } from "../btc.network.js";
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
@@ -262,49 +262,43 @@ type NetworkDerivationsInstances = {
   };
 };
 
-let networkDerivationsInstances = {} as NetworkDerivationsInstances;
+const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
+  "regtest",
+  "testnet",
+  "mainnet",
+] as const;
 
-beforeAll(() => {
-  const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
-    "regtest",
-    "testnet",
-    "mainnet",
-  ] as const;
+const derivationTypes: BtcDerivationTypeUnion[] = [
+  "btcLegacy",
+  "btcSegWit",
+  "btcNativeSegWit",
+  "btcTaproot",
+  "btcP2wsh",
+  "btcP2wshInP2sh",
+] as const;
 
-  const derivationTypes: BtcDerivationTypeUnion[] = [
-    "btcLegacy",
-    "btcSegWit",
-    "btcNativeSegWit",
-    "btcTaproot",
-    "btcP2wsh",
-    "btcP2wshInP2sh",
-  ] as const;
+const networkDerivationsInstances = await networkPurposes.reduce(
+  async (networkDerivationsInstances, networkPurpose) => {
+    (await networkDerivationsInstances)[networkPurpose] = await derivationTypes.reduce(
+      async (derivations, derivationType) => {
+        (await derivations)[derivationType] = await getNetwork({
+          network: "btc",
+          mnemonic: MNEMONIC,
+          derivationConfig: {
+            networkPurpose,
+            derivationType,
+          },
+        });
 
-  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
-    (networkDerivationsInstances, networkPurpose) => {
-      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
-        NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]
-      >(
-        (derivations, derivationType) => {
-          derivations[derivationType] = getNetwork({
-            network: "btc",
-            mnemonic: MNEMONIC,
-            derivationConfig: {
-              networkPurpose,
-              derivationType,
-            },
-          });
+        return derivations;
+      },
+      {} as Promise<NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]>,
+    );
 
-          return derivations;
-        },
-        {} as NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion],
-      );
-
-      return networkDerivationsInstances;
-    },
-    {} as NetworkDerivationsInstances,
-  );
-});
+    return networkDerivationsInstances;
+  },
+  {} as Promise<NetworkDerivationsInstances>,
+);
 
 describe("Btc", () => {
   describe("mainnet", () => {

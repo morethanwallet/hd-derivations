@@ -1,7 +1,7 @@
 import { getNetwork } from "../../get-network/index.js";
 import { tonConfig } from "../../libs/modules/config/index.js";
 import { Ton } from "../ton.network.js";
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
@@ -51,44 +51,38 @@ type NetworkDerivationsInstances = {
   };
 };
 
-let networkDerivationsInstances = {} as NetworkDerivationsInstances;
+const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
+const contractVersions: TestContractVersion[] = ["v4r2", "v5r1"] as const;
 
-beforeAll(() => {
-  const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
-  const contractVersions: TestContractVersion[] = ["v4r2", "v5r1"] as const;
-
-  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
-    (networkDerivationsInstances, networkPurpose) => {
-      networkDerivationsInstances[networkPurpose] = contractVersions.reduce<
-        NetworkDerivationsInstances[CommonNetworkPurposeUnion]
-      >(
-        (contractVersions, contractVersion) => {
-          contractVersions[contractVersion] = getNetwork({
-            network: "ton",
-            mnemonic: MNEMONIC,
-            derivationConfig: {
-              networkPurpose,
-              contractVersion,
-              derivationType: "tonBase",
-              workChain: 0,
-              isFriendlyFormat: true,
-              friendlyFormatArguments: {
-                bounceable: false,
-                urlSafe: true,
-              },
+const networkDerivationsInstances = await networkPurposes.reduce(
+  async (networkDerivationsInstances, networkPurpose) => {
+    (await networkDerivationsInstances)[networkPurpose] = await contractVersions.reduce(
+      async (contractVersions, contractVersion) => {
+        (await contractVersions)[contractVersion] = await getNetwork({
+          network: "ton",
+          mnemonic: MNEMONIC,
+          derivationConfig: {
+            networkPurpose,
+            contractVersion,
+            derivationType: "tonBase",
+            workChain: 0,
+            isFriendlyFormat: true,
+            friendlyFormatArguments: {
+              bounceable: false,
+              urlSafe: true,
             },
-          });
+          },
+        });
 
-          return contractVersions;
-        },
-        {} as NetworkDerivationsInstances[CommonNetworkPurposeUnion],
-      );
+        return contractVersions;
+      },
+      {} as Promise<NetworkDerivationsInstances[CommonNetworkPurposeUnion]>,
+    );
 
-      return networkDerivationsInstances;
-    },
-    {} as NetworkDerivationsInstances,
-  );
-});
+    return networkDerivationsInstances;
+  },
+  {} as Promise<NetworkDerivationsInstances>,
+);
 
 describe("Ton", () => {
   describe("mainnet", () => {

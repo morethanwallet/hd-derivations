@@ -19,7 +19,6 @@ export default defineConfig({
       tsconfigPath: "tsconfig.build.json",
     }),
     nodePolyfills(),
-    //  typescript()
   ],
   resolve: {
     alias: [

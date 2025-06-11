@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import { Zec } from "../zec.network.js";
 import { getNetwork } from "../../get-network/index.js";
 import { zecConfig } from "../../libs/modules/config/index.js";
@@ -61,29 +61,25 @@ type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeRegTestExtendedUnion]: { zecTransparent: Zec };
 };
 
-let networkDerivationsInstances = {} as NetworkDerivationsInstances;
+const networkPurposes = ["mainnet", "testnet", "regtest"] as const;
 
-beforeAll(() => {
-  const networkPurposes = ["mainnet", "testnet", "regtest"] as const;
+const networkDerivationsInstances = await networkPurposes.reduce(
+  async (networkDerivationsInstances, networkPurpose) => {
+    (await networkDerivationsInstances)[networkPurpose] = {
+      zecTransparent: await getNetwork({
+        network: "zec",
+        mnemonic: MNEMONIC,
+        derivationConfig: {
+          networkPurpose,
+          derivationType: "zecTransparent",
+        },
+      }),
+    };
 
-  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
-    (networkDerivationsInstances, networkPurpose) => {
-      networkDerivationsInstances[networkPurpose] = {
-        zecTransparent: getNetwork({
-          network: "zec",
-          mnemonic: MNEMONIC,
-          derivationConfig: {
-            networkPurpose,
-            derivationType: "zecTransparent",
-          },
-        }),
-      };
-
-      return networkDerivationsInstances;
-    },
-    {} as NetworkDerivationsInstances,
-  );
-});
+    return networkDerivationsInstances;
+  },
+  {} as Promise<NetworkDerivationsInstances>,
+);
 
 describe("Zec", () => {
   describe("mainnet", () => {

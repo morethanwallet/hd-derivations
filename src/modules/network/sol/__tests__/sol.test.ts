@@ -1,7 +1,6 @@
 import { getNetwork } from "../../get-network/index.js";
 import { solConfig } from "../../libs/modules/config/index.js";
-import { Sol } from "../sol.network.js";
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
@@ -25,13 +24,9 @@ const MOCK_ITEM = { ...MOCK_CREDENTIAL, derivationPath: MOCK_DERIVATION_PATH };
 const MOCK_EXTRINSIC_PRIVATE_KEY =
   "2kGgMTsQbm2HwZtXFBoiB61ysVLFtokWSuhcCwPN3Nr2G5EChbuHgCsm4fegZYXKwx27YQczzcA3WePrkuvJZSn4";
 
-let solNetworkDerivation: Sol;
-
-beforeAll(() => {
-  solNetworkDerivation = getNetwork({
-    network: "sol",
-    mnemonic: MNEMONIC,
-  });
+const solNetworkDerivation = await getNetwork({
+  network: "sol",
+  mnemonic: MNEMONIC,
 });
 
 describe("Sol", () => {
