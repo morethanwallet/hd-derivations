@@ -68,7 +68,8 @@ function getBaseDerivationHandlers({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,
-      shouldUseHardenedAddress,
+      shouldUseHardenedAddress = true,
+      isSecondIteration,
     }) {
       const shouldHarden =
         scheme === "ed25519" || scheme === "secp256k1" || shouldUseHardenedAddress;
@@ -76,7 +77,7 @@ function getBaseDerivationHandlers({
       validateDerivationPath(derivationPathPrefix);
       let batch: DerivedItem<"dotBase">[] = [];
 
-      if (!derivationPathPrefix) {
+      if (!derivationPathPrefix && !isSecondIteration) {
         batch.push(this.deriveItemFromMnemonic({ derivationPath: derivationPathPrefix }));
       }
 
