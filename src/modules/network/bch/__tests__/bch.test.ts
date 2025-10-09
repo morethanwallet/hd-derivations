@@ -103,36 +103,42 @@ type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeRegTestExtendedUnion]: { [key in BchDerivationTypeUnion]: Bch };
 };
 
-const derivationTypes: BchDerivationTypeUnion[] = ["bchCashAddr", "bchLegacy"] as const;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
-const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
-  "mainnet",
-  "testnet",
-  "regtest",
-] as const;
+beforeAll(() => {
+  const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
+    "mainnet",
+    "testnet",
+    "regtest",
+  ] as const;
 
-const networkDerivationsInstances = await networkPurposes.reduce(
-  async (networkDerivationsInstances, networkPurpose) => {
-    (await networkDerivationsInstances)[networkPurpose] = await derivationTypes.reduce(
-      async (derivations, derivationType) => {
-        (await derivations)[derivationType] = await getNetwork({
-          network: "bch",
-          mnemonic: MNEMONIC,
-          derivationConfig: {
-            networkPurpose,
-            derivationType,
-          },
-        });
+  const derivationTypes: BchDerivationTypeUnion[] = ["bchCashAddr", "bchLegacy"] as const;
 
-        return derivations;
-      },
-      {} as Promise<NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]>,
-    );
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
+        NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]
+      >(
+        (derivations, derivationType) => {
+          derivations[derivationType] = getNetwork({
+            network: "bch",
+            mnemonic: MNEMONIC,
+            derivationConfig: {
+              networkPurpose,
+              derivationType,
+            },
+          });
 
-    return networkDerivationsInstances;
-  },
-  {} as Promise<NetworkDerivationsInstances>,
-);
+          return derivations;
+        },
+        {} as NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion],
+      );
+
+      return networkDerivationsInstances;
+    },
+    {} as NetworkDerivationsInstances,
+  );
+});
 
 describe("Bch", () => {
   describe("mainnet", () => {

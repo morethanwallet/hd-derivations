@@ -7,6 +7,7 @@ import {
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
+import { Evm } from "../evm.network.js";
 
 const MOCK_DERIVATION_PATH = {
   eth: "m/44'/60'/0'/0/0",
@@ -59,9 +60,13 @@ const MOCK_EXTRINSIC_PRIVATE_KEY = {
   coinomiEtc: { privateKey: "0x32e7c1d1418bb32d5cf0b83b0c19b727c92a12bc0681334ce11b591d2cd42891" },
 };
 
-const evmNetworkDerivation = await getNetwork({
-  network: "evm",
-  mnemonic: MNEMONIC,
+let evmNetworkDerivation: Evm;
+
+beforeAll(() => {
+  evmNetworkDerivation = getNetwork({
+    network: "evm",
+    mnemonic: MNEMONIC,
+  });
 });
 
 describe("Evm", () => {

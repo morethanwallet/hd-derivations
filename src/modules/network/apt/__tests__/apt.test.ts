@@ -85,17 +85,17 @@ const EXTRINSIC_PRIVATE_KEY = {
 
 const networkDerivationsInstances = {
   ed25519: {
-    aptLegacy: await getNetwork({
+    aptLegacy: getNetwork({
       network: "apt",
       mnemonic: MNEMONIC,
       derivationConfig: { derivationType: "aptLegacy", scheme: "ed25519" },
     }),
-    aptBase: await getNetwork({
+    aptBase: getNetwork({
       network: "apt",
       mnemonic: MNEMONIC,
       derivationConfig: { derivationType: "aptBase", scheme: "ed25519" },
     }),
-    multiSig: await getNetwork({
+    multiSig: getNetwork({
       network: "apt",
       mnemonic: MNEMONIC,
       derivationConfig: {
@@ -105,7 +105,7 @@ const networkDerivationsInstances = {
       },
     }),
   },
-  secp256k1: await getNetwork({
+  secp256k1: getNetwork({
     network: "apt",
     mnemonic: MNEMONIC,
     derivationConfig: {
@@ -113,7 +113,7 @@ const networkDerivationsInstances = {
       scheme: "secp256k1",
     },
   }),
-  secp256r1: await getNetwork({
+  secp256r1: getNetwork({
     network: "apt",
     mnemonic: MNEMONIC,
     derivationConfig: {

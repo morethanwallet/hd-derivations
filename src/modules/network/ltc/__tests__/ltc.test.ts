@@ -151,40 +151,46 @@ type NetworkDerivationsInstances = {
   };
 };
 
-const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
-  "regtest",
-  "testnet",
-  "mainnet",
-] as const;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
-const derivationTypes: LtcDerivationTypeUnion[] = [
-  "ltcLegacy",
-  "ltcSegWit",
-  "ltcNativeSegWit",
-] as const;
+beforeAll(() => {
+  const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
+    "regtest",
+    "testnet",
+    "mainnet",
+  ] as const;
 
-const networkDerivationsInstances = await networkPurposes.reduce(
-  async (networkDerivationsInstances, networkPurpose) => {
-    (await networkDerivationsInstances)[networkPurpose] = await derivationTypes.reduce(
-      async (derivations, derivationType) => {
-        (await derivations)[derivationType] = await getNetwork({
-          network: "ltc",
-          mnemonic: MNEMONIC,
-          derivationConfig: {
-            networkPurpose,
-            derivationType,
-          },
-        });
+  const derivationTypes: LtcDerivationTypeUnion[] = [
+    "ltcLegacy",
+    "ltcSegWit",
+    "ltcNativeSegWit",
+  ] as const;
 
-        return derivations;
-      },
-      {} as Promise<NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]>,
-    );
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
+        NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]
+      >(
+        (derivations, derivationType) => {
+          derivations[derivationType] = getNetwork({
+            network: "ltc",
+            mnemonic: MNEMONIC,
+            derivationConfig: {
+              networkPurpose,
+              derivationType,
+            },
+          });
 
-    return networkDerivationsInstances;
-  },
-  {} as Promise<NetworkDerivationsInstances>,
-);
+          return derivations;
+        },
+        {} as NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion],
+      );
+
+      return networkDerivationsInstances;
+    },
+    {} as NetworkDerivationsInstances,
+  );
+});
 
 describe("Ltc", () => {
   describe("mainnet", () => {

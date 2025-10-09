@@ -24,7 +24,7 @@ const MOCK_ITEM = { ...MOCK_CREDENTIAL, derivationPath: MOCK_DERIVATION_PATH };
 const MOCK_EXTRINSIC_PRIVATE_KEY =
   "2kGgMTsQbm2HwZtXFBoiB61ysVLFtokWSuhcCwPN3Nr2G5EChbuHgCsm4fegZYXKwx27YQczzcA3WePrkuvJZSn4";
 
-const solNetworkDerivation = await getNetwork({
+const solNetworkDerivation = getNetwork({
   network: "sol",
   mnemonic: MNEMONIC,
 });

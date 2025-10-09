@@ -25,7 +25,7 @@ const MOCK_EXTRINSIC_PRIVATE_KEY =
   "24f3c25fb405791851bb499dec9797b37ced60a2c7addda8f314374fefe1914a";
 
 const networkDerivationsInstances = {
-  trxBase: await getNetwork({
+  trxBase: getNetwork({
     network: "trx",
     mnemonic: MNEMONIC,
     derivationConfig: {

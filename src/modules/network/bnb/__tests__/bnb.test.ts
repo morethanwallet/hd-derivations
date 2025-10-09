@@ -7,6 +7,7 @@ import {
 } from "../../libs/constants/index.js";
 import { bnbConfig } from "../../libs/modules/config/index.js";
 import { describe, it, expect } from "vitest";
+import { Bnb } from "../bnb.network.js";
 
 const MOCK_DERIVATION_PATH = "m/44'/714'/0'/0/0";
 
@@ -27,9 +28,13 @@ const MOCK_ITEM = {
 const MOCK_EXTRINSIC_PRIVATE_KEY =
   "331c8f3e423db52e2fb5fc64a6f9408c41cd56d814bc64868a9d27ab83cfa683";
 
-const bnbNetworkDerivation = await getNetwork({
-  network: "bnb",
-  mnemonic: MNEMONIC,
+let bnbNetworkDerivation: Bnb;
+
+beforeAll(() => {
+  bnbNetworkDerivation = getNetwork({
+    network: "bnb",
+    mnemonic: MNEMONIC,
+  });
 });
 
 describe("Bnb", () => {

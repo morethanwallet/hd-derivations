@@ -51,38 +51,44 @@ type NetworkDerivationsInstances = {
   };
 };
 
-const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
-const contractVersions: TestContractVersion[] = ["v4r2", "v5r1"] as const;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
-const networkDerivationsInstances = await networkPurposes.reduce(
-  async (networkDerivationsInstances, networkPurpose) => {
-    (await networkDerivationsInstances)[networkPurpose] = await contractVersions.reduce(
-      async (contractVersions, contractVersion) => {
-        (await contractVersions)[contractVersion] = await getNetwork({
-          network: "ton",
-          mnemonic: MNEMONIC,
-          derivationConfig: {
-            networkPurpose,
-            contractVersion,
-            derivationType: "tonBase",
-            workChain: 0,
-            isFriendlyFormat: true,
-            friendlyFormatArguments: {
-              bounceable: false,
-              urlSafe: true,
+beforeAll(() => {
+  const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
+  const contractVersions: TestContractVersion[] = ["v4r2", "v5r1"] as const;
+
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = contractVersions.reduce<
+        NetworkDerivationsInstances[CommonNetworkPurposeUnion]
+      >(
+        (contractVersions, contractVersion) => {
+          contractVersions[contractVersion] = getNetwork({
+            network: "ton",
+            mnemonic: MNEMONIC,
+            derivationConfig: {
+              networkPurpose,
+              contractVersion,
+              derivationType: "tonBase",
+              workChain: 0,
+              isFriendlyFormat: true,
+              friendlyFormatArguments: {
+                bounceable: false,
+                urlSafe: true,
+              },
             },
-          },
-        });
+          });
 
-        return contractVersions;
-      },
-      {} as Promise<NetworkDerivationsInstances[CommonNetworkPurposeUnion]>,
-    );
+          return contractVersions;
+        },
+        {} as NetworkDerivationsInstances[CommonNetworkPurposeUnion],
+      );
 
-    return networkDerivationsInstances;
-  },
-  {} as Promise<NetworkDerivationsInstances>,
-);
+      return networkDerivationsInstances;
+    },
+    {} as NetworkDerivationsInstances,
+  );
+});
 
 describe("Ton", () => {
   describe("mainnet", () => {

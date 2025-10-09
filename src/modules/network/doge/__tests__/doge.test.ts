@@ -69,29 +69,33 @@ type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeRegTestExtendedUnion]: { dogeLegacy: Doge };
 };
 
-const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
-  "mainnet",
-  "testnet",
-  "regtest",
-] as const;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
-const networkDerivationsInstances = await networkPurposes.reduce(
-  async (networkDerivationsInstances, networkPurpose) => {
-    (await networkDerivationsInstances)[networkPurpose] = {
-      dogeLegacy: await getNetwork({
-        network: "doge",
-        mnemonic: MNEMONIC,
-        derivationConfig: {
-          networkPurpose,
-          derivationType: "dogeLegacy",
-        },
-      }),
-    };
+beforeAll(() => {
+  const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
+    "mainnet",
+    "testnet",
+    "regtest",
+  ] as const;
 
-    return networkDerivationsInstances;
-  },
-  {} as Promise<NetworkDerivationsInstances>,
-);
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = {
+        dogeLegacy: getNetwork({
+          network: "doge",
+          mnemonic: MNEMONIC,
+          derivationConfig: {
+            networkPurpose,
+            derivationType: "dogeLegacy",
+          },
+        }),
+      };
+
+      return networkDerivationsInstances;
+    },
+    {} as NetworkDerivationsInstances,
+  );
+});
 
 describe("Doge", () => {
   describe("mainnet", () => {

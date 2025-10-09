@@ -66,29 +66,33 @@ type NetworkDerivationsInstances = {
   };
 };
 
-const signatureSchemes: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">[] = [
-  "ed25519",
-  "secp256k1",
-  "secp256r1",
-] as const;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
-const networkDerivationsInstances = await signatureSchemes.reduce(
-  async (networkDerivationsInstances, signatureScheme) => {
-    (await networkDerivationsInstances)[signatureScheme] = {
-      suiBase: await getNetwork({
-        network: "sui",
-        mnemonic: MNEMONIC,
-        derivationConfig: {
-          derivationType: "suiBase",
-          scheme: signatureScheme,
-        },
-      }),
-    };
+beforeAll(() => {
+  const signatureSchemes: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">[] = [
+    "ed25519",
+    "secp256k1",
+    "secp256r1",
+  ] as const;
 
-    return networkDerivationsInstances;
-  },
-  {} as Promise<NetworkDerivationsInstances>,
-);
+  networkDerivationsInstances = signatureSchemes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, signatureScheme) => {
+      networkDerivationsInstances[signatureScheme] = {
+        suiBase: getNetwork({
+          network: "sui",
+          mnemonic: MNEMONIC,
+          derivationConfig: {
+            derivationType: "suiBase",
+            scheme: signatureScheme,
+          },
+        }),
+      };
+
+      return networkDerivationsInstances;
+    },
+    {} as NetworkDerivationsInstances,
+  );
+});
 
 describe("Sui", () => {
   describe("ed25519", () => {
