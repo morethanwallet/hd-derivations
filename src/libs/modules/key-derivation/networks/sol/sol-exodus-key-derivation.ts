@@ -6,8 +6,7 @@ import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic";
 import { type Secp256k1Curve, type Ed25519Curve } from "@/libs/modules/curves/curves";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
-import { ExceptionMessage } from "../../libs/enums/index.js";
-import { Ed25519SecretKeyIndex } from "./libs/enums/enums.js";
+import { Ed25519SecretKeyBytePosition, ExceptionMessage } from "../../libs/enums/index.js";
 import { getBase58EncodedKeyPair, importByPrivateKey } from "./libs/helpers/helpers.js";
 
 class SolExodusKeyDerivation implements AbstractKeyDerivation<"solExodus"> {
@@ -37,8 +36,8 @@ class SolExodusKeyDerivation implements AbstractKeyDerivation<"solExodus"> {
     }
 
     const secretKeyBytes = node.privateKey.subarray(
-      Ed25519SecretKeyIndex.START,
-      Ed25519SecretKeyIndex.END,
+      Ed25519SecretKeyBytePosition.START,
+      Ed25519SecretKeyBytePosition.END,
     );
 
     const secretKeyBuffer = Buffer.from(secretKeyBytes);
