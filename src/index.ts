@@ -34,51 +34,6 @@ console.log(
 // exodus -> ltc -> legacy derivation
 // enkrypt password - sdasd#$#D#D#
 
-// #2 Exodus Cardano
-// import { createHmac } from "crypto";
-// import * as CSL from "@emurgo/cardano-serialization-lib-nodejs";
-// import { Bip32Keys } from "./libs/modules/keys";
-// import { Mnemonic } from "./libs/modules/mnemonic/mnemonic";
-// // 1) secp256k1 BIP32: m/44'/1815'/0'/0/0
-// async function deriveCardanoBip32Priv(mnemonic: string) {
-//   const keys = new Bip32Keys(undefined as any, new Mnemonic(mnemonic));
-//   const rootKey = keys.getBip32RootKeyFromSeed();
-//   const path = `m/44'/1815'/0'/0/0`;
-//   const child = rootKey.derivePath(path);
-//   if (!child.privateKey) throw new Error("No private key at path");
-//   return child.privateKey; // 32 bytes
-// }
-
-// // 2) Byron-legacy master key seed (bip_utils: HMAC_MESSAGE_FORMAT = "Root Seed Chain %d")
-// function byronLegacyMasterFromSeed(seed32: Uint8Array, counter = 1) {
-//   // HMAC-SHA512 with KEY = seed32, MESSAGE = "Root Seed Chain <counter>"
-//   const msg = Buffer.from(`Root Seed Chain ${counter}`, "ascii");
-//   const I = createHmac("sha512", seed32).update(msg).digest(); // 64B
-//   const IL = I.subarray(0, 32); // private key bytes
-//   const IR = I.subarray(32, 64); // chain code (not used below but available)
-//   return { IL, IR };
-// }
-
-// // 3) Build a Shelley Base address using the same key for payment & stake (Exodus-style “strange”)
-// function baseAddrFromSameKey(IL: Buffer, networkId = CSL.NetworkInfo.mainnet().network_id()) {
-//   const sk = CSL.PrivateKey.from_normal_bytes(IL); // 32B ed25519 seed
-//   const pk = sk.to_public();
-
-//   const paymentCred = CSL.Credential.from_keyhash(pk.hash());
-//   const stakeCred = CSL.Credential.from_keyhash(pk.hash());
-//   const base = CSL.BaseAddress.new(networkId, paymentCred, stakeCred);
-//   return { addressBech32: base.to_address().to_bech32(), sk, pk };
-// }
-
-// const mnemonic = "deposit potato belt enroll space involve sing angry marine shop ostrich midnight";
-
-// // secp256k1 (BIP32/SLIP-10 compatible) → priv32 at m/44'/1815'/0'/0/0
-// const cardanoBip32Priv32 = await deriveCardanoBip32Priv(mnemonic);
-
-// // Byron-legacy master generator per bip_utils spec
-// const { IL } = byronLegacyMasterFromSeed(cardanoBip32Priv32, 1);
-
-// // Shelley base address with same key for payment & stake
-// const { addressBech32 } = baseAddrFromSameKey(IL, CSL.NetworkInfo.mainnet().network_id());
-
-// console.log("Strange Derivation:", addressBech32);
+// mnemonic: deposit potato belt …  counter=1  addr=addr1qyzyyhdd43qgumfzpf0yc5qg8yfmrh94rtgf4aqxkxhv8tqygfw6mtzq3ekjyzj7f3gqswgnk8wt2xksnt6qdvdwcwkqklvquh
+// mnemonic: drill exotic title f…  counter=3  addr=addr1qymnxusdlakesfm4kmef2ca4ryf5jukfrlvkrc8xzpktc2ehxdeqmlmdnqnhtdhjj43m2xgnf9evj87ev8swvyrvhs4shxt4jt
+// mnemonic: volume lesson garage…  counter=2  addr=addr1q9pv40cm5k66qjva263462vt7lv6qx9hvjtg0p60uehqcp6ze2l3hfd45pye644rt55cha7e5qvtweyks7r5lenwpsrsuhnr45
