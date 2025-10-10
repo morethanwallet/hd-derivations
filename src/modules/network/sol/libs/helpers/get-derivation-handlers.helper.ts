@@ -49,7 +49,7 @@ function getSolExodusDerivationHandlers({
 }: GetDerivationHandlersParameters["solExodus"]): GetDerivationHandlersReturnType<"solExodus"> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
-      validateDerivationPath(derivationPath, true);
+      validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
 
       return { ...keys, address: keys.publicKey, derivationPath };
@@ -67,7 +67,7 @@ function getSolExodusDerivationHandlers({
       );
     },
     doesPKBelongToMnemonic(parameters) {
-      return (doesPKBelongToMnemonic<"solExodus">).call(this, parameters, true);
+      return (doesPKBelongToMnemonic<"solExodus">).call(this, parameters);
     },
   };
 }
