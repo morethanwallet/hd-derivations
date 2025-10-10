@@ -17,13 +17,15 @@ class AdaCommonKeyDerivation
     this.mnemonic = mnemonic;
   }
 
-  public deriveFromMnemonic(
-    parameters: DeriveFromMnemonicParameters<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>,
-  ): KeyPair<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">> {
+  public deriveFromMnemonic({
+    derivationPath,
+  }: DeriveFromMnemonicParameters<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>): KeyPair<
+    GetDerivationTypeUnion<"adaEnterprise" | "adaReward">
+  > {
     const entropy = this.mnemonic.getEntropy();
     const rootKey = getRootKey(entropy);
 
-    const node = getNode(rootKey, parameters.derivationPath);
+    const node = getNode(rootKey, derivationPath);
     const { privateKey, publicKey } = getNodeRawKeys(node);
 
     return {
@@ -32,13 +34,15 @@ class AdaCommonKeyDerivation
     };
   }
 
-  public importByPrivateKey(
-    parameters: ImportByPrivateKeyParameters<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>,
-  ): KeyPair<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">> | never {
-    const rawPublicKey = PrivateKey.from_hex(parameters.privateKey).to_public();
+  public importByPrivateKey({
+    privateKey,
+  }: ImportByPrivateKeyParameters<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>):
+    | KeyPair<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>
+    | never {
+    const rawPublicKey = PrivateKey.from_hex(privateKey).to_public();
 
     return {
-      privateKey: parameters.privateKey,
+      privateKey,
       publicKey: rawPublicKey.to_hex(),
     };
   }
