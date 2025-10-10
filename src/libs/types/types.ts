@@ -14,7 +14,7 @@ export type {
   LtcDerivationTypeUnion,
   DotDerivationTypeUnion,
   SolDerivationTypeUnion,
-} from "./derivation/index.js";
+} from "./derivation/types.js";
 export {
   type AdaBaseKeyPair,
   type CommonKeyPair,
