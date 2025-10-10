@@ -1,4 +1,4 @@
-import type { PrefixConfig } from "@/libs/modules/keys/index.js";
+import type { PrefixConfig } from "@/libs/modules/curves/curves.js";
 import { type DerivationTypeUnion } from "@/libs/types/index.js";
 import type { GetDerivationConfig } from "../types/index.js";
 

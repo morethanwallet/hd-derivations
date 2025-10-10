@@ -1,6 +1,5 @@
 import { ExceptionMessage as CommonExceptionMessage } from "@/libs/enums/index.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
-import { Ed25519Keys } from "@/libs/modules/keys/index.js";
 import type {
   AptDerivationTypeUnion,
   CommonDerivationPath,
@@ -42,11 +41,15 @@ import {
   convertHexToBytes,
   removeHexPrefix,
 } from "@/libs/utils/index.js";
+import { type Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
 
-class AptKeyDerivation
-  extends Ed25519Keys
-  implements AbstractKeyDerivation<AptDerivationTypeUnion>
-{
+class AptKeyDerivation implements AbstractKeyDerivation<AptDerivationTypeUnion> {
+  private mnemonic: Mnemonic;
+
+  public constructor(mnemonic: Mnemonic) {
+    this.mnemonic = mnemonic;
+  }
+
   public deriveFromMnemonic({
     derivationPath,
     scheme,

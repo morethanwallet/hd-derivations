@@ -14,6 +14,7 @@ import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
 import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";
 import { avaxConfig } from "@/modules/network/libs/modules/config/index.js";
+import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
   private derivationHandlers: DerivationsHandlers<AvaxDerivationTypeUnion>[AvaxDerivationTypeUnion];
@@ -24,6 +25,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
   }: ConstructorParameters<AvaxDerivationTypeUnion>) {
     const { networkPurpose, derivationType } = derivationConfig;
     const { prefix } = avaxConfig[networkPurpose][derivationType];
+    const secp256k1Curve = new Secp256k1Curve();
 
     const derivationsHandlers: DerivationsHandlers<AvaxDerivationTypeUnion> = {
       avaxX: getAvaxDerivationHandlers({
@@ -32,6 +34,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
           findCustomPrefixConfig("avaxX", derivationConfig) ??
             avaxConfig[networkPurpose].avaxX.prefixConfig,
           mnemonic,
+          secp256k1Curve,
           false,
         ),
       }),
@@ -41,6 +44,7 @@ class Avax implements AbstractNetwork<AvaxDerivationTypeUnion> {
           findCustomPrefixConfig("avaxP", derivationConfig) ??
             avaxConfig[networkPurpose].avaxP.prefixConfig,
           mnemonic,
+          secp256k1Curve,
           false,
         ),
       }),

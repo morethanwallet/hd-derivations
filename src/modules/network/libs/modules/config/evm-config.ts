@@ -1,6 +1,6 @@
 import type { CommonDerivationPath } from "@/libs/types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
-import type { PrefixConfigProperty } from "@/libs/modules/keys/index.js";
+import type { PrefixConfigProperty } from "@/libs/modules/curves/curves.js";
 
 type EvmNetworkTypeUnion = "eth" | "etc";
 

@@ -1,9 +1,7 @@
 import bs58check from "bs58check";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
-import { type BIP32Interface } from "bip32";
-import { ecPair } from "@/libs/modules/ecc/index.js";
 import { networks } from "bitcoinjs-lib";
-import { type PrefixConfig, Bip32Keys } from "@/libs/modules/keys/index.js";
+import { Secp256k1Curve, type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
@@ -11,72 +9,69 @@ import {
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import { ExceptionMessage } from "@/libs/modules/key-derivation/libs/enums/index.js";
-import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
+import { getKeyPairFromBip32Interface } from "../../libs/helpers/get-key-pair-from-bip32-interface.helper.js";
 
-class TransparentKeyDerivation
-  extends Bip32Keys
-  implements AbstractKeyDerivation<"zecTransparent">
-{
-  public constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
-    super(prefixConfig, mnemonic);
+class TransparentKeyDerivation implements AbstractKeyDerivation<"zecTransparent"> {
+  private readonly mnemonic: Mnemonic;
+  private readonly prefixConfig: PrefixConfig;
+  private readonly secp256k1Curve: Secp256k1Curve;
+
+  public constructor(
+    mnemonic: Mnemonic,
+    prefixConfig: PrefixConfig,
+    secp256k1Curve: Secp256k1Curve,
+  ) {
+    this.mnemonic = mnemonic;
+    this.prefixConfig = prefixConfig;
+    this.secp256k1Curve = secp256k1Curve;
   }
 
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"zecTransparent">): CommonKeyPair {
-    const node = this.rootKey.derivePath(derivationPath);
-    const { privateKey, publicKey } = this.getKeyPair(node);
+    const seed = this.mnemonic.getSeed();
+    const rootKey = this.secp256k1Curve.getRootKeyFromSeed(seed, this.prefixConfig);
+    const node = rootKey.derivePath(derivationPath);
 
-    return {
-      privateKey,
-      publicKey,
-    };
+    return getKeyPairFromBip32Interface(node, true);
   }
 
   public importByPrivateKey({ privateKey }: PrivateKey<"zecTransparent">): CommonKeyPair {
-    const { publicKey } = this.getKeyPair(privateKey);
+    const privateKeyBytes = bs58check.decode(privateKey);
+    const networkPrefixIndex = 0;
+    const privateKeyStartIndex = 1;
+    const publicKeyCompressedByteStartIndex = 33;
+    const wifCompressedLength = 34;
+    const wifCompressedByte = 0x01;
+
+    if (privateKeyBytes[networkPrefixIndex] !== this.prefixConfig.wif) {
+      throw new KeyDerivationError(ExceptionMessage.ZCASH_INVALID_WIF_PREFIX);
+    }
+
+    const prefixRemovedPrivateKeyBytes = privateKeyBytes.slice(
+      privateKeyStartIndex,
+      publicKeyCompressedByteStartIndex,
+    );
+
+    const isCompressed =
+      privateKeyBytes.length === wifCompressedLength &&
+      privateKeyBytes[publicKeyCompressedByteStartIndex] === wifCompressedByte;
+
+    const keyPair = this.secp256k1Curve.getKeyPairFromPrivateKey(
+      prefixRemovedPrivateKeyBytes,
+      networks.bitcoin,
+      isCompressed,
+    );
+
+    if (!keyPair.privateKey) {
+      throw new KeyDerivationError(ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
+    }
 
     return {
       privateKey,
-      publicKey,
+      publicKey: convertBytesToHex(keyPair.publicKey),
     };
-  }
-
-  private getKeyPair(source: BIP32Interface | string): CommonKeyPair {
-    if (typeof source === "string") {
-      const decoded = bs58check.decode(source);
-      const networkPrefixIndex = 0;
-      const privateKeyStartIndex = 1;
-      const publicKeyCompressedByteStartIndex = 33;
-      const wifCompressedLength = 34;
-      const wifCompressedByte = 0x01;
-
-      if (decoded[networkPrefixIndex] !== this.prefixConfig.wif) {
-        throw new KeyDerivationError(ExceptionMessage.ZCASH_INVALID_WIF_PREFIX);
-      }
-
-      const privateKey = decoded.slice(privateKeyStartIndex, publicKeyCompressedByteStartIndex);
-      const compressed =
-        decoded.length === wifCompressedLength &&
-        decoded[publicKeyCompressedByteStartIndex] === wifCompressedByte;
-
-      const keyPair = ecPair.fromPrivateKey(privateKey, {
-        compressed,
-        network: networks.bitcoin,
-      });
-
-      if (!keyPair.privateKey) {
-        throw new KeyDerivationError(ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
-      }
-
-      return {
-        privateKey: convertBytesToHex(keyPair.privateKey),
-        publicKey: convertBytesToHex(keyPair.publicKey),
-      };
-    }
-
-    return getKeyPairFromEc({ source, prefixConfig: this.prefixConfig });
   }
 }
 

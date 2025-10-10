@@ -11,13 +11,16 @@ import type {
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { getSolDerivationHandlers } from "./libs/helpers/index.js";
+import { Ed25519Curve } from "@/libs/modules/curves/curves.js";
 
 class Sol implements AbstractNetwork<"solBase"> {
   private derivationHandlers: DerivationsHandlers<"solBase">["solBase"];
 
   public constructor({ mnemonic }: ConstructorParameters<"solBase">) {
+    const ed25519Curve = new Ed25519Curve();
+
     this.derivationHandlers = getSolDerivationHandlers({
-      keysDerivationInstance: new SolKeyDerivation(mnemonic),
+      keysDerivationInstance: new SolKeyDerivation(mnemonic, ed25519Curve),
     });
   }
 

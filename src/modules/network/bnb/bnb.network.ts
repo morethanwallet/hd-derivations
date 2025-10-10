@@ -12,15 +12,19 @@ import type {
 } from "../libs/types/index.js";
 import { getBnbDerivationHandlers } from "./libs/helpers/index.js";
 import { bnbConfig } from "../libs/modules/config/index.js";
+import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Bnb implements AbstractNetwork<"bnbBase"> {
   private derivationHandlers: DerivationsHandlers<"bnbBase">["bnbBase"];
 
   public constructor({ mnemonic, derivationConfig }: ConstructorParameters<"bnbBase">) {
+    const secp256k1Curve = new Secp256k1Curve();
+
     this.derivationHandlers = getBnbDerivationHandlers({
       keysDerivationInstance: new BnbKeyDerivation(
-        derivationConfig?.prefixConfig ?? bnbConfig.prefixConfig,
         mnemonic,
+        secp256k1Curve,
+        derivationConfig?.prefixConfig ?? bnbConfig.prefixConfig,
       ),
     });
   }

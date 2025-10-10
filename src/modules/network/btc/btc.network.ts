@@ -24,6 +24,7 @@ import {
 } from "./libs/helpers/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
 import { type BtcDerivationTypeUnion } from "@/libs/types/index.js";
+import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
   private derivationHandlers: DerivationsHandlers<BtcDerivationTypeUnion>[BtcDerivationTypeUnion];
@@ -33,6 +34,7 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
     derivationConfig,
   }: ConstructorParameters<BtcDerivationTypeUnion>) {
     const { networkPurpose, derivationType } = derivationConfig;
+    const secp256K1Curve = new Secp256k1Curve();
 
     const derivationsHandlers: DerivationsHandlers<BtcDerivationTypeUnion> = {
       btcLegacy: getLegacyDerivationHandlers({
@@ -40,6 +42,7 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
           findCustomPrefixConfig("btcLegacy", derivationConfig) ??
             btcConfig[networkPurpose].btcLegacy.prefixConfig,
           mnemonic,
+          secp256K1Curve,
         ),
       }),
       btcSegWit: getSegWitDerivationHandlers({
@@ -47,6 +50,7 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
           findCustomPrefixConfig("btcSegWit", derivationConfig) ??
             btcConfig[networkPurpose].btcSegWit.prefixConfig,
           mnemonic,
+          secp256K1Curve,
         ),
       }),
       btcNativeSegWit: getNativeSegWitDerivationHandlers({
@@ -54,6 +58,7 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
           findCustomPrefixConfig("btcNativeSegWit", derivationConfig) ??
             btcConfig[networkPurpose].btcNativeSegWit.prefixConfig,
           mnemonic,
+          secp256K1Curve,
         ),
       }),
       btcTaproot: getTaprootDerivationHandlers({
@@ -61,6 +66,7 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
           findCustomPrefixConfig("btcTaproot", derivationConfig) ??
             btcConfig[networkPurpose].btcTaproot.prefixConfig,
           mnemonic,
+          secp256K1Curve,
         ),
       }),
       btcP2wsh: getP2wshDerivationHandlers({
@@ -68,6 +74,7 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
           findCustomPrefixConfig("btcP2wsh", derivationConfig) ??
             btcConfig[networkPurpose].btcP2wsh.prefixConfig,
           mnemonic,
+          secp256K1Curve,
         ),
       }),
       btcP2wshInP2sh: getP2wshInP2shDerivationHandlers({
@@ -75,6 +82,7 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
           findCustomPrefixConfig("btcP2wshInP2sh", derivationConfig) ??
             btcConfig[networkPurpose].btcP2wshInP2sh.prefixConfig,
           mnemonic,
+          secp256K1Curve,
         ),
       }),
     };

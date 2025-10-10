@@ -18,6 +18,7 @@ import {
 } from "./libs/helpers/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
 import type { LtcDerivationTypeUnion } from "@/libs/types/index.js";
+import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Ltc implements AbstractNetwork<LtcDerivationTypeUnion> {
   private derivationHandlers: DerivationsHandlers<LtcDerivationTypeUnion>[LtcDerivationTypeUnion];
@@ -27,6 +28,7 @@ class Ltc implements AbstractNetwork<LtcDerivationTypeUnion> {
     derivationConfig,
   }: ConstructorParameters<LtcDerivationTypeUnion>) {
     const { networkPurpose, derivationType } = derivationConfig;
+    const secp256k1Curve = new Secp256k1Curve();
 
     const derivationsHandlers: DerivationsHandlers<LtcDerivationTypeUnion> = {
       ltcLegacy: getLegacyDerivationHandlers({
@@ -34,6 +36,7 @@ class Ltc implements AbstractNetwork<LtcDerivationTypeUnion> {
           findCustomPrefixConfig("ltcLegacy", derivationConfig) ??
             ltcConfig[networkPurpose].ltcLegacy.prefixConfig,
           mnemonic,
+          secp256k1Curve,
         ),
       }),
       ltcSegWit: getSegWitDerivationHandlers({
@@ -41,6 +44,7 @@ class Ltc implements AbstractNetwork<LtcDerivationTypeUnion> {
           findCustomPrefixConfig("ltcSegWit", derivationConfig) ??
             ltcConfig[networkPurpose].ltcSegWit.prefixConfig,
           mnemonic,
+          secp256k1Curve,
         ),
       }),
       ltcNativeSegWit: getNativeSegWitDerivationHandlers({
@@ -48,6 +52,7 @@ class Ltc implements AbstractNetwork<LtcDerivationTypeUnion> {
           findCustomPrefixConfig("ltcNativeSegWit", derivationConfig) ??
             ltcConfig[networkPurpose].ltcNativeSegWit.prefixConfig,
           mnemonic,
+          secp256k1Curve,
         ),
       }),
     };

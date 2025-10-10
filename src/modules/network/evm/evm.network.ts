@@ -12,15 +12,19 @@ import type {
 } from "../libs/types/index.js";
 import { getEvmDerivationHandlers } from "./libs/helpers/index.js";
 import { evmConfig } from "../libs/modules/config/index.js";
+import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Evm implements AbstractNetwork<"evmBase"> {
   private derivationHandlers: DerivationsHandlers<"evmBase">["evmBase"];
 
   public constructor({ mnemonic, derivationConfig }: ConstructorParameters<"evmBase">) {
+    const secp256k1Curve = new Secp256k1Curve();
+
     this.derivationHandlers = getEvmDerivationHandlers({
       keysDerivationInstance: new EvmKeyDerivation(
         derivationConfig?.prefixConfig ?? evmConfig.prefixConfig,
         mnemonic,
+        secp256k1Curve,
       ),
     });
   }

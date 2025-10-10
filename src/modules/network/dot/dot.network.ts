@@ -18,6 +18,7 @@ import {
   getStandardHdDerivationHandlers,
 } from "./libs/helpers/index.js";
 import type { DotDerivationTypeUnion } from "@/libs/types/index.js";
+import { Ed25519Curve } from "@/libs/modules/curves/curves.js";
 
 class Dot implements AbstractNetwork<DotDerivationTypeUnion> {
   private derivationHandlers: DerivationsHandlers<DotDerivationTypeUnion>[DotDerivationTypeUnion];
@@ -27,10 +28,12 @@ class Dot implements AbstractNetwork<DotDerivationTypeUnion> {
     mnemonic,
     dotMnemonic,
   }: ConstructorParameters<DotDerivationTypeUnion>) {
+    const ed25519Curve = new Ed25519Curve();
+
     const derivationHandlers: DerivationsHandlers<DotDerivationTypeUnion> = {
       dotStandardHd: getStandardHdDerivationHandlers({
         ss58Format,
-        keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic),
+        keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic, ed25519Curve),
       }),
       dotBase: getBaseDerivationHandlers({
         scheme,

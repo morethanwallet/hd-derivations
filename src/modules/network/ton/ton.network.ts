@@ -11,6 +11,7 @@ import type {
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { getTonDerivationHandlers } from "./libs/helpers/index.js";
+import { Ed25519Curve } from "@/libs/modules/curves/curves.js";
 
 class Ton implements AbstractNetwork<"tonBase"> {
   private derivationHandlers: DerivationsHandlers<"tonBase">["tonBase"];
@@ -18,10 +19,11 @@ class Ton implements AbstractNetwork<"tonBase"> {
   // TODO: Remove derivation type for chains with only 1 derivation type
   public constructor({ derivationConfig, mnemonic }: ConstructorParameters<"tonBase">) {
     const { derivationType, ...addressParameters } = derivationConfig;
+    const ed25519Curve = new Ed25519Curve();
 
     this.derivationHandlers = getTonDerivationHandlers({
       ...addressParameters,
-      keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic),
+      keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic, ed25519Curve),
     });
   }
 

@@ -14,6 +14,7 @@ import { geXrpDerivationHandlers } from "./libs/helpers/index.js";
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import { findCustomPrefixConfig } from "../libs/helpers/index.js";
 import { xrpConfig } from "../libs/modules/config/index.js";
+import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
   private derivationHandlers: DerivationsHandlers<XrpDerivationTypeUnion>[XrpDerivationTypeUnion];
@@ -24,6 +25,7 @@ class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
   }: ConstructorParameters<XrpDerivationTypeUnion>) {
     const { derivationType, networkPurpose, destinationTag } = derivationConfig;
     const isTestnet = networkPurpose === "testnet";
+    const secp256k1Curve = new Secp256k1Curve();
 
     const derivationsHandlers: DerivationsHandlers<XrpDerivationTypeUnion> = {
       xrpBase: geXrpDerivationHandlers({
@@ -33,6 +35,7 @@ class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomPrefixConfig("bchLegacy", derivationConfig) ?? xrpConfig.prefixConfig,
           mnemonic,
+          secp256k1Curve,
           false,
         ),
       }),
@@ -43,6 +46,7 @@ class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomPrefixConfig("bchCashAddr", derivationConfig) ?? xrpConfig.prefixConfig,
           mnemonic,
+          secp256k1Curve,
           false,
         ),
       }),
