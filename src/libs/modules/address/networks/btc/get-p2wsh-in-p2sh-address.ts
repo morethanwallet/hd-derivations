@@ -3,7 +3,7 @@ import { ExceptionMessage } from "@/libs/modules/address/libs/enums/index.js";
 import { AddressError } from "../../libs/exceptions/index.js";
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
 import { type CommonKeyPair } from "@/libs/types/index.js";
-import { type PrefixConfig } from "@/libs/modules/keys/index.js";
+import { type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import { payments } from "bitcoinjs-lib";
 import { convertHexToBytes } from "@/libs/utils/index.js";
 

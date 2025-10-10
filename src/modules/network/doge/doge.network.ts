@@ -13,16 +13,20 @@ import type {
 } from "@/modules/network/libs/types/index.js";
 import { getLegacyDerivationHandlers } from "./libs/helpers/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
+import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Doge implements AbstractNetwork<"dogeLegacy"> {
   private derivationHandlers: DerivationsHandlers<"dogeLegacy">["dogeLegacy"];
 
   public constructor({ mnemonic, derivationConfig }: ConstructorParameters<"dogeLegacy">) {
+    const secp256k1Curve = new Secp256k1Curve();
+
     this.derivationHandlers = getLegacyDerivationHandlers({
       keysDerivationInstance: new CommonBipKeyDerivation(
         findCustomPrefixConfig("dogeLegacy", derivationConfig) ??
           dogeConfig[derivationConfig.networkPurpose].dogeLegacy.prefixConfig,
         mnemonic,
+        secp256k1Curve,
       ),
     });
   }

@@ -3,42 +3,52 @@ import {
   type AbstractKeyDerivation,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
-import { type PrefixConfig, Bip32Keys } from "@/libs/modules/keys/index.js";
-import { type BIP32Interface } from "bip32";
-import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
+import { type Secp256k1Curve, type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { getPublicKeyFromPrivateKey } from "@binance-chain/javascript-sdk/lib/crypto/index.js";
 import { convertHexToBytes } from "@/libs/utils/index.js";
+import { getKeyPairFromPrivateKeyBytes } from "../../libs/helpers/index.js";
 
-class BnbKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"bnbBase"> {
-  constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
-    super(prefixConfig, mnemonic);
+class BnbKeyDerivation implements AbstractKeyDerivation<"bnbBase"> {
+  public prefixConfig: PrefixConfig;
+  private mnemonic: Mnemonic;
+  private secp256k1Curve: Secp256k1Curve;
+
+  public constructor(
+    mnemonic: Mnemonic,
+    secp256k1Curve: Secp256k1Curve,
+    prefixConfig: PrefixConfig,
+  ) {
+    this.mnemonic = mnemonic;
+    this.secp256k1Curve = secp256k1Curve;
+    this.prefixConfig = prefixConfig;
   }
 
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"bnbBase">): CommonKeyPair {
-    const node = this.rootKey.derivePath(derivationPath);
+    const rootKey = this.secp256k1Curve.getRootKeyFromSeed(
+      this.mnemonic.getSeed(),
+      this.prefixConfig,
+    );
+
+    const node = this.secp256k1Curve.derivePath(rootKey, derivationPath);
 
     return this.getKeyPair(node.privateKey);
   }
 
   public importByPrivateKey({ privateKey }: PrivateKey<"bnbBase">): CommonKeyPair {
     const rawKey = convertHexToBytes(privateKey);
-    const { publicKey } = this.getKeyPair(rawKey);
 
-    return {
-      privateKey,
-      publicKey,
-    };
+    return this.getKeyPair(rawKey);
   }
 
-  public getKeyPair(source: BIP32Interface | Uint8Array | undefined): CommonKeyPair {
-    const { privateKey } = getKeyPairFromEc({
-      source,
-      isPrivateKeyWifFormatted: false,
-      prefixConfig: this.prefixConfig,
-    });
+  public getKeyPair(privateKeyBytes: Uint8Array | undefined): CommonKeyPair {
+    const { privateKey } = getKeyPairFromPrivateKeyBytes(
+      privateKeyBytes,
+      this.secp256k1Curve,
+      this.prefixConfig,
+    );
 
     const publicKey = getPublicKeyFromPrivateKey(privateKey);
 

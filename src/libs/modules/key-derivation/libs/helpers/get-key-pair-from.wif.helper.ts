@@ -1,0 +1,12 @@
+import { type PrefixConfig } from "@/libs/modules/curves/curves";
+import { ecPair, type ECPairInterface } from "@/libs/modules/ecc/ecc.js";
+import { convertBytesToHex } from "@/libs/utils/index.js";
+
+function getKeyPairFromWif(wif: string, prefixConfig: PrefixConfig) {
+  const keyPair: ECPairInterface = ecPair.fromWIF(wif, prefixConfig);
+  const publicKey = convertBytesToHex(keyPair.publicKey);
+
+  return { privateKey: wif, publicKey };
+}
+
+export { getKeyPairFromWif };

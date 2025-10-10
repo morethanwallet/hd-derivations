@@ -1,2 +1,3 @@
-export { getKeyPairFromEc } from "./get-key-pair-from-ec.helper.js";
-export { convertEcBytesPrivateKeyToHexKeyPair } from "./convert-ec-bytes-private-key-to-hex-key-pair.helper.js";
+export { getKeyPairFromPrivateKeyBytes } from "./get-key-pair-from-private-key-bytes.helper.js";
+export { getKeyPairFromBip32Interface } from "./get-key-pair-from-bip32-interface.helper.js";
+export { getKeyPairFromWif } from "./get-key-pair-from.wif.helper.js";

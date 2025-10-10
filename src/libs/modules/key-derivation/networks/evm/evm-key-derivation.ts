@@ -1,48 +1,51 @@
 import { bufferToHex } from "ethereumjs-util";
 import { checkAndRemoveHexPrefix, addHexPrefix, convertHexToBytes } from "@/libs/utils/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
-import { type PrefixConfig, Bip32Keys } from "@/libs/modules/keys/index.js";
-import { getKeyPairFromEc } from "@/libs/modules/key-derivation/libs/helpers/index.js";
+import { type Secp256k1Curve, type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
+import { getKeyPairFromPrivateKeyBytes } from "../../libs/helpers";
 
-class EvmKeyDerivation extends Bip32Keys implements AbstractKeyDerivation<"evmBase"> {
-  public constructor(prefixConfig: PrefixConfig, mnemonic: Mnemonic) {
-    super(prefixConfig, mnemonic);
+class EvmKeyDerivation implements AbstractKeyDerivation<"evmBase"> {
+  public prefixConfig: PrefixConfig;
+  private mnemonic: Mnemonic;
+  private secp256k1Curve: Secp256k1Curve;
+
+  public constructor(
+    prefixConfig: PrefixConfig,
+    mnemonic: Mnemonic,
+    secp256k1Curve: Secp256k1Curve,
+  ) {
+    this.prefixConfig = prefixConfig;
+    this.mnemonic = mnemonic;
+    this.secp256k1Curve = secp256k1Curve;
   }
 
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"evmBase">): CommonKeyPair {
-    const node = this.rootKey.derivePath(derivationPath);
-    const { privateKey, publicKey } = this.getKeyPair(node.privateKey);
+    const seed = this.mnemonic.getSeed();
+    const rootKey = this.secp256k1Curve.getRootKeyFromSeed(seed, this.prefixConfig);
+    const node = this.secp256k1Curve.derivePath(rootKey, derivationPath);
 
-    return {
-      privateKey,
-      publicKey,
-    };
+    return this.getKeyPair(node.privateKey);
   }
 
   public importByPrivateKey({ privateKey }: PrivateKey<"evmBase">): CommonKeyPair {
     const rawPrivateKey = convertHexToBytes(checkAndRemoveHexPrefix(privateKey));
 
-    const { publicKey } = this.getKeyPair(rawPrivateKey);
-
-    return {
-      privateKey,
-      publicKey,
-    };
+    return this.getKeyPair(rawPrivateKey);
   }
 
-  private getKeyPair(rawPrivateKey?: Uint8Array): CommonKeyPair {
-    const { privateKey, publicKey } = getKeyPairFromEc({
-      prefixConfig: this.prefixConfig,
-      source: rawPrivateKey,
-      isPrivateKeyWifFormatted: false,
-    });
+  private getKeyPair(privateKeyBytes: Uint8Array | undefined): CommonKeyPair {
+    const { privateKey, publicKey } = getKeyPairFromPrivateKeyBytes(
+      privateKeyBytes,
+      this.secp256k1Curve,
+      this.prefixConfig,
+    );
 
     return {
       privateKey: bufferToHex(Buffer.from(privateKey, "hex")),

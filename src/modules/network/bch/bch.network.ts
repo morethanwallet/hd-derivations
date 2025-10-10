@@ -17,6 +17,7 @@ import {
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import { findCustomPrefixConfig } from "../libs/helpers/index.js";
 import { bchConfig } from "../libs/modules/config/index.js";
+import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Bch implements AbstractNetwork<BchDerivationTypeUnion> {
   private derivationHandlers: DerivationsHandlers<BchDerivationTypeUnion>[BchDerivationTypeUnion];
@@ -26,6 +27,7 @@ class Bch implements AbstractNetwork<BchDerivationTypeUnion> {
     derivationConfig,
   }: ConstructorParameters<BchDerivationTypeUnion>) {
     const { networkPurpose, derivationType } = derivationConfig;
+    const secp256k1Curve = new Secp256k1Curve();
 
     const derivationsHandlers: DerivationsHandlers<BchDerivationTypeUnion> = {
       bchLegacy: getLegacyDerivationHandlers({
@@ -33,6 +35,7 @@ class Bch implements AbstractNetwork<BchDerivationTypeUnion> {
           findCustomPrefixConfig("bchLegacy", derivationConfig) ??
             bchConfig[networkPurpose].bchLegacy.prefixConfig,
           mnemonic,
+          secp256k1Curve,
         ),
       }),
       bchCashAddr: getCashAddrDerivationHandlers({
@@ -41,6 +44,7 @@ class Bch implements AbstractNetwork<BchDerivationTypeUnion> {
           findCustomPrefixConfig("bchCashAddr", derivationConfig) ??
             bchConfig[networkPurpose].bchCashAddr.prefixConfig,
           mnemonic,
+          secp256k1Curve,
         ),
       }),
     };

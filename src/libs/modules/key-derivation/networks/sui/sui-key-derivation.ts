@@ -10,9 +10,15 @@ import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
 import { ExceptionMessage } from "@/libs/enums/index.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import type { KeyPairInstanceUnion, KeyPairUnion } from "./libs/types/index.js";
-import { Ed25519Keys } from "@/libs/modules/keys/index.js";
+import { type Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
 
-class SuiKeyDerivation extends Ed25519Keys implements AbstractKeyDerivation<"suiBase"> {
+class SuiKeyDerivation implements AbstractKeyDerivation<"suiBase"> {
+  private mnemonic: Mnemonic;
+
+  public constructor(mnemonic: Mnemonic) {
+    this.mnemonic = mnemonic;
+  }
+
   public deriveFromMnemonic({
     derivationPath,
     scheme,

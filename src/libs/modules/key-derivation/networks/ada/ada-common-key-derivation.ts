@@ -1,24 +1,30 @@
 import { PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
-import { getNode } from "./libs/helpers/index.js";
+import { getNode, getNodeRawKeys, getRootKey } from "./libs/helpers/helpers.js";
 import type {
   ImportByPrivateKeyParameters,
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import type { GetDerivationTypeUnion, KeyPair } from "@/libs/types/index.js";
-import { AdaKeys } from "@/libs/modules/keys/index.js";
+import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
 class AdaCommonKeyDerivation
-  extends AdaKeys
   implements AbstractKeyDerivation<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>
 {
+  private readonly mnemonic: Mnemonic;
+
+  public constructor(mnemonic: Mnemonic) {
+    this.mnemonic = mnemonic;
+  }
+
   public deriveFromMnemonic(
     parameters: DeriveFromMnemonicParameters<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>,
   ): KeyPair<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">> {
-    const rootKey = this.getRootKey();
+    const entropy = this.mnemonic.getEntropy();
+    const rootKey = getRootKey(entropy);
 
     const node = getNode(rootKey, parameters.derivationPath);
-    const { privateKey, publicKey } = this.getRawKeys(node);
+    const { privateKey, publicKey } = getNodeRawKeys(node);
 
     return {
       privateKey: privateKey.to_hex(),

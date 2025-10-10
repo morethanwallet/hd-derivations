@@ -1,27 +1,33 @@
 import { PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
-import { getNode } from "./libs/helpers/index.js";
+import { getNode, getNodeRawKeys, getRootKey } from "./libs/helpers/helpers.js";
 import type {
   ImportByPrivateKeyParameters,
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import type { KeyPair } from "@/libs/types/index.js";
-import { AdaKeys } from "@/libs/modules/keys/index.js";
+import { type Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
 
-class AdaBaseKeyDerivation extends AdaKeys implements AbstractKeyDerivation<"adaBase"> {
+class AdaBaseKeyDerivation implements AbstractKeyDerivation<"adaBase"> {
+  private readonly mnemonic: Mnemonic;
+
+  public constructor(mnemonic: Mnemonic) {
+    this.mnemonic = mnemonic;
+  }
+
   public deriveFromMnemonic(
     parameters: DeriveFromMnemonicParameters<"adaBase">,
   ): KeyPair<"adaBase"> {
-    const rootKey = this.getRootKey();
+    const entropy = this.mnemonic.getEntropy();
+    const rootKey = getRootKey(entropy);
 
     const enterpriseNode = getNode(rootKey, parameters.enterpriseDerivationPath);
     const rewardNode = getNode(rootKey, parameters.rewardDerivationPath);
 
     const { privateKey: enterprisePrivateKey, publicKey: enterprisePublicKey } =
-      this.getRawKeys(enterpriseNode);
+      getNodeRawKeys(enterpriseNode);
 
-    const { privateKey: rewardPrivateKey, publicKey: rewardPublicKey } =
-      this.getRawKeys(rewardNode);
+    const { privateKey: rewardPrivateKey, publicKey: rewardPublicKey } = getNodeRawKeys(rewardNode);
 
     return {
       enterprisePrivateKey: enterprisePrivateKey.to_hex(),
