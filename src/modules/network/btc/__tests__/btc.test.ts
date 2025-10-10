@@ -552,7 +552,7 @@ describe("Btc", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns true for legacy private key", () => {
+        it("Returns false for legacy private key", () => {
           const isNative = networkDerivationsInstances.mainnet.btcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -563,7 +563,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for segWit private key", () => {
+        it("Returns false for segWit private key", () => {
           const isNative = networkDerivationsInstances.mainnet.btcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -574,7 +574,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for native segWit private key", () => {
+        it("Returns false for native segWit private key", () => {
           const isNative =
             networkDerivationsInstances.mainnet.btcNativeSegWit.doesPKBelongToMnemonic({
               derivationPathPrefix: btcConfig.mainnet.btcNativeSegWit.derivationPathPrefix,
@@ -586,7 +586,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for taproot private key", () => {
+        it("Returns false for taproot private key", () => {
           const isNative = networkDerivationsInstances.mainnet.btcTaproot.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -597,7 +597,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
+        it("Returns false for p2wsh (1-of-1 multisig) private key", () => {
           const isNative = networkDerivationsInstances.mainnet.btcP2wsh.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.mainnet.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -608,7 +608,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
+        it("Returns false for p2wsh (1-of-1 multisig) private key", () => {
           const isNative =
             networkDerivationsInstances.mainnet.btcP2wshInP2sh.doesPKBelongToMnemonic({
               derivationPathPrefix: btcConfig.mainnet.btcP2wshInP2sh.derivationPathPrefix,
@@ -868,7 +868,7 @@ describe("Btc", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns true for legacy private key", () => {
+        it("Returns false for legacy private key", () => {
           const isNative = networkDerivationsInstances.testnet.btcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -879,7 +879,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for segWit private key", () => {
+        it("Returns false for segWit private key", () => {
           const isNative = networkDerivationsInstances.testnet.btcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -890,7 +890,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for native segWit private key", () => {
+        it("Returns false for native segWit private key", () => {
           const isNative =
             networkDerivationsInstances.testnet.btcNativeSegWit.doesPKBelongToMnemonic({
               derivationPathPrefix: btcConfig.testnet.btcNativeSegWit.derivationPathPrefix,
@@ -902,7 +902,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for taproot private key", () => {
+        it("Returns false for taproot private key", () => {
           const isNative = networkDerivationsInstances.testnet.btcTaproot.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -913,7 +913,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
+        it("Returns false for p2wsh (1-of-1 multisig) private key", () => {
           const isNative = networkDerivationsInstances.testnet.btcP2wsh.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.testnet.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -924,7 +924,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
+        it("Returns false for p2wsh (1-of-1 multisig) private key", () => {
           const isNative =
             networkDerivationsInstances.testnet.btcP2wshInP2sh.doesPKBelongToMnemonic({
               derivationPathPrefix: btcConfig.testnet.btcP2wshInP2sh.derivationPathPrefix,
@@ -1184,7 +1184,7 @@ describe("Btc", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns true for legacy private key", () => {
+        it("Returns false for legacy private key", () => {
           const isNative = networkDerivationsInstances.regtest.btcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -1195,7 +1195,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for segWit private key", () => {
+        it("Returns false for segWit private key", () => {
           const isNative = networkDerivationsInstances.regtest.btcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -1206,7 +1206,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for native segWit private key", () => {
+        it("Returns false for native segWit private key", () => {
           const isNative =
             networkDerivationsInstances.regtest.btcNativeSegWit.doesPKBelongToMnemonic({
               derivationPathPrefix: btcConfig.regtest.btcNativeSegWit.derivationPathPrefix,
@@ -1218,7 +1218,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for taproot private key", () => {
+        it("Returns false for taproot private key", () => {
           const isNative = networkDerivationsInstances.regtest.btcTaproot.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -1229,7 +1229,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
+        it("Returns false for p2wsh (1-of-1 multisig) private key", () => {
           const isNative = networkDerivationsInstances.regtest.btcP2wsh.doesPKBelongToMnemonic({
             derivationPathPrefix: btcConfig.regtest.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -1240,7 +1240,7 @@ describe("Btc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for p2wsh (1-of-1 multisig) private key", () => {
+        it("Returns false for p2wsh (1-of-1 multisig) private key", () => {
           const isNative =
             networkDerivationsInstances.regtest.btcP2wshInP2sh.doesPKBelongToMnemonic({
               derivationPathPrefix: btcConfig.regtest.btcP2wshInP2sh.derivationPathPrefix,

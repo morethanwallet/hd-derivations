@@ -15,14 +15,14 @@ export type { DerivationTypeUnion, GetDerivationTypeUnion } from "@/libs/types/t
 export { Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
 const network = getNetwork({
-  ...DEFAULT_INSTANCE_PARAMETERS.ada,
-  mnemonic: "deposit potato belt enroll space involve sing angry marine shop ostrich midnight",
+  ...DEFAULT_INSTANCE_PARAMETERS.sol,
+  derivationConfig: { derivationType: "solExodus" },
+  mnemonic: "drill exotic title fall ivory boy praise unfold search foil surge tip",
 });
 console.log(
-  network.deriveItemFromMnemonic({
-    // derivationPath: "m/44'/1815'/0'/0/0",
-    enterpriseDerivationPath: "m/44'/1815'/0'/0/0",
-    rewardDerivationPath: "m/44'/1815'/0'/0/0",
+  network.getCredentialFromPK({
+    privateKey:
+      "4uAMzZHQPeUqZCLSoEFjooLzuYGPBDq8a5m9HMu7N1EqfgN5nFdd17nuLBmNmdp6VUTBfwqdyURiQxSGH6XVxWQ2",
   }),
 );
 
@@ -30,33 +30,9 @@ console.log(
 // enkrypt -> doge -> use m/49'/0'/0'/0/0
 // enkrypt -> ltc -> use m/49'/0'/0'/0/0
 // enkrypt -> etc -> use m/44'/60'/0'/0/0
-// exodus -> sol -> #1 below
 // exodus -> ada -> #2 below
 // exodus -> ltc -> legacy derivation
 // enkrypt password - sdasd#$#D#D#
-
-// #1 Exodus Solana
-// import { getPublicKey } from "ed25519-hd-key";
-// import { Bip32Keys } from "./libs/modules/keys";
-// import { Mnemonic } from "./libs/modules/mnemonic/mnemonic";
-// import base58 from "bs58";
-// const keys = new Bip32Keys(
-//   undefined as any,
-//   new Mnemonic("deposit potato belt enroll space involve sing angry marine shop ostrich midnight"),
-// );
-// const rootKey = keys.getBip32RootKeyFromSeed();
-// export async function exodusSolanaKeypair() {
-//   const node = rootKey.derivePath("m/44'/501'/0'/0/0");
-//   const rawPriv = node.privateKey as Uint8Array;
-//   const rawPrivateKey = rawPriv.slice(0, 32);
-
-//   const rawPublicKey = getPublicKey(Buffer.from(rawPrivateKey), false);
-//   const privateKey = base58.encode(Buffer.concat([rawPrivateKey, rawPublicKey]));
-//   const publicKey = base58.encode(rawPublicKey);
-//   console.log(publicKey);
-// }
-
-// exodusSolanaKeypair();
 
 // #2 Exodus Cardano
 // import { createHmac } from "crypto";
