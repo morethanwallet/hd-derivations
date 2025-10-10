@@ -44,4 +44,39 @@ function getSolDerivationHandlers({
   };
 }
 
-export { getSolDerivationHandlers };
+function getSolExodusDerivationHandlers({
+  keysDerivationInstance,
+}: GetDerivationHandlersParameters["solExodus"]): GetDerivationHandlersReturnType<"solExodus"> {
+  return {
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath, true);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+
+      return { ...keys, address: keys.publicKey, derivationPath };
+    },
+    getCredentialFromPK: ({ privateKey }) => {
+      const keys = keysDerivationInstance.importByPrivateKey({ privateKey });
+
+      return { ...keys, address: keys.publicKey };
+    },
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      addressPosition = DEFAULT_ADDRESS_POSITION,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"solExodus">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        true,
+        addressPosition,
+      );
+    },
+    doesPKBelongToMnemonic(parameters) {
+      return (doesPKBelongToMnemonic<"solExodus">).call(this, parameters, true);
+    },
+  };
+}
+
+export { getSolDerivationHandlers, getSolExodusDerivationHandlers };

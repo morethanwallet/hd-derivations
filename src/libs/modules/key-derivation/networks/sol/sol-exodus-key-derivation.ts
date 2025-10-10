@@ -10,7 +10,7 @@ import { ExceptionMessage } from "../../libs/enums/index.js";
 import { Ed25519SecretKeyIndex } from "./libs/enums/enums.js";
 import { getBase58EncodedKeyPair, importByPrivateKey } from "./libs/helpers/helpers.js";
 
-class SolKeyDerivation implements AbstractKeyDerivation<"solBase"> {
+class SolExodusKeyDerivation implements AbstractKeyDerivation<"solExodus"> {
   private mnemonic: Mnemonic;
   private ed25519Curve: Ed25519Curve;
   private secp256k1Curve: Secp256k1Curve;
@@ -27,7 +27,7 @@ class SolKeyDerivation implements AbstractKeyDerivation<"solBase"> {
 
   public deriveFromMnemonic({
     derivationPath,
-  }: DeriveFromMnemonicParameters<"solBase">): CommonKeyPair {
+  }: DeriveFromMnemonicParameters<"solExodus">): CommonKeyPair {
     const seed = this.mnemonic.getSeed();
     const rootKey = this.secp256k1Curve.getRootKeyFromSeed(seed);
     const node = this.secp256k1Curve.derivePath(rootKey, derivationPath);
@@ -47,9 +47,9 @@ class SolKeyDerivation implements AbstractKeyDerivation<"solBase"> {
     return getBase58EncodedKeyPair(secretKeyBuffer, publicKeyBuffer);
   }
 
-  public importByPrivateKey({ privateKey }: PrivateKey<"solBase">): CommonKeyPair {
+  public importByPrivateKey({ privateKey }: PrivateKey<"solExodus">): CommonKeyPair {
     return importByPrivateKey(privateKey, this.ed25519Curve);
   }
 }
 
-export { SolKeyDerivation };
+export { SolExodusKeyDerivation };

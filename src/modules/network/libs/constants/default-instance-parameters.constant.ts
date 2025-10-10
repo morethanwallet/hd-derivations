@@ -77,6 +77,9 @@ const DEFAULT_DOT_INSTANCE_PARAMETERS: InstanceParameters["dot"] = {
 
 const DEFAULT_SOL_INSTANCE_PARAMETERS: InstanceParameters["sol"] = {
   network: "sol",
+  derivationConfig: {
+    derivationType: "solBase",
+  },
 };
 
 const DEFAULT_DOGE_INSTANCE_PARAMETERS: InstanceParameters["doge"] = {

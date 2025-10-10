@@ -7,7 +7,7 @@ import { type Mnemonic } from "@/libs/modules/mnemonic";
 import { type Ed25519Curve } from "@/libs/modules/curves/curves";
 import { getBase58EncodedKeyPair, importByPrivateKey } from "./libs/helpers/helpers.js";
 
-class SolKeyDerivation implements AbstractKeyDerivation<"solBase"> {
+class SolBaseKeyDerivation implements AbstractKeyDerivation<"solBase"> {
   private mnemonic: Mnemonic;
   private ed25519Curve: Ed25519Curve;
 
@@ -31,4 +31,4 @@ class SolKeyDerivation implements AbstractKeyDerivation<"solBase"> {
   }
 }
 
-export { SolKeyDerivation };
+export { SolBaseKeyDerivation };

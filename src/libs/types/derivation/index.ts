@@ -14,4 +14,5 @@ export type {
   LtcDerivationTypeUnion,
   DotDerivationTypeUnion,
   GetDerivationTypeUnion,
+  SolDerivationTypeUnion,
 } from "./derivation-type-union.type.js";

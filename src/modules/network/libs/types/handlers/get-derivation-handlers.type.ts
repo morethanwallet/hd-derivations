@@ -5,12 +5,13 @@ import type {
   SuiKeyDerivation,
   BnbKeyDerivation,
   EvmKeyDerivation,
-  SolKeyDerivation,
+  SolBaseKeyDerivation,
   TransparentKeyDerivation,
   AptKeyDerivation,
   AdaBaseKeyDerivation,
   AdaCommonKeyDerivation,
   DotKeyDerivation,
+  SolExodusKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
 import type {
   GetDerivationTypeUnion,
@@ -77,7 +78,9 @@ type DotBaseParameters = {
 
 type BchParameters = { keysDerivationInstance: CommonBipKeyDerivation; isRegtest: boolean };
 
-type SolParameters = { keysDerivationInstance: SolKeyDerivation };
+type SolBaseParameters = { keysDerivationInstance: SolBaseKeyDerivation };
+
+type SolExodusParameters = { keysDerivationInstance: SolExodusKeyDerivation };
 
 type ZecParameters = { keysDerivationInstance: TransparentKeyDerivation };
 
@@ -114,7 +117,8 @@ type GetDerivationHandlersParameters = Record<AvaxDerivationTypeUnion, AvaxParam
   Record<GetDerivationTypeUnion<"dotStandardHd">, DotStandardHdParameters> &
   Record<GetDerivationTypeUnion<"dotBase">, DotBaseParameters> &
   Record<GetDerivationTypeUnion<"bchCashAddr">, BchParameters> &
-  Record<GetDerivationTypeUnion<"solBase">, SolParameters> &
+  Record<GetDerivationTypeUnion<"solBase">, SolBaseParameters> &
+  Record<GetDerivationTypeUnion<"solExodus">, SolExodusParameters> &
   Record<GetDerivationTypeUnion<"zecTransparent">, ZecParameters> &
   Record<AptDerivationTypeUnion, AptParameters> &
   Record<CommonBipParametersDerivationTypeUnion, CommonBipParameters>;
