@@ -105,15 +105,15 @@
 <path fill="none" stroke="#757575" d="M12388.53,-4614.99C12469.71,-4621.38 12615.87,-4632.88 12721.79,-4641.22"/>
 <polygon fill="#757575" stroke="#757575" points="12721.67,-4644.72 12731.91,-4642.01 12722.22,-4637.74 12721.67,-4644.72"/>
 </g>
-<!-- libs/types/derivation/index.ts -->
+<!-- libs/types/derivation/types.ts -->
 <g id="node160" class="node">
-<title>libs/types/derivation/index.ts</title>
+<title>libs/types/derivation/types.ts</title>
 <path fill="none" stroke="#c6c5fe" d="M13462.83,-6967.73C13462.83,-6967.73 13293.17,-6967.73 13293.17,-6967.73 13289.33,-6967.73 13285.5,-6963.89 13285.5,-6960.06 13285.5,-6960.06 13285.5,-6952.39 13285.5,-6952.39 13285.5,-6948.56 13289.33,-6944.73 13293.17,-6944.73 13293.17,-6944.73 13462.83,-6944.73 13462.83,-6944.73 13466.67,-6944.73 13470.5,-6948.56 13470.5,-6952.39 13470.5,-6952.39 13470.5,-6960.06 13470.5,-6960.06 13470.5,-6963.89 13466.67,-6967.73 13462.83,-6967.73"/>
-<text text-anchor="middle" x="13378" y="-6952.53" font-family="Arial" font-size="14.00" fill="#c6c5fe">libs/types/derivation/index.ts</text>
+<text text-anchor="middle" x="13378" y="-6952.53" font-family="Arial" font-size="14.00" fill="#c6c5fe">libs/types/derivation/types.ts</text>
 </g>
-<!-- libs/types/types.ts&#45;&gt;libs/types/derivation/index.ts -->
+<!-- libs/types/types.ts&#45;&gt;libs/types/derivation/types.ts -->
 <g id="edge359" class="edge">
-<title>libs/types/types.ts&#45;&gt;libs/types/derivation/index.ts</title>
+<title>libs/types/types.ts&#45;&gt;libs/types/derivation/types.ts</title>
 <path fill="none" stroke="#757575" d="M12333.15,-4621.74C12407.7,-4788.47 13268.21,-6712.94 13367.65,-6935.31"/>
 <polygon fill="#757575" stroke="#757575" points="13364.53,-6936.9 13371.8,-6944.6 13370.92,-6934.05 13364.53,-6936.9"/>
 </g>
@@ -3231,15 +3231,15 @@
 <path fill="none" stroke="#757575" d="M13966.65,-7000.75C14003.63,-7002.53 14044.1,-7004.48 14082.48,-7006.34"/>
 <polygon fill="#757575" stroke="#757575" points="14082.55,-7009.84 14092.71,-7006.83 14082.89,-7002.85 14082.55,-7009.84"/>
 </g>
-<!-- libs/types/derivation/index.ts&#45;&gt;libs/types/derivation/derivation&#45;path.type.ts -->
+<!-- libs/types/derivation/types.ts&#45;&gt;libs/types/derivation/derivation&#45;path.type.ts -->
 <g id="edge351" class="edge">
-<title>libs/types/derivation/index.ts&#45;&gt;libs/types/derivation/derivation&#45;path.type.ts</title>
+<title>libs/types/derivation/types.ts&#45;&gt;libs/types/derivation/derivation&#45;path.type.ts</title>
 <path fill="none" stroke="#757575" d="M13470.71,-6963.96C13532.01,-6969.13 13613.96,-6976.05 13684.07,-6981.96"/>
 <polygon fill="#757575" stroke="#757575" points="13684.06,-6985.47 13694.32,-6982.82 13684.65,-6978.5 13684.06,-6985.47"/>
 </g>
-<!-- libs/types/derivation/index.ts&#45;&gt;libs/types/derivation/derivation&#45;type&#45;union.type.ts -->
+<!-- libs/types/derivation/types.ts&#45;&gt;libs/types/derivation/derivation&#45;type&#45;union.type.ts -->
 <g id="edge352" class="edge">
-<title>libs/types/derivation/index.ts&#45;&gt;libs/types/derivation/derivation&#45;type&#45;union.type.ts</title>
+<title>libs/types/derivation/types.ts&#45;&gt;libs/types/derivation/derivation&#45;type&#45;union.type.ts</title>
 <path fill="none" stroke="#757575" d="M13470.66,-6955.25C13591.02,-6954.81 13808.82,-6956.89 13994,-6974.23 14056.31,-6980.06 14126.58,-6991.63 14177.06,-7000.84"/>
 <polygon fill="#757575" stroke="#757575" points="14176.74,-7004.34 14187.21,-7002.7 14178.01,-6997.45 14176.74,-7004.34"/>
 </g>
