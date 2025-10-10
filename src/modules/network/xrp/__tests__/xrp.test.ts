@@ -65,31 +65,37 @@ type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeUnion]: { [key in XrpDerivationTypeUnion]: Xrp };
 };
 
-const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
-const derivationTypes: XrpDerivationTypeUnion[] = ["xrpBase", "xrpX"] as const;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
-const networkDerivationsInstances = await networkPurposes.reduce(
-  async (networkDerivationsInstances, networkPurpose) => {
-    (await networkDerivationsInstances)[networkPurpose] = await derivationTypes.reduce(
-      async (derivations, derivationType) => {
-        (await derivations)[derivationType] = await getNetwork({
-          network: "xrp",
-          mnemonic: MNEMONIC,
-          derivationConfig: {
-            networkPurpose,
-            derivationType,
-          },
-        });
+beforeAll(() => {
+  const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
+  const derivationTypes: XrpDerivationTypeUnion[] = ["xrpBase", "xrpX"] as const;
 
-        return derivations;
-      },
-      {} as Promise<NetworkDerivationsInstances[CommonNetworkPurposeUnion]>,
-    );
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
+        NetworkDerivationsInstances[CommonNetworkPurposeUnion]
+      >(
+        (derivations, derivationType) => {
+          derivations[derivationType] = getNetwork({
+            network: "xrp",
+            mnemonic: MNEMONIC,
+            derivationConfig: {
+              networkPurpose,
+              derivationType,
+            },
+          });
 
-    return networkDerivationsInstances;
-  },
-  {} as Promise<NetworkDerivationsInstances>,
-);
+          return derivations;
+        },
+        {} as NetworkDerivationsInstances[CommonNetworkPurposeUnion],
+      );
+
+      return networkDerivationsInstances;
+    },
+    {} as NetworkDerivationsInstances,
+  );
+});
 
 describe("Xrp", () => {
   describe("mainnet", () => {

@@ -61,25 +61,29 @@ type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeRegTestExtendedUnion]: { zecTransparent: Zec };
 };
 
-const networkPurposes = ["mainnet", "testnet", "regtest"] as const;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
-const networkDerivationsInstances = await networkPurposes.reduce(
-  async (networkDerivationsInstances, networkPurpose) => {
-    (await networkDerivationsInstances)[networkPurpose] = {
-      zecTransparent: await getNetwork({
-        network: "zec",
-        mnemonic: MNEMONIC,
-        derivationConfig: {
-          networkPurpose,
-          derivationType: "zecTransparent",
-        },
-      }),
-    };
+beforeAll(() => {
+  const networkPurposes = ["mainnet", "testnet", "regtest"] as const;
 
-    return networkDerivationsInstances;
-  },
-  {} as Promise<NetworkDerivationsInstances>,
-);
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = {
+        zecTransparent: getNetwork({
+          network: "zec",
+          mnemonic: MNEMONIC,
+          derivationConfig: {
+            networkPurpose,
+            derivationType: "zecTransparent",
+          },
+        }),
+      };
+
+      return networkDerivationsInstances;
+    },
+    {} as NetworkDerivationsInstances,
+  );
+});
 
 describe("Zec", () => {
   describe("mainnet", () => {

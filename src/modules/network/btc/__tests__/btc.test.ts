@@ -262,43 +262,49 @@ type NetworkDerivationsInstances = {
   };
 };
 
-const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
-  "regtest",
-  "testnet",
-  "mainnet",
-] as const;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
-const derivationTypes: BtcDerivationTypeUnion[] = [
-  "btcLegacy",
-  "btcSegWit",
-  "btcNativeSegWit",
-  "btcTaproot",
-  "btcP2wsh",
-  "btcP2wshInP2sh",
-] as const;
+beforeAll(() => {
+  const networkPurposes: CommonNetworkPurposeRegTestExtendedUnion[] = [
+    "regtest",
+    "testnet",
+    "mainnet",
+  ] as const;
 
-const networkDerivationsInstances = await networkPurposes.reduce(
-  async (networkDerivationsInstances, networkPurpose) => {
-    (await networkDerivationsInstances)[networkPurpose] = await derivationTypes.reduce(
-      async (derivations, derivationType) => {
-        (await derivations)[derivationType] = await getNetwork({
-          network: "btc",
-          mnemonic: MNEMONIC,
-          derivationConfig: {
-            networkPurpose,
-            derivationType,
-          },
-        });
+  const derivationTypes: BtcDerivationTypeUnion[] = [
+    "btcLegacy",
+    "btcSegWit",
+    "btcNativeSegWit",
+    "btcTaproot",
+    "btcP2wsh",
+    "btcP2wshInP2sh",
+  ] as const;
 
-        return derivations;
-      },
-      {} as Promise<NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]>,
-    );
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
+        NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion]
+      >(
+        (derivations, derivationType) => {
+          derivations[derivationType] = getNetwork({
+            network: "btc",
+            mnemonic: MNEMONIC,
+            derivationConfig: {
+              networkPurpose,
+              derivationType,
+            },
+          });
 
-    return networkDerivationsInstances;
-  },
-  {} as Promise<NetworkDerivationsInstances>,
-);
+          return derivations;
+        },
+        {} as NetworkDerivationsInstances[CommonNetworkPurposeRegTestExtendedUnion],
+      );
+
+      return networkDerivationsInstances;
+    },
+    {} as NetworkDerivationsInstances,
+  );
+});
 
 describe("Btc", () => {
   describe("mainnet", () => {

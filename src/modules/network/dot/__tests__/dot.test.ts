@@ -104,7 +104,7 @@ type NetworkDerivationsInstances = {
 
 const networkDerivationsInstances: NetworkDerivationsInstances = {
   ed25519: {
-    dotBase: await getNetwork({
+    dotBase: getNetwork({
       network: "dot",
       mnemonic: MNEMONIC,
       derivationConfig: {
@@ -113,7 +113,7 @@ const networkDerivationsInstances: NetworkDerivationsInstances = {
         ss58Format: DOT_SS58_FORMAT,
       },
     }),
-    dotStandardHd: await getNetwork({
+    dotStandardHd: getNetwork({
       network: "dot",
       mnemonic: MNEMONIC,
       derivationConfig: {
@@ -124,7 +124,7 @@ const networkDerivationsInstances: NetworkDerivationsInstances = {
     }),
   },
   secp256k1: {
-    dotBase: await getNetwork({
+    dotBase: getNetwork({
       network: "dot",
       mnemonic: MNEMONIC,
       derivationConfig: {
@@ -135,7 +135,7 @@ const networkDerivationsInstances: NetworkDerivationsInstances = {
     }),
   },
   sr25519: {
-    dotBase: await getNetwork({
+    dotBase: getNetwork({
       network: "dot",
       mnemonic: MNEMONIC,
       derivationConfig: {

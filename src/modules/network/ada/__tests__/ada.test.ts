@@ -130,40 +130,46 @@ type NetworkDerivationsInstances = {
   };
 };
 
-const networkPurposes: AdaNetworkPurposeUnion[] = [
-  "mainnet",
-  "testnetPreprod",
-  "testnetPreview",
-] as const;
+let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
-const derivationTypes: AdaDerivationTypeUnion[] = [
-  "adaBase",
-  "adaEnterprise",
-  "adaReward",
-] as const;
+beforeAll(() => {
+  const networkPurposes: AdaNetworkPurposeUnion[] = [
+    "mainnet",
+    "testnetPreprod",
+    "testnetPreview",
+  ] as const;
 
-const networkDerivationsInstances = await networkPurposes.reduce(
-  async (networkDerivationsInstances, networkPurpose) => {
-    (await networkDerivationsInstances)[networkPurpose] = await derivationTypes.reduce(
-      async (derivations, derivationType) => {
-        (await derivations)[derivationType] = await getNetwork({
-          network: "ada",
-          mnemonic: MNEMONIC,
-          derivationConfig: {
-            networkPurpose,
-            derivationType,
-          },
-        });
+  const derivationTypes: AdaDerivationTypeUnion[] = [
+    "adaBase",
+    "adaEnterprise",
+    "adaReward",
+  ] as const;
 
-        return derivations;
-      },
-      {} as Promise<NetworkDerivationsInstances[AdaNetworkPurposeUnion]>,
-    );
+  networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
+    (networkDerivationsInstances, networkPurpose) => {
+      networkDerivationsInstances[networkPurpose] = derivationTypes.reduce<
+        NetworkDerivationsInstances[AdaNetworkPurposeUnion]
+      >(
+        (derivations, derivationType) => {
+          derivations[derivationType] = getNetwork({
+            network: "ada",
+            mnemonic: MNEMONIC,
+            derivationConfig: {
+              networkPurpose,
+              derivationType,
+            },
+          });
 
-    return networkDerivationsInstances;
-  },
-  {} as Promise<NetworkDerivationsInstances>,
-);
+          return derivations;
+        },
+        {} as NetworkDerivationsInstances[AdaNetworkPurposeUnion],
+      );
+
+      return networkDerivationsInstances;
+    },
+    {} as NetworkDerivationsInstances,
+  );
+});
 
 describe("Ada", () => {
   describe("mainnet", () => {

@@ -1,4 +1,4 @@
-import { ECPairFactory, ECPairAPI, type ECPairInterface } from "ecpair";
+import { ECPairFactory, type ECPairAPI, type ECPairInterface } from "ecpair";
 import * as ecc from "tiny-secp256k1";
 import { initEccLib } from "bitcoinjs-lib";
 
