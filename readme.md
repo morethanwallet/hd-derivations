@@ -201,7 +201,7 @@ Networks methods parameters are defined in the [`abstract-network.type.ts`](src/
 
 > **Adapt or reuse any existing module if possible**
 
-- ✅ Implement extended key logic in the [`keys`](src/libs/modules/keys/index.ts)
+- ✅ Implement curve logic in the [`curves`](src/libs/modules//curves/curves.ts)
 - ✅ Implement credentials logic in [`key-derivation`](src/libs/modules/key-derivation/index.ts)
 - ✅ Implement address logic in [`address`](src/libs/modules/address/index.ts)
 - ✅ Add the network derivation types to [`DerivationTypeUnion`](src/libs/types/derivation/derivation-type-union.type.ts)
