@@ -11,7 +11,7 @@ export {
   type DerivationConfig,
   type GetNetworkTypeUnion,
 } from "@/modules/network/index.js";
-export type { DerivationTypeUnion, GetDerivationTypeUnion } from "@/libs/types/index.js";
+export type { DerivationTypeUnion, GetDerivationTypeUnion } from "@/libs/types/types.js";
 export { Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
 const network = getNetwork({

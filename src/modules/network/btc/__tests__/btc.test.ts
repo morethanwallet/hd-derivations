@@ -1,4 +1,4 @@
-import type { BtcDerivationTypeUnion } from "@/libs/types/index.js";
+import type { BtcDerivationTypeUnion } from "@/libs/types/types.js";
 import { getNetwork } from "../../get-network/index.js";
 import { btcConfig } from "../../libs/modules/config/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";

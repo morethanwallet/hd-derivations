@@ -1,4 +1,4 @@
-import type { CommonDerivationPath } from "@/libs/types/index.js";
+import type { CommonDerivationPath } from "@/libs/types/types.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 import type { PrefixConfigProperty } from "@/libs/modules/curves/curves.js";
 

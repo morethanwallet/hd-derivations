@@ -5,7 +5,7 @@ import type {
   CommonDerivationPath,
   CommonKeyPair,
   CommonPrivateKey,
-} from "@/libs/types/index.js";
+} from "@/libs/types/types.js";
 import type {
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,

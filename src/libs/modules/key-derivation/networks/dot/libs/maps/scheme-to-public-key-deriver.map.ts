@@ -1,4 +1,4 @@
-import type { GetSignatureSchemeUnion } from "@/libs/types/index.js";
+import type { GetSignatureSchemeUnion } from "@/libs/types/types.js";
 import { getPublicKey } from "micro-sr25519";
 import { ed25519 } from "@noble/curves/ed25519";
 import { secp256k1 } from "@noble/curves/secp256k1";

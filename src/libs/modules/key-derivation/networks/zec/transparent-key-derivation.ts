@@ -6,7 +6,7 @@ import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import { ExceptionMessage } from "@/libs/modules/key-derivation/libs/enums/index.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";

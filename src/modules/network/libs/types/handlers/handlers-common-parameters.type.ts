@@ -1,4 +1,4 @@
-import { type BtcDerivationTypeUnion, type DerivationTypeUnion } from "@/libs/types/index.js";
+import { type BtcDerivationTypeUnion, type DerivationTypeUnion } from "@/libs/types/types.js";
 
 type HandlersCommonParameters<T extends DerivationTypeUnion> = T extends BtcDerivationTypeUnion
   ? { base58RootKey?: string }

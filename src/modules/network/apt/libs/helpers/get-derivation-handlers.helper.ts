@@ -1,5 +1,5 @@
 import { getAptAddress } from "@/libs/modules/address/index.js";
-import type { AptDerivationTypeUnion } from "@/libs/types/index.js";
+import type { AptDerivationTypeUnion } from "@/libs/types/types.js";
 import {
   deriveItemsBatchFromMnemonic,
   doesPKExistInBatch,

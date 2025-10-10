@@ -3,7 +3,7 @@ import type {
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import type { CommonKeyPair, GetSignatureSchemeUnion } from "@/libs/types/index.js";
+import type { CommonKeyPair, GetSignatureSchemeUnion } from "@/libs/types/types.js";
 import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
 import { Secp256r1Keypair } from "@mysten/sui/keypairs/secp256r1";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";

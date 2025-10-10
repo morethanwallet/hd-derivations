@@ -17,7 +17,7 @@ import {
   getNativeSegWitDerivationHandlers,
 } from "./libs/helpers/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
-import type { LtcDerivationTypeUnion } from "@/libs/types/index.js";
+import type { LtcDerivationTypeUnion } from "@/libs/types/types.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Ltc implements AbstractNetwork<LtcDerivationTypeUnion> {

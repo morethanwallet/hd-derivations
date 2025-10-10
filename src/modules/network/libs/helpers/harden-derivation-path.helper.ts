@@ -1,5 +1,5 @@
 import { DerivationPathSymbol } from "@/libs/enums/index.js";
-import { CommonDerivationPath } from "@/libs/types/index.js";
+import { CommonDerivationPath } from "@/libs/types/types.js";
 
 function hardenDerivationPath(
   derivationPath: CommonDerivationPath["derivationPath"],

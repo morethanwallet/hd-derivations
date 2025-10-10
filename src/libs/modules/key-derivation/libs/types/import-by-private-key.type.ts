@@ -4,7 +4,7 @@ import type {
   DerivationTypeUnion,
   AptDerivationTypeUnion,
   GetSignatureSchemeUnion,
-} from "@/libs/types/index.js";
+} from "@/libs/types/types.js";
 import type { HandlersCommonParameters } from "./handlers-common-parameters.type.js";
 
 type AptParameters = {

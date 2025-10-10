@@ -8,7 +8,7 @@ import {
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
-import type { GetDerivationTypeUnion, GetSignatureSchemeUnion } from "@/libs/types/index.js";
+import type { GetDerivationTypeUnion, GetSignatureSchemeUnion } from "@/libs/types/types.js";
 
 const MOCK_DERIVATION_PATH = {
   ed25519: "m/44'/784'/0'/0'/0'",

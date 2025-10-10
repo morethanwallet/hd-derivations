@@ -1,5 +1,5 @@
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
-import { type CommonKeyPair } from "@/libs/types/index.js";
+import { type CommonKeyPair } from "@/libs/types/types.js";
 import { type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import { ripemd160 } from "@noble/hashes/ripemd160";
 import { sha256 } from "@noble/hashes/sha256";

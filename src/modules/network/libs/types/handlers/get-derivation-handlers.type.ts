@@ -20,7 +20,7 @@ import type {
   GetSignatureSchemeUnion,
   AptDerivationTypeUnion,
   LtcDerivationTypeUnion,
-} from "@/libs/types/index.js";
+} from "@/libs/types/types.js";
 import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
 import { type GetCredentialFromPK } from "./get-credential-from-p-k.type.js";
 import { type DeriveItemsBatchFromMnemonic } from "./derive-items-batch-from-mnemonic.type.js";

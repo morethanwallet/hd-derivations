@@ -1,4 +1,4 @@
-import type { DerivationTypeUnion, DerivationPath } from "@/libs/types/index.js";
+import type { DerivationTypeUnion, DerivationPath } from "@/libs/types/types.js";
 import { type HandlersCommonParameters } from "./handlers-common-parameters.type.js";
 import { type DerivedItem } from "../derived-item.type.js";
 

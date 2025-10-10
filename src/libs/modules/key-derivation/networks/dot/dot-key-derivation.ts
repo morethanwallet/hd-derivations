@@ -3,7 +3,7 @@ import type {
   DeriveFromMnemonicParameters,
   ImportByPrivateKeyParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import type { CommonKeyPair } from "@/libs/types/index.js";
+import type { CommonKeyPair } from "@/libs/types/types.js";
 import { convertBytesToHex, convertHexToBytes } from "@/libs/utils/index.js";
 import { DotMnemonic } from "@/libs/modules/mnemonic";
 import { keyExtractSuri, keyFromPath } from "@polkadot/util-crypto";

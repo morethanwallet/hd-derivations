@@ -1,7 +1,7 @@
 import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants";
 import { ExceptionMessage } from "@/libs/enums/index.js";
 import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
-import type { CommonKeyPair, GetSignatureSchemeUnion } from "@/libs/types/index.js";
+import type { CommonKeyPair, GetSignatureSchemeUnion } from "@/libs/types/types.js";
 import {
   addHexPrefix,
   convertBytesToHex,

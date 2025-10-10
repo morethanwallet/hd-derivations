@@ -1,5 +1,5 @@
 import { getXrpAddress } from "@/libs/modules/address/index.js";
-import { XrpDerivationTypeUnion } from "@/libs/types/index.js";
+import { XrpDerivationTypeUnion } from "@/libs/types/types.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,

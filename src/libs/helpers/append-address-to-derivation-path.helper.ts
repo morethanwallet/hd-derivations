@@ -1,4 +1,4 @@
-import type { CommonDerivationPath } from "@/libs/types/index.js";
+import type { CommonDerivationPath } from "@/libs/types/types.js";
 import { DerivationPathSymbol } from "../enums/index.js";
 import { getDerivationPathSegmentsArray } from "./get-derivation-path-segments-array.helper.js";
 

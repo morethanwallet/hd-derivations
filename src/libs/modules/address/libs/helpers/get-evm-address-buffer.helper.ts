@@ -1,5 +1,5 @@
 import { checkAndRemoveHexPrefix, convertHexToBytes } from "@/libs/utils/index.js";
-import { type CommonKeyPair } from "@/libs/types/index.js";
+import { type CommonKeyPair } from "@/libs/types/types.js";
 import { importPublic, publicToAddress } from "ethereumjs-util";
 
 function getPublicKeyBuffer(publicKey: Uint8Array): Buffer {

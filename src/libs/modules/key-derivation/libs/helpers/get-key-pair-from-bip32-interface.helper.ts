@@ -1,4 +1,4 @@
-import { type CommonKeyPair } from "@/libs/types/index.js";
+import { type CommonKeyPair } from "@/libs/types/types.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
 import { type BIP32Interface } from "bip32";
 import { KeyDerivationError } from "../exceptions/index.js";

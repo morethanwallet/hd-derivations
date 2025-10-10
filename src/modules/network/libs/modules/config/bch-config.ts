@@ -1,4 +1,4 @@
-import type { BchDerivationTypeUnion } from "@/libs/types/index.js";
+import type { BchDerivationTypeUnion } from "@/libs/types/types.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 import type { Secp256k1Config } from "./libs/types/index.js";

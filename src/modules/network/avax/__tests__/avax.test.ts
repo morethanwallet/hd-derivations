@@ -9,7 +9,7 @@ import {
   MNEMONIC,
 } from "../../libs/constants/index.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
-import type { AvaxDerivationTypeUnion } from "@/libs/types/index.js";
+import type { AvaxDerivationTypeUnion } from "@/libs/types/types.js";
 
 const MOCK_COMMON_DERIVATION_PATH = "m/44'/9000'/0'/0/0";
 

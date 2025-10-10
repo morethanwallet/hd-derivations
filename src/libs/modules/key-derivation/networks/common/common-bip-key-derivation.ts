@@ -3,7 +3,7 @@ import {
   type AbstractKeyDerivation,
   type CommonBipDerivationTypeUnion,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { type Secp256k1Curve, type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import {
   getKeyPairFromBip32Interface,

@@ -8,7 +8,7 @@ import {
   type GetDerivationHandlersParameters,
   type GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
-import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";
+import { type AvaxDerivationTypeUnion } from "@/libs/types/types.js";
 
 function getAvaxDerivationHandlers({
   prefix,

@@ -17,7 +17,7 @@ import {
   getBaseDerivationHandlers,
   getStandardHdDerivationHandlers,
 } from "./libs/helpers/index.js";
-import type { DotDerivationTypeUnion } from "@/libs/types/index.js";
+import type { DotDerivationTypeUnion } from "@/libs/types/types.js";
 import { Ed25519Curve } from "@/libs/modules/curves/curves.js";
 
 class Dot implements AbstractNetwork<DotDerivationTypeUnion> {

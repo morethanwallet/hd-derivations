@@ -6,7 +6,7 @@ import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { getKeyPairFromPrivateKeyBytes } from "../../libs/helpers";
 
 class EvmKeyDerivation implements AbstractKeyDerivation<"evmBase"> {

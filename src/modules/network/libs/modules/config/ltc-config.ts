@@ -1,4 +1,4 @@
-import type { LtcDerivationTypeUnion } from "@/libs/types/index.js";
+import type { LtcDerivationTypeUnion } from "@/libs/types/types.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import type { Secp256k1Config } from "./libs/types/index.js";
 

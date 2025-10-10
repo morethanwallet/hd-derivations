@@ -1,4 +1,4 @@
-import type { GetDerivationTypeUnion, DerivationTypeUnion } from "@/libs/types/index.js";
+import type { GetDerivationTypeUnion, DerivationTypeUnion } from "@/libs/types/types.js";
 import type {
   DeriveItemFromMnemonic,
   DerivedItem,

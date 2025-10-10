@@ -23,7 +23,7 @@ import {
   getP2wshInP2shDerivationHandlers,
 } from "./libs/helpers/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
-import { type BtcDerivationTypeUnion } from "@/libs/types/index.js";
+import { type BtcDerivationTypeUnion } from "@/libs/types/types.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {

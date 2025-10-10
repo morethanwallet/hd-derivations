@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { getNetwork } from "../../get-network/index.js";
 import type { AdaNetworkPurposeUnion } from "../../libs/types/index.js";
-import type { AdaDerivationTypeUnion } from "@/libs/types/index.js";
+import type { AdaDerivationTypeUnion } from "@/libs/types/types.js";
 import { Ada } from "../ada.network.js";
 import {
   FIRST_ITEM_INDEX,

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { Bch } from "../bch.network.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
-import type { BchDerivationTypeUnion } from "@/libs/types/index.js";
+import type { BchDerivationTypeUnion } from "@/libs/types/types.js";
 import { getNetwork } from "../../get-network/index.js";
 import { bchConfig } from "../../libs/modules/config/index.js";
 import {

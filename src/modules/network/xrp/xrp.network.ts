@@ -9,7 +9,7 @@ import type {
   DoesPKBelongToMnemonicParameters,
   GetCredentialFromPKParameters,
 } from "../libs/types/index.js";
-import type { XrpDerivationTypeUnion } from "@/libs/types/index.js";
+import type { XrpDerivationTypeUnion } from "@/libs/types/types.js";
 import { geXrpDerivationHandlers } from "./libs/helpers/index.js";
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import { findCustomPrefixConfig } from "../libs/helpers/index.js";

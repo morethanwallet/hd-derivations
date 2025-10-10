@@ -15,7 +15,7 @@ import {
   getRewardDerivationHandlers,
   getBaseDerivationHandlers,
 } from "./libs/helpers/index.js";
-import type { AdaDerivationTypeUnion } from "@/libs/types/index.js";
+import type { AdaDerivationTypeUnion } from "@/libs/types/types.js";
 import {
   AdaBaseKeyDerivation,
   AdaCommonKeyDerivation,

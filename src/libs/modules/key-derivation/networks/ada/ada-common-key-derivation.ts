@@ -5,7 +5,7 @@ import type {
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import type { GetDerivationTypeUnion, KeyPair } from "@/libs/types/index.js";
+import type { GetDerivationTypeUnion, KeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
 class AdaCommonKeyDerivation
