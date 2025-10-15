@@ -1,6 +1,7 @@
 import { DerivationPathSymbol } from "@/libs/enums/index.js";
 import { appendAddressToDerivationPath, checkHardenedSuffixEnding } from "@/libs/helpers/index.js";
 import {
+  getAdaExodusAddress,
   getBaseAddress,
   getEnterpriseAddress,
   getRewardAddress,
@@ -23,6 +24,7 @@ import type {
 const DERIVATION_PATH_PATTERN = {
   enterprise: "m/1852'/1815'/0'/0",
   reward: "m/1852'/1815'/0'/2",
+  exodus: "m/44'/1815'/0'/0",
 };
 
 function getEnterpriseDerivationHandlers({
@@ -95,13 +97,57 @@ function getRewardDerivationHandlers({
         ...parameters,
         derivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
       });
-      itemsBatch.push(
-        ...this.deriveItemsBatchFromMnemonic({ ...parameters, shouldUseHardenedAddress: true }),
-      );
+
+      itemsBatch.push(...this.deriveItemsBatchFromMnemonic({ ...parameters }));
 
       if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) return true;
 
       return (doesPKBelongToMnemonic<"adaReward">).call(this, parameters);
+    },
+  };
+}
+
+function getExodusDerivationHandlers({
+  keysDerivationInstance,
+  networkId,
+}: GetDerivationHandlersParameters["adaExodus"]): GetDerivationHandlersReturnType<"adaExodus"> {
+  return {
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+      const address = getAdaExodusAddress(keys.publicKey, networkId);
+
+      return { ...keys, address, derivationPath };
+    },
+    getCredentialFromPK: (parameters) => {
+      const keys = keysDerivationInstance.importByPrivateKey(parameters);
+      const address = getAdaExodusAddress(keys.publicKey, networkId);
+
+      return { ...keys, address };
+    },
+    deriveItemsBatchFromMnemonic({
+      derivationPathPrefix,
+      indexLookupFrom,
+      indexLookupTo,
+      shouldUseHardenedAddress,
+    }) {
+      return (deriveItemsBatchFromMnemonic<"adaExodus">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        shouldUseHardenedAddress,
+      );
+    },
+    doesPKBelongToMnemonic(parameters) {
+      const itemsBatch = this.deriveItemsBatchFromMnemonic({
+        ...parameters,
+        derivationPathPrefix: DERIVATION_PATH_PATTERN.exodus,
+      });
+
+      itemsBatch.push(...this.deriveItemsBatchFromMnemonic({ ...parameters }));
+
+      if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) return true;
+
+      return (doesPKBelongToMnemonic<"adaExodus">).call(this, parameters);
     },
   };
 }
@@ -252,4 +298,9 @@ function getBaseDerivationHandlers({
   };
 }
 
-export { getEnterpriseDerivationHandlers, getRewardDerivationHandlers, getBaseDerivationHandlers };
+export {
+  getEnterpriseDerivationHandlers,
+  getRewardDerivationHandlers,
+  getExodusDerivationHandlers,
+  getBaseDerivationHandlers,
+};

@@ -1,6 +1,3 @@
-import { DEFAULT_INSTANCE_PARAMETERS } from "@/modules/network/index.js";
-import { getNetwork } from "./modules/network/get-network";
-
 export {
   getNetwork,
   DEFAULT_INSTANCE_PARAMETERS,
@@ -14,23 +11,10 @@ export {
 export type { DerivationTypeUnion, GetDerivationTypeUnion } from "@/libs/types/types.js";
 export { Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
-const network = getNetwork({
-  ...DEFAULT_INSTANCE_PARAMETERS.sol,
-  derivationConfig: { derivationType: "solExodus" },
-  mnemonic: "drill exotic title fall ivory boy praise unfold search foil surge tip",
-});
-console.log(
-  network.getCredentialFromPK({
-    privateKey:
-      "4uAMzZHQPeUqZCLSoEFjooLzuYGPBDq8a5m9HMu7N1EqfgN5nFdd17nuLBmNmdp6VUTBfwqdyURiQxSGH6XVxWQ2",
-  }),
-);
-
 // enkrypt -> btc -> use m/49'/0'/0'/0/0
 // enkrypt -> doge -> use m/49'/0'/0'/0/0
 // enkrypt -> ltc -> use m/49'/0'/0'/0/0
 // enkrypt -> etc -> use m/44'/60'/0'/0/0
-// exodus -> ada -> #2 below
 // exodus -> ltc -> legacy derivation
 // enkrypt password - sdasd#$#D#D#
 

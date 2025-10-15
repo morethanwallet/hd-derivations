@@ -13,6 +13,7 @@ import {
   getNetworkId,
   getEnterpriseDerivationHandlers,
   getRewardDerivationHandlers,
+  getExodusDerivationHandlers,
   getBaseDerivationHandlers,
 } from "./libs/helpers/index.js";
 import type { AdaDerivationTypeUnion } from "@/libs/types/types.js";
@@ -20,6 +21,8 @@ import {
   AdaBaseKeyDerivation,
   AdaCommonKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
+import { AdaExodusKeyDerivation } from "@/libs/modules/key-derivation/networks/ada/ada-exodus-key-derivation.js";
+import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
   private derivationHandlers: DerivationsHandlers<AdaDerivationTypeUnion>[AdaDerivationTypeUnion];
@@ -30,6 +33,7 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
   }: ConstructorParameters<AdaDerivationTypeUnion>) {
     const networkId = getNetworkId(networkPurpose);
     const commonKeysDerivationInstance = new AdaCommonKeyDerivation(mnemonic);
+    const secp256k1Curve = new Secp256k1Curve();
 
     const derivationsHandlers: DerivationsHandlers<AdaDerivationTypeUnion> = {
       adaEnterprise: getEnterpriseDerivationHandlers({
@@ -43,6 +47,10 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
       adaBase: getBaseDerivationHandlers({
         networkId,
         keysDerivationInstance: new AdaBaseKeyDerivation(mnemonic),
+      }),
+      adaExodus: getExodusDerivationHandlers({
+        networkId,
+        keysDerivationInstance: new AdaExodusKeyDerivation(mnemonic, secp256k1Curve),
       }),
     };
 

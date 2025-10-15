@@ -29,6 +29,7 @@ import { type DoesPKBelongToMnemonic } from "./does-p-k-belong-to-mnemonic.type.
 import type { CommonNetworkPurposeUnion } from "../network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "../ton-address-derivation-config.type.js";
 import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
+import { AdaExodusKeyDerivation } from "@/libs/modules/key-derivation/networks/ada/ada-exodus-key-derivation.js";
 
 type AvaxParameters = {
   prefix: string;
@@ -40,6 +41,11 @@ type BtcTaprootParameters = { keysDerivationInstance: TaprootKeyDerivation };
 type AdaCommonParameters = {
   networkId: number;
   keysDerivationInstance: AdaCommonKeyDerivation;
+};
+
+type AdaExoodusParameters = {
+  networkId: number;
+  keysDerivationInstance: AdaExodusKeyDerivation;
 };
 
 type AdaBaseParameters = {
@@ -108,6 +114,7 @@ type CommonBipParametersDerivationTypeUnion = GetDerivationTypeUnion<
 type GetDerivationHandlersParameters = Record<AvaxDerivationTypeUnion, AvaxParameters> &
   Record<GetDerivationTypeUnion<"btcTaproot">, BtcTaprootParameters> &
   Record<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">, AdaCommonParameters> &
+  Record<GetDerivationTypeUnion<"adaExodus">, AdaExoodusParameters> &
   Record<GetDerivationTypeUnion<"adaBase">, AdaBaseParameters> &
   Record<GetDerivationTypeUnion<"tonBase">, TonParameters> &
   Record<GetDerivationTypeUnion<"suiBase">, SuiParameters> &
