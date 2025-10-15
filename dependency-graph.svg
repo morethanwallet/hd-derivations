@@ -585,23 +585,23 @@
 <path fill="none" stroke="#757575" d="M9920.54,-7049.15C9979.78,-7035.24 10084.26,-7012.16 10175,-6999.67 10218.24,-6993.71 10265.46,-6989.36 10308.67,-6986.21"/>
 <polygon fill="#757575" stroke="#757575" points="10308.96,-6989.7 10318.69,-6985.5 10308.46,-6982.72 10308.96,-6989.7"/>
 </g>
-<!-- libs/modules/address/libs/enums/exception&#45;message.enum.ts -->
+<!-- libs/modules/address/libs/enums/enums.ts -->
 <g id="node23" class="node">
+<title>libs/modules/address/libs/enums/enums.ts</title>
+<path fill="none" stroke="#c6c5fe" d="M11844.83,-7489.17C11844.83,-7489.17 11588.17,-7489.17 11588.17,-7489.17 11584.33,-7489.17 11580.5,-7485.33 11580.5,-7481.5 11580.5,-7481.5 11580.5,-7473.83 11580.5,-7473.83 11580.5,-7470 11584.33,-7466.17 11588.17,-7466.17 11588.17,-7466.17 11844.83,-7466.17 11844.83,-7466.17 11848.67,-7466.17 11852.5,-7470 11852.5,-7473.83 11852.5,-7473.83 11852.5,-7481.5 11852.5,-7481.5 11852.5,-7485.33 11848.67,-7489.17 11844.83,-7489.17"/>
+<text text-anchor="middle" x="11716.5" y="-7473.97" font-family="Arial" font-size="14.00" fill="#c6c5fe">libs/modules/address/libs/enums/enums.ts</text>
+</g>
+<!-- libs/modules/address/libs/enums/exception&#45;message.enum.ts -->
+<g id="node24" class="node">
 <title>libs/modules/address/libs/enums/exception&#45;message.enum.ts</title>
 <path fill="none" stroke="#cfffac" d="M12512.83,-7489.17C12512.83,-7489.17 12141.17,-7489.17 12141.17,-7489.17 12137.33,-7489.17 12133.5,-7485.33 12133.5,-7481.5 12133.5,-7481.5 12133.5,-7473.83 12133.5,-7473.83 12133.5,-7470 12137.33,-7466.17 12141.17,-7466.17 12141.17,-7466.17 12512.83,-7466.17 12512.83,-7466.17 12516.67,-7466.17 12520.5,-7470 12520.5,-7473.83 12520.5,-7473.83 12520.5,-7481.5 12520.5,-7481.5 12520.5,-7485.33 12516.67,-7489.17 12512.83,-7489.17"/>
 <text text-anchor="middle" x="12327" y="-7473.97" font-family="Arial" font-size="14.00" fill="#cfffac">libs/modules/address/libs/enums/exception&#45;message.enum.ts</text>
 </g>
-<!-- libs/modules/address/libs/enums/index.ts -->
-<g id="node24" class="node">
-<title>libs/modules/address/libs/enums/index.ts</title>
-<path fill="none" stroke="#c6c5fe" d="M11840.33,-7489.17C11840.33,-7489.17 11592.67,-7489.17 11592.67,-7489.17 11588.83,-7489.17 11585,-7485.33 11585,-7481.5 11585,-7481.5 11585,-7473.83 11585,-7473.83 11585,-7470 11588.83,-7466.17 11592.67,-7466.17 11592.67,-7466.17 11840.33,-7466.17 11840.33,-7466.17 11844.17,-7466.17 11848,-7470 11848,-7473.83 11848,-7473.83 11848,-7481.5 11848,-7481.5 11848,-7485.33 11844.17,-7489.17 11840.33,-7489.17"/>
-<text text-anchor="middle" x="11716.5" y="-7473.97" font-family="Arial" font-size="14.00" fill="#c6c5fe">libs/modules/address/libs/enums/index.ts</text>
-</g>
-<!-- libs/modules/address/libs/enums/index.ts&#45;&gt;libs/modules/address/libs/enums/exception&#45;message.enum.ts -->
+<!-- libs/modules/address/libs/enums/enums.ts&#45;&gt;libs/modules/address/libs/enums/exception&#45;message.enum.ts -->
 <g id="edge22" class="edge">
-<title>libs/modules/address/libs/enums/index.ts&#45;&gt;libs/modules/address/libs/enums/exception&#45;message.enum.ts</title>
-<path fill="none" stroke="#757575" d="M11848.04,-7477.67C11928.15,-7477.67 12032.42,-7477.67 12123.12,-7477.67"/>
-<polygon fill="#757575" stroke="#757575" points="12123.26,-7481.17 12133.26,-7477.67 12123.26,-7474.17 12123.26,-7481.17"/>
+<title>libs/modules/address/libs/enums/enums.ts&#45;&gt;libs/modules/address/libs/enums/exception&#45;message.enum.ts</title>
+<path fill="none" stroke="#757575" d="M11852.55,-7477.67C11932.03,-7477.67 12034.1,-7477.67 12123.1,-7477.67"/>
+<polygon fill="#757575" stroke="#757575" points="12123.33,-7481.17 12133.33,-7477.67 12123.33,-7474.17 12123.33,-7481.17"/>
 </g>
 <!-- libs/modules/address/libs/exceptions/address&#45;error.exception.ts -->
 <g id="node25" class="node">
@@ -945,11 +945,11 @@
 <path fill="none" stroke="#757575" d="M11255.63,-7434.57C11299.33,-7438.34 11337.79,-7446.03 11354,-7460.67 11416.18,-7516.79 11327.53,-7589.86 11390,-7645.67 11464.04,-7711.81 11589.12,-7699.62 11660.75,-7685.32"/>
 <polygon fill="#757575" stroke="#757575" points="11661.84,-7688.67 11670.92,-7683.21 11660.41,-7681.82 11661.84,-7688.67"/>
 </g>
-<!-- libs/modules/address/networks/bch/get&#45;cash&#45;addr&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts -->
+<!-- libs/modules/address/networks/bch/get&#45;cash&#45;addr&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts -->
 <g id="edge54" class="edge">
-<title>libs/modules/address/networks/bch/get&#45;cash&#45;addr&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts</title>
-<path fill="none" stroke="#757575" d="M11240.05,-7446.19C11344.86,-7453.13 11476.58,-7461.85 11574.78,-7468.35"/>
-<polygon fill="#757575" stroke="#757575" points="11574.57,-7471.84 11584.78,-7469.01 11575.03,-7464.86 11574.57,-7471.84"/>
+<title>libs/modules/address/networks/bch/get&#45;cash&#45;addr&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts</title>
+<path fill="none" stroke="#757575" d="M11240.05,-7446.19C11343.21,-7453.02 11472.44,-7461.57 11570.12,-7468.04"/>
+<polygon fill="#757575" stroke="#757575" points="11570.16,-7471.55 11580.37,-7468.72 11570.62,-7464.57 11570.16,-7471.55"/>
 </g>
 <!-- libs/modules/address/networks/bch/get&#45;cash&#45;addr&#45;address.ts&#45;&gt;libs/modules/address/libs/exceptions/index.ts -->
 <g id="edge55" class="edge">
@@ -1065,9 +1065,9 @@
 <path fill="none" stroke="#757575" d="M11243.1,-7584.63C11280.88,-7588.49 11319.7,-7596.56 11354,-7611.67 11374.14,-7620.53 11369.89,-7636.73 11390,-7645.67 11448.52,-7671.68 11518.77,-7679.8 11579.01,-7680.75"/>
 <polygon fill="#757575" stroke="#757575" points="11579.33,-7684.25 11589.36,-7680.84 11579.39,-7677.25 11579.33,-7684.25"/>
 </g>
-<!-- libs/modules/address/networks/btc/get&#45;p2wsh&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts -->
+<!-- libs/modules/address/networks/btc/get&#45;p2wsh&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts -->
 <g id="edge65" class="edge">
-<title>libs/modules/address/networks/btc/get&#45;p2wsh&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts</title>
+<title>libs/modules/address/networks/btc/get&#45;p2wsh&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts</title>
 <path fill="none" stroke="#757575" d="M11132.15,-7579.16C11253.35,-7558.07 11510.35,-7513.36 11638.91,-7490.99"/>
 <polygon fill="#757575" stroke="#757575" points="11639.81,-7494.39 11649.06,-7489.22 11638.61,-7487.49 11639.81,-7494.39"/>
 </g>
@@ -1113,9 +1113,9 @@
 <path fill="none" stroke="#757575" d="M11267.7,-7351.11C11305.94,-7354.54 11338.77,-7361.31 11354,-7373.67 11398.9,-7410.09 11353.59,-7453.76 11390,-7498.67 11460.93,-7586.14 11588.15,-7635.1 11660.76,-7657.16"/>
 <polygon fill="#757575" stroke="#757575" points="11660.04,-7660.6 11670.63,-7660.1 11662.04,-7653.89 11660.04,-7660.6"/>
 </g>
-<!-- libs/modules/address/networks/btc/get&#45;p2wsh&#45;in&#45;p2sh&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts -->
+<!-- libs/modules/address/networks/btc/get&#45;p2wsh&#45;in&#45;p2sh&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts -->
 <g id="edge72" class="edge">
-<title>libs/modules/address/networks/btc/get&#45;p2wsh&#45;in&#45;p2sh&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts</title>
+<title>libs/modules/address/networks/btc/get&#45;p2wsh&#45;in&#45;p2sh&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts</title>
 <path fill="none" stroke="#757575" d="M11121.83,-7341.15C11184.19,-7331.56 11285.37,-7326.15 11354,-7373.67 11385.39,-7395.4 11358.68,-7429.82 11390,-7451.67 11466.12,-7504.76 11577.98,-7500.58 11648.76,-7490.67"/>
 <polygon fill="#757575" stroke="#757575" points="11649.51,-7494.09 11658.89,-7489.17 11648.49,-7487.17 11649.51,-7494.09"/>
 </g>
@@ -1155,11 +1155,11 @@
 <path fill="none" stroke="#757575" d="M11244.52,-7389.85C11292.51,-7392.45 11336.1,-7399.35 11354,-7414.67 11407.74,-7460.64 11341.91,-7517.81 11390,-7569.67 11438.54,-7622.02 11513.56,-7647.68 11579.34,-7660.19"/>
 <polygon fill="#757575" stroke="#757575" points="11578.93,-7663.67 11589.39,-7662.01 11580.18,-7656.78 11578.93,-7663.67"/>
 </g>
-<!-- libs/modules/address/networks/btc/get&#45;taproot&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts -->
+<!-- libs/modules/address/networks/btc/get&#45;taproot&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts -->
 <g id="edge78" class="edge">
-<title>libs/modules/address/networks/btc/get&#45;taproot&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts</title>
-<path fill="none" stroke="#757575" d="M11244.73,-7386.66C11282.12,-7390.64 11320.37,-7399 11354,-7414.67 11374.8,-7424.35 11369.24,-7441.9 11390,-7451.67 11446.74,-7478.34 11515.21,-7486.82 11574.69,-7487.84"/>
-<polygon fill="#757575" stroke="#757575" points="11574.88,-7491.35 11584.91,-7487.95 11574.95,-7484.35 11574.88,-7491.35"/>
+<title>libs/modules/address/networks/btc/get&#45;taproot&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts</title>
+<path fill="none" stroke="#757575" d="M11244.73,-7386.66C11282.12,-7390.64 11320.37,-7399 11354,-7414.67 11374.8,-7424.35 11369.24,-7441.9 11390,-7451.67 11445.29,-7477.65 11511.71,-7486.37 11570.09,-7487.75"/>
+<polygon fill="#757575" stroke="#757575" points="11570.08,-7491.25 11580.14,-7487.92 11570.2,-7484.25 11570.08,-7491.25"/>
 </g>
 <!-- libs/modules/address/networks/btc/get&#45;taproot&#45;address.ts&#45;&gt;libs/modules/address/libs/exceptions/index.ts -->
 <g id="edge79" class="edge">
@@ -1233,9 +1233,9 @@
 <path fill="none" stroke="#757575" d="M11294.01,-7270.95C11320.92,-7275 11342.8,-7281.53 11354,-7291.67 11423.23,-7354.33 11335.19,-7423.06 11390,-7498.67 11455.24,-7588.67 11581.8,-7636.18 11656.44,-7657.43"/>
 <polygon fill="#757575" stroke="#757575" points="11655.59,-7660.83 11666.16,-7660.13 11657.47,-7654.08 11655.59,-7660.83"/>
 </g>
-<!-- libs/modules/address/networks/common/get&#45;btc&#45;native&#45;seg&#45;wit&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts -->
+<!-- libs/modules/address/networks/common/get&#45;btc&#45;native&#45;seg&#45;wit&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts -->
 <g id="edge95" class="edge">
-<title>libs/modules/address/networks/common/get&#45;btc&#45;native&#45;seg&#45;wit&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts</title>
+<title>libs/modules/address/networks/common/get&#45;btc&#45;native&#45;seg&#45;wit&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts</title>
 <path fill="none" stroke="#757575" d="M11154.9,-7259.15C11214.6,-7255.59 11293.17,-7259.24 11354,-7291.67 11376.91,-7303.88 11369.43,-7321.82 11390,-7337.67 11474.07,-7402.44 11592.65,-7443.49 11661.05,-7463.37"/>
 <polygon fill="#757575" stroke="#757575" points="11660.19,-7466.77 11670.77,-7466.16 11662.12,-7460.04 11660.19,-7466.77"/>
 </g>
@@ -1269,9 +1269,9 @@
 <path fill="none" stroke="#757575" d="M11108.31,-7218.15C11170.8,-7203.98 11287.5,-7188.75 11354,-7250.67 11435.52,-7326.56 11325.9,-7407.58 11390,-7498.67 11453.71,-7589.2 11579.94,-7636.37 11655.11,-7657.45"/>
 <polygon fill="#757575" stroke="#757575" points="11654.35,-7660.87 11664.92,-7660.13 11656.19,-7654.12 11654.35,-7660.87"/>
 </g>
-<!-- libs/modules/address/networks/common/get&#45;btc&#45;seg&#45;wit&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts -->
+<!-- libs/modules/address/networks/common/get&#45;btc&#45;seg&#45;wit&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts -->
 <g id="edge101" class="edge">
-<title>libs/modules/address/networks/common/get&#45;btc&#45;seg&#45;wit&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts</title>
+<title>libs/modules/address/networks/common/get&#45;btc&#45;seg&#45;wit&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts</title>
 <path fill="none" stroke="#757575" d="M11146.86,-7218.15C11207.59,-7213.46 11290.82,-7215.74 11354,-7250.67 11377.65,-7263.74 11369.66,-7281.87 11390,-7299.67 11479.68,-7378.13 11609.73,-7436.15 11674.97,-7462.29"/>
 <polygon fill="#757575" stroke="#757575" points="11673.91,-7465.63 11684.49,-7466.06 11676.49,-7459.13 11673.91,-7465.63"/>
 </g>
@@ -1311,9 +1311,9 @@
 <path fill="none" stroke="#757575" d="M11167.57,-7113.17C11231.12,-7125.93 11309.18,-7152.86 11354,-7209.67 11434.17,-7311.28 11316.58,-7392.06 11390,-7498.67 11452.62,-7589.59 11578.65,-7636.53 11654.19,-7657.48"/>
 <polygon fill="#757575" stroke="#757575" points="11653.49,-7660.91 11664.05,-7660.14 11655.31,-7654.15 11653.49,-7660.91"/>
 </g>
-<!-- libs/modules/address/networks/common/get&#45;btc&#45;legacy&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts -->
+<!-- libs/modules/address/networks/common/get&#45;btc&#45;legacy&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts -->
 <g id="edge89" class="edge">
-<title>libs/modules/address/networks/common/get&#45;btc&#45;legacy&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/index.ts</title>
+<title>libs/modules/address/networks/common/get&#45;btc&#45;legacy&#45;address.ts&#45;&gt;libs/modules/address/libs/enums/enums.ts</title>
 <path fill="none" stroke="#757575" d="M11129.76,-7113.22C11192.4,-7127.21 11287.94,-7155.9 11354,-7209.67 11377.24,-7228.58 11368.94,-7245.35 11390,-7266.67 11480.5,-7358.24 11617.37,-7430.72 11680.87,-7461.55"/>
 <polygon fill="#757575" stroke="#757575" points="11679.53,-7464.79 11690.06,-7465.96 11682.56,-7458.48 11679.53,-7464.79"/>
 </g>
