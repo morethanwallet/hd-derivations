@@ -1,4 +1,4 @@
-import type { BchDerivationTypeUnion } from "@/libs/types/index.js";
+import type { BchDerivationTypeUnion } from "@/libs/types/types.js";
 import type {
   AbstractNetwork,
   DerivationsHandlers,

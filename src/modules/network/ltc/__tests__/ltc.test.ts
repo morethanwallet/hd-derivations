@@ -1,4 +1,4 @@
-import type { LtcDerivationTypeUnion } from "@/libs/types/index.js";
+import type { LtcDerivationTypeUnion } from "@/libs/types/types.js";
 import { getNetwork } from "../../get-network/index.js";
 import { ltcConfig } from "../../libs/modules/config/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
@@ -321,7 +321,7 @@ describe("Ltc", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns true for legacy private key", () => {
+        it("Returns false for legacy private key", () => {
           const isNative = networkDerivationsInstances.mainnet.ltcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: ltcConfig.mainnet.ltcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -332,7 +332,7 @@ describe("Ltc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for segWit private key", () => {
+        it("Returns false for segWit private key", () => {
           const isNative = networkDerivationsInstances.mainnet.ltcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: ltcConfig.mainnet.ltcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -343,7 +343,7 @@ describe("Ltc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for native segWit private key", () => {
+        it("Returns false for native segWit private key", () => {
           const isNative =
             networkDerivationsInstances.mainnet.ltcNativeSegWit.doesPKBelongToMnemonic({
               derivationPathPrefix: ltcConfig.mainnet.ltcNativeSegWit.derivationPathPrefix,
@@ -486,7 +486,7 @@ describe("Ltc", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns true for legacy private key", () => {
+        it("Returns false for legacy private key", () => {
           const isNative = networkDerivationsInstances.testnet.ltcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: ltcConfig.testnet.ltcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -497,7 +497,7 @@ describe("Ltc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for segWit private key", () => {
+        it("Returns false for segWit private key", () => {
           const isNative = networkDerivationsInstances.testnet.ltcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: ltcConfig.testnet.ltcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -508,7 +508,7 @@ describe("Ltc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for native segWit private key", () => {
+        it("Returns false for native segWit private key", () => {
           const isNative =
             networkDerivationsInstances.testnet.ltcNativeSegWit.doesPKBelongToMnemonic({
               derivationPathPrefix: ltcConfig.testnet.ltcNativeSegWit.derivationPathPrefix,
@@ -651,7 +651,7 @@ describe("Ltc", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns true for legacy private key", () => {
+        it("Returns false for legacy private key", () => {
           const isNative = networkDerivationsInstances.regtest.ltcLegacy.doesPKBelongToMnemonic({
             derivationPathPrefix: ltcConfig.regtest.ltcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -662,7 +662,7 @@ describe("Ltc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for segWit private key", () => {
+        it("Returns false for segWit private key", () => {
           const isNative = networkDerivationsInstances.regtest.ltcSegWit.doesPKBelongToMnemonic({
             derivationPathPrefix: ltcConfig.regtest.ltcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -673,7 +673,7 @@ describe("Ltc", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for native segWit private key", () => {
+        it("Returns false for native segWit private key", () => {
           const isNative =
             networkDerivationsInstances.regtest.ltcNativeSegWit.doesPKBelongToMnemonic({
               derivationPathPrefix: ltcConfig.regtest.ltcNativeSegWit.derivationPathPrefix,

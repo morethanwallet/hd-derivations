@@ -6,7 +6,7 @@ import {
   checkHardenedSuffixEnding,
   hardenDerivationPathValue,
 } from "@/libs/helpers/index.js";
-import type { CommonDerivationPath } from "@/libs/types/index.js";
+import type { CommonDerivationPath } from "@/libs/types/types.js";
 import { ExceptionMessage } from "./libs/enums/index.js";
 import {
   validateDerivationPathLength,

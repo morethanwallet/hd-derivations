@@ -1,4 +1,4 @@
-import type { GetDerivationTypeUnion } from "@/libs/types/index.js";
+import type { GetDerivationTypeUnion } from "@/libs/types/types.js";
 
 type CommonEd25519DerivationTypeUnion = GetDerivationTypeUnion<"tonBase" | "dotStandardHd">;
 

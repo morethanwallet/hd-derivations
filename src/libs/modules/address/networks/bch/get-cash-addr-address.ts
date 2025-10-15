@@ -1,10 +1,10 @@
-import { ExceptionMessage } from "@/libs/modules/address/libs/enums/index.js";
+import { ExceptionMessage } from "@/libs/modules/address/libs/enums/enums.js";
 import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
 import { type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import { toCashAddress } from "bchaddrjs";
 import { payments } from "bitcoinjs-lib";
-import type { CommonKeyPair } from "@/libs/types/index.js";
+import type { CommonKeyPair } from "@/libs/types/types.js";
 import { convertHexToBytes } from "@/libs/utils/index.js";
 
 const REGTEST_PREFIX = "bchreg";

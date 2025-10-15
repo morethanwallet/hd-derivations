@@ -12,6 +12,7 @@ type DerivationTypeUnion =
   | "adaBase"
   | "adaReward"
   | "adaEnterprise"
+  | "adaExodus"
   | "bnbBase"
   | "evmBase"
   | "xrpBase"
@@ -22,6 +23,7 @@ type DerivationTypeUnion =
   | "dotBase"
   | "dotStandardHd"
   | "solBase"
+  | "solExodus" // TODO: Refactor codebase to exclude clients from the `derivationTypeUnion` and accepting id only of the shape similar to "network.derivationType.curve.hdScheme.authenticationScheme.client". Explore whether there's need for the `hdScheme` and the following type: type HdSchemeUnion = "bip32-secp256k1" | "bip32-ed25519" | "slip10-ed25519" | "schnorrkel-sr25519";
   | "dogeLegacy"
   | "zecTransparent"
   | "aptBase"
@@ -36,7 +38,9 @@ type BtcDerivationTypeUnion = GetDerivationTypeUnion<
   "btcLegacy" | "btcSegWit" | "btcTaproot" | "btcP2wsh" | "btcP2wshInP2sh" | "btcNativeSegWit"
 >;
 
-type AdaDerivationTypeUnion = GetDerivationTypeUnion<"adaEnterprise" | "adaReward" | "adaBase">;
+type AdaDerivationTypeUnion = GetDerivationTypeUnion<
+  "adaEnterprise" | "adaReward" | "adaBase" | "adaExodus"
+>;
 
 type XrpDerivationTypeUnion = GetDerivationTypeUnion<"xrpX" | "xrpBase">;
 
@@ -50,6 +54,8 @@ type LtcDerivationTypeUnion = GetDerivationTypeUnion<"ltcLegacy" | "ltcSegWit" |
 
 type DotDerivationTypeUnion = GetDerivationTypeUnion<"dotBase" | "dotStandardHd">;
 
+type SolDerivationTypeUnion = GetDerivationTypeUnion<"solBase" | "solExodus">;
+
 export type {
   DerivationTypeUnion,
   BtcDerivationTypeUnion,
@@ -61,4 +67,5 @@ export type {
   LtcDerivationTypeUnion,
   DotDerivationTypeUnion,
   GetDerivationTypeUnion,
+  SolDerivationTypeUnion,
 };

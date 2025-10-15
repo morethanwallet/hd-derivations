@@ -5,7 +5,7 @@ import type {
   AvaxDerivationTypeUnion,
   LtcDerivationTypeUnion,
   GetDerivationTypeUnion,
-} from "@/libs/types/index.js";
+} from "@/libs/types/types.js";
 
 type CommonBipDerivationTypeUnion = GetDerivationTypeUnion<
   | BtcDerivationTypeUnion

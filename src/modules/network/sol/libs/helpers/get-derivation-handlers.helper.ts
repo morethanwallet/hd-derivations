@@ -7,7 +7,7 @@ import type {
   GetDerivationHandlersParameters,
   GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
-import { DEFAULT_ADDRESS_POSITION } from "../constants";
+import { DEFAULT_SOL_BASE_ADDRESS_POSITION } from "../constants";
 
 function getSolDerivationHandlers({
   keysDerivationInstance,
@@ -28,7 +28,7 @@ function getSolDerivationHandlers({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,
-      addressPosition = DEFAULT_ADDRESS_POSITION,
+      addressPosition = DEFAULT_SOL_BASE_ADDRESS_POSITION,
     }) {
       return (deriveItemsBatchFromMnemonic<"solBase">).call(
         this,
@@ -44,4 +44,32 @@ function getSolDerivationHandlers({
   };
 }
 
-export { getSolDerivationHandlers };
+function getSolExodusDerivationHandlers({
+  keysDerivationInstance,
+}: GetDerivationHandlersParameters["solExodus"]): GetDerivationHandlersReturnType<"solExodus"> {
+  return {
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      validateDerivationPath(derivationPath);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+
+      return { ...keys, address: keys.publicKey, derivationPath };
+    },
+    getCredentialFromPK: ({ privateKey }) => {
+      const keys = keysDerivationInstance.importByPrivateKey({ privateKey });
+
+      return { ...keys, address: keys.publicKey };
+    },
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"solExodus">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+      );
+    },
+    doesPKBelongToMnemonic(parameters) {
+      return (doesPKBelongToMnemonic<"solExodus">).call(this, parameters);
+    },
+  };
+}
+
+export { getSolDerivationHandlers, getSolExodusDerivationHandlers };

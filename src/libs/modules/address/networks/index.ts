@@ -6,7 +6,12 @@ export {
   getP2wshInP2shAddress,
 } from "./btc/index.js";
 export { getAvaxAddress } from "./avax/index.js";
-export { getEnterpriseAddress, getRewardAddress, getBaseAddress } from "./ada/index.js";
+export {
+  getEnterpriseAddress,
+  getRewardAddress,
+  getBaseAddress,
+  getAdaExodusAddress,
+} from "./ada/index.js";
 export { getXrpAddress, type DestinationTagProperty } from "./xrp/index.js";
 export { getBtcLegacyAddress } from "./common/index.js";
 export { getCashAddrAddress } from "./bch/index.js";

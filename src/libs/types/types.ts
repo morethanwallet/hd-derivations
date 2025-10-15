@@ -13,7 +13,8 @@ export type {
   AptDerivationTypeUnion,
   LtcDerivationTypeUnion,
   DotDerivationTypeUnion,
-} from "./derivation/index.js";
+  SolDerivationTypeUnion,
+} from "./derivation/types.js";
 export {
   type AdaBaseKeyPair,
   type CommonKeyPair,

@@ -1,4 +1,4 @@
-import type { GetDerivationTypeUnion } from "@/libs/types/index.js";
+import type { GetDerivationTypeUnion } from "@/libs/types/types.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import type { Secp256k1Config } from "./libs/types/index.js";
 

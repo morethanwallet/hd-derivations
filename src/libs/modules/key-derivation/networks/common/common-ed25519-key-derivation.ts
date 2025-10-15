@@ -3,7 +3,7 @@ import type {
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic";
 import { type Ed25519Curve } from "@/libs/modules/curves/curves";

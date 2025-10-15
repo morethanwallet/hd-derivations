@@ -1,4 +1,4 @@
-import type { CommonDerivationPath, DotDerivationTypeUnion } from "@/libs/types/index.js";
+import type { CommonDerivationPath, DotDerivationTypeUnion } from "@/libs/types/types.js";
 
 type DotConfig = {
   derivationPathPrefix: Record<DotDerivationTypeUnion, CommonDerivationPath["derivationPath"]>;

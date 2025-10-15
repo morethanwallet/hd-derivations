@@ -5,12 +5,13 @@ import type {
   SuiKeyDerivation,
   BnbKeyDerivation,
   EvmKeyDerivation,
-  SolKeyDerivation,
+  SolBaseKeyDerivation,
   TransparentKeyDerivation,
   AptKeyDerivation,
   AdaBaseKeyDerivation,
   AdaCommonKeyDerivation,
   DotKeyDerivation,
+  SolExodusKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
 import type {
   GetDerivationTypeUnion,
@@ -20,7 +21,7 @@ import type {
   GetSignatureSchemeUnion,
   AptDerivationTypeUnion,
   LtcDerivationTypeUnion,
-} from "@/libs/types/index.js";
+} from "@/libs/types/types.js";
 import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
 import { type GetCredentialFromPK } from "./get-credential-from-p-k.type.js";
 import { type DeriveItemsBatchFromMnemonic } from "./derive-items-batch-from-mnemonic.type.js";
@@ -28,6 +29,7 @@ import { type DoesPKBelongToMnemonic } from "./does-p-k-belong-to-mnemonic.type.
 import type { CommonNetworkPurposeUnion } from "../network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "../ton-address-derivation-config.type.js";
 import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
+import { AdaExodusKeyDerivation } from "@/libs/modules/key-derivation/networks/ada/ada-exodus-key-derivation.js";
 
 type AvaxParameters = {
   prefix: string;
@@ -39,6 +41,11 @@ type BtcTaprootParameters = { keysDerivationInstance: TaprootKeyDerivation };
 type AdaCommonParameters = {
   networkId: number;
   keysDerivationInstance: AdaCommonKeyDerivation;
+};
+
+type AdaExoodusParameters = {
+  networkId: number;
+  keysDerivationInstance: AdaExodusKeyDerivation;
 };
 
 type AdaBaseParameters = {
@@ -77,7 +84,9 @@ type DotBaseParameters = {
 
 type BchParameters = { keysDerivationInstance: CommonBipKeyDerivation; isRegtest: boolean };
 
-type SolParameters = { keysDerivationInstance: SolKeyDerivation };
+type SolBaseParameters = { keysDerivationInstance: SolBaseKeyDerivation };
+
+type SolExodusParameters = { keysDerivationInstance: SolExodusKeyDerivation };
 
 type ZecParameters = { keysDerivationInstance: TransparentKeyDerivation };
 
@@ -105,6 +114,7 @@ type CommonBipParametersDerivationTypeUnion = GetDerivationTypeUnion<
 type GetDerivationHandlersParameters = Record<AvaxDerivationTypeUnion, AvaxParameters> &
   Record<GetDerivationTypeUnion<"btcTaproot">, BtcTaprootParameters> &
   Record<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">, AdaCommonParameters> &
+  Record<GetDerivationTypeUnion<"adaExodus">, AdaExoodusParameters> &
   Record<GetDerivationTypeUnion<"adaBase">, AdaBaseParameters> &
   Record<GetDerivationTypeUnion<"tonBase">, TonParameters> &
   Record<GetDerivationTypeUnion<"suiBase">, SuiParameters> &
@@ -114,7 +124,8 @@ type GetDerivationHandlersParameters = Record<AvaxDerivationTypeUnion, AvaxParam
   Record<GetDerivationTypeUnion<"dotStandardHd">, DotStandardHdParameters> &
   Record<GetDerivationTypeUnion<"dotBase">, DotBaseParameters> &
   Record<GetDerivationTypeUnion<"bchCashAddr">, BchParameters> &
-  Record<GetDerivationTypeUnion<"solBase">, SolParameters> &
+  Record<GetDerivationTypeUnion<"solBase">, SolBaseParameters> &
+  Record<GetDerivationTypeUnion<"solExodus">, SolExodusParameters> &
   Record<GetDerivationTypeUnion<"zecTransparent">, ZecParameters> &
   Record<AptDerivationTypeUnion, AptParameters> &
   Record<CommonBipParametersDerivationTypeUnion, CommonBipParameters>;

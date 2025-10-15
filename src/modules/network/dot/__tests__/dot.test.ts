@@ -12,7 +12,7 @@ import {
   DotDerivationTypeUnion,
   GetDerivationTypeUnion,
   GetSignatureSchemeUnion,
-} from "@/libs/types/index.js";
+} from "@/libs/types/types.js";
 
 const DERIVATION_PATH = { dotStandardHd: "m/44'/354'/0'/0'/0'", dotBase: "" };
 

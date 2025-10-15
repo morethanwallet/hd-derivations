@@ -5,7 +5,7 @@ import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { convertBytesToHex, convertHexToBytes } from "@/libs/utils/index.js";
 import { getKeyPairFromWif } from "../../libs/helpers/get-key-pair-from.wif.helper.js";
 import { getKeyPairFromBip32Interface } from "../../libs/helpers/get-key-pair-from-bip32-interface.helper.js";

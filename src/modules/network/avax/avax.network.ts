@@ -12,7 +12,7 @@ import type {
 import { getAvaxDerivationHandlers } from "./libs/helpers/index.js";
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
-import { type AvaxDerivationTypeUnion } from "@/libs/types/index.js";
+import { type AvaxDerivationTypeUnion } from "@/libs/types/types.js";
 import { avaxConfig } from "@/modules/network/libs/modules/config/index.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 

@@ -1,4 +1,4 @@
-import type { GetSignatureSchemeUnion } from "@/libs/types";
+import type { GetSignatureSchemeUnion } from "@/libs/types/types";
 import { PrivateKeyVariants } from "@aptos-labs/ts-sdk";
 
 const signatureSchemeToPrivateKeyVariant: Record<

@@ -2,7 +2,7 @@ import type {
   GetDerivationTypeUnion,
   DerivationTypeUnion,
   GetSignatureSchemeUnion,
-} from "@/libs/types/index.js";
+} from "@/libs/types/types.js";
 
 type DotBaseDeriveFromMnemonicParameters = {
   scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;

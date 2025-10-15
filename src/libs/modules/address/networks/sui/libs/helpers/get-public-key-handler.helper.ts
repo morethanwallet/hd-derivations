@@ -1,6 +1,6 @@
 import { ExceptionMessage } from "@/libs/enums/index.js";
 import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
-import type { GetSignatureSchemeUnion } from "@/libs/types/index.js";
+import type { GetSignatureSchemeUnion } from "@/libs/types/types.js";
 import { Ed25519PublicKey } from "@mysten/sui/keypairs/ed25519";
 import { Secp256k1PublicKey } from "@mysten/sui/keypairs/secp256k1";
 import { Secp256r1PublicKey } from "@mysten/sui/keypairs/secp256r1";

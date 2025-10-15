@@ -6,15 +6,15 @@ import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import { type PrivateKey, type CommonKeyPair } from "@/libs/types/index.js";
+import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import { ExceptionMessage } from "@/libs/modules/key-derivation/libs/enums/index.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
 import { getKeyPairFromBip32Interface } from "../../libs/helpers/get-key-pair-from-bip32-interface.helper.js";
 
 class TransparentKeyDerivation implements AbstractKeyDerivation<"zecTransparent"> {
+  public readonly prefixConfig: PrefixConfig;
   private readonly mnemonic: Mnemonic;
-  private readonly prefixConfig: PrefixConfig;
   private readonly secp256k1Curve: Secp256k1Curve;
 
   public constructor(

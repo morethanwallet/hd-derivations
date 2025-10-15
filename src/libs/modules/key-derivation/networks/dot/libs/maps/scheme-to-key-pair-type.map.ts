@@ -1,4 +1,4 @@
-import type { GetSignatureSchemeUnion } from "@/libs/types/index.js";
+import type { GetSignatureSchemeUnion } from "@/libs/types/types.js";
 import type { KeypairType } from "@polkadot/util-crypto/types";
 
 const schemeToKeyPairType: Record<

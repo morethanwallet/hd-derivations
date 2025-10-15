@@ -1,4 +1,4 @@
-import type { BtcDerivationTypeUnion } from "@/libs/types/index.js";
+import type { BtcDerivationTypeUnion } from "@/libs/types/types.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 import type { Secp256k1Config } from "./libs/types/secp256k1-config.type.js";

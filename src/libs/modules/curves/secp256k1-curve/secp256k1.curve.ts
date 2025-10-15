@@ -5,7 +5,7 @@ import { ecc, type ECPairInterface, ecPair } from "@/libs/modules/ecc/ecc.js";
 class Secp256k1Curve {
   private readonly bip32: BIP32API = BIP32Factory(ecc);
 
-  public getRootKeyFromSeed(seed: Buffer, prefixConfig: PrefixConfig): BIP32Interface {
+  public getRootKeyFromSeed(seed: Buffer, prefixConfig?: PrefixConfig): BIP32Interface {
     return this.bip32.fromSeed(Uint8Array.from(seed), prefixConfig);
   }
 

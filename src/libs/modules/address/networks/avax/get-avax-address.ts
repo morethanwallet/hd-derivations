@@ -1,5 +1,5 @@
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
-import { type CommonKeyPair } from "@/libs/types/index.js";
+import { type CommonKeyPair } from "@/libs/types/types.js";
 import { convertHexToBytes } from "@/libs/utils/index.js";
 import { bech32 } from "bech32";
 import { crypto } from "bitcoinjs-lib";

@@ -1,4 +1,3 @@
-
 import { AptKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import type {
   ConstructorParameters,
@@ -12,7 +11,7 @@ import type {
   GetCredentialFromPKParameters,
 } from "../libs/types/index.js";
 import { getAptDerivationHandlers } from "./libs/helpers/index.js";
-import type { AptDerivationTypeUnion } from "@/libs/types/index.js";
+import type { AptDerivationTypeUnion } from "@/libs/types/types.js";
 
 class Apt implements AbstractNetwork<AptDerivationTypeUnion> {
   private derivationHandlers: DerivationsHandlers<AptDerivationTypeUnion>[AptDerivationTypeUnion];

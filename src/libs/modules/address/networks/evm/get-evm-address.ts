@@ -1,5 +1,5 @@
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
-import { type CommonKeyPair } from "@/libs/types/index.js";
+import { type CommonKeyPair } from "@/libs/types/types.js";
 import { toChecksumAddress } from "ethereumjs-util";
 import { getEvmAddressBuffer } from "@/libs/modules/address/libs/helpers/index.js";
 import { addHexPrefix } from "@/libs/utils/index.js";

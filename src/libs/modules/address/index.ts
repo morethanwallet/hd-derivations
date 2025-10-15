@@ -13,6 +13,7 @@ export {
   getEnterpriseAddress,
   getRewardAddress,
   getBaseAddress,
+  getAdaExodusAddress,
   getXrpAddress,
   type DestinationTagProperty,
   getBtcLegacyAddress,

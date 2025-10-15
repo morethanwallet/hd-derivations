@@ -1,10 +1,10 @@
-import { type DerivationTypeUnion } from "@/libs/types/index.js";
+import { type DerivationTypeUnion } from "@/libs/types/types.js";
 import type {
   GetCredentialFromPK,
   DeriveItemsBatchFromMnemonic,
   DeriveItemFromMnemonic,
   DoesPKBelongToMnemonic,
-} from "./handlers/index.js";
+} from "./handlers/types.js";
 
 type AbstractNetwork<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;

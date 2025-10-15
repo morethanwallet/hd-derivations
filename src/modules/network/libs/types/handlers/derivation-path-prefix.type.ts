@@ -3,7 +3,7 @@ import type {
   CommonDerivationPath,
   GetDerivationTypeUnion,
   DerivationTypeUnion,
-} from "@/libs/types/index.js";
+} from "@/libs/types/types.js";
 
 type CommonDerivationPathPrefix = {
   derivationPathPrefix: CommonDerivationPath["derivationPath"];

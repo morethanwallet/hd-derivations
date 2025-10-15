@@ -2,7 +2,7 @@ import type {
   AptDerivationTypeUnion,
   GetDerivationTypeUnion,
   DerivationTypeUnion,
-} from "@/libs/types/index.js";
+} from "@/libs/types/types.js";
 import type {
   DeriveItemsBatchFromMnemonic,
   DoesPKBelongToMnemonicParameters,

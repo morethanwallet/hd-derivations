@@ -1,1 +1,4 @@
-export { getSolDerivationHandlers } from "./get-derivation-handlers.helper.js";
+export {
+  getSolDerivationHandlers,
+  getSolExodusDerivationHandlers,
+} from "./get-derivation-handlers.helper.js";

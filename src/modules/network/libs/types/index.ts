@@ -11,7 +11,7 @@ export type {
   DoesPKBelongToMnemonic,
   DoesPKBelongToMnemonicParameters,
   DerivationsHandlers,
-} from "./handlers/index.js";
+} from "./handlers/types.js";
 export { type ConstructorParameters } from "./constructor-parameters.type.js";
 export { type DerivedItem } from "./derived-item.type.js";
 export { type DerivedCredential } from "./derived-credential.type.js";

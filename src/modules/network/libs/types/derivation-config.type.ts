@@ -11,7 +11,8 @@ import type {
   GetSignatureSchemeUnion,
   LtcDerivationTypeUnion,
   XrpDerivationTypeUnion,
-} from "@/libs/types/index.js";
+  SolDerivationTypeUnion,
+} from "@/libs/types/types.js";
 import type {
   AdaNetworkPurposeUnion,
   CommonNetworkPurposeRegTestExtendedUnion,
@@ -88,6 +89,10 @@ type LtcDerivationConfig = {
   derivationType: LtcDerivationTypeUnion;
 } & PrefixConfigProperty;
 
+type SolDerivationConfig = {
+  derivationType: SolDerivationTypeUnion;
+};
+
 type DerivationConfig = {
   ada: AdaDerivationConfig;
   avax: AvaxDerivationConfig;
@@ -102,6 +107,7 @@ type DerivationConfig = {
   zec: ZecDerivationConfig;
   apt: AptDerivationConfig;
   ltc: LtcDerivationConfig;
+  sol: SolDerivationConfig;
 } & {
   [key in "evm" | "bnb"]: PrefixConfigProperty;
 };

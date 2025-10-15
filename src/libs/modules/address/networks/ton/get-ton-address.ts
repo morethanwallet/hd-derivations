@@ -1,5 +1,5 @@
 import type { Address, TonAddressRequiredData } from "@/libs/modules/address/libs/types/index.js";
-import { type CommonKeyPair } from "@/libs/types/index.js";
+import { type CommonKeyPair } from "@/libs/types/types.js";
 import { type ContractVersionToContract } from "./libs/types/index.js";
 import {
   WalletContractV1R1,

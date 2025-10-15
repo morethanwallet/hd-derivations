@@ -1,4 +1,4 @@
-import { GetDerivationTypeUnion, type DerivationTypeUnion } from "@/libs/types/index.js";
+import { GetDerivationTypeUnion, type DerivationTypeUnion } from "@/libs/types/types.js";
 import { type DerivedItem } from "../derived-item.type.js";
 import { type LookupHandlersCommonParameters } from "./lookup-handlers-common-parameters.type.js";
 import type { DerivationPathPrefix } from "./derivation-path-prefix.type.js";

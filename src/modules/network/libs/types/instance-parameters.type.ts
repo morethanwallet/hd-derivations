@@ -61,6 +61,7 @@ type EvmInstanceParameters = {
 
 type SolInstanceParameters = {
   network: NetworkTypeMap["sol"];
+  derivationConfig: GetDerivationConfig<"sol">;
 } & MnemonicProperty;
 
 type DogeInstanceParameters = {
