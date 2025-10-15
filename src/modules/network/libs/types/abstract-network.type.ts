@@ -4,7 +4,7 @@ import type {
   DeriveItemsBatchFromMnemonic,
   DeriveItemFromMnemonic,
   DoesPKBelongToMnemonic,
-} from "./handlers/index.js";
+} from "./handlers/types.js";
 
 type AbstractNetwork<T extends DerivationTypeUnion> = {
   deriveItemFromMnemonic: DeriveItemFromMnemonic<T>;
