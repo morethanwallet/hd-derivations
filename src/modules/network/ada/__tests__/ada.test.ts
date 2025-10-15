@@ -14,11 +14,13 @@ import { adaConfig } from "../../libs/modules/config/index.js";
 const DERIVATION_PATH = {
   adaEnterprise: "m/1852'/1815'/0'/0/0",
   adaReward: "m/1852'/1815'/0'/2/0",
+  adaExodus: "m/44'/1815'/0'/0/0",
 };
 
 const DERIVATION_PATH_BATCH_PREFIX = {
   adaEnterprise: "m/1852'/1815'/0'/0",
   adaReward: "m/1852'/1815'/0'/2",
+  adaExodus: "m/44'/1815'/0'/0",
 };
 
 const MAINNET_EXTRINSIC_PRIVATE_KEY = {
@@ -29,6 +31,9 @@ const MAINNET_EXTRINSIC_PRIVATE_KEY = {
   adaReward: {
     privateKey:
       "f8d0f492f823729b5e1a38b8191cb8271d9342924a9064c5aea9c37bc43a7f5daf772f592a11762827d4dae995f088a65984659dc953a2e162f5222595c8bd1d",
+  },
+  adaExodus: {
+    privateKey: "c0aef177582b20c8b54efdd1c6d3ee4eaf5c25f6995b8a49147815ede6b983bf",
   },
 };
 
@@ -50,6 +55,12 @@ const COMMON_MAINNET_CREDENTIAL = {
 const MAINNET_CREDENTIAL = {
   adaEnterprise: COMMON_MAINNET_CREDENTIAL.adaEnterprise,
   adaReward: COMMON_MAINNET_CREDENTIAL.adaReward,
+  adaExodus: {
+    privateKey: "533bd39fd5566d0dbf68e70b011fd0686fd63901f4bc817f2f8509103294c0a4",
+    publicKey: "c1ba8711b990e2ca1582a10803cb5d9bf1d224da61eee3e2819aa19104e1751f",
+    address:
+      "addr1qymnxusdlakesfm4kmef2ca4ryf5jukfrlvkrc8xzpktc2ehxdeqmlmdnqnhtdhjj43m2xgnf9evj87ev8swvyrvhs4shxt4jt",
+  },
   adaBase: {
     enterprisePrivateKey: COMMON_MAINNET_CREDENTIAL.adaEnterprise.privateKey,
     enterprisePublicKey: COMMON_MAINNET_CREDENTIAL.adaEnterprise.publicKey,
@@ -68,6 +79,10 @@ const MAINNET_ITEM = {
   adaReward: {
     ...MAINNET_CREDENTIAL.adaReward,
     derivationPath: DERIVATION_PATH.adaReward,
+  },
+  adaExodus: {
+    ...MAINNET_CREDENTIAL.adaExodus,
+    derivationPath: DERIVATION_PATH.adaExodus,
   },
   adaBase: {
     ...MAINNET_CREDENTIAL.adaBase,
@@ -143,6 +158,7 @@ beforeAll(() => {
     "adaBase",
     "adaEnterprise",
     "adaReward",
+    "adaExodus",
   ] as const;
 
   networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
@@ -199,6 +215,14 @@ describe("Ada", () => {
 
         expect(MAINNET_ITEM.adaBase).toEqual(derivedItem);
       });
+
+      it("Derives correct exodus item", () => {
+        const derivedItem = networkDerivationsInstances.mainnet.adaExodus.deriveItemFromMnemonic({
+          derivationPath: DERIVATION_PATH.adaExodus,
+        });
+
+        expect(MAINNET_ITEM.adaExodus).toEqual(derivedItem);
+      });
     });
 
     describe("getCredentialFromPK", () => {
@@ -225,6 +249,14 @@ describe("Ada", () => {
         });
 
         expect(derivedItem).toEqual(MAINNET_CREDENTIAL.adaBase);
+      });
+
+      it("Derives correct exodus credential", () => {
+        const derivedItem = networkDerivationsInstances.mainnet.adaExodus.getCredentialFromPK({
+          privateKey: MAINNET_CREDENTIAL.adaExodus.privateKey,
+        });
+
+        expect(MAINNET_CREDENTIAL.adaExodus).toEqual(derivedItem);
       });
     });
 
@@ -261,6 +293,17 @@ describe("Ada", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MAINNET_ITEM.adaBase);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
+      });
+
+      it("Derives correct exodus items batch", () => {
+        const items = networkDerivationsInstances.mainnet.adaExodus.deriveItemsBatchFromMnemonic({
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.adaExodus,
+          indexLookupFrom: INDEX_LOOKUP_FROM,
+          indexLookupTo: INDEX_LOOKUP_TO,
+        });
+
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MAINNET_ITEM.adaExodus);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
@@ -311,6 +354,17 @@ describe("Ada", () => {
           expect(isEnterpriseKeyNative).toBe(true);
           expect(isRewardKeyNative).toBe(true);
         });
+
+        it("Returns true for exodus private key", () => {
+          const isNative = networkDerivationsInstances.mainnet.adaExodus.doesPKBelongToMnemonic({
+            derivationPathPrefix: adaConfig.mainnet.adaExodus.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: MAINNET_CREDENTIAL.adaExodus.privateKey,
+          });
+
+          expect(isNative).toBe(true);
+        });
       });
 
       describe("Validates extrinsic private key correctly", () => {
@@ -327,7 +381,7 @@ describe("Ada", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for reward private key", () => {
+        it("Returns false for reward private key", () => {
           const isNative = networkDerivationsInstances.mainnet.adaReward.doesPKBelongToMnemonic({
             derivationPathPrefix: adaConfig.mainnet.adaReward.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
@@ -338,7 +392,7 @@ describe("Ada", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for base private key", () => {
+        it("Returns false for base private key", () => {
           const isEnterpriseKeyNative =
             networkDerivationsInstances.mainnet.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.mainnet.adaBase.derivationPathPrefix,
@@ -357,6 +411,17 @@ describe("Ada", () => {
 
           expect(isEnterpriseKeyNative).toBe(false);
           expect(isRewardKeyNative).toBe(false);
+        });
+
+        it("Returns false for exodus private key", () => {
+          const isNative = networkDerivationsInstances.mainnet.adaExodus.doesPKBelongToMnemonic({
+            derivationPathPrefix: adaConfig.mainnet.adaExodus.derivationPathPrefix,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: TESTNET_PREPROD_EXTRINSIC_PRIVATE_KEY.adaExodus.privateKey,
+          });
+
+          expect(isNative).toBe(false);
         });
       });
     });
@@ -522,7 +587,7 @@ describe("Ada", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for reward private key", () => {
+        it("Returns false for reward private key", () => {
           const isNative =
             networkDerivationsInstances.testnetPreview.adaReward.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreview.adaReward.derivationPathPrefix,
@@ -534,7 +599,7 @@ describe("Ada", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for base private key", () => {
+        it("Returns false for base private key", () => {
           const isEnterpriseKeyNative =
             networkDerivationsInstances.testnetPreview.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreview.adaBase.derivationPathPrefix,
@@ -718,7 +783,7 @@ describe("Ada", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for reward private key", () => {
+        it("Returns false for reward private key", () => {
           const isNative =
             networkDerivationsInstances.testnetPreprod.adaReward.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreprod.adaReward.derivationPathPrefix,
@@ -730,7 +795,7 @@ describe("Ada", () => {
           expect(isNative).toBe(false);
         });
 
-        it("Returns true for base private key", () => {
+        it("Returns false for base private key", () => {
           const isEnterpriseKeyNative =
             networkDerivationsInstances.testnetPreprod.adaBase.doesPKBelongToMnemonic({
               derivationPathPrefix: adaConfig.testnetPreprod.adaBase.derivationPathPrefix,
