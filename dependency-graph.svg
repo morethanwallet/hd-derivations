@@ -3753,15 +3753,15 @@
 <path fill="none" stroke="#757575" d="M5424.63,-4277.21C5477.13,-4278.12 5540.53,-4279.22 5598.67,-4280.23"/>
 <polygon fill="#757575" stroke="#757575" points="5598.65,-4283.73 5608.71,-4280.4 5598.77,-4276.73 5598.65,-4283.73"/>
 </g>
-<!-- modules/network/libs/types/handlers/index.ts -->
+<!-- modules/network/libs/types/handlers/types.ts -->
 <g id="node283" class="node">
-<title>modules/network/libs/types/handlers/index.ts</title>
+<title>modules/network/libs/types/handlers/types.ts</title>
 <path fill="none" stroke="#c6c5fe" d="M6426.33,-4432.72C6426.33,-4432.72 6156.67,-4432.72 6156.67,-4432.72 6152.83,-4432.72 6149,-4428.89 6149,-4425.06 6149,-4425.06 6149,-4417.39 6149,-4417.39 6149,-4413.56 6152.83,-4409.72 6156.67,-4409.72 6156.67,-4409.72 6426.33,-4409.72 6426.33,-4409.72 6430.17,-4409.72 6434,-4413.56 6434,-4417.39 6434,-4417.39 6434,-4425.06 6434,-4425.06 6434,-4428.89 6430.17,-4432.72 6426.33,-4432.72"/>
-<text text-anchor="middle" x="6291.5" y="-4417.52" font-family="Arial" font-size="14.00" fill="#c6c5fe">modules/network/libs/types/handlers/index.ts</text>
+<text text-anchor="middle" x="6291.5" y="-4417.52" font-family="Arial" font-size="14.00" fill="#c6c5fe">modules/network/libs/types/handlers/types.ts</text>
 </g>
-<!-- modules/network/libs/types/index.ts&#45;&gt;modules/network/libs/types/handlers/index.ts -->
+<!-- modules/network/libs/types/index.ts&#45;&gt;modules/network/libs/types/handlers/types.ts -->
 <g id="edge746" class="edge">
-<title>modules/network/libs/types/index.ts&#45;&gt;modules/network/libs/types/handlers/index.ts</title>
+<title>modules/network/libs/types/index.ts&#45;&gt;modules/network/libs/types/handlers/types.ts</title>
 <path fill="none" stroke="#757575" d="M5387.81,-4286.74C5567.75,-4313.55 6013.66,-4379.98 6203.11,-4408.2"/>
 <polygon fill="#757575" stroke="#757575" points="6202.62,-4411.67 6213.03,-4409.68 6203.65,-4404.75 6202.62,-4411.67"/>
 </g>
@@ -6057,9 +6057,9 @@
 <path fill="none" stroke="#757575" d="M5935.29,-4283.22C6135.34,-4283.22 6485.71,-4283.22 6786,-4283.22 6786,-4283.22 6786,-4283.22 7729,-4283.22 8096.61,-4283.22 8188.42,-4273.88 8556,-4269.22 9400.63,-4258.52 9611.8,-4253.22 10456.5,-4253.22 10456.5,-4253.22 10456.5,-4253.22 11066,-4253.22 11283.23,-4253.22 11844.3,-4197.43 12043,-4285.22 12177.36,-4344.59 12280.54,-4500.2 12314.24,-4555.97"/>
 <polygon fill="#757575" stroke="#757575" points="12311.26,-4557.81 12319.38,-4564.61 12317.27,-4554.23 12311.26,-4557.81"/>
 </g>
-<!-- modules/network/libs/types/abstract&#45;network.type.ts&#45;&gt;modules/network/libs/types/handlers/index.ts -->
+<!-- modules/network/libs/types/abstract&#45;network.type.ts&#45;&gt;modules/network/libs/types/handlers/types.ts -->
 <g id="edge694" class="edge">
-<title>modules/network/libs/types/abstract&#45;network.type.ts&#45;&gt;modules/network/libs/types/handlers/index.ts</title>
+<title>modules/network/libs/types/abstract&#45;network.type.ts&#45;&gt;modules/network/libs/types/handlers/types.ts</title>
 <path fill="none" stroke="#757575" d="M5838.39,-4294.75C5883.51,-4303.15 5944.73,-4315.44 5998,-4329.22 6087.94,-4352.5 6191.19,-4386.79 6247.8,-4406.27"/>
 <polygon fill="#757575" stroke="#757575" points="6246.89,-4409.66 6257.48,-4409.61 6249.17,-4403.04 6246.89,-4409.66"/>
 </g>
@@ -6069,9 +6069,9 @@
 <path fill="none" stroke="#c6c5fe" d="M6981.33,-4452.72C6981.33,-4452.72 6592.67,-4452.72 6592.67,-4452.72 6588.83,-4452.72 6585,-4448.89 6585,-4445.06 6585,-4445.06 6585,-4437.39 6585,-4437.39 6585,-4433.56 6588.83,-4429.72 6592.67,-4429.72 6592.67,-4429.72 6981.33,-4429.72 6981.33,-4429.72 6985.17,-4429.72 6989,-4433.56 6989,-4437.39 6989,-4437.39 6989,-4445.06 6989,-4445.06 6989,-4448.89 6985.17,-4452.72 6981.33,-4452.72"/>
 <text text-anchor="middle" x="6787" y="-4437.52" font-family="Arial" font-size="14.00" fill="#c6c5fe">modules/network/libs/types/handlers/derivations&#45;handlers.type.ts</text>
 </g>
-<!-- modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/derivations&#45;handlers.type.ts -->
-<g id="edge733" class="edge">
-<title>modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/derivations&#45;handlers.type.ts</title>
+<!-- modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/derivations&#45;handlers.type.ts -->
+<g id="edge735" class="edge">
+<title>modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/derivations&#45;handlers.type.ts</title>
 <path fill="none" stroke="#757575" d="M6434.25,-4426.97C6477.98,-4428.74 6527.13,-4430.73 6574.51,-4432.65"/>
 <polygon fill="#757575" stroke="#757575" points="6574.45,-4436.15 6584.59,-4433.06 6574.74,-4429.16 6574.45,-4436.15"/>
 </g>
@@ -6081,9 +6081,9 @@
 <path fill="none" stroke="#c6c5fe" d="M7437.33,-4456.72C7437.33,-4456.72 7032.67,-4456.72 7032.67,-4456.72 7028.83,-4456.72 7025,-4452.89 7025,-4449.06 7025,-4449.06 7025,-4441.39 7025,-4441.39 7025,-4437.56 7028.83,-4433.72 7032.67,-4433.72 7032.67,-4433.72 7437.33,-4433.72 7437.33,-4433.72 7441.17,-4433.72 7445,-4437.56 7445,-4441.39 7445,-4441.39 7445,-4449.06 7445,-4449.06 7445,-4452.89 7441.17,-4456.72 7437.33,-4456.72"/>
 <text text-anchor="middle" x="7235" y="-4441.52" font-family="Arial" font-size="14.00" fill="#c6c5fe">modules/network/libs/types/handlers/get&#45;derivation&#45;handlers.type.ts</text>
 </g>
-<!-- modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/get&#45;derivation&#45;handlers.type.ts -->
-<g id="edge738" class="edge">
-<title>modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/get&#45;derivation&#45;handlers.type.ts</title>
+<!-- modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/get&#45;derivation&#45;handlers.type.ts -->
+<g id="edge740" class="edge">
+<title>modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/get&#45;derivation&#45;handlers.type.ts</title>
 <path fill="none" stroke="#757575" d="M6356.14,-4432.75C6415.21,-4442.83 6505.71,-4456.69 6585,-4462.22 6764.12,-4474.72 6809.55,-4468.44 6989,-4462.22 7019.05,-4461.18 7051.14,-4459.42 7081.86,-4457.42"/>
 <polygon fill="#757575" stroke="#757575" points="7082.48,-4460.89 7092.23,-4456.74 7082.02,-4453.91 7082.48,-4460.89"/>
 </g>
@@ -6093,9 +6093,9 @@
 <path fill="none" stroke="#c6c5fe" d="M7945.33,-4610.72C7945.33,-4610.72 7510.67,-4610.72 7510.67,-4610.72 7506.83,-4610.72 7503,-4606.89 7503,-4603.06 7503,-4603.06 7503,-4595.39 7503,-4595.39 7503,-4591.56 7506.83,-4587.72 7510.67,-4587.72 7510.67,-4587.72 7945.33,-4587.72 7945.33,-4587.72 7949.17,-4587.72 7953,-4591.56 7953,-4595.39 7953,-4595.39 7953,-4603.06 7953,-4603.06 7953,-4606.89 7949.17,-4610.72 7945.33,-4610.72"/>
 <text text-anchor="middle" x="7728" y="-4595.52" font-family="Arial" font-size="14.00" fill="#c6c5fe">modules/network/libs/types/handlers/derive&#45;item&#45;from&#45;mnemonic.type.ts</text>
 </g>
-<!-- modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/derive&#45;item&#45;from&#45;mnemonic.type.ts -->
-<g id="edge734" class="edge">
-<title>modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/derive&#45;item&#45;from&#45;mnemonic.type.ts</title>
+<!-- modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/derive&#45;item&#45;from&#45;mnemonic.type.ts -->
+<g id="edge736" class="edge">
+<title>modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/derive&#45;item&#45;from&#45;mnemonic.type.ts</title>
 <path fill="none" stroke="#757575" d="M6323.13,-4432.81C6375.79,-4452.2 6487.27,-4490.89 6585,-4509.22 6895.46,-4567.46 7260.26,-4588.08 7492.48,-4595.34"/>
 <polygon fill="#757575" stroke="#757575" points="7492.64,-4598.85 7502.75,-4595.65 7492.86,-4591.85 7492.64,-4598.85"/>
 </g>
@@ -6105,9 +6105,9 @@
 <path fill="none" stroke="#c6c5fe" d="M7967.33,-4534.72C7967.33,-4534.72 7488.67,-4534.72 7488.67,-4534.72 7484.83,-4534.72 7481,-4530.89 7481,-4527.06 7481,-4527.06 7481,-4519.39 7481,-4519.39 7481,-4515.56 7484.83,-4511.72 7488.67,-4511.72 7488.67,-4511.72 7967.33,-4511.72 7967.33,-4511.72 7971.17,-4511.72 7975,-4515.56 7975,-4519.39 7975,-4519.39 7975,-4527.06 7975,-4527.06 7975,-4530.89 7971.17,-4534.72 7967.33,-4534.72"/>
 <text text-anchor="middle" x="7728" y="-4519.52" font-family="Arial" font-size="14.00" fill="#c6c5fe">modules/network/libs/types/handlers/derive&#45;items&#45;batch&#45;from&#45;mnemonic.type.ts</text>
 </g>
-<!-- modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/derive&#45;items&#45;batch&#45;from&#45;mnemonic.type.ts -->
-<g id="edge735" class="edge">
-<title>modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/derive&#45;items&#45;batch&#45;from&#45;mnemonic.type.ts</title>
+<!-- modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/derive&#45;items&#45;batch&#45;from&#45;mnemonic.type.ts -->
+<g id="edge737" class="edge">
+<title>modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/derive&#45;items&#45;batch&#45;from&#45;mnemonic.type.ts</title>
 <path fill="none" stroke="#757575" d="M6338.75,-4432.74C6396.11,-4446.47 6497.08,-4468.88 6585,-4479.22 6887.78,-4514.85 7238.5,-4523.56 7470.54,-4524.83"/>
 <polygon fill="#757575" stroke="#757575" points="7470.79,-4528.33 7480.81,-4524.88 7470.83,-4521.33 7470.79,-4528.33"/>
 </g>
@@ -6117,9 +6117,9 @@
 <path fill="none" stroke="#c6c5fe" d="M7952.33,-4452.72C7952.33,-4452.72 7503.67,-4452.72 7503.67,-4452.72 7499.83,-4452.72 7496,-4448.89 7496,-4445.06 7496,-4445.06 7496,-4437.39 7496,-4437.39 7496,-4433.56 7499.83,-4429.72 7503.67,-4429.72 7503.67,-4429.72 7952.33,-4429.72 7952.33,-4429.72 7956.17,-4429.72 7960,-4433.56 7960,-4437.39 7960,-4437.39 7960,-4445.06 7960,-4445.06 7960,-4448.89 7956.17,-4452.72 7952.33,-4452.72"/>
 <text text-anchor="middle" x="7728" y="-4437.52" font-family="Arial" font-size="14.00" fill="#c6c5fe">modules/network/libs/types/handlers/does&#45;p&#45;k&#45;belong&#45;to&#45;mnemonic.type.ts</text>
 </g>
-<!-- modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/does&#45;p&#45;k&#45;belong&#45;to&#45;mnemonic.type.ts -->
-<g id="edge736" class="edge">
-<title>modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/does&#45;p&#45;k&#45;belong&#45;to&#45;mnemonic.type.ts</title>
+<!-- modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/does&#45;p&#45;k&#45;belong&#45;to&#45;mnemonic.type.ts -->
+<g id="edge738" class="edge">
+<title>modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/does&#45;p&#45;k&#45;belong&#45;to&#45;mnemonic.type.ts</title>
 <path fill="none" stroke="#757575" d="M6434.04,-4419.05C6651.48,-4416.32 7080.78,-4413.3 7445,-4425.22 7474.61,-4426.19 7505.95,-4427.59 7536.56,-4429.17"/>
 <polygon fill="#757575" stroke="#757575" points="7536.74,-4432.69 7546.91,-4429.71 7537.11,-4425.7 7536.74,-4432.69"/>
 </g>
@@ -6129,9 +6129,9 @@
 <path fill="none" stroke="#c6c5fe" d="M8467.33,-4334.72C8467.33,-4334.72 8063.67,-4334.72 8063.67,-4334.72 8059.83,-4334.72 8056,-4330.89 8056,-4327.06 8056,-4327.06 8056,-4319.39 8056,-4319.39 8056,-4315.56 8059.83,-4311.72 8063.67,-4311.72 8063.67,-4311.72 8467.33,-4311.72 8467.33,-4311.72 8471.17,-4311.72 8475,-4315.56 8475,-4319.39 8475,-4319.39 8475,-4327.06 8475,-4327.06 8475,-4330.89 8471.17,-4334.72 8467.33,-4334.72"/>
 <text text-anchor="middle" x="8265.5" y="-4319.52" font-family="Arial" font-size="14.00" fill="#c6c5fe">modules/network/libs/types/handlers/get&#45;credential&#45;from&#45;p&#45;k.type.ts</text>
 </g>
-<!-- modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/get&#45;credential&#45;from&#45;p&#45;k.type.ts -->
-<g id="edge737" class="edge">
-<title>modules/network/libs/types/handlers/index.ts&#45;&gt;modules/network/libs/types/handlers/get&#45;credential&#45;from&#45;p&#45;k.type.ts</title>
+<!-- modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/get&#45;credential&#45;from&#45;p&#45;k.type.ts -->
+<g id="edge739" class="edge">
+<title>modules/network/libs/types/handlers/types.ts&#45;&gt;modules/network/libs/types/handlers/get&#45;credential&#45;from&#45;p&#45;k.type.ts</title>
 <path fill="none" stroke="#757575" d="M6385.98,-4409.71C6525.04,-4393.1 6794.76,-4362.93 7025,-4349.22 7382.09,-4327.96 7797.94,-4323.35 8045.75,-4322.73"/>
 <polygon fill="#757575" stroke="#757575" points="8045.97,-4326.23 8055.96,-4322.7 8045.95,-4319.23 8045.97,-4326.23"/>
 </g>
@@ -6364,13 +6364,13 @@
 <polygon fill="#757575" stroke="#757575" points="8000.73,-4525.71 8010.71,-4522.17 8000.7,-4518.71 8000.73,-4525.71"/>
 </g>
 <!-- modules/network/libs/types/handlers/lookup&#45;handlers&#45;common&#45;parameters.type.ts&#45;&gt;libs/types/types.ts -->
-<g id="edge739" class="edge">
+<g id="edge733" class="edge">
 <title>modules/network/libs/types/handlers/lookup&#45;handlers&#45;common&#45;parameters.type.ts&#45;&gt;libs/types/types.ts</title>
 <path fill="none" stroke="#757575" d="M8520.23,-4522.48C8968.31,-4525.07 9929.06,-4532.37 10740,-4550.22 11028.97,-4556.58 11101.01,-4565.78 11390,-4571.22 11713.01,-4577.3 12098.82,-4576.95 12255.09,-4576.5"/>
 <polygon fill="#757575" stroke="#757575" points="12255.5,-4579.99 12265.49,-4576.46 12255.48,-4572.99 12255.5,-4579.99"/>
 </g>
 <!-- modules/network/libs/types/handlers/lookup&#45;handlers&#45;common&#45;parameters.type.ts&#45;&gt;modules/network/libs/types/handlers/handlers&#45;common&#45;parameters.type.ts -->
-<g id="edge740" class="edge">
+<g id="edge734" class="edge">
 <title>modules/network/libs/types/handlers/lookup&#45;handlers&#45;common&#45;parameters.type.ts&#45;&gt;modules/network/libs/types/handlers/handlers&#45;common&#45;parameters.type.ts</title>
 <path fill="none" stroke="#757575" d="M8341.42,-4532.73C8436.98,-4547.4 8601.82,-4572.71 8702.13,-4588.11"/>
 <polygon fill="#757575" stroke="#757575" points="8701.82,-4591.61 8712.23,-4589.67 8702.88,-4584.69 8701.82,-4591.61"/>

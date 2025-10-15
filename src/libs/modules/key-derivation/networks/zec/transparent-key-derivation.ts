@@ -13,8 +13,8 @@ import { convertBytesToHex } from "@/libs/utils/index.js";
 import { getKeyPairFromBip32Interface } from "../../libs/helpers/get-key-pair-from-bip32-interface.helper.js";
 
 class TransparentKeyDerivation implements AbstractKeyDerivation<"zecTransparent"> {
+  public readonly prefixConfig: PrefixConfig;
   private readonly mnemonic: Mnemonic;
-  private readonly prefixConfig: PrefixConfig;
   private readonly secp256k1Curve: Secp256k1Curve;
 
   public constructor(
