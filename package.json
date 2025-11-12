@@ -1,6 +1,6 @@
 {
   "name": "@morethanwallet/hd-derivations",
-  "version": "1.0.0-beta.23",
+  "version": "1.0.0-beta.24",
   "description": "",
   "main": "./build/node/index.js",
   "browser": "./build/browser/index.js",
@@ -24,16 +24,16 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "test": "vitest --coverage",
-    "build": "npm run build:browser && npm run build:node",
+    "build": "yarn build:browser && yarn build:node",
     "build:browser": "vite build",
     "build:node": "tsc --project ./tsconfig.build.json && npx tsc-alias --project ./tsconfig.build.json",
-    "publish:package": "tsx ./publish-package.ts",
+    "publish:package": "tsx ./scripts/publish-package.ts",
     "build:graph": "npx madge src/ --ts-config ./tsconfig.json --warning --extensions ts,tsx --image dependency-graph.svg",
     "lint:prettify": "prettier ./ --write \"**/*.{ts,json,md}\"",
     "lint:type": "npx tsc --noEmit"
   },
   "simple-git-hooks": {
-    "pre-commit": "npm run build:graph"
+    "pre-commit": "yarn build:graph"
   },
   "keywords": [],
   "author": "",
@@ -73,10 +73,11 @@
     "tsc-alias": "1.8.10",
     "tsx": "4.19.1",
     "typescript": "5.6.3",
-    "vite-plugin-dts": "4.5.0",
-    "vite-plugin-node-polyfills": "0.23.0",
-    "vite-plugin-wasm": "3.4.1",
+    "vite": "7.1.10",
+    "vite-plugin-dts": "4.5.4",
+    "vite-plugin-node-polyfills": "0.24.0",
+    "vite-plugin-wasm": "3.5.0",
     "vite-tsconfig-paths": "5.1.4",
-    "vitest": "2.1.8"
+    "vitest": "3.2.4"
   }
 }
