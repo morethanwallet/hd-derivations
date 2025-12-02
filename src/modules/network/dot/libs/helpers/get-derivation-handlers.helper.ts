@@ -5,10 +5,10 @@ import {
   validateDerivationPath as commonValidateDerivationPath,
   doesPKExistInBatch,
 } from "@/modules/network/libs/helpers/index.js";
-import {
+import type {
   DerivedItem,
-  type GetDerivationHandlersParameters,
-  type GetDerivationHandlersReturnType,
+  GetDerivationHandlersParameters,
+  GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
 import { validateDerivationPath } from "./validate-derivation-path.helper.js";
 import { appendAddressToDerivationPath } from "./append-address-to-derivation-path.helper.js";
