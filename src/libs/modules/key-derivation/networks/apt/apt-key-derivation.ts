@@ -118,11 +118,7 @@ class AptKeyDerivation implements AbstractKeyDerivation<AptDerivationTypeUnion> 
     const privateKey = rawPrivateKey.toString();
     const publicKey = rawPublicKey.toString();
 
-    const lastDelimiterIndex = privateKey.lastIndexOf(APTOS_LIBRARY_PRIVATE_KEY_DELIMITER);
-    const privateKeyStartIndex = lastDelimiterIndex + APTOS_LIBRARY_PRIVATE_KEY_DELIMITER_LENGTH;
-    const normalizedPrivateKey = privateKey.slice(privateKeyStartIndex);
-
-    return { privateKey: normalizedPrivateKey, publicKey };
+    return { privateKey: this.removePrivateKeyMetadata(privateKey), publicKey };
   }
 
   private formatPrivateKey(
@@ -170,6 +166,14 @@ class AptKeyDerivation implements AbstractKeyDerivation<AptDerivationTypeUnion> 
     if (!secp256r1.verify(signature, messageHash, publicKeyBytes, { lowS: true })) {
       throw new KeyDerivationError(ExceptionMessage.INVALID_PRIVATE_KEY);
     }
+  }
+
+  private removePrivateKeyMetadata(privateKey: CommonPrivateKey["privateKey"]) {
+    const lastDelimiterIndex = privateKey.lastIndexOf(APTOS_LIBRARY_PRIVATE_KEY_DELIMITER);
+    const privateKeyStartIndex = lastDelimiterIndex + APTOS_LIBRARY_PRIVATE_KEY_DELIMITER_LENGTH;
+    const normalizedPrivateKey = privateKey.slice(privateKeyStartIndex);
+
+    return normalizedPrivateKey;
   }
 }
 
