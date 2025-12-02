@@ -30,6 +30,7 @@ import { HDKey } from "@scure/bip32";
 import { secp256r1 } from "@noble/curves/p256";
 import {
   APTOS_LIBRARY_PRIVATE_KEY_DELIMITER,
+  APTOS_LIBRARY_PRIVATE_KEY_DELIMITER_LENGTH,
   VALIDATION_MESSAGE_TO_SIGN,
 } from "./libs/constants/index.js";
 import { sha3_256 } from "@noble/hashes/sha3";
@@ -118,8 +119,7 @@ class AptKeyDerivation implements AbstractKeyDerivation<AptDerivationTypeUnion> 
     const publicKey = rawPublicKey.toString();
 
     const lastDelimiterIndex = privateKey.lastIndexOf(APTOS_LIBRARY_PRIVATE_KEY_DELIMITER);
-    const delimiterSkipIndex = 1;
-    const privateKeyStartIndex = lastDelimiterIndex + delimiterSkipIndex;
+    const privateKeyStartIndex = lastDelimiterIndex + APTOS_LIBRARY_PRIVATE_KEY_DELIMITER_LENGTH;
     const normalizedPrivateKey = privateKey.slice(privateKeyStartIndex);
 
     return { privateKey: normalizedPrivateKey, publicKey };
