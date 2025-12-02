@@ -28,7 +28,11 @@ import {
 import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants/index.js";
 import { HDKey } from "@scure/bip32";
 import { secp256r1 } from "@noble/curves/p256";
-import { VALIDATION_MESSAGE_TO_SIGN } from "./libs/constants/index.js";
+import {
+  APTOS_LIBRARY_PRIVATE_KEY_DELIMITER,
+  APTOS_LIBRARY_PRIVATE_KEY_DELIMITER_LENGTH,
+  VALIDATION_MESSAGE_TO_SIGN,
+} from "./libs/constants/index.js";
 import { sha3_256 } from "@noble/hashes/sha3";
 import { ExceptionMessage } from "../../libs/enums/index.js";
 import {
@@ -114,7 +118,7 @@ class AptKeyDerivation implements AbstractKeyDerivation<AptDerivationTypeUnion> 
     const privateKey = rawPrivateKey.toString();
     const publicKey = rawPublicKey.toString();
 
-    return { privateKey, publicKey };
+    return { privateKey: this.removePrivateKeyMetadata(privateKey), publicKey };
   }
 
   private formatPrivateKey(
@@ -162,6 +166,14 @@ class AptKeyDerivation implements AbstractKeyDerivation<AptDerivationTypeUnion> 
     if (!secp256r1.verify(signature, messageHash, publicKeyBytes, { lowS: true })) {
       throw new KeyDerivationError(ExceptionMessage.INVALID_PRIVATE_KEY);
     }
+  }
+
+  private removePrivateKeyMetadata(privateKey: CommonPrivateKey["privateKey"]) {
+    const lastDelimiterIndex = privateKey.lastIndexOf(APTOS_LIBRARY_PRIVATE_KEY_DELIMITER);
+    const privateKeyStartIndex = lastDelimiterIndex + APTOS_LIBRARY_PRIVATE_KEY_DELIMITER_LENGTH;
+    const normalizedPrivateKey = privateKey.slice(privateKeyStartIndex);
+
+    return normalizedPrivateKey;
   }
 }
 

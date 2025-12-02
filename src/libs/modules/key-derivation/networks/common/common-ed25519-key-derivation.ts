@@ -8,9 +8,7 @@ import { convertBytesToHex } from "@/libs/utils/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic";
 import { type Ed25519Curve } from "@/libs/modules/curves/curves";
 
-class CommonEd25519KeyDerivation
-  implements AbstractKeyDerivation<CommonEd25519DerivationTypeUnion>
-{
+class CommonEd25519KeyDerivation implements AbstractKeyDerivation<CommonEd25519DerivationTypeUnion> {
   private mnemonic: Mnemonic;
   private ed25519Curve: Ed25519Curve;
 

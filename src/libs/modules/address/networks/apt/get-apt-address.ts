@@ -2,14 +2,14 @@ import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants";
 import { ExceptionMessage } from "@/libs/enums/index.js";
 import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
 import type { CommonKeyPair, GetSignatureSchemeUnion } from "@/libs/types/types.js";
+import { convertHexToBytes, removeHexPrefix } from "@/libs/utils/index.js";
 import {
-  addHexPrefix,
-  convertBytesToHex,
-  convertHexToBytes,
-  removeHexPrefix,
-} from "@/libs/utils/index.js";
-import { AnyPublicKey, Ed25519PublicKey, MultiKey, Secp256k1PublicKey } from "@aptos-labs/ts-sdk";
-import { sha3_256 } from "@noble/hashes/sha3";
+  AnyPublicKey,
+  Ed25519PublicKey,
+  MultiKey,
+  Secp256k1PublicKey,
+  Secp256r1PublicKey,
+} from "@aptos-labs/ts-sdk";
 
 const ED25519_LEGACY_PUBLIC_KEY_START_INDEX = 2;
 const SECP256K1_BYTES_PUBLIC_KEY_START_INDEX = 2;
@@ -22,6 +22,7 @@ function getAptAddress(
 ) {
   const prefixRemovedPublicKey = removeHexPrefix(publicKey);
   const publicKeyBytes = convertHexToBytes(prefixRemovedPublicKey);
+
   // TODO: Add the correct parsing logic when multi-signature will be implemented for multiple accounts
   const multiSigAdjustedPublicKeyBytes = isMultiSig ? publicKeyBytes.slice(3, -1) : publicKeyBytes;
   let publicKeyInstance: AnyPublicKey | Ed25519PublicKey | null = null;
@@ -62,19 +63,10 @@ function getAptAddress(
 
   if (scheme === "secp256r1") {
     const publicKeyBytes = convertHexToBytes(prefixRemovedPublicKey);
+    const publicKey = new Secp256r1PublicKey(publicKeyBytes);
+    const authKey = publicKey.authKey();
 
-    const secp256r1KeyTypePrefix = 0x02;
-    const singleKeyAuthenticationValue = 0x02;
-
-    const formattedPublicKeyBuffer = Buffer.concat([
-      Buffer.from([secp256r1KeyTypePrefix]),
-      publicKeyBytes,
-      Buffer.from([singleKeyAuthenticationValue]),
-    ]);
-
-    const publicKeyHash = sha3_256(formattedPublicKeyBuffer);
-
-    return addHexPrefix(convertBytesToHex(publicKeyHash));
+    return authKey.derivedAddress().toString();
   }
 
   if (!publicKeyInstance) throw new AddressError(ExceptionMessage.INVALID_SCHEME);

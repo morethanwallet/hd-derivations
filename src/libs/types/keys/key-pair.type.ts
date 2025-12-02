@@ -1,6 +1,6 @@
-import {
+import type {
   GetDerivationTypeUnion,
-  type DerivationTypeUnion,
+  DerivationTypeUnion,
 } from "../derivation/derivation-type-union.type.js";
 import { type AdaBasePrivateKey, type CommonPrivateKey } from "./private-key.type.js";
 

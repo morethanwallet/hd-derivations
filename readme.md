@@ -33,7 +33,7 @@ With support for multiple key types and derivation schemes, `hd-derivations` is 
 <a id="installation"></a>
 ## Installation ⚙️
 ```
-npm install hd-derivations
+yarn add hd-derivations
 ```
 
 <a id="how-to-use"></a>

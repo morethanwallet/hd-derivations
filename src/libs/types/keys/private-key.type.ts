@@ -1,6 +1,6 @@
-import {
+import type {
   GetDerivationTypeUnion,
-  type DerivationTypeUnion,
+  DerivationTypeUnion,
 } from "../derivation/derivation-type-union.type.js";
 
 type CommonPrivateKey = { privateKey: string };
