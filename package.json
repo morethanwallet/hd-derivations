@@ -27,10 +27,12 @@
     "build": "yarn build:browser && yarn build:node",
     "build:browser": "vite build",
     "build:node": "tsc --project ./tsconfig.build.json && npx tsc-alias --project ./tsconfig.build.json",
-    "publish:package": "tsx ./scripts/publish-package.ts",
+    "publish:package": "tsx ./scripts/publish-package.script.ts",
     "build:graph": "npx madge src/ --ts-config ./tsconfig.json --warning --extensions ts,tsx --image dependency-graph.svg",
     "lint:prettify": "prettier ./ --write \"**/*.{ts,json,md}\"",
-    "lint:type": "npx tsc --noEmit"
+    "lint:fs": "npx tsx scripts/check-filesystem.script.ts",
+    "lint:type": "npx tsc --noEmit",
+    "lint": "yarn lint:prettify && yarn lint:fs && yarn lint:type"
   },
   "simple-git-hooks": {
     "pre-commit": "yarn build:graph"

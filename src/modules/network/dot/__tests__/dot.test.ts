@@ -9,9 +9,9 @@ import {
 } from "../../libs/constants/index.js";
 import { dotConfig } from "../../libs/modules/config/index.js";
 import {
-  DotDerivationTypeUnion,
-  GetDerivationTypeUnion,
-  GetSignatureSchemeUnion,
+  type DotDerivationTypeUnion,
+  type GetDerivationTypeUnion,
+  type GetSignatureSchemeUnion,
 } from "@/libs/types/types.js";
 
 const DERIVATION_PATH = { dotStandardHd: "m/44'/354'/0'/0'/0'", dotBase: "" };

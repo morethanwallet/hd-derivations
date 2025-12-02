@@ -8,9 +8,9 @@ import type {
 import type { GetDerivationTypeUnion, KeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
-class AdaCommonKeyDerivation
-  implements AbstractKeyDerivation<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>
-{
+class AdaCommonKeyDerivation implements AbstractKeyDerivation<
+  GetDerivationTypeUnion<"adaEnterprise" | "adaReward">
+> {
   private readonly mnemonic: Mnemonic;
 
   public constructor(mnemonic: Mnemonic) {
