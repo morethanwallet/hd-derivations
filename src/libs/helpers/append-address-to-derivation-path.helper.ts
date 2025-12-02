@@ -21,10 +21,9 @@ function appendAddressToDerivationPath({
     shouldHarden ? DerivationPathSymbol.HARDENED_SUFFIX : ""
   }`;
 
-  const formattedAddressPosition =
-    addressPosition ?? derivationPath.split(DerivationPathSymbol.DELIMITER).length;
-
   const splittedDerivationPath = getDerivationPathSegmentsArray(derivationPath);
+  const formattedAddressPosition = addressPosition ?? splittedDerivationPath.length;
+
   const addressInjectedDerivationPath = splittedDerivationPath.toSpliced(
     formattedAddressPosition,
     DELETION_SKIP_COUNT,
