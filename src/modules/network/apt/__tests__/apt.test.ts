@@ -38,13 +38,15 @@ const CREDENTIAL = {
     },
   },
   secp256k1: {
+    // aptBase and aptLegacy have the same output
     address: "0xafb25fd59e168974fd7c56df13b4237734ae2090983ea7c648d86df637e0ded0",
     publicKey:
       "0x014104e06e68eb0e50b63d1bd8f4d427aa539040c8eacbd517265b79f8946c50076a65c4863416facc215198ee173e6747a7de001fe126caa0c3db9ae6fb18f1140c7f",
     privateKey: "0xb275b8966de552351e14a7a3d9b0ceb422ed30ca20dd58a824f6d3de069f0daa",
   },
   secp256r1: {
-    address: "0x69acf516008958723532f98be28c0f2b4f58b880644ed8c5f83e96921487c2ba",
+    // aptBase and aptLegacy have the same output
+    address: "0x658f7a592a6fc54a948c7caf9196761d16ca84a5ab1e770a2940c75dd7ddc11c",
     publicKey: "0x024f0ebaaf2c68a8003e506dfaf9b2a5bb212d4b37baa83ef4d7b9ea4585974169",
     privateKey: "0xb275b8966de552351e14a7a3d9b0ceb422ed30ca20dd58a824f6d3de069f0daa",
   },
