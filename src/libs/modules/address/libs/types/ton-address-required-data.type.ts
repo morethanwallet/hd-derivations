@@ -22,4 +22,4 @@ type TonAddressRequiredData = {
   friendlyFormatArguments?: TonAddressFriendlyFormatArguments;
 };
 
-export type { TonAddressRequiredData, TonAddressFriendlyFormatArguments };
+export type { TonAddressRequiredData, TonAddressFriendlyFormatArguments, ContractVersion };

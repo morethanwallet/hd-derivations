@@ -2,6 +2,7 @@ export type {
   Address,
   TonAddressRequiredData,
   TonAddressFriendlyFormatArguments,
+  ContractVersion,
 } from "./libs/types/index.js";
 export {
   getBtcSegWitAddress,

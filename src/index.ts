@@ -10,3 +10,4 @@ export {
 } from "@/modules/network/index.js";
 export type { DerivationTypeUnion, GetDerivationTypeUnion } from "@/libs/types/types.js";
 export { Mnemonic } from "@/libs/modules/mnemonic/index.js";
+export type { ContractVersion } from "@/libs/modules/address/index.js";
