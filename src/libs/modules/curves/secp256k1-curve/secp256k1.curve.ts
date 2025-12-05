@@ -17,6 +17,16 @@ class Secp256k1Curve {
     return rootKey.derivePath(derivationPath);
   }
 
+  public deriveNodeFromSeed(
+    seed: Buffer,
+    derivationPath: string,
+    prefixConfig?: PrefixConfig,
+  ): BIP32Interface {
+    const rootKey = this.getRootKeyFromSeed(seed, prefixConfig);
+
+    return this.derivePath(rootKey, derivationPath);
+  }
+
   public getKeyPairFromPrivateKey(
     privateKeyBytes: Uint8Array,
     prefixConfig: PrefixConfig,

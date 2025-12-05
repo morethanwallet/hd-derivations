@@ -27,12 +27,8 @@ class BnbKeyDerivation implements AbstractKeyDerivation<"bnbBase"> {
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"bnbBase">): CommonKeyPair {
-    const rootKey = this.secp256k1Curve.getRootKeyFromSeed(
-      this.mnemonic.getSeed(),
-      this.prefixConfig,
-    );
-
-    const node = this.secp256k1Curve.derivePath(rootKey, derivationPath);
+    const seed = this.mnemonic.getSeed();
+    const node = this.secp256k1Curve.deriveNodeFromSeed(seed, derivationPath, this.prefixConfig);
 
     return this.getKeyPair(node.privateKey);
   }

@@ -43,8 +43,7 @@ class AdaExodusKeyDerivation implements AbstractKeyDerivation<GetDerivationTypeU
     GetDerivationTypeUnion<"adaExodus">
   > {
     const seed = this.mnemonic.getSeed();
-    const rootKey = this.secp256k1Curve.getRootKeyFromSeed(seed);
-    const node = this.secp256k1Curve.derivePath(rootKey, derivationPath);
+    const node = this.secp256k1Curve.deriveNodeFromSeed(seed, derivationPath);
 
     if (!node.privateKey) {
       throw new KeyDerivationError(ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);

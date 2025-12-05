@@ -28,8 +28,7 @@ class EvmKeyDerivation implements AbstractKeyDerivation<"evmBase"> {
     derivationPath,
   }: DeriveFromMnemonicParameters<"evmBase">): CommonKeyPair {
     const seed = this.mnemonic.getSeed();
-    const rootKey = this.secp256k1Curve.getRootKeyFromSeed(seed, this.prefixConfig);
-    const node = this.secp256k1Curve.derivePath(rootKey, derivationPath);
+    const node = this.secp256k1Curve.deriveNodeFromSeed(seed, derivationPath, this.prefixConfig);
 
     return this.getKeyPair(node.privateKey);
   }
