@@ -1,4 +1,4 @@
-import { ExceptionMessage } from "@/libs/enums/index.js";
+import { ExceptionMessage } from "@/libs/enums/enums.js";
 import { ValidationError } from "@/libs/exceptions";
 import type { CommonDerivationPath } from "@/libs/types/types.js";
 

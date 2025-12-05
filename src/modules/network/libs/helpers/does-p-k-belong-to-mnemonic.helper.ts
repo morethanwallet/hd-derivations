@@ -8,7 +8,7 @@ import type {
   DoesPKBelongToMnemonicParameters,
 } from "../types/index.js";
 import { checkHardenedSuffixEnding } from "@/libs/helpers/index.js";
-import { DerivationPathSymbol } from "@/libs/enums/index.js";
+import { DerivationPathSymbol } from "@/libs/enums/enums.js";
 import { doesPKExistInBatch } from "./does-p-k-exist-in-batch.helper.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/index.js";
 import { increaseDerivationPathDepth } from "./increase-derivation-path-depth.helper.js";

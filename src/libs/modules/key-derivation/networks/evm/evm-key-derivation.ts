@@ -7,7 +7,7 @@ import {
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
-import { getKeyPairFromPrivateKeyBytes } from "../../libs/helpers";
+import { deriveSecp256k1Node, getKeyPairFromPrivateKeyBytes } from "../../libs/helpers";
 
 class EvmKeyDerivation implements AbstractKeyDerivation<"evmBase"> {
   public prefixConfig: PrefixConfig;
@@ -27,8 +27,12 @@ class EvmKeyDerivation implements AbstractKeyDerivation<"evmBase"> {
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"evmBase">): CommonKeyPair {
-    const seed = this.mnemonic.getSeed();
-    const node = this.secp256k1Curve.deriveNodeFromSeed(seed, derivationPath, this.prefixConfig);
+    const node = deriveSecp256k1Node({
+      derivationPath,
+      mnemonic: this.mnemonic,
+      secp256k1Curve: this.secp256k1Curve,
+      prefixConfig: this.prefixConfig,
+    });
 
     return this.getKeyPair(node.privateKey);
   }

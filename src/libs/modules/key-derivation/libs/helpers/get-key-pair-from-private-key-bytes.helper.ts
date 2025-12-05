@@ -1,7 +1,7 @@
 import { type PrefixConfig, type Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
-import { ExceptionMessage } from "../enums/index.js";
 import { KeyDerivationError } from "../exceptions/index.js";
+import { ExceptionMessage } from "@/libs/enums/enums.js";
 
 function getKeyPairFromPrivateKeyBytes(
   privateKeyBytes: Uint8Array | undefined,

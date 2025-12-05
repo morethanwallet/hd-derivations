@@ -6,8 +6,10 @@ import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic";
 import { type Secp256k1Curve, type Ed25519Curve } from "@/libs/modules/curves/curves";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
-import { Ed25519SecretKeyBytePosition, ExceptionMessage } from "../../libs/enums/index.js";
+import { Ed25519SecretKeyBytePosition } from "../../libs/enums/index.js";
 import { getBase58EncodedKeyPair, importByPrivateKey } from "./libs/helpers/helpers.js";
+import { ExceptionMessage } from "@/libs/enums/enums.js";
+import { deriveSecp256k1Node } from "../../libs/helpers/derive-secp256k1-node.helper.js";
 
 class SolExodusKeyDerivation implements AbstractKeyDerivation<"solExodus"> {
   private mnemonic: Mnemonic;
@@ -27,8 +29,11 @@ class SolExodusKeyDerivation implements AbstractKeyDerivation<"solExodus"> {
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"solExodus">): CommonKeyPair {
-    const seed = this.mnemonic.getSeed();
-    const node = this.secp256k1Curve.deriveNodeFromSeed(seed, derivationPath);
+    const node = deriveSecp256k1Node({
+      derivationPath,
+      mnemonic: this.mnemonic,
+      secp256k1Curve: this.secp256k1Curve,
+    });
 
     if (!node.privateKey) {
       throw new KeyDerivationError(ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);

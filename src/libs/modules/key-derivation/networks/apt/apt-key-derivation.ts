@@ -1,4 +1,4 @@
-import { ExceptionMessage as CommonExceptionMessage } from "@/libs/enums/index.js";
+import { ExceptionMessage as CommonExceptionMessage } from "@/libs/enums/enums.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import type {
   AptDerivationTypeUnion,

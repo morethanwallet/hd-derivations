@@ -1,4 +1,4 @@
-import { ExceptionMessage } from "@/libs/enums/index.js";
+import { ExceptionMessage } from "@/libs/enums/enums.js";
 import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
 import type { GetSignatureSchemeUnion } from "@/libs/types/types.js";
 import { Ed25519PublicKey } from "@mysten/sui/keypairs/ed25519";

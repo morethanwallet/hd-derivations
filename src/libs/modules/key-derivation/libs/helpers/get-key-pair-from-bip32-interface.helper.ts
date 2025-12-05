@@ -2,7 +2,7 @@ import { type CommonKeyPair } from "@/libs/types/types.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
 import { type BIP32Interface } from "bip32";
 import { KeyDerivationError } from "../exceptions/index.js";
-import { ExceptionMessage } from "../enums/index.js";
+import { ExceptionMessage } from "@/libs/enums/enums.js";
 
 function getKeyPairFromBip32Interface(
   keyPair: BIP32Interface,

@@ -1,5 +1,5 @@
 import { DECIMAL_SYSTEM_IDENTIFIER, HARDEN_RANGE_START_INDEX } from "@/libs/constants/index.js";
-import { DerivationPathSymbol } from "@/libs/enums/index.js";
+import { DerivationPathSymbol } from "@/libs/enums/enums.js";
 import { ValidationError } from "@/libs/exceptions/index.js";
 import {
   getDerivationPathSegmentsArray,

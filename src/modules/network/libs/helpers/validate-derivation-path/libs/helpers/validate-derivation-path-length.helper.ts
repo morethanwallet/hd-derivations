@@ -1,6 +1,6 @@
 import { ValidationError } from "@/libs/exceptions/index.js";
 import type { CommonDerivationPath } from "@/libs/types/types.js";
-import { ExceptionMessage } from "@/libs/enums/index.js";
+import { ExceptionMessage } from "@/libs/enums/enums.js";
 
 const INVALID_DERIVATION_PATH_LENGTH = 0;
 
