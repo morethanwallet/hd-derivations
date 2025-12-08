@@ -17,20 +17,22 @@ import {
   getNativeSegWitDerivationHandlers,
 } from "./libs/helpers/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
-import type { LtcDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
-class Ltc implements AbstractNetwork<LtcDerivationTypeUnion> {
-  private derivationHandlers: DerivationsHandlers<LtcDerivationTypeUnion>[LtcDerivationTypeUnion];
+class Ltc implements AbstractNetwork<DerivationTypeUnionByNetwork["ltc"]> {
+  private derivationHandlers: DerivationsHandlers<
+    DerivationTypeUnionByNetwork["ltc"]
+  >[DerivationTypeUnionByNetwork["ltc"]];
 
   public constructor({
     mnemonic,
     derivationConfig,
-  }: ConstructorParameters<LtcDerivationTypeUnion>) {
+  }: ConstructorParameters<DerivationTypeUnionByNetwork["ltc"]>) {
     const { networkPurpose, derivationType } = derivationConfig;
     const secp256k1Curve = new Secp256k1Curve();
 
-    const derivationsHandlers: DerivationsHandlers<LtcDerivationTypeUnion> = {
+    const derivationsHandlers: DerivationsHandlers<DerivationTypeUnionByNetwork["ltc"]> = {
       ltcLegacy: getLegacyDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomPrefixConfig("ltcLegacy", derivationConfig) ??
@@ -61,25 +63,25 @@ class Ltc implements AbstractNetwork<LtcDerivationTypeUnion> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<LtcDerivationTypeUnion>,
-  ): DerivedItem<LtcDerivationTypeUnion> {
+    parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["ltc"]>,
+  ): DerivedItem<DerivationTypeUnionByNetwork["ltc"]> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<LtcDerivationTypeUnion>,
-  ): DerivedCredential<LtcDerivationTypeUnion> {
+    parameters: GetCredentialFromPKParameters<DerivationTypeUnionByNetwork["ltc"]>,
+  ): DerivedCredential<DerivationTypeUnionByNetwork["ltc"]> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<LtcDerivationTypeUnion>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeUnionByNetwork["ltc"]>,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<LtcDerivationTypeUnion>,
+    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeUnionByNetwork["ltc"]>,
   ) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }

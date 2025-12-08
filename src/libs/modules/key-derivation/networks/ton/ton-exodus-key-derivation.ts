@@ -5,10 +5,10 @@ import {
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic";
 import { type Secp256k1Curve, type Ed25519Curve } from "@/libs/modules/curves/curves";
-import { getBase58EncodedKeyPair, importByPrivateKey } from "./libs/helpers/helpers.js";
 import { getEd25519KeyPairFromSecp256k1RootKey } from "../../libs/helpers/index.js";
+import { convertBytesToHex } from "@/libs/utils/index.js";
 
-class SolExodusKeyDerivation implements AbstractKeyDerivation<"solExodus"> {
+class TonExodusKeyDerivation implements AbstractKeyDerivation<"tonExodus"> {
   private mnemonic: Mnemonic;
   private ed25519Curve: Ed25519Curve;
   private secp256k1Curve: Secp256k1Curve;
@@ -25,7 +25,7 @@ class SolExodusKeyDerivation implements AbstractKeyDerivation<"solExodus"> {
 
   public deriveFromMnemonic({
     derivationPath,
-  }: DeriveFromMnemonicParameters<"solExodus">): CommonKeyPair {
+  }: DeriveFromMnemonicParameters<"tonExodus">): CommonKeyPair {
     const { secretKey, publicKey } = getEd25519KeyPairFromSecp256k1RootKey({
       derivationPath,
       ed25519Curve: this.ed25519Curve,
@@ -33,12 +33,18 @@ class SolExodusKeyDerivation implements AbstractKeyDerivation<"solExodus"> {
       secp256k1Curve: this.secp256k1Curve,
     });
 
-    return getBase58EncodedKeyPair(secretKey, publicKey);
+    return { privateKey: convertBytesToHex(secretKey), publicKey: convertBytesToHex(publicKey) };
   }
 
-  public importByPrivateKey({ privateKey }: PrivateKey<"solExodus">): CommonKeyPair {
-    return importByPrivateKey(privateKey, this.ed25519Curve);
+  public importByPrivateKey({ privateKey }: PrivateKey<"tonExodus">): CommonKeyPair {
+    const secretKeyBuffer = Buffer.from(privateKey, "hex");
+    const publicKeyBuffer = this.ed25519Curve.getPublicKeyBuffer(secretKeyBuffer, false);
+
+    return {
+      privateKey: convertBytesToHex(secretKeyBuffer),
+      publicKey: convertBytesToHex(publicKeyBuffer),
+    };
   }
 }
 
-export { SolExodusKeyDerivation };
+export { TonExodusKeyDerivation };

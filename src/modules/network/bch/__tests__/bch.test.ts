@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { Bch } from "../bch.network.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
-import type { BchDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { getNetwork } from "../../get-network/index.js";
 import { bchConfig } from "../../libs/modules/config/index.js";
 import {
@@ -100,7 +100,9 @@ const MOCK_COMMON_TESTNETS_EXTRINSIC_PRIVATE_KEY =
   "cPS2rfjHVcJxNCTnxgoALhzeqCFFHadE4tButfB4L2aoowkMP4m7";
 
 type NetworkDerivationsInstances = {
-  [key in CommonNetworkPurposeRegTestExtendedUnion]: { [key in BchDerivationTypeUnion]: Bch };
+  [key in CommonNetworkPurposeRegTestExtendedUnion]: {
+    [key in DerivationTypeUnionByNetwork["bch"]]: Bch;
+  };
 };
 
 let networkDerivationsInstances = {} as NetworkDerivationsInstances;
@@ -112,7 +114,10 @@ beforeAll(() => {
     "regtest",
   ] as const;
 
-  const derivationTypes: BchDerivationTypeUnion[] = ["bchCashAddr", "bchLegacy"] as const;
+  const derivationTypes: DerivationTypeUnionByNetwork["bch"][] = [
+    "bchCashAddr",
+    "bchLegacy",
+  ] as const;
 
   networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
     (networkDerivationsInstances, networkPurpose) => {

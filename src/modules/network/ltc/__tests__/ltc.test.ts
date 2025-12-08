@@ -1,4 +1,4 @@
-import type { LtcDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { getNetwork } from "../../get-network/index.js";
 import { ltcConfig } from "../../libs/modules/config/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
@@ -147,7 +147,7 @@ const ITEM = {
 
 type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeRegTestExtendedUnion]: {
-    [key in LtcDerivationTypeUnion]: Ltc;
+    [key in DerivationTypeUnionByNetwork["ltc"]]: Ltc;
   };
 };
 
@@ -160,7 +160,7 @@ beforeAll(() => {
     "mainnet",
   ] as const;
 
-  const derivationTypes: LtcDerivationTypeUnion[] = [
+  const derivationTypes: DerivationTypeUnionByNetwork["ltc"][] = [
     "ltcLegacy",
     "ltcSegWit",
     "ltcNativeSegWit",

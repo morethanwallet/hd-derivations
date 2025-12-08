@@ -13,22 +13,27 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { getSolDerivationHandlers, getSolExodusDerivationHandlers } from "./libs/helpers/index.js";
+import {
+  getSolBaseDerivationHandlers,
+  getSolExodusDerivationHandlers,
+} from "./libs/helpers/helpers.js";
 import { Ed25519Curve, Secp256k1Curve } from "@/libs/modules/curves/curves.js";
-import { type SolDerivationTypeUnion } from "@/libs/types/types.js";
+import { type DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
-class Sol implements AbstractNetwork<SolDerivationTypeUnion> {
-  private derivationHandlers: DerivationsHandlers<SolDerivationTypeUnion>[SolDerivationTypeUnion];
+class Sol implements AbstractNetwork<DerivationTypeUnionByNetwork["sol"]> {
+  private derivationHandlers: DerivationsHandlers<
+    DerivationTypeUnionByNetwork["sol"]
+  >[DerivationTypeUnionByNetwork["sol"]];
 
   public constructor({
     mnemonic,
     derivationConfig,
-  }: ConstructorParameters<SolDerivationTypeUnion>) {
+  }: ConstructorParameters<DerivationTypeUnionByNetwork["sol"]>) {
     const ed25519Curve = new Ed25519Curve();
     const secp256k1Curve = new Secp256k1Curve();
 
-    const derivationHandlers: DerivationsHandlers<SolDerivationTypeUnion> = {
-      solBase: getSolDerivationHandlers({
+    const derivationHandlers: DerivationsHandlers<DerivationTypeUnionByNetwork["sol"]> = {
+      solBase: getSolBaseDerivationHandlers({
         keysDerivationInstance: new SolBaseKeyDerivation(mnemonic, ed25519Curve),
       }),
       solExodus: getSolExodusDerivationHandlers({
@@ -40,25 +45,25 @@ class Sol implements AbstractNetwork<SolDerivationTypeUnion> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<SolDerivationTypeUnion>,
-  ): DerivedItem<SolDerivationTypeUnion> {
+    parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["sol"]>,
+  ): DerivedItem<DerivationTypeUnionByNetwork["sol"]> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<SolDerivationTypeUnion>,
-  ): DerivedCredential<SolDerivationTypeUnion> {
+    parameters: GetCredentialFromPKParameters<DerivationTypeUnionByNetwork["sol"]>,
+  ): DerivedCredential<DerivationTypeUnionByNetwork["sol"]> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<SolDerivationTypeUnion>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeUnionByNetwork["sol"]>,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<SolDerivationTypeUnion>,
+    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeUnionByNetwork["sol"]>,
   ) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }

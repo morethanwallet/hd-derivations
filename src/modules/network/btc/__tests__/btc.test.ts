@@ -1,4 +1,4 @@
-import type { BtcDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { getNetwork } from "../../get-network/index.js";
 import { btcConfig } from "../../libs/modules/config/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
@@ -258,7 +258,7 @@ const MOCK_REGTEST_ITEM = {
 
 type NetworkDerivationsInstances = {
   [key in CommonNetworkPurposeRegTestExtendedUnion]: {
-    [key in BtcDerivationTypeUnion]: Btc;
+    [key in DerivationTypeUnionByNetwork["btc"]]: Btc;
   };
 };
 
@@ -271,7 +271,7 @@ beforeAll(() => {
     "mainnet",
   ] as const;
 
-  const derivationTypes: BtcDerivationTypeUnion[] = [
+  const derivationTypes: DerivationTypeUnionByNetwork["btc"][] = [
     "btcLegacy",
     "btcSegWit",
     "btcNativeSegWit",

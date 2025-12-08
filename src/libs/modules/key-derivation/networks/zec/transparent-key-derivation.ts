@@ -11,7 +11,7 @@ import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
 import { getKeyPairFromBip32Interface } from "../../libs/helpers/get-key-pair-from-bip32-interface.helper.js";
 import { ExceptionMessage } from "@/libs/enums/enums.js";
-import { deriveSecp256k1Node } from "../../libs/helpers/derive-secp256k1-node.helper.js";
+import { getSecp256k1NodeFromMnemonic } from "../../libs/helpers/get-secp256k1-node-from-mnemonic.helper.js";
 
 class TransparentKeyDerivation implements AbstractKeyDerivation<"zecTransparent"> {
   public readonly prefixConfig: PrefixConfig;
@@ -31,7 +31,7 @@ class TransparentKeyDerivation implements AbstractKeyDerivation<"zecTransparent"
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"zecTransparent">): CommonKeyPair {
-    const node = deriveSecp256k1Node({
+    const node = getSecp256k1NodeFromMnemonic({
       derivationPath,
       mnemonic: this.mnemonic,
       secp256k1Curve: this.secp256k1Curve,

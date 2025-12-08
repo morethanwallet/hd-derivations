@@ -5,14 +5,6 @@ export type {
 } from "./derivation-path.type.js";
 export type {
   DerivationTypeUnion,
-  BtcDerivationTypeUnion,
-  AdaDerivationTypeUnion,
-  XrpDerivationTypeUnion,
-  AvaxDerivationTypeUnion,
-  BchDerivationTypeUnion,
-  AptDerivationTypeUnion,
-  LtcDerivationTypeUnion,
-  DotDerivationTypeUnion,
+  DerivationTypeUnionByNetwork,
   GetDerivationTypeUnion,
-  SolDerivationTypeUnion,
 } from "./derivation-type-union.type.js";

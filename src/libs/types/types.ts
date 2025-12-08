@@ -4,16 +4,8 @@ export type {
   AdaBaseDerivationPath,
   DerivationPath,
   DerivationTypeUnion,
-  BtcDerivationTypeUnion,
-  AdaDerivationTypeUnion,
-  XrpDerivationTypeUnion,
-  AvaxDerivationTypeUnion,
+  DerivationTypeUnionByNetwork,
   GetDerivationTypeUnion,
-  BchDerivationTypeUnion,
-  AptDerivationTypeUnion,
-  LtcDerivationTypeUnion,
-  DotDerivationTypeUnion,
-  SolDerivationTypeUnion,
 } from "./derivation/types.js";
 export {
   type AdaBaseKeyPair,

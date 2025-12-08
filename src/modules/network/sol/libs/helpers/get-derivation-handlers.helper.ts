@@ -9,7 +9,7 @@ import type {
 } from "@/modules/network/libs/types/index.js";
 import { DEFAULT_SOL_BASE_ADDRESS_POSITION } from "../constants";
 
-function getSolDerivationHandlers({
+function getSolBaseDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["solBase"]): GetDerivationHandlersReturnType<"solBase"> {
   return {
@@ -72,4 +72,4 @@ function getSolExodusDerivationHandlers({
   };
 }
 
-export { getSolDerivationHandlers, getSolExodusDerivationHandlers };
+export { getSolBaseDerivationHandlers, getSolExodusDerivationHandlers };

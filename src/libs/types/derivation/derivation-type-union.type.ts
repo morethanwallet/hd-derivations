@@ -19,6 +19,7 @@ type DerivationTypeUnion =
   | "xrpX"
   | "trxBase"
   | "tonBase"
+  | "tonExodus"
   | "suiBase"
   | "dotBase"
   | "dotStandardHd"
@@ -56,16 +57,23 @@ type DotDerivationTypeUnion = GetDerivationTypeUnion<"dotBase" | "dotStandardHd"
 
 type SolDerivationTypeUnion = GetDerivationTypeUnion<"solBase" | "solExodus">;
 
-export type {
-  DerivationTypeUnion,
-  BtcDerivationTypeUnion,
-  AdaDerivationTypeUnion,
-  XrpDerivationTypeUnion,
-  AvaxDerivationTypeUnion,
-  BchDerivationTypeUnion,
-  AptDerivationTypeUnion,
-  LtcDerivationTypeUnion,
-  DotDerivationTypeUnion,
-  GetDerivationTypeUnion,
-  SolDerivationTypeUnion,
+type TonDerivationTypeUnion = GetDerivationTypeUnion<"tonBase" | "tonExodus">;
+
+type DerivationTypeUnionByNetwork = {
+  btc: BtcDerivationTypeUnion;
+  ada: AdaDerivationTypeUnion;
+  xrp: XrpDerivationTypeUnion;
+  avax: AvaxDerivationTypeUnion;
+  bch: BchDerivationTypeUnion;
+  apt: AptDerivationTypeUnion;
+  ltc: LtcDerivationTypeUnion;
+  dot: DotDerivationTypeUnion;
+  sol: SolDerivationTypeUnion;
+  ton: TonDerivationTypeUnion;
+  trx: GetDerivationTypeUnion<"trxBase">;
+  sui: GetDerivationTypeUnion<"suiBase">;
+  doge: GetDerivationTypeUnion<"dogeLegacy">;
+  zec: GetDerivationTypeUnion<"zecTransparent">;
 };
+
+export type { GetDerivationTypeUnion, DerivationTypeUnion, DerivationTypeUnionByNetwork };

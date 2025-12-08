@@ -1,5 +1,5 @@
 import { getAptAddress } from "@/libs/modules/address/index.js";
-import type { AptDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import {
   deriveItemsBatchFromMnemonic,
   doesPKExistInBatch,
@@ -14,7 +14,9 @@ function getAptDerivationHandlers({
   scheme,
   isMultiSig,
   isLegacy,
-}: GetDerivationHandlersParameters[AptDerivationTypeUnion]): GetDerivationHandlersReturnType<AptDerivationTypeUnion> {
+}: GetDerivationHandlersParameters[DerivationTypeUnionByNetwork["apt"]]): GetDerivationHandlersReturnType<
+  DerivationTypeUnionByNetwork["apt"]
+> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({
@@ -35,7 +37,7 @@ function getAptDerivationHandlers({
       return { ...keys, address };
     },
     deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
-      return (deriveItemsBatchFromMnemonic<AptDerivationTypeUnion>).call(
+      return (deriveItemsBatchFromMnemonic<DerivationTypeUnionByNetwork["apt"]>).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },

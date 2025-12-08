@@ -1,4 +1,7 @@
-import { CommonEd25519KeyDerivation } from "@/libs/modules/key-derivation/index.js";
+import {
+  CommonEd25519KeyDerivation,
+  TonExodusKeyDerivation,
+} from "@/libs/modules/key-derivation/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
   GetCredentialFromPKParameters,
@@ -10,42 +13,61 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { getTonDerivationHandlers } from "./libs/helpers/index.js";
-import { Ed25519Curve } from "@/libs/modules/curves/curves.js";
+import {
+  getTonBaseDerivationHandlers,
+  getTonExodusDerivationHandlers,
+} from "./libs/helpers/helpers.js";
+import { Ed25519Curve, Secp256k1Curve } from "@/libs/modules/curves/curves.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
-class Ton implements AbstractNetwork<"tonBase"> {
-  private derivationHandlers: DerivationsHandlers<"tonBase">["tonBase"];
+class Ton implements AbstractNetwork<DerivationTypeUnionByNetwork["ton"]> {
+  private derivationHandlers: DerivationsHandlers<
+    DerivationTypeUnionByNetwork["ton"]
+  >[DerivationTypeUnionByNetwork["ton"]];
 
-  // TODO: Remove derivation type for chains with only 1 derivation type
-  public constructor({ derivationConfig, mnemonic }: ConstructorParameters<"tonBase">) {
+  public constructor({
+    derivationConfig,
+    mnemonic,
+  }: ConstructorParameters<DerivationTypeUnionByNetwork["ton"]>) {
     const { derivationType, ...addressParameters } = derivationConfig;
-    const ed25519Curve = new Ed25519Curve();
+    const ed25519Curve = new Ed25519Curve(); // TODO: Export already initialized curves
+    const secp256k1Curve = new Secp256k1Curve();
 
-    this.derivationHandlers = getTonDerivationHandlers({
-      ...addressParameters,
-      keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic, ed25519Curve),
-    });
+    const derivationHandlers: DerivationsHandlers<DerivationTypeUnionByNetwork["ton"]> = {
+      tonBase: getTonBaseDerivationHandlers({
+        ...addressParameters,
+        keysDerivationInstance: new CommonEd25519KeyDerivation(mnemonic, ed25519Curve),
+      }),
+      tonExodus: getTonExodusDerivationHandlers({
+        ...addressParameters,
+        keysDerivationInstance: new TonExodusKeyDerivation(mnemonic, ed25519Curve, secp256k1Curve),
+      }),
+    };
+
+    this.derivationHandlers = derivationHandlers[derivationConfig.derivationType];
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<"tonBase">,
-  ): DerivedItem<"tonBase"> {
+    parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["ton"]>,
+  ): DerivedItem<DerivationTypeUnionByNetwork["ton"]> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<"tonBase">,
-  ): DerivedCredential<"tonBase"> {
+    parameters: GetCredentialFromPKParameters<DerivationTypeUnionByNetwork["ton"]>,
+  ): DerivedCredential<DerivationTypeUnionByNetwork["ton"]> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<"tonBase">,
+    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeUnionByNetwork["ton"]>,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
-  public doesPKBelongToMnemonic(parameters: DoesPKBelongToMnemonicParameters<"tonBase">) {
+  public doesPKBelongToMnemonic(
+    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeUnionByNetwork["ton"]>,
+  ) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }
 }

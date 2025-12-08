@@ -9,26 +9,28 @@ import type {
   DoesPKBelongToMnemonicParameters,
   GetCredentialFromPKParameters,
 } from "../libs/types/index.js";
-import type { XrpDerivationTypeUnion } from "@/libs/types/types.js";
-import { geXrpDerivationHandlers } from "./libs/helpers/index.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
+import { getXrpDerivationHandlers } from "./libs/helpers/index.js";
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
 import { findCustomPrefixConfig } from "../libs/helpers/index.js";
 import { xrpConfig } from "../libs/modules/config/index.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
-class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
-  private derivationHandlers: DerivationsHandlers<XrpDerivationTypeUnion>[XrpDerivationTypeUnion];
+class Xrp implements AbstractNetwork<DerivationTypeUnionByNetwork["xrp"]> {
+  private derivationHandlers: DerivationsHandlers<
+    DerivationTypeUnionByNetwork["xrp"]
+  >[DerivationTypeUnionByNetwork["xrp"]];
 
   public constructor({
     mnemonic,
     derivationConfig,
-  }: ConstructorParameters<XrpDerivationTypeUnion>) {
+  }: ConstructorParameters<DerivationTypeUnionByNetwork["xrp"]>) {
     const { derivationType, networkPurpose, destinationTag } = derivationConfig;
     const isTestnet = networkPurpose === "testnet";
     const secp256k1Curve = new Secp256k1Curve();
 
-    const derivationsHandlers: DerivationsHandlers<XrpDerivationTypeUnion> = {
-      xrpBase: geXrpDerivationHandlers({
+    const derivationsHandlers: DerivationsHandlers<DerivationTypeUnionByNetwork["xrp"]> = {
+      xrpBase: getXrpDerivationHandlers({
         derivationType,
         isTestnet,
         destinationTag,
@@ -39,7 +41,7 @@ class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
           false,
         ),
       }),
-      xrpX: geXrpDerivationHandlers({
+      xrpX: getXrpDerivationHandlers({
         derivationType,
         isTestnet,
         destinationTag,
@@ -56,25 +58,25 @@ class Xrp implements AbstractNetwork<XrpDerivationTypeUnion> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<XrpDerivationTypeUnion>,
-  ): DerivedItem<XrpDerivationTypeUnion> {
+    parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["xrp"]>,
+  ): DerivedItem<DerivationTypeUnionByNetwork["xrp"]> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<XrpDerivationTypeUnion>,
-  ): DerivedCredential<XrpDerivationTypeUnion> {
+    parameters: GetCredentialFromPKParameters<DerivationTypeUnionByNetwork["xrp"]>,
+  ): DerivedCredential<DerivationTypeUnionByNetwork["xrp"]> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<XrpDerivationTypeUnion>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeUnionByNetwork["xrp"]>,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<XrpDerivationTypeUnion>,
+    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeUnionByNetwork["xrp"]>,
   ) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }

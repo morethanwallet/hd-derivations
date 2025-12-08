@@ -1,20 +1,13 @@
-import type {
-  XrpDerivationTypeUnion,
-  BtcDerivationTypeUnion,
-  BchDerivationTypeUnion,
-  AvaxDerivationTypeUnion,
-  LtcDerivationTypeUnion,
-  GetDerivationTypeUnion,
-} from "@/libs/types/types.js";
+import type { GetDerivationTypeUnion, DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 type CommonBipDerivationTypeUnion = GetDerivationTypeUnion<
-  | BtcDerivationTypeUnion
-  | BchDerivationTypeUnion
-  | AvaxDerivationTypeUnion
-  | XrpDerivationTypeUnion
-  | "trxBase"
-  | "dogeLegacy"
-  | LtcDerivationTypeUnion
+  | DerivationTypeUnionByNetwork["btc"]
+  | DerivationTypeUnionByNetwork["bch"]
+  | DerivationTypeUnionByNetwork["avax"]
+  | DerivationTypeUnionByNetwork["xrp"]
+  | DerivationTypeUnionByNetwork["trx"]
+  | DerivationTypeUnionByNetwork["doge"]
+  | DerivationTypeUnionByNetwork["ltc"]
 >;
 
 export { type CommonBipDerivationTypeUnion };

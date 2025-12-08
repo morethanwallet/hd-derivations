@@ -1,4 +1,8 @@
-import type { PrefixConfig, Secp256k1Curve } from "@/libs/modules/curves/curves";
+import type {
+  NonNullableBip32Interface,
+  PrefixConfig,
+  Secp256k1Curve,
+} from "@/libs/modules/curves/curves";
 import type { Mnemonic } from "@/libs/modules/mnemonic";
 import type { BIP32Interface } from "bip32";
 import { KeyDerivationError } from "../exceptions";
@@ -11,8 +15,6 @@ type Parameters = {
   secp256k1Curve: Secp256k1Curve;
 };
 
-type NonNullableBip32Interface = Omit<BIP32Interface, "privateKey"> & { privateKey: Uint8Array };
-
 function checkNodePrivateKey(node: BIP32Interface): node is NonNullableBip32Interface {
   if (!node.privateKey) {
     return false;
@@ -21,7 +23,7 @@ function checkNodePrivateKey(node: BIP32Interface): node is NonNullableBip32Inte
   return true;
 }
 
-function deriveSecp256k1Node({
+function getSecp256k1NodeFromMnemonic({
   mnemonic,
   derivationPath,
   secp256k1Curve,
@@ -38,4 +40,4 @@ function deriveSecp256k1Node({
   return node;
 }
 
-export { deriveSecp256k1Node };
+export { getSecp256k1NodeFromMnemonic };

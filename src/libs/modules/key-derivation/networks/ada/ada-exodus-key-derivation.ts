@@ -8,10 +8,10 @@ import type { GetDerivationTypeUnion, KeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { type Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
-import { Ed25519SecretKeyBytePosition } from "../../libs/enums/index.js";
 import { ExceptionMessage as AdaExceptionMessage } from "./libs/enums/enums.js";
 import { createHmac, createHash } from "crypto";
-import { deriveSecp256k1Node } from "../../libs/helpers/index.js";
+import { getSecp256k1NodeFromMnemonic } from "../../libs/helpers/index.js";
+import { Ed25519SecretKeyBytePosition } from "@/libs/modules/curves/curves.js";
 
 const Ed25519ClampMask = {
   LOW: 0b11111000, // 248
@@ -43,7 +43,7 @@ class AdaExodusKeyDerivation implements AbstractKeyDerivation<GetDerivationTypeU
   }: DeriveFromMnemonicParameters<GetDerivationTypeUnion<"adaExodus">>): KeyPair<
     GetDerivationTypeUnion<"adaExodus">
   > {
-    const node = deriveSecp256k1Node({
+    const node = getSecp256k1NodeFromMnemonic({
       derivationPath,
       mnemonic: this.mnemonic,
       secp256k1Curve: this.secp256k1Curve,

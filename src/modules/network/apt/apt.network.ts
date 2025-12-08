@@ -11,15 +11,17 @@ import type {
   GetCredentialFromPKParameters,
 } from "../libs/types/index.js";
 import { getAptDerivationHandlers } from "./libs/helpers/index.js";
-import type { AptDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
-class Apt implements AbstractNetwork<AptDerivationTypeUnion> {
-  private derivationHandlers: DerivationsHandlers<AptDerivationTypeUnion>[AptDerivationTypeUnion];
+class Apt implements AbstractNetwork<DerivationTypeUnionByNetwork["apt"]> {
+  private derivationHandlers: DerivationsHandlers<
+    DerivationTypeUnionByNetwork["apt"]
+  >[DerivationTypeUnionByNetwork["apt"]];
 
   public constructor({
     mnemonic,
     derivationConfig: { scheme, authenticationScheme, derivationType },
-  }: ConstructorParameters<AptDerivationTypeUnion>) {
+  }: ConstructorParameters<DerivationTypeUnionByNetwork["apt"]>) {
     this.derivationHandlers = getAptDerivationHandlers({
       scheme,
       isLegacy: derivationType === "aptLegacy",
@@ -29,25 +31,25 @@ class Apt implements AbstractNetwork<AptDerivationTypeUnion> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<AptDerivationTypeUnion>,
-  ): DerivedItem<AptDerivationTypeUnion> {
+    parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["apt"]>,
+  ): DerivedItem<DerivationTypeUnionByNetwork["apt"]> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<AptDerivationTypeUnion>,
-  ): DerivedCredential<AptDerivationTypeUnion> {
+    parameters: GetCredentialFromPKParameters<DerivationTypeUnionByNetwork["apt"]>,
+  ): DerivedCredential<DerivationTypeUnionByNetwork["apt"]> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<AptDerivationTypeUnion>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeUnionByNetwork["apt"]>,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<AptDerivationTypeUnion>,
+    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeUnionByNetwork["apt"]>,
   ) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }

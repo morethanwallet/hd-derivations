@@ -1,5 +1,9 @@
 export { TaprootKeyDerivation } from "./networks/btc/index.js";
-export { AdaBaseKeyDerivation, AdaCommonKeyDerivation } from "./networks/ada/index.js";
+export {
+  AdaBaseKeyDerivation,
+  AdaCommonKeyDerivation,
+  AdaExodusKeyDerivation,
+} from "./networks/ada/ada.js";
 export { CommonBipKeyDerivation, CommonEd25519KeyDerivation } from "./networks/common/index.js";
 export { SuiKeyDerivation } from "./networks/sui/index.js";
 export { BnbKeyDerivation } from "./networks/bnb/index.js";
@@ -8,3 +12,4 @@ export { SolBaseKeyDerivation, SolExodusKeyDerivation } from "./networks/sol/ind
 export { TransparentKeyDerivation } from "./networks/zec/index.js";
 export { AptKeyDerivation } from "./networks/apt/index.js";
 export { DotKeyDerivation } from "./networks/dot/index.js";
+export { TonExodusKeyDerivation } from "./networks/ton/ton.js";

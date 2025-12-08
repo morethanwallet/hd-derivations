@@ -1,5 +1,5 @@
 import { getXrpAddress } from "@/libs/modules/address/index.js";
-import type { XrpDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
@@ -10,10 +10,12 @@ import type {
   GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
 
-function geXrpDerivationHandlers({
+function getXrpDerivationHandlers({
   keysDerivationInstance,
   ...parameters
-}: GetDerivationHandlersParameters[XrpDerivationTypeUnion]): GetDerivationHandlersReturnType<XrpDerivationTypeUnion> {
+}: GetDerivationHandlersParameters[DerivationTypeUnionByNetwork["xrp"]]): GetDerivationHandlersReturnType<
+  DerivationTypeUnionByNetwork["xrp"]
+> {
   return {
     deriveItemFromMnemonic: ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
@@ -34,15 +36,15 @@ function geXrpDerivationHandlers({
       indexLookupTo,
       shouldUseHardenedAddress,
     }) {
-      return (deriveItemsBatchFromMnemonic<XrpDerivationTypeUnion>).call(
+      return (deriveItemsBatchFromMnemonic<DerivationTypeUnionByNetwork["xrp"]>).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
         shouldUseHardenedAddress,
       );
     },
-    doesPKBelongToMnemonic: doesPKBelongToMnemonic<XrpDerivationTypeUnion>,
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<DerivationTypeUnionByNetwork["xrp"]>,
   };
 }
 
-export { geXrpDerivationHandlers };
+export { getXrpDerivationHandlers };

@@ -1,17 +1,8 @@
 import type { PrefixConfig } from "@/libs/modules/curves/curves.js";
 import type {
-  AdaDerivationTypeUnion,
-  AptDerivationTypeUnion,
+  DerivationTypeUnionByNetwork,
   AuthSchemeUnion,
-  AvaxDerivationTypeUnion,
-  BchDerivationTypeUnion,
-  BtcDerivationTypeUnion,
-  GetDerivationTypeUnion,
-  DotDerivationTypeUnion,
   GetSignatureSchemeUnion,
-  LtcDerivationTypeUnion,
-  XrpDerivationTypeUnion,
-  SolDerivationTypeUnion,
 } from "@/libs/types/types.js";
 import type {
   AdaNetworkPurposeUnion,
@@ -25,72 +16,72 @@ type PrefixConfigProperty = { prefixConfig?: PrefixConfig };
 
 type AdaDerivationConfig = {
   networkPurpose: AdaNetworkPurposeUnion;
-  derivationType: AdaDerivationTypeUnion;
+  derivationType: DerivationTypeUnionByNetwork["ada"];
 };
 
 type AvaxDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
-  derivationType: AvaxDerivationTypeUnion;
+  derivationType: DerivationTypeUnionByNetwork["avax"];
 } & PrefixConfigProperty;
 
 type BtcDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-  derivationType: BtcDerivationTypeUnion;
+  derivationType: DerivationTypeUnionByNetwork["btc"];
 } & PrefixConfigProperty;
 
 type TrxDerivationConfig = {
-  derivationType: GetDerivationTypeUnion<"trxBase">;
+  derivationType: DerivationTypeUnionByNetwork["trx"];
 } & PrefixConfigProperty;
 
 type TonDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
-  derivationType: GetDerivationTypeUnion<"tonBase">;
+  derivationType: DerivationTypeUnionByNetwork["ton"];
 } & TonAddressDerivationConfig;
 
 type SuiDerivationConfig = {
   scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
-  derivationType: GetDerivationTypeUnion<"suiBase">;
+  derivationType: DerivationTypeUnionByNetwork["sui"];
 };
 
 type BchDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-  derivationType: BchDerivationTypeUnion;
+  derivationType: DerivationTypeUnionByNetwork["bch"];
 } & PrefixConfigProperty;
 
 type DotDerivationConfig = {
-  derivationType: DotDerivationTypeUnion;
+  derivationType: DerivationTypeUnionByNetwork["dot"];
   scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
 } & Ss58Format;
 
 type XrpDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
-  derivationType: XrpDerivationTypeUnion;
+  derivationType: DerivationTypeUnionByNetwork["xrp"];
 } & PrefixConfigProperty &
   DestinationTagProperty;
 
 type DogeDerivationConfig = {
-  derivationType: GetDerivationTypeUnion<"dogeLegacy">;
+  derivationType: DerivationTypeUnionByNetwork["doge"];
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
 } & PrefixConfigProperty;
 
 type ZecDerivationConfig = {
-  derivationType: GetDerivationTypeUnion<"zecTransparent">;
+  derivationType: DerivationTypeUnionByNetwork["zec"];
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
 } & PrefixConfigProperty;
 
 type AptDerivationConfig = {
-  derivationType: AptDerivationTypeUnion;
+  derivationType: DerivationTypeUnionByNetwork["apt"];
   authenticationScheme?: AuthSchemeUnion;
   scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
 };
 
 type LtcDerivationConfig = {
   networkPurpose: CommonNetworkPurposeRegTestExtendedUnion;
-  derivationType: LtcDerivationTypeUnion;
+  derivationType: DerivationTypeUnionByNetwork["ltc"];
 } & PrefixConfigProperty;
 
 type SolDerivationConfig = {
-  derivationType: SolDerivationTypeUnion;
+  derivationType: DerivationTypeUnionByNetwork["sol"];
 };
 
 type DerivationConfig = {
