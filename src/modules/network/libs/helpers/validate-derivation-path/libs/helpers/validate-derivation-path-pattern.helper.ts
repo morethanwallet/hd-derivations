@@ -1,5 +1,5 @@
 import { ValidationError } from "@/libs/exceptions/index.js";
-import { ExceptionMessage } from "@/libs/enums/index.js";
+import { ExceptionMessage } from "@/libs/enums/enums.js";
 import type { CommonDerivationPath } from "@/libs/types/types.js";
 
 function validateDerivationPathPattern(

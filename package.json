@@ -67,7 +67,7 @@
     "got": "14.6.5",
     "micro-sr25519": "0.1.0",
     "tiny-secp256k1": "2.2.3",
-    "xrpl": "4.3.0"
+    "xrpl": "4.4.3"
   },
   "devDependencies": {
     "@types/bchaddrjs": "0.4.3",

@@ -1,4 +1,4 @@
-import type { BchDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import type {
   AbstractNetwork,
   DerivationsHandlers,
@@ -19,17 +19,19 @@ import { findCustomPrefixConfig } from "../libs/helpers/index.js";
 import { bchConfig } from "../libs/modules/config/index.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
-class Bch implements AbstractNetwork<BchDerivationTypeUnion> {
-  private derivationHandlers: DerivationsHandlers<BchDerivationTypeUnion>[BchDerivationTypeUnion];
+class Bch implements AbstractNetwork<DerivationTypeUnionByNetwork["bch"]> {
+  private derivationHandlers: DerivationsHandlers<
+    DerivationTypeUnionByNetwork["bch"]
+  >[DerivationTypeUnionByNetwork["bch"]];
 
   public constructor({
     mnemonic,
     derivationConfig,
-  }: ConstructorParameters<BchDerivationTypeUnion>) {
+  }: ConstructorParameters<DerivationTypeUnionByNetwork["bch"]>) {
     const { networkPurpose, derivationType } = derivationConfig;
     const secp256k1Curve = new Secp256k1Curve();
 
-    const derivationsHandlers: DerivationsHandlers<BchDerivationTypeUnion> = {
+    const derivationsHandlers: DerivationsHandlers<DerivationTypeUnionByNetwork["bch"]> = {
       bchLegacy: getLegacyDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomPrefixConfig("bchLegacy", derivationConfig) ??
@@ -53,25 +55,25 @@ class Bch implements AbstractNetwork<BchDerivationTypeUnion> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<BchDerivationTypeUnion>,
-  ): DerivedItem<BchDerivationTypeUnion> {
+    parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["bch"]>,
+  ): DerivedItem<DerivationTypeUnionByNetwork["bch"]> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<BchDerivationTypeUnion>,
-  ): DerivedCredential<BchDerivationTypeUnion> {
+    parameters: GetCredentialFromPKParameters<DerivationTypeUnionByNetwork["bch"]>,
+  ): DerivedCredential<DerivationTypeUnionByNetwork["bch"]> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<BchDerivationTypeUnion>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeUnionByNetwork["bch"]>,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<BchDerivationTypeUnion>,
+    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeUnionByNetwork["bch"]>,
   ) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }

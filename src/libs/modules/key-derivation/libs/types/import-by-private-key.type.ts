@@ -2,7 +2,7 @@ import type {
   PrivateKey,
   KeyPair,
   DerivationTypeUnion,
-  AptDerivationTypeUnion,
+  DerivationTypeUnionByNetwork,
   GetSignatureSchemeUnion,
 } from "@/libs/types/types.js";
 import type { HandlersCommonParameters } from "./handlers-common-parameters.type.js";
@@ -13,7 +13,7 @@ type AptParameters = {
 };
 
 type ImportByPrivateKeyParameters<T extends DerivationTypeUnion> = PrivateKey<T> &
-  (T extends AptDerivationTypeUnion ? AptParameters : HandlersCommonParameters<T>);
+  (T extends DerivationTypeUnionByNetwork["apt"] ? AptParameters : HandlersCommonParameters<T>);
 
 type ImportByPrivateKey<T extends DerivationTypeUnion> = (
   parameters: ImportByPrivateKeyParameters<T>,

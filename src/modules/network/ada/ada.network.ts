@@ -16,7 +16,7 @@ import {
   getExodusDerivationHandlers,
   getBaseDerivationHandlers,
 } from "./libs/helpers/index.js";
-import type { AdaDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import {
   AdaBaseKeyDerivation,
   AdaCommonKeyDerivation,
@@ -24,18 +24,20 @@ import {
 import { AdaExodusKeyDerivation } from "@/libs/modules/key-derivation/networks/ada/ada-exodus-key-derivation.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
-class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
-  private derivationHandlers: DerivationsHandlers<AdaDerivationTypeUnion>[AdaDerivationTypeUnion];
+class Ada implements AbstractNetwork<DerivationTypeUnionByNetwork["ada"]> {
+  private derivationHandlers: DerivationsHandlers<
+    DerivationTypeUnionByNetwork["ada"]
+  >[DerivationTypeUnionByNetwork["ada"]];
 
   public constructor({
     mnemonic,
     derivationConfig: { derivationType, networkPurpose },
-  }: ConstructorParameters<AdaDerivationTypeUnion>) {
+  }: ConstructorParameters<DerivationTypeUnionByNetwork["ada"]>) {
     const networkId = getNetworkId(networkPurpose);
     const commonKeysDerivationInstance = new AdaCommonKeyDerivation(mnemonic);
     const secp256k1Curve = new Secp256k1Curve();
 
-    const derivationsHandlers: DerivationsHandlers<AdaDerivationTypeUnion> = {
+    const derivationsHandlers: DerivationsHandlers<DerivationTypeUnionByNetwork["ada"]> = {
       adaEnterprise: getEnterpriseDerivationHandlers({
         networkId,
         keysDerivationInstance: commonKeysDerivationInstance,
@@ -58,25 +60,25 @@ class Ada implements AbstractNetwork<AdaDerivationTypeUnion> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<AdaDerivationTypeUnion>,
-  ): DerivedItem<AdaDerivationTypeUnion> {
+    parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["ada"]>,
+  ): DerivedItem<DerivationTypeUnionByNetwork["ada"]> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<AdaDerivationTypeUnion>,
-  ): DerivedCredential<AdaDerivationTypeUnion> {
+    parameters: GetCredentialFromPKParameters<DerivationTypeUnionByNetwork["ada"]>,
+  ): DerivedCredential<DerivationTypeUnionByNetwork["ada"]> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<AdaDerivationTypeUnion>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeUnionByNetwork["ada"]>,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<AdaDerivationTypeUnion>,
+    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeUnionByNetwork["ada"]>,
   ) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }

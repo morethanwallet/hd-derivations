@@ -1,5 +1,5 @@
 import type { CommonDerivationPath } from "@/libs/types/types.js";
-import { DerivationPathSymbol } from "@/libs/enums/index.js";
+import { DerivationPathSymbol } from "@/libs/enums/enums.js";
 
 type AppendAddressToDerivationPathParameters = {
   derivationPath: CommonDerivationPath["derivationPath"];

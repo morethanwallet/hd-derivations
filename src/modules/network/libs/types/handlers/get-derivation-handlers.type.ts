@@ -12,15 +12,14 @@ import type {
   AdaCommonKeyDerivation,
   DotKeyDerivation,
   SolExodusKeyDerivation,
+  TonExodusKeyDerivation,
+  AdaExodusKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
 import type {
   GetDerivationTypeUnion,
-  AvaxDerivationTypeUnion,
   DerivationTypeUnion,
-  XrpDerivationTypeUnion,
   GetSignatureSchemeUnion,
-  AptDerivationTypeUnion,
-  LtcDerivationTypeUnion,
+  DerivationTypeUnionByNetwork,
 } from "@/libs/types/types.js";
 import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
 import { type GetCredentialFromPK } from "./get-credential-from-p-k.type.js";
@@ -29,7 +28,6 @@ import { type DoesPKBelongToMnemonic } from "./does-p-k-belong-to-mnemonic.type.
 import type { CommonNetworkPurposeUnion } from "../network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "../ton-address-derivation-config.type.js";
 import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
-import { AdaExodusKeyDerivation } from "@/libs/modules/key-derivation/networks/ada/ada-exodus-key-derivation.js";
 
 type AvaxParameters = {
   prefix: string;
@@ -53,10 +51,17 @@ type AdaBaseParameters = {
   keysDerivationInstance: AdaBaseKeyDerivation;
 };
 
-type TonParameters = {
-  keysDerivationInstance: CommonEd25519KeyDerivation;
+type TonCommonParameters = {
   networkPurpose: CommonNetworkPurposeUnion;
 } & TonAddressDerivationConfig;
+
+type TonBaseParameters = {
+  keysDerivationInstance: CommonEd25519KeyDerivation;
+} & TonCommonParameters;
+
+type TonExodusParameters = {
+  keysDerivationInstance: TonExodusKeyDerivation;
+} & TonCommonParameters;
 
 type SuiParameters = {
   keysDerivationInstance: SuiKeyDerivation;
@@ -66,7 +71,7 @@ type SuiParameters = {
 type XrpParameters = {
   keysDerivationInstance: CommonBipKeyDerivation;
   isTestnet: boolean;
-  derivationType: XrpDerivationTypeUnion;
+  derivationType: DerivationTypeUnionByNetwork["xrp"];
 } & DestinationTagProperty;
 
 type BnbParameters = { keysDerivationInstance: BnbKeyDerivation };
@@ -100,25 +105,29 @@ type AptParameters = {
 type CommonBipParameters = { keysDerivationInstance: CommonBipKeyDerivation };
 
 type CommonBipParametersDerivationTypeUnion = GetDerivationTypeUnion<
-  | "bchLegacy"
   | "btcLegacy"
   | "btcNativeSegWit"
   | "btcP2wsh"
   | "btcP2wshInP2sh"
   | "btcSegWit"
-  | "dogeLegacy"
-  | LtcDerivationTypeUnion
-  | "trxBase"
+  | DerivationTypeUnionByNetwork["bch"]
+  | DerivationTypeUnionByNetwork["doge"]
+  | DerivationTypeUnionByNetwork["ltc"]
+  | DerivationTypeUnionByNetwork["trx"]
 >;
 
-type GetDerivationHandlersParameters = Record<AvaxDerivationTypeUnion, AvaxParameters> &
+type GetDerivationHandlersParameters = Record<
+  DerivationTypeUnionByNetwork["avax"],
+  AvaxParameters
+> &
   Record<GetDerivationTypeUnion<"btcTaproot">, BtcTaprootParameters> &
   Record<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">, AdaCommonParameters> &
   Record<GetDerivationTypeUnion<"adaExodus">, AdaExoodusParameters> &
   Record<GetDerivationTypeUnion<"adaBase">, AdaBaseParameters> &
-  Record<GetDerivationTypeUnion<"tonBase">, TonParameters> &
+  Record<GetDerivationTypeUnion<"tonBase">, TonBaseParameters> &
+  Record<GetDerivationTypeUnion<"tonExodus">, TonExodusParameters> &
   Record<GetDerivationTypeUnion<"suiBase">, SuiParameters> &
-  Record<XrpDerivationTypeUnion, XrpParameters> &
+  Record<DerivationTypeUnionByNetwork["xrp"], XrpParameters> &
   Record<GetDerivationTypeUnion<"bnbBase">, BnbParameters> &
   Record<GetDerivationTypeUnion<"evmBase">, EvmParameters> &
   Record<GetDerivationTypeUnion<"dotStandardHd">, DotStandardHdParameters> &
@@ -127,7 +136,7 @@ type GetDerivationHandlersParameters = Record<AvaxDerivationTypeUnion, AvaxParam
   Record<GetDerivationTypeUnion<"solBase">, SolBaseParameters> &
   Record<GetDerivationTypeUnion<"solExodus">, SolExodusParameters> &
   Record<GetDerivationTypeUnion<"zecTransparent">, ZecParameters> &
-  Record<AptDerivationTypeUnion, AptParameters> &
+  Record<DerivationTypeUnionByNetwork["apt"], AptParameters> &
   Record<CommonBipParametersDerivationTypeUnion, CommonBipParameters>;
 
 type GetDerivationHandlersReturnType<T extends DerivationTypeUnion> = {

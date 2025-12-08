@@ -1,15 +1,7 @@
 import type {
-  AvaxDerivationTypeUnion,
-  AdaDerivationTypeUnion,
-  BtcDerivationTypeUnion,
   DerivationTypeUnion,
   GetDerivationTypeUnion,
-  BchDerivationTypeUnion,
-  XrpDerivationTypeUnion,
-  AptDerivationTypeUnion,
-  LtcDerivationTypeUnion,
-  DotDerivationTypeUnion,
-  SolDerivationTypeUnion,
+  DerivationTypeUnionByNetwork,
 } from "@/libs/types/types.js";
 import { DotMnemonic, type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import type { GetDerivationConfig } from "./derivation-config.type.js";
@@ -19,33 +11,33 @@ type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
   T extends GetDerivationTypeUnion<"evmBase" | "bnbBase">
     ? { derivationConfig?: GetDerivationConfig<"evm" | "bnb"> }
     : {
-        derivationConfig: T extends BtcDerivationTypeUnion
+        derivationConfig: T extends DerivationTypeUnionByNetwork["btc"]
           ? GetDerivationConfig<"btc">
-          : T extends AdaDerivationTypeUnion
+          : T extends DerivationTypeUnionByNetwork["ada"]
             ? GetDerivationConfig<"ada">
-            : T extends AvaxDerivationTypeUnion
+            : T extends DerivationTypeUnionByNetwork["avax"]
               ? GetDerivationConfig<"avax">
-              : T extends GetDerivationTypeUnion<"trxBase">
+              : T extends DerivationTypeUnionByNetwork["trx"]
                 ? GetDerivationConfig<"trx">
-                : T extends GetDerivationTypeUnion<"tonBase">
+                : T extends DerivationTypeUnionByNetwork["ton"]
                   ? GetDerivationConfig<"ton">
-                  : T extends GetDerivationTypeUnion<"suiBase">
+                  : T extends DerivationTypeUnionByNetwork["sui"]
                     ? GetDerivationConfig<"sui">
-                    : T extends BchDerivationTypeUnion
+                    : T extends DerivationTypeUnionByNetwork["bch"]
                       ? GetDerivationConfig<"bch">
-                      : T extends DotDerivationTypeUnion
+                      : T extends DerivationTypeUnionByNetwork["dot"]
                         ? GetDerivationConfig<"dot">
-                        : T extends XrpDerivationTypeUnion
+                        : T extends DerivationTypeUnionByNetwork["xrp"]
                           ? GetDerivationConfig<"xrp">
-                          : T extends GetDerivationTypeUnion<"dogeLegacy">
+                          : T extends DerivationTypeUnionByNetwork["doge"]
                             ? GetDerivationConfig<"doge">
-                            : T extends GetDerivationTypeUnion<"zecTransparent">
+                            : T extends DerivationTypeUnionByNetwork["zec"]
                               ? GetDerivationConfig<"zec">
-                              : T extends AptDerivationTypeUnion
+                              : T extends DerivationTypeUnionByNetwork["apt"]
                                 ? GetDerivationConfig<"apt">
-                                : T extends LtcDerivationTypeUnion
+                                : T extends DerivationTypeUnionByNetwork["ltc"]
                                   ? GetDerivationConfig<"ltc">
-                                  : T extends GetDerivationTypeUnion<SolDerivationTypeUnion>
+                                  : T extends DerivationTypeUnionByNetwork["sol"]
                                     ? GetDerivationConfig<"sol">
                                     : never;
       };
@@ -53,6 +45,6 @@ type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =
 type ConstructorParameters<T extends DerivationTypeUnion> = {
   mnemonic: Mnemonic;
 } & ConstructorDerivationConfigParameters<T> &
-  (T extends DotDerivationTypeUnion ? { dotMnemonic: DotMnemonic } : {});
+  (T extends DerivationTypeUnionByNetwork["dot"] ? { dotMnemonic: DotMnemonic } : {});
 
 export { type ConstructorParameters };

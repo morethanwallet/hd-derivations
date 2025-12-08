@@ -9,7 +9,7 @@ import {
 } from "../../libs/constants/index.js";
 import { dotConfig } from "../../libs/modules/config/index.js";
 import {
-  type DotDerivationTypeUnion,
+  type DerivationTypeUnionByNetwork,
   type GetDerivationTypeUnion,
   type GetSignatureSchemeUnion,
 } from "@/libs/types/types.js";
@@ -96,7 +96,7 @@ const DOT_BASE_DEFAULT_DERIVED_ITEMS_LENGTH = 1;
 const DOT_BASE_ITEMS_BATCH_LENGTH = INDEX_LOOKUP_TO + DOT_BASE_DEFAULT_DERIVED_ITEMS_LENGTH;
 
 type NetworkDerivationsInstances = {
-  ed25519: Record<DotDerivationTypeUnion, Dot>;
+  ed25519: Record<DerivationTypeUnionByNetwork["dot"], Dot>;
 } & Record<
   GetSignatureSchemeUnion<"secp256k1" | "sr25519">,
   Record<GetDerivationTypeUnion<"dotBase">, Dot>

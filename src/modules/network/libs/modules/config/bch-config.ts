@@ -1,4 +1,4 @@
-import type { BchDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 import type { Secp256k1Config } from "./libs/types/index.js";
@@ -8,38 +8,40 @@ const derivationPathPrefix = {
   testnet: "m/44'/1'",
 };
 
-const bchConfig: Secp256k1Config<CommonNetworkPurposeRegTestExtendedUnion, BchDerivationTypeUnion> =
-  {
-    mainnet: {
-      bchLegacy: {
-        ...getCommonPrefixConfig("mainnet"),
-        derivationPathPrefix: derivationPathPrefix.mainnet,
-      },
-      bchCashAddr: {
-        ...getCommonPrefixConfig("mainnet"),
-        derivationPathPrefix: derivationPathPrefix.mainnet,
-      },
+const bchConfig: Secp256k1Config<
+  CommonNetworkPurposeRegTestExtendedUnion,
+  DerivationTypeUnionByNetwork["bch"]
+> = {
+  mainnet: {
+    bchLegacy: {
+      ...getCommonPrefixConfig("mainnet"),
+      derivationPathPrefix: derivationPathPrefix.mainnet,
     },
-    testnet: {
-      bchLegacy: {
-        ...getCommonPrefixConfig("testnet"),
-        derivationPathPrefix: derivationPathPrefix.testnet,
-      },
-      bchCashAddr: {
-        ...getCommonPrefixConfig("testnet"),
-        derivationPathPrefix: derivationPathPrefix.testnet,
-      },
+    bchCashAddr: {
+      ...getCommonPrefixConfig("mainnet"),
+      derivationPathPrefix: derivationPathPrefix.mainnet,
     },
-    regtest: {
-      bchLegacy: {
-        ...getCommonPrefixConfig("regtest"),
-        derivationPathPrefix: derivationPathPrefix.testnet,
-      },
-      bchCashAddr: {
-        ...getCommonPrefixConfig("regtest"),
-        derivationPathPrefix: derivationPathPrefix.testnet,
-      },
+  },
+  testnet: {
+    bchLegacy: {
+      ...getCommonPrefixConfig("testnet"),
+      derivationPathPrefix: derivationPathPrefix.testnet,
     },
-  };
+    bchCashAddr: {
+      ...getCommonPrefixConfig("testnet"),
+      derivationPathPrefix: derivationPathPrefix.testnet,
+    },
+  },
+  regtest: {
+    bchLegacy: {
+      ...getCommonPrefixConfig("regtest"),
+      derivationPathPrefix: derivationPathPrefix.testnet,
+    },
+    bchCashAddr: {
+      ...getCommonPrefixConfig("regtest"),
+      derivationPathPrefix: derivationPathPrefix.testnet,
+    },
+  },
+};
 
 export { bchConfig };

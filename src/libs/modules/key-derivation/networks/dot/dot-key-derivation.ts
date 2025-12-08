@@ -13,7 +13,7 @@ import {
   schemeToPublicKeyDeriver,
 } from "./libs/maps/index.js";
 import { DEV_PHRASE } from "./libs/constants/index.js";
-import { DerivationPathSymbol } from "@/libs/enums/index.js";
+import { DerivationPathSymbol } from "@/libs/enums/enums.js";
 
 class DotKeyDerivation implements AbstractKeyDerivation<"dotBase"> {
   private mnemonic: DotMnemonic;

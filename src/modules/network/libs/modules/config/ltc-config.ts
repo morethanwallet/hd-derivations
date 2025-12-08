@@ -1,4 +1,4 @@
-import type { LtcDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import type { Secp256k1Config } from "./libs/types/index.js";
 
@@ -35,44 +35,46 @@ const PREFIX_CONFIG = {
   },
 };
 
-const ltcConfig: Secp256k1Config<CommonNetworkPurposeRegTestExtendedUnion, LtcDerivationTypeUnion> =
-  {
-    mainnet: {
-      ltcLegacy: { derivationPathPrefix: "m/44'/2'", prefixConfig: PREFIX_CONFIG.mainnet },
-      ltcSegWit: { derivationPathPrefix: "m/49'/2'", prefixConfig: PREFIX_CONFIG.mainnet },
-      ltcNativeSegWit: {
-        derivationPathPrefix: "m/84'/2'",
-        prefixConfig: PREFIX_CONFIG.mainnet,
-      },
+const ltcConfig: Secp256k1Config<
+  CommonNetworkPurposeRegTestExtendedUnion,
+  DerivationTypeUnionByNetwork["ltc"]
+> = {
+  mainnet: {
+    ltcLegacy: { derivationPathPrefix: "m/44'/2'", prefixConfig: PREFIX_CONFIG.mainnet },
+    ltcSegWit: { derivationPathPrefix: "m/49'/2'", prefixConfig: PREFIX_CONFIG.mainnet },
+    ltcNativeSegWit: {
+      derivationPathPrefix: "m/84'/2'",
+      prefixConfig: PREFIX_CONFIG.mainnet,
     },
-    testnet: {
-      ltcLegacy: {
-        derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcLegacy,
-        prefixConfig: PREFIX_CONFIG.testnet,
-      },
-      ltcSegWit: {
-        derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcSegWit,
-        prefixConfig: PREFIX_CONFIG.testnet,
-      },
-      ltcNativeSegWit: {
-        derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcNativeSegWit,
-        prefixConfig: PREFIX_CONFIG.testnet,
-      },
+  },
+  testnet: {
+    ltcLegacy: {
+      derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcLegacy,
+      prefixConfig: PREFIX_CONFIG.testnet,
     },
-    regtest: {
-      ltcLegacy: {
-        derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcLegacy,
-        prefixConfig: PREFIX_CONFIG.regtest,
-      },
-      ltcSegWit: {
-        derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcSegWit,
-        prefixConfig: PREFIX_CONFIG.regtest,
-      },
-      ltcNativeSegWit: {
-        derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcNativeSegWit,
-        prefixConfig: PREFIX_CONFIG.regtest,
-      },
+    ltcSegWit: {
+      derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcSegWit,
+      prefixConfig: PREFIX_CONFIG.testnet,
     },
-  };
+    ltcNativeSegWit: {
+      derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcNativeSegWit,
+      prefixConfig: PREFIX_CONFIG.testnet,
+    },
+  },
+  regtest: {
+    ltcLegacy: {
+      derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcLegacy,
+      prefixConfig: PREFIX_CONFIG.regtest,
+    },
+    ltcSegWit: {
+      derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcSegWit,
+      prefixConfig: PREFIX_CONFIG.regtest,
+    },
+    ltcNativeSegWit: {
+      derivationPathPrefix: TESTNETS_DERIVATION_PATH_PREFIX.ltcNativeSegWit,
+      prefixConfig: PREFIX_CONFIG.regtest,
+    },
+  },
+};
 
 export { ltcConfig };

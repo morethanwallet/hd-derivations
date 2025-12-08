@@ -8,12 +8,14 @@ import {
   type GetDerivationHandlersParameters,
   type GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
-import { type AvaxDerivationTypeUnion } from "@/libs/types/types.js";
+import { type DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 function getAvaxDerivationHandlers({
   prefix,
   keysDerivationInstance,
-}: GetDerivationHandlersParameters[AvaxDerivationTypeUnion]): GetDerivationHandlersReturnType<AvaxDerivationTypeUnion> {
+}: GetDerivationHandlersParameters[DerivationTypeUnionByNetwork["avax"]]): GetDerivationHandlersReturnType<
+  DerivationTypeUnionByNetwork["avax"]
+> {
   const bech32Prefix = keysDerivationInstance.prefixConfig.bech32;
 
   return {
@@ -42,14 +44,14 @@ function getAvaxDerivationHandlers({
       indexLookupTo,
       shouldUseHardenedAddress,
     }) {
-      return (deriveItemsBatchFromMnemonic<AvaxDerivationTypeUnion>).call(
+      return (deriveItemsBatchFromMnemonic<DerivationTypeUnionByNetwork["avax"]>).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
         shouldUseHardenedAddress,
       );
     },
-    doesPKBelongToMnemonic: doesPKBelongToMnemonic<AvaxDerivationTypeUnion>,
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<DerivationTypeUnionByNetwork["avax"]>,
   };
 }
 

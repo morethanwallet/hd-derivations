@@ -1,5 +1,5 @@
 import { DECIMAL_SYSTEM_IDENTIFIER, HARDEN_RANGE_START_INDEX } from "@/libs/constants/index.js";
-import { DerivationPathSymbol } from "@/libs/enums/index.js";
+import { DerivationPathSymbol } from "@/libs/enums/enums.js";
 import { ValidationError } from "@/libs/exceptions/index.js";
 import {
   getDerivationPathSegmentsArray,
@@ -27,12 +27,10 @@ function validateDerivationPath(
   for (const segment of derivationPathSegmentsArray.slice(purposeIndex)) {
     const isHardened = checkHardenedSuffixEnding(segment);
 
-    const numericSegmentValue = isHardened
-      ? parseInt(
-          segment.replace(DerivationPathSymbol.HARDENED_SUFFIX, ""),
-          DECIMAL_SYSTEM_IDENTIFIER,
-        )
-      : parseInt(segment, DECIMAL_SYSTEM_IDENTIFIER);
+    const numericSegmentValue = parseInt(
+      segment.replace(DerivationPathSymbol.HARDENED_SUFFIX, ""),
+      DECIMAL_SYSTEM_IDENTIFIER,
+    );
 
     if (isNaN(numericSegmentValue)) {
       const invalidNumericSegmentExceptionMessage = `${ExceptionMessage.DERIVATION_PATH_SEGMENT_IS_INVALID}: ${segment}`;

@@ -1,7 +1,7 @@
-import { ExceptionMessage as CommonExceptionMessage } from "@/libs/enums/index.js";
+import { ExceptionMessage as CommonExceptionMessage } from "@/libs/enums/enums.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import type {
-  AptDerivationTypeUnion,
+  DerivationTypeUnionByNetwork,
   CommonDerivationPath,
   CommonKeyPair,
   CommonPrivateKey,
@@ -34,7 +34,7 @@ import {
   VALIDATION_MESSAGE_TO_SIGN,
 } from "./libs/constants/index.js";
 import { sha3_256 } from "@noble/hashes/sha3";
-import { ExceptionMessage } from "../../libs/enums/index.js";
+import { ExceptionMessage } from "../../libs/enums/enums.js";
 import {
   signatureSchemeToPrivateKeyVariant,
   signatureSchemeToSchemeId,
@@ -47,7 +47,7 @@ import {
 } from "@/libs/utils/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
 
-class AptKeyDerivation implements AbstractKeyDerivation<AptDerivationTypeUnion> {
+class AptKeyDerivation implements AbstractKeyDerivation<DerivationTypeUnionByNetwork["apt"]> {
   private mnemonic: Mnemonic;
 
   public constructor(mnemonic: Mnemonic) {
@@ -59,7 +59,7 @@ class AptKeyDerivation implements AbstractKeyDerivation<AptDerivationTypeUnion> 
     scheme,
     isLegacy,
     isMultiSig,
-  }: DeriveFromMnemonicParameters<AptDerivationTypeUnion>): CommonKeyPair {
+  }: DeriveFromMnemonicParameters<DerivationTypeUnionByNetwork["apt"]>): CommonKeyPair {
     if (scheme === "secp256r1") return this.getSecp256r1KeyPairFromMnemonic(derivationPath);
 
     const account = Account.fromDerivationPath({
@@ -90,7 +90,7 @@ class AptKeyDerivation implements AbstractKeyDerivation<AptDerivationTypeUnion> 
     privateKey,
     scheme,
     isLegacy,
-  }: ImportByPrivateKeyParameters<AptDerivationTypeUnion>): CommonKeyPair {
+  }: ImportByPrivateKeyParameters<DerivationTypeUnionByNetwork["apt"]>): CommonKeyPair {
     if (scheme === "secp256r1") return this.getSecp256r1KeyPairFromPrivateKey(privateKey);
 
     const formattedKey = this.formatPrivateKey(

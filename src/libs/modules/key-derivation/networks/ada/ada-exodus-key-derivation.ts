@@ -8,9 +8,10 @@ import type { GetDerivationTypeUnion, KeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { type Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
-import { Ed25519SecretKeyBytePosition, ExceptionMessage } from "../../libs/enums/index.js";
 import { ExceptionMessage as AdaExceptionMessage } from "./libs/enums/enums.js";
 import { createHmac, createHash } from "crypto";
+import { getSecp256k1NodeFromMnemonic } from "../../libs/helpers/index.js";
+import { Ed25519SecretKeyBytePosition } from "@/libs/modules/curves/curves.js";
 
 const Ed25519ClampMask = {
   LOW: 0b11111000, // 248
@@ -42,13 +43,11 @@ class AdaExodusKeyDerivation implements AbstractKeyDerivation<GetDerivationTypeU
   }: DeriveFromMnemonicParameters<GetDerivationTypeUnion<"adaExodus">>): KeyPair<
     GetDerivationTypeUnion<"adaExodus">
   > {
-    const seed = this.mnemonic.getSeed();
-    const rootKey = this.secp256k1Curve.getRootKeyFromSeed(seed);
-    const node = this.secp256k1Curve.derivePath(rootKey, derivationPath);
-
-    if (!node.privateKey) {
-      throw new KeyDerivationError(ExceptionMessage.PRIVATE_KEY_GENERATION_FAILED);
-    }
+    const node = getSecp256k1NodeFromMnemonic({
+      derivationPath,
+      mnemonic: this.mnemonic,
+      secp256k1Curve: this.secp256k1Curve,
+    });
 
     const secretKey = this.deriveByronSecretKey(node.privateKey);
     const rawPrivateKey = PrivateKey.from_normal_bytes(Buffer.from(secretKey));

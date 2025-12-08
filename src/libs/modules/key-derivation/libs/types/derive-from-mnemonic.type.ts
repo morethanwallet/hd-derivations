@@ -1,6 +1,6 @@
 import type { CommonBipDerivationTypeUnion } from "./common-bip-derivation-type-union.type.js";
 import type {
-  AptDerivationTypeUnion,
+  DerivationTypeUnionByNetwork,
   DerivationPath,
   DerivationTypeUnion,
   KeyPair,
@@ -17,7 +17,7 @@ type AptDeriveFromMnemonicParameters = {
 type DeriveFromMnemonicParameters<T extends DerivationTypeUnion> = DerivationPath<T> &
   (T extends CommonBipDerivationTypeUnion
     ? { base58RootKey?: string }
-    : T extends AptDerivationTypeUnion
+    : T extends DerivationTypeUnionByNetwork["apt"]
       ? AptDeriveFromMnemonicParameters
       : HandlersCommonParameters<T>);
 

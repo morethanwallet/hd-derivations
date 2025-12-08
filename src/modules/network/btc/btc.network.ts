@@ -23,20 +23,22 @@ import {
   getP2wshInP2shDerivationHandlers,
 } from "./libs/helpers/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
-import { type BtcDerivationTypeUnion } from "@/libs/types/types.js";
+import { type DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
-class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
-  private derivationHandlers: DerivationsHandlers<BtcDerivationTypeUnion>[BtcDerivationTypeUnion];
+class Btc implements AbstractNetwork<DerivationTypeUnionByNetwork["btc"]> {
+  private derivationHandlers: DerivationsHandlers<
+    DerivationTypeUnionByNetwork["btc"]
+  >[DerivationTypeUnionByNetwork["btc"]];
 
   public constructor({
     mnemonic,
     derivationConfig,
-  }: ConstructorParameters<BtcDerivationTypeUnion>) {
+  }: ConstructorParameters<DerivationTypeUnionByNetwork["btc"]>) {
     const { networkPurpose, derivationType } = derivationConfig;
     const secp256K1Curve = new Secp256k1Curve();
 
-    const derivationsHandlers: DerivationsHandlers<BtcDerivationTypeUnion> = {
+    const derivationsHandlers: DerivationsHandlers<DerivationTypeUnionByNetwork["btc"]> = {
       btcLegacy: getLegacyDerivationHandlers({
         keysDerivationInstance: new CommonBipKeyDerivation(
           findCustomPrefixConfig("btcLegacy", derivationConfig) ??
@@ -91,25 +93,25 @@ class Btc implements AbstractNetwork<BtcDerivationTypeUnion> {
   }
 
   public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<BtcDerivationTypeUnion>,
-  ): DerivedItem<BtcDerivationTypeUnion> {
+    parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["btc"]>,
+  ): DerivedItem<DerivationTypeUnionByNetwork["btc"]> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<BtcDerivationTypeUnion>,
-  ): DerivedCredential<BtcDerivationTypeUnion> {
+    parameters: GetCredentialFromPKParameters<DerivationTypeUnionByNetwork["btc"]>,
+  ): DerivedCredential<DerivationTypeUnionByNetwork["btc"]> {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 
   public deriveItemsBatchFromMnemonic(
-    parameters: DeriveItemsBatchFromMnemonicParameters<BtcDerivationTypeUnion>,
+    parameters: DeriveItemsBatchFromMnemonicParameters<DerivationTypeUnionByNetwork["btc"]>,
   ) {
     return this.derivationHandlers.deriveItemsBatchFromMnemonic(parameters);
   }
 
   public doesPKBelongToMnemonic(
-    parameters: DoesPKBelongToMnemonicParameters<BtcDerivationTypeUnion>,
+    parameters: DoesPKBelongToMnemonicParameters<DerivationTypeUnionByNetwork["btc"]>,
   ) {
     return this.derivationHandlers.doesPKBelongToMnemonic(parameters);
   }

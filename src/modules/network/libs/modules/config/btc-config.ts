@@ -1,4 +1,4 @@
-import type { BtcDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 import type { Secp256k1Config } from "./libs/types/secp256k1-config.type.js";
@@ -17,86 +17,88 @@ const commonTestnetsDerivationPathPrefix = {
   btcP2wshInP2sh: commonSegWitDerivationPathPrefix.testnet,
 };
 
-const btcConfig: Secp256k1Config<CommonNetworkPurposeRegTestExtendedUnion, BtcDerivationTypeUnion> =
-  {
-    mainnet: {
-      btcLegacy: {
-        derivationPathPrefix: "m/44'/0'",
-        ...getCommonPrefixConfig("mainnet"),
-      },
-      btcSegWit: {
-        derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
-        ...getCommonPrefixConfig("mainnet"),
-      },
-      btcNativeSegWit: {
-        derivationPathPrefix: "m/84'/0'",
-        ...getCommonPrefixConfig("mainnet"),
-      },
-      btcTaproot: {
-        derivationPathPrefix: "m/86'/0'",
-        ...getCommonPrefixConfig("mainnet"),
-      },
-      btcP2wsh: {
-        derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
-        ...getCommonPrefixConfig("mainnet"),
-      },
-      btcP2wshInP2sh: {
-        derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
-        ...getCommonPrefixConfig("mainnet"),
-      },
+const btcConfig: Secp256k1Config<
+  CommonNetworkPurposeRegTestExtendedUnion,
+  DerivationTypeUnionByNetwork["btc"]
+> = {
+  mainnet: {
+    btcLegacy: {
+      derivationPathPrefix: "m/44'/0'",
+      ...getCommonPrefixConfig("mainnet"),
     },
-    testnet: {
-      btcLegacy: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcLegacy,
-        ...getCommonPrefixConfig("testnet"),
-      },
-      btcSegWit: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcSegWit,
-        ...getCommonPrefixConfig("testnet"),
-      },
-      btcNativeSegWit: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcNativeSegWit,
-        ...getCommonPrefixConfig("testnet"),
-      },
-      btcTaproot: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcTaproot,
-        ...getCommonPrefixConfig("testnet"),
-      },
-      btcP2wsh: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wsh,
-        ...getCommonPrefixConfig("testnet"),
-      },
-      btcP2wshInP2sh: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wshInP2sh,
-        ...getCommonPrefixConfig("testnet"),
-      },
+    btcSegWit: {
+      derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
+      ...getCommonPrefixConfig("mainnet"),
     },
-    regtest: {
-      btcLegacy: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcLegacy,
-        ...getCommonPrefixConfig("regtest"),
-      },
-      btcSegWit: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcSegWit,
-        ...getCommonPrefixConfig("regtest"),
-      },
-      btcNativeSegWit: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcNativeSegWit,
-        ...getCommonPrefixConfig("regtest"),
-      },
-      btcTaproot: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcTaproot,
-        ...getCommonPrefixConfig("regtest"),
-      },
-      btcP2wsh: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wsh,
-        ...getCommonPrefixConfig("regtest"),
-      },
-      btcP2wshInP2sh: {
-        derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wshInP2sh,
-        ...getCommonPrefixConfig("regtest"),
-      },
+    btcNativeSegWit: {
+      derivationPathPrefix: "m/84'/0'",
+      ...getCommonPrefixConfig("mainnet"),
     },
-  };
+    btcTaproot: {
+      derivationPathPrefix: "m/86'/0'",
+      ...getCommonPrefixConfig("mainnet"),
+    },
+    btcP2wsh: {
+      derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
+      ...getCommonPrefixConfig("mainnet"),
+    },
+    btcP2wshInP2sh: {
+      derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
+      ...getCommonPrefixConfig("mainnet"),
+    },
+  },
+  testnet: {
+    btcLegacy: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcLegacy,
+      ...getCommonPrefixConfig("testnet"),
+    },
+    btcSegWit: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcSegWit,
+      ...getCommonPrefixConfig("testnet"),
+    },
+    btcNativeSegWit: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcNativeSegWit,
+      ...getCommonPrefixConfig("testnet"),
+    },
+    btcTaproot: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcTaproot,
+      ...getCommonPrefixConfig("testnet"),
+    },
+    btcP2wsh: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wsh,
+      ...getCommonPrefixConfig("testnet"),
+    },
+    btcP2wshInP2sh: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wshInP2sh,
+      ...getCommonPrefixConfig("testnet"),
+    },
+  },
+  regtest: {
+    btcLegacy: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcLegacy,
+      ...getCommonPrefixConfig("regtest"),
+    },
+    btcSegWit: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcSegWit,
+      ...getCommonPrefixConfig("regtest"),
+    },
+    btcNativeSegWit: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcNativeSegWit,
+      ...getCommonPrefixConfig("regtest"),
+    },
+    btcTaproot: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcTaproot,
+      ...getCommonPrefixConfig("regtest"),
+    },
+    btcP2wsh: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wsh,
+      ...getCommonPrefixConfig("regtest"),
+    },
+    btcP2wshInP2sh: {
+      derivationPathPrefix: commonTestnetsDerivationPathPrefix.btcP2wshInP2sh,
+      ...getCommonPrefixConfig("regtest"),
+    },
+  },
+};
 
 export { btcConfig };

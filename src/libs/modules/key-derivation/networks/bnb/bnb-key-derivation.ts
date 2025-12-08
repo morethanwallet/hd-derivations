@@ -7,7 +7,10 @@ import { type Secp256k1Curve, type PrefixConfig } from "@/libs/modules/curves/cu
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { getPublicKeyFromPrivateKey } from "@binance-chain/javascript-sdk/lib/crypto/index.js";
 import { convertHexToBytes } from "@/libs/utils/index.js";
-import { getKeyPairFromPrivateKeyBytes } from "../../libs/helpers/index.js";
+import {
+  getSecp256k1NodeFromMnemonic,
+  getKeyPairFromPrivateKeyBytes,
+} from "../../libs/helpers/index.js";
 
 class BnbKeyDerivation implements AbstractKeyDerivation<"bnbBase"> {
   public prefixConfig: PrefixConfig;
@@ -27,12 +30,12 @@ class BnbKeyDerivation implements AbstractKeyDerivation<"bnbBase"> {
   public deriveFromMnemonic({
     derivationPath,
   }: DeriveFromMnemonicParameters<"bnbBase">): CommonKeyPair {
-    const rootKey = this.secp256k1Curve.getRootKeyFromSeed(
-      this.mnemonic.getSeed(),
-      this.prefixConfig,
-    );
-
-    const node = this.secp256k1Curve.derivePath(rootKey, derivationPath);
+    const node = getSecp256k1NodeFromMnemonic({
+      derivationPath,
+      mnemonic: this.mnemonic,
+      secp256k1Curve: this.secp256k1Curve,
+      prefixConfig: this.prefixConfig,
+    });
 
     return this.getKeyPair(node.privateKey);
   }

@@ -9,7 +9,7 @@ import {
   MNEMONIC,
 } from "../../libs/constants/index.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
-import type { AvaxDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 const MOCK_COMMON_DERIVATION_PATH = "m/44'/9000'/0'/0/0";
 
@@ -68,14 +68,14 @@ const MOCK_TESTNET_ITEM = {
 };
 
 type NetworkDerivationsInstances = {
-  [key in CommonNetworkPurposeUnion]: { [key in AvaxDerivationTypeUnion]: Avax };
+  [key in CommonNetworkPurposeUnion]: { [key in DerivationTypeUnionByNetwork["avax"]]: Avax };
 };
 
 let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
   const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
-  const derivationTypes: AvaxDerivationTypeUnion[] = ["avaxP", "avaxX"] as const;
+  const derivationTypes: DerivationTypeUnionByNetwork["avax"][] = ["avaxP", "avaxX"] as const;
 
   networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
     (networkDerivationsInstances, networkPurpose) => {

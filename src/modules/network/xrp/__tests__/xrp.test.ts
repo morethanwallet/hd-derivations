@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { Xrp } from "../xrp.network.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
-import type { XrpDerivationTypeUnion } from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { getNetwork } from "../../get-network/index.js";
 import { xrpConfig } from "../../libs/modules/config/index.js";
 import {
@@ -62,14 +62,14 @@ const MOCK_TESTNET_ITEM = {
 };
 
 type NetworkDerivationsInstances = {
-  [key in CommonNetworkPurposeUnion]: { [key in XrpDerivationTypeUnion]: Xrp };
+  [key in CommonNetworkPurposeUnion]: { [key in DerivationTypeUnionByNetwork["xrp"]]: Xrp };
 };
 
 let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
   const networkPurposes: CommonNetworkPurposeUnion[] = ["mainnet", "testnet"] as const;
-  const derivationTypes: XrpDerivationTypeUnion[] = ["xrpBase", "xrpX"] as const;
+  const derivationTypes: DerivationTypeUnionByNetwork["xrp"][] = ["xrpBase", "xrpX"] as const;
 
   networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
     (networkDerivationsInstances, networkPurpose) => {

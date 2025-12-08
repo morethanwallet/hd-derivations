@@ -2,7 +2,7 @@ import type { GetSignatureSchemeUnion } from "@/libs/types/types.js";
 import { getPublicKey } from "micro-sr25519";
 import { ed25519 } from "@noble/curves/ed25519";
 import { secp256k1 } from "@noble/curves/secp256k1";
-import { ThirtyTwoBytePrivateKeyIndex } from "@/libs/enums";
+import { ThirtyTwoBytePrivateKeyIndex } from "@/libs/enums/enums";
 
 const schemeToPublicKeyDeriver: Record<
   GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">,
