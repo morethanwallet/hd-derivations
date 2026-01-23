@@ -1,9 +1,5 @@
 import type { PrefixConfig } from "@/libs/modules/curves/curves.js";
-import type {
-  DerivationTypeUnionByNetwork,
-  AuthSchemeUnion,
-  GetSignatureSchemeUnion,
-} from "@/libs/types/types.js";
+import type { DerivationTypeUnionByNetwork, AuthSchemeUnion } from "@/libs/types/types.js";
 import type {
   AdaNetworkPurposeUnion,
   CommonNetworkPurposeRegTestExtendedUnion,
@@ -11,6 +7,7 @@ import type {
 } from "./network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
 import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
+import type { Curve } from "@/libs/enums/enums.js";
 
 type PrefixConfigProperty = { prefixConfig?: PrefixConfig };
 
@@ -39,7 +36,7 @@ type TonDerivationConfig = {
 } & TonAddressDerivationConfig;
 
 type SuiDerivationConfig = {
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  scheme: Curve["SECP256R1" | "SECP256K1" | "ED25519"];
   derivationType: DerivationTypeUnionByNetwork["sui"];
 };
 
@@ -50,7 +47,7 @@ type BchDerivationConfig = {
 
 type DotDerivationConfig = {
   derivationType: DerivationTypeUnionByNetwork["dot"];
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
+  scheme: Curve["SR25519" | "SECP256K1" | "ED25519"];
 } & Ss58Format;
 
 type XrpDerivationConfig = {
@@ -72,7 +69,7 @@ type ZecDerivationConfig = {
 type AptDerivationConfig = {
   derivationType: DerivationTypeUnionByNetwork["apt"];
   authenticationScheme?: AuthSchemeUnion;
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  scheme: Curve["ED25519" | "SECP256K1" | "SECP256R1"];
 };
 
 type LtcDerivationConfig = {

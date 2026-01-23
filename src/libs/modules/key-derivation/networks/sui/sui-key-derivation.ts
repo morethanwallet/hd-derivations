@@ -3,11 +3,11 @@ import type {
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
-import type { CommonKeyPair, GetSignatureSchemeUnion } from "@/libs/types/types.js";
+import type { CommonKeyPair } from "@/libs/types/types.js";
 import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
 import { Secp256r1Keypair } from "@mysten/sui/keypairs/secp256r1";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
-import { ExceptionMessage } from "@/libs/enums/enums.js";
+import { Curve, ExceptionMessage } from "@/libs/enums/enums.js";
 import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import type { KeyPairInstanceUnion, KeyPairUnion } from "./libs/types/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
@@ -26,7 +26,10 @@ class SuiKeyDerivation implements AbstractKeyDerivation<"suiBase"> {
     const keyPairHandler = this.getKeyPairHandler(scheme);
     const keyPair = keyPairHandler.deriveKeypair(this.mnemonic.getMnemonic(), derivationPath);
 
-    return this.getKeyPair(keyPair);
+    const privateKey = keyPair.getSecretKey();
+    const publicKey = this.getPublicKey(keyPair);
+
+    return { privateKey, publicKey };
   }
 
   public importByPrivateKey({
@@ -40,19 +43,12 @@ class SuiKeyDerivation implements AbstractKeyDerivation<"suiBase"> {
     return { privateKey, publicKey };
   }
 
-  private getKeyPair(keyPair: KeyPairInstanceUnion): CommonKeyPair {
-    const privateKey = keyPair.getSecretKey();
-    const publicKey = this.getPublicKey(keyPair);
-
-    return { privateKey, publicKey };
-  }
-
   private getPublicKey(keyPair: KeyPairInstanceUnion): CommonKeyPair["publicKey"] {
     return keyPair.getPublicKey().toSuiPublicKey();
   }
 
   private getKeyPairHandler(
-    scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
+    scheme: Curve["ED25519"] | Curve["SECP256K1"] | Curve["SECP256R1"],
   ): KeyPairUnion {
     switch (scheme) {
       case "secp256k1":

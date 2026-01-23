@@ -1,7 +1,7 @@
 import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants";
-import { ExceptionMessage } from "@/libs/enums/enums.js";
+import { Curve, ExceptionMessage } from "@/libs/enums/enums.js";
 import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
-import type { CommonKeyPair, GetSignatureSchemeUnion } from "@/libs/types/types.js";
+import type { CommonKeyPair } from "@/libs/types/types.js";
 import { convertHexToBytes, removeHexPrefix } from "@/libs/utils/index.js";
 import {
   AnyPublicKey,
@@ -17,7 +17,7 @@ const SECP256K1_BYTES_PUBLIC_KEY_START_INDEX = 2;
 function getAptAddress(
   publicKey: CommonKeyPair["publicKey"],
   isLegacy: boolean,
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
+  scheme: Curve["ED25519"] | Curve["SECP256K1"] | Curve["SECP256R1"],
   isMultiSig?: boolean,
 ) {
   const prefixRemovedPublicKey = removeHexPrefix(publicKey);

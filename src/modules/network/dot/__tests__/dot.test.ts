@@ -11,8 +11,8 @@ import { dotConfig } from "../../libs/modules/config/index.js";
 import {
   type DerivationTypeUnionByNetwork,
   type GetDerivationTypeUnion,
-  type GetSignatureSchemeUnion,
 } from "@/libs/types/types.js";
+import type { Curve } from "@/libs/enums/enums.js";
 
 const DERIVATION_PATH = { dotStandardHd: "m/44'/354'/0'/0'/0'", dotBase: "" };
 
@@ -97,10 +97,7 @@ const DOT_BASE_ITEMS_BATCH_LENGTH = INDEX_LOOKUP_TO + DOT_BASE_DEFAULT_DERIVED_I
 
 type NetworkDerivationsInstances = {
   ed25519: Record<DerivationTypeUnionByNetwork["dot"], Dot>;
-} & Record<
-  GetSignatureSchemeUnion<"secp256k1" | "sr25519">,
-  Record<GetDerivationTypeUnion<"dotBase">, Dot>
->;
+} & Record<Curve["SECP256K1"] | Curve["SR25519"], Record<GetDerivationTypeUnion<"dotBase">, Dot>>;
 
 const networkDerivationsInstances: NetworkDerivationsInstances = {
   ed25519: {

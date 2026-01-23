@@ -8,7 +8,8 @@ import {
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
-import type { GetDerivationTypeUnion, GetSignatureSchemeUnion } from "@/libs/types/types.js";
+import type { GetDerivationTypeUnion } from "@/libs/types/types.js";
+import type { Curve } from "@/libs/enums/enums.js";
 
 const MOCK_DERIVATION_PATH = {
   ed25519: "m/44'/784'/0'/0'/0'",
@@ -61,7 +62,7 @@ const MOCK_EXTRINSIC_PRIVATE_KEY =
 type TrxDerivationTypeUnion = GetDerivationTypeUnion<"suiBase">;
 
 type NetworkDerivationsInstances = {
-  [key in GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">]: {
+  [key in Curve["ED25519" | "SECP256K1" | "SECP256R1"]]: {
     [key in TrxDerivationTypeUnion]: Sui;
   };
 };
@@ -69,7 +70,7 @@ type NetworkDerivationsInstances = {
 let networkDerivationsInstances = {} as NetworkDerivationsInstances;
 
 beforeAll(() => {
-  const signatureSchemes: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">[] = [
+  const signatureSchemes: Curve["ED25519" | "SECP256K1" | "SECP256R1"][] = [
     "ed25519",
     "secp256k1",
     "secp256r1",

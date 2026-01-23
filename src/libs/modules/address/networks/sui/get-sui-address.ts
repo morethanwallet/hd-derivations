@@ -1,11 +1,12 @@
-import type { CommonKeyPair, GetSignatureSchemeUnion } from "@/libs/types/types.js";
+import type { CommonKeyPair } from "@/libs/types/types.js";
 import type { Address } from "../../libs/types/index.js";
 import { fromBase64 } from "@mysten/sui/utils";
 import { getPublicKeyHandler } from "./libs/helpers/index.js";
+import type { Curve } from "@/libs/enums/enums.js";
 
 function getSuiAddress(
   publicKey: CommonKeyPair["publicKey"],
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">,
+  scheme: Curve["ED25519"] | Curve["SECP256K1"] | Curve["SECP256R1"],
 ): Address["address"] {
   const flagByteEndIndex = 1;
   const decodedKey = fromBase64(publicKey);

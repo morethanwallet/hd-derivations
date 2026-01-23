@@ -1,6 +1,6 @@
 import {
   CommonEd25519KeyDerivation,
-  DotKeyDerivation,
+  DotBaseKeyDerivation,
 } from "@/libs/modules/key-derivation/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
@@ -40,7 +40,7 @@ class Dot implements AbstractNetwork<DerivationTypeUnionByNetwork["dot"]> {
       dotBase: getBaseDerivationHandlers({
         scheme,
         ss58Format,
-        keysDerivationInstance: new DotKeyDerivation(dotMnemonic),
+        keysDerivationInstance: new DotBaseKeyDerivation(dotMnemonic),
       }),
     };
 

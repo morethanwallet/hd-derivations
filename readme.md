@@ -20,6 +20,13 @@ hd-derivations is a powerful and flexible hierarchical deterministic (HD) key de
 
 With support for multiple key types, derivation schemes, and other network specific configs, `hd-derivations` is a reliable solution for developers working with Bitcoin, Ethereum-compatible chains, Cardano, and more. Whether you are generating wallets, recovering accounts, or working with advanced key management, this package simplifies the process while maintaining security and flexibility.
 
+## License
+
+This package is **free for non-commercial use only**.
+
+Commercial use is not permitted without an explicit license.
+See the LICENSE file for details.
+
 <a id="features"></a>
 ## Key Features
 
@@ -254,4 +261,4 @@ Networks methods parameters are defined in the [`abstract-network.type.ts`](src/
 1. For full guidelines, see [`quality-criteria.md`](quality-criteria.md).
 
 2. Make sure you're not causing any circular dependencies and confused structure in the dependency graph:
-   ![dependency-graph](./dependency-graph.svg)
+   ![dependency-graph](https://raw.githubusercontent.com/morethanwallet/hd-derivations/2b4bd5856f6183a1ad93966aad715aca8ad09a14/dependency-graph.svg?token=AUHACYVF7TKPNJMDCVMR7G3JOIPPU)

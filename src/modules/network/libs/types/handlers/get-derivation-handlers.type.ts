@@ -10,7 +10,7 @@ import type {
   AptKeyDerivation,
   AdaBaseKeyDerivation,
   AdaCommonKeyDerivation,
-  DotKeyDerivation,
+  DotBaseKeyDerivation,
   SolExodusKeyDerivation,
   TonExodusKeyDerivation,
   AdaExodusKeyDerivation,
@@ -18,7 +18,6 @@ import type {
 import type {
   GetDerivationTypeUnion,
   DerivationTypeUnion,
-  GetSignatureSchemeUnion,
   DerivationTypeUnionByNetwork,
 } from "@/libs/types/types.js";
 import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
@@ -28,6 +27,7 @@ import { type DoesPKBelongToMnemonic } from "./does-p-k-belong-to-mnemonic.type.
 import type { CommonNetworkPurposeUnion } from "../network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "../ton-address-derivation-config.type.js";
 import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
+import type { Curve } from "@/libs/enums/enums.js";
 
 type AvaxParameters = {
   prefix: string;
@@ -65,7 +65,7 @@ type TonExodusParameters = {
 
 type SuiParameters = {
   keysDerivationInstance: SuiKeyDerivation;
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  scheme: Curve["ED25519" | "SECP256K1" | "SECP256R1"];
 };
 
 type XrpParameters = {
@@ -83,8 +83,8 @@ type DotStandardHdParameters = {
 } & Ss58Format;
 
 type DotBaseParameters = {
-  keysDerivationInstance: DotKeyDerivation;
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
+  keysDerivationInstance: DotBaseKeyDerivation;
+  scheme: Curve["ED25519" | "SECP256K1" | "SR25519"];
 } & Ss58Format;
 
 type BchParameters = { keysDerivationInstance: CommonBipKeyDerivation; isRegtest: boolean };
@@ -98,7 +98,7 @@ type ZecParameters = { keysDerivationInstance: TransparentKeyDerivation };
 type AptParameters = {
   keysDerivationInstance: AptKeyDerivation;
   isMultiSig?: boolean;
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  scheme: Curve["ED25519" | "SECP256K1" | "SECP256R1"];
   isLegacy: boolean;
 };
 
