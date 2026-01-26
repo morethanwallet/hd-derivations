@@ -1,7 +1,7 @@
 {
   "name": "@morethanwallet/hd-derivations",
-  "version": "1.0.0-beta.34",
-  "license": "Non-Commercial",
+  "version": "1.0.0-beta.35",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "description": "",
   "main": "./build/node/index.js",
   "browser": "./build/browser/index.js",
