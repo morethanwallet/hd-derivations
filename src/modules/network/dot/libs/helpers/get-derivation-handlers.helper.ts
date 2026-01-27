@@ -1,4 +1,4 @@
-import { getDotAddress } from "@/libs/modules/address/index.js";
+import { getDotAddress } from "@/libs/modules/address/address.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
@@ -105,4 +105,36 @@ function getBaseDerivationHandlers({
   };
 }
 
-export { getStandardHdDerivationHandlers, getBaseDerivationHandlers };
+function getLedgerDerivationHandlers({
+  keysDerivationInstance,
+  ss58Format,
+}: GetDerivationHandlersParameters["dotLedger"]): GetDerivationHandlersReturnType<"dotLedger"> {
+  return {
+    deriveItemFromMnemonic: ({ derivationPath }) => {
+      commonValidateDerivationPath(derivationPath, true);
+      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+      const address = getDotAddress(keys.publicKey, ss58Format);
+
+      return { ...keys, address, derivationPath };
+    },
+    getCredentialFromPK: (parameters) => {
+      const keys = keysDerivationInstance.importByPrivateKey(parameters);
+      const address = getDotAddress(keys.publicKey, ss58Format);
+
+      return { ...keys, address };
+    },
+    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+      return (deriveItemsBatchFromMnemonic<"dotLedger">).call(
+        this,
+        { indexLookupFrom, indexLookupTo },
+        { derivationPath: derivationPathPrefix },
+        true,
+      );
+    },
+    doesPKBelongToMnemonic(parameters) {
+      return (doesPKBelongToMnemonic<"dotLedger">).call(this, parameters, true);
+    },
+  };
+}
+
+export { getStandardHdDerivationHandlers, getBaseDerivationHandlers, getLedgerDerivationHandlers };

@@ -1,7 +1,7 @@
 import {
   CommonEd25519KeyDerivation,
   TonExodusKeyDerivation,
-} from "@/libs/modules/key-derivation/index.js";
+} from "@/libs/modules/key-derivation/networks.js";
 import type {
   DeriveItemFromMnemonicParameters,
   GetCredentialFromPKParameters,

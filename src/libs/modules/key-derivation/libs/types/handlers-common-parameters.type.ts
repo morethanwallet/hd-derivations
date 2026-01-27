@@ -1,15 +1,12 @@
-import type {
-  GetDerivationTypeUnion,
-  DerivationTypeUnion,
-  GetSignatureSchemeUnion,
-} from "@/libs/types/types.js";
+import type { Curve } from "@/libs/enums/enums";
+import type { GetDerivationTypeUnion, DerivationTypeUnion } from "@/libs/types/types.js";
 
 type DotBaseDeriveFromMnemonicParameters = {
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
+  scheme: Curve["ED25519"] | Curve["SECP256K1"] | Curve["SR25519"];
 };
 
 type SuiDeriveFromMnemonicParameters = {
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  scheme: Curve["ED25519"] | Curve["SECP256K1"] | Curve["SECP256R1"];
 };
 
 type HandlersCommonParameters<T extends DerivationTypeUnion> =

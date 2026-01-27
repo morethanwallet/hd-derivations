@@ -5,7 +5,7 @@ import {
   getP2wshInP2shAddress,
   getBtcSegWitAddress,
   getTaprootAddress,
-} from "@/libs/modules/address/index.js";
+} from "@/libs/modules/address/address.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,

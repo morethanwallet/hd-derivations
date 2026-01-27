@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { Dot } from "../dot.network.js";
-import { getNetwork } from "../../get-network/index.js";
+import { getNetwork } from "../../get-network/get-network.js";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
@@ -11,15 +11,29 @@ import { dotConfig } from "../../libs/modules/config/index.js";
 import {
   type DerivationTypeUnionByNetwork,
   type GetDerivationTypeUnion,
-  type GetSignatureSchemeUnion,
 } from "@/libs/types/types.js";
+import type { Curve } from "@/libs/enums/enums.js";
 
-const DERIVATION_PATH = { dotStandardHd: "m/44'/354'/0'/0'/0'", dotBase: "" };
+const DERIVATION_PATH = {
+  dotStandardHd: "m/44'/354'/0'/0'/0'",
+  dotLedger: "m/44'/354'/0'/0'/0'",
+  dotBase: "",
+};
 
-const DERIVATION_PATH_PREFIX = { dotStandardHd: "m/44'/354'/0'/0'", dotBase: "" };
+const DERIVATION_PATH_PREFIX = {
+  dotStandardHd: "m/44'/354'/0'/0'",
+  dotLedger: "m/44'/354'/0'/0'",
+  dotBase: "",
+};
 
 const CREDENTIAL = {
   ed25519: {
+    dotLedger: {
+      privateKey:
+        "3023787b5522a1ab3b3b75f823599f6b9d86e27ae517d5f1e9a7a8e4a2af3f4448c5c0bd7596b66b499582d34db66041cb46dafe77a449eb793c5568c774a005",
+      publicKey: "48c5c0bd7596b66b499582d34db66041cb46dafe77a449eb793c5568c774a005",
+      address: "12eRCAqFCrKJ27DtssoweWoUHiSgmSMJ15jZtXJ8tSuR9YnQ",
+    },
     dotStandardHd: {
       privateKey: "01f183bbd8d019f7a617d1f53206bc6f80d99b4663ec3c0cad810b638e19f96c",
       publicKey: "61e50053ac0f824b0721f0d71ccf2a53970f6582cde9b2819a0585332b631d67",
@@ -51,6 +65,10 @@ const CREDENTIAL = {
 
 const ITEM = {
   ed25519: {
+    dotLedger: {
+      ...CREDENTIAL.ed25519.dotLedger,
+      derivationPath: DERIVATION_PATH.dotLedger,
+    },
     dotStandardHd: {
       ...CREDENTIAL.ed25519.dotStandardHd,
       derivationPath: DERIVATION_PATH.dotStandardHd,
@@ -76,6 +94,8 @@ const ITEM = {
 
 const EXTRINSIC_PRIVATE_KEY = {
   ed25519: {
+    dotLedger:
+      "68fda9f6b2a4d1e3204e5025744508a1301b7041a49ac8fe92244ba3d8bcdc58f12ca0ab57ee6421999b386675fcc092c22d59112817c45b1938c12bdfd00a58",
     dotStandardHd: "c71e6bfb514231f3cdb549c032c726c411e6ed98fccced392017900c0b1fb0c5",
     dotBase:
       "ee74dc1ff000b6cbc33aab1c4b94712462729ad44de28648a4625747408f96c1fc4ea859b40f2ea312aa79951e4bf2606a572fd819999a3210f2817a8c2ead05",
@@ -97,10 +117,7 @@ const DOT_BASE_ITEMS_BATCH_LENGTH = INDEX_LOOKUP_TO + DOT_BASE_DEFAULT_DERIVED_I
 
 type NetworkDerivationsInstances = {
   ed25519: Record<DerivationTypeUnionByNetwork["dot"], Dot>;
-} & Record<
-  GetSignatureSchemeUnion<"secp256k1" | "sr25519">,
-  Record<GetDerivationTypeUnion<"dotBase">, Dot>
->;
+} & Record<Curve["SECP256K1" | "SR25519"], Record<GetDerivationTypeUnion<"dotBase">, Dot>>;
 
 const networkDerivationsInstances: NetworkDerivationsInstances = {
   ed25519: {
@@ -118,6 +135,15 @@ const networkDerivationsInstances: NetworkDerivationsInstances = {
       mnemonic: MNEMONIC,
       derivationConfig: {
         derivationType: "dotStandardHd",
+        scheme: "ed25519",
+        ss58Format: DOT_SS58_FORMAT,
+      },
+    }),
+    dotLedger: getNetwork({
+      network: "dot",
+      mnemonic: MNEMONIC,
+      derivationConfig: {
+        derivationType: "dotLedger",
         scheme: "ed25519",
         ss58Format: DOT_SS58_FORMAT,
       },
@@ -159,6 +185,14 @@ describe("Dot", () => {
         expect(ITEM.ed25519.dotStandardHd).toEqual(derivedItem);
       });
 
+      it("Derives correct ledger item", () => {
+        const derivedItem = networkDerivationsInstances.ed25519.dotLedger.deriveItemFromMnemonic({
+          derivationPath: DERIVATION_PATH.dotLedger,
+        });
+
+        expect(ITEM.ed25519.dotLedger).toEqual(derivedItem);
+      });
+
       it("Derives correct base item", () => {
         const derivedItem = networkDerivationsInstances.ed25519.dotBase.deriveItemFromMnemonic({
           derivationPath: DERIVATION_PATH.dotBase,
@@ -175,6 +209,14 @@ describe("Dot", () => {
         });
 
         expect(credential).toEqual(CREDENTIAL.ed25519.dotStandardHd);
+      });
+
+      it("Derives correct ledger credential", () => {
+        const credential = networkDerivationsInstances.ed25519.dotLedger.getCredentialFromPK({
+          privateKey: CREDENTIAL.ed25519.dotLedger.privateKey,
+        });
+
+        expect(credential).toEqual(CREDENTIAL.ed25519.dotLedger);
       });
 
       it("Derives correct base credential", () => {
@@ -196,6 +238,17 @@ describe("Dot", () => {
           });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(ITEM.ed25519.dotStandardHd);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
+      });
+
+      it("Derives correct ledger items batch", () => {
+        const items = networkDerivationsInstances.ed25519.dotLedger.deriveItemsBatchFromMnemonic({
+          derivationPathPrefix: DERIVATION_PATH_PREFIX.dotLedger,
+          indexLookupFrom: INDEX_LOOKUP_FROM,
+          indexLookupTo: INDEX_LOOKUP_TO,
+        });
+
+        expect(items[FIRST_ITEM_INDEX]).toEqual(ITEM.ed25519.dotLedger);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
@@ -226,6 +279,17 @@ describe("Dot", () => {
           expect(isNative).toBe(true);
         });
 
+        it("Returns true for ledger private key", () => {
+          const isNative = networkDerivationsInstances.ed25519.dotLedger.doesPKBelongToMnemonic({
+            derivationPathPrefix: dotConfig.derivationPathPrefix.dotLedger,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: CREDENTIAL.ed25519.dotLedger.privateKey,
+          });
+
+          expect(isNative).toBe(true);
+        });
+
         it("Returns true for base private key", () => {
           const isNative = networkDerivationsInstances.ed25519.dotBase.doesPKBelongToMnemonic({
             derivationPathPrefix: dotConfig.derivationPathPrefix.dotBase,
@@ -248,6 +312,17 @@ describe("Dot", () => {
               privateKey: EXTRINSIC_PRIVATE_KEY.ed25519.dotStandardHd,
             },
           );
+
+          expect(isNative).toBe(false);
+        });
+
+        it("Returns false for ledger private key", () => {
+          const isNative = networkDerivationsInstances.ed25519.dotLedger.doesPKBelongToMnemonic({
+            derivationPathPrefix: dotConfig.derivationPathPrefix.dotLedger,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+            privateKey: EXTRINSIC_PRIVATE_KEY.ed25519.dotLedger,
+          });
 
           expect(isNative).toBe(false);
         });

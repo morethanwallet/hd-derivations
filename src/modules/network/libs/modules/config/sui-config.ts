@@ -1,8 +1,8 @@
-import type { GetSignatureSchemeUnion } from "@/libs/types/types.js";
+import type { Curve } from "@/libs/enums/enums";
 
 type SuiConfig = {
   suiBase: {
-    [key in GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">]: {
+    [key in Curve["ED25519"] | Curve["SECP256K1"] | Curve["SECP256R1"]]: {
       derivationPathPrefix: string;
     };
   };

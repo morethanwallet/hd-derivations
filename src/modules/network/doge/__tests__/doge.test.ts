@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { Doge } from "../doge.network.js";
-import { getNetwork } from "../../get-network/index.js";
+import { getNetwork } from "../../get-network/get-network.js";
 import { dogeConfig } from "../../libs/modules/config/index.js";
 import {
   FIRST_ITEM_INDEX,

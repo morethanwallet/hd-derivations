@@ -1,7 +1,7 @@
 import {
   TaprootKeyDerivation,
   CommonBipKeyDerivation,
-} from "@/libs/modules/key-derivation/index.js";
+} from "@/libs/modules/key-derivation/networks.js";
 import { btcConfig } from "@/modules/network/libs/modules/config/index.js";
 import type {
   DeriveItemFromMnemonicParameters,

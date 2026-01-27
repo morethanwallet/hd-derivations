@@ -1,4 +1,4 @@
-import { getXrpAddress } from "@/libs/modules/address/index.js";
+import { getXrpAddress } from "@/libs/modules/address/address.js";
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import {
   doesPKBelongToMnemonic,

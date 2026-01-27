@@ -2,7 +2,7 @@ import type { PrefixConfig } from "@/libs/modules/curves/curves.js";
 import type {
   DerivationTypeUnionByNetwork,
   AuthSchemeUnion,
-  GetSignatureSchemeUnion,
+  GetDerivationTypeUnion,
 } from "@/libs/types/types.js";
 import type {
   AdaNetworkPurposeUnion,
@@ -10,7 +10,8 @@ import type {
   CommonNetworkPurposeUnion,
 } from "./network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
-import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
+import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/address.js";
+import type { Curve } from "@/libs/enums/enums.js";
 
 type PrefixConfigProperty = { prefixConfig?: PrefixConfig };
 
@@ -39,7 +40,7 @@ type TonDerivationConfig = {
 } & TonAddressDerivationConfig;
 
 type SuiDerivationConfig = {
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  scheme: Curve["SECP256R1" | "SECP256K1" | "ED25519"];
   derivationType: DerivationTypeUnionByNetwork["sui"];
 };
 
@@ -48,10 +49,17 @@ type BchDerivationConfig = {
   derivationType: DerivationTypeUnionByNetwork["bch"];
 } & PrefixConfigProperty;
 
-type DotDerivationConfig = {
-  derivationType: DerivationTypeUnionByNetwork["dot"];
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "sr25519">;
-} & Ss58Format;
+type DotDerivationConfig = (
+  | {
+      derivationType: GetDerivationTypeUnion<"dotBase">;
+      scheme: Curve["SR25519" | "SECP256K1" | "ED25519"];
+    }
+  | {
+      derivationType: GetDerivationTypeUnion<"dotLedger" | "dotStandardHd">;
+      scheme: Curve["ED25519"];
+    }
+) &
+  Ss58Format;
 
 type XrpDerivationConfig = {
   networkPurpose: CommonNetworkPurposeUnion;
@@ -72,7 +80,7 @@ type ZecDerivationConfig = {
 type AptDerivationConfig = {
   derivationType: DerivationTypeUnionByNetwork["apt"];
   authenticationScheme?: AuthSchemeUnion;
-  scheme: GetSignatureSchemeUnion<"ed25519" | "secp256k1" | "secp256r1">;
+  scheme: Curve["ED25519" | "SECP256K1" | "SECP256R1"];
 };
 
 type LtcDerivationConfig = {
