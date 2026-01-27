@@ -261,4 +261,4 @@ Networks methods parameters are defined in the [`abstract-network.type.ts`](src/
 1. For full guidelines, see [`quality-criteria.md`](quality-criteria.md).
 
 2. Make sure you're not causing any circular dependencies and confused structure in the dependency graph:
-   ![dependency-graph](https://raw.githubusercontent.com/morethanwallet/hd-derivations/2b4bd5856f6183a1ad93966aad715aca8ad09a14/dependency-graph.svg?token=AUHACYVF7TKPNJMDCVMR7G3JOIPPU)
+   [dependency-graph](https://github.com/morethanwallet/hd-derivations/blob/main/dependency-graph.svg)
