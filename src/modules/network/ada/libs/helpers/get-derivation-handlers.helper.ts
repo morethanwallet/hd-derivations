@@ -5,7 +5,7 @@ import {
   getBaseAddress,
   getEnterpriseAddress,
   getRewardAddress,
-} from "@/libs/modules/address/index.js";
+} from "@/libs/modules/address/address.js";
 import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "@/modules/network/libs/constants";
 import {
   doesPKBelongToMnemonic,

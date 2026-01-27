@@ -1,7 +1,7 @@
 import type {
   TonAddressFriendlyFormatArguments,
   TonAddressRequiredData,
-} from "@/libs/modules/address/index.js";
+} from "@/libs/modules/address/address.js";
 
 type TonAddressDerivationConfig = Pick<
   TonAddressRequiredData,

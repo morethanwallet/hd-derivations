@@ -11,7 +11,7 @@ import type {
 } from "../libs/types/index.js";
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { getXrpDerivationHandlers } from "./libs/helpers/index.js";
-import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
+import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import { findCustomPrefixConfig } from "../libs/helpers/index.js";
 import { xrpConfig } from "../libs/modules/config/index.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";

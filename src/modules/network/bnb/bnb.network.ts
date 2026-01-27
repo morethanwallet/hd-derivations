@@ -1,4 +1,4 @@
-import { BnbKeyDerivation } from "@/libs/modules/key-derivation/index.js";
+import { BnbKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import type {
   ConstructorParameters,
   AbstractNetwork,

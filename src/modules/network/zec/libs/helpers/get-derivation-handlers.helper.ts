@@ -1,4 +1,4 @@
-import { getTransparentAddress } from "@/libs/modules/address/index.js";
+import { getTransparentAddress } from "@/libs/modules/address/address.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,

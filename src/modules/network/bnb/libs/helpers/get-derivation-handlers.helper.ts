@@ -1,4 +1,4 @@
-import { getBnbAddress } from "@/libs/modules/address/index.js";
+import { getBnbAddress } from "@/libs/modules/address/address.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,

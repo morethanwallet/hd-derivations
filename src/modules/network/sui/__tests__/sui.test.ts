@@ -1,4 +1,4 @@
-import { getNetwork } from "../../get-network/index.js";
+import { getNetwork } from "../../get-network/get-network.js";
 import { suiConfig } from "../../libs/modules/config/index.js";
 import { Sui } from "../sui.network.js";
 import { describe, it, expect } from "vitest";

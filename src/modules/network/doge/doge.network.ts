@@ -1,4 +1,4 @@
-import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/index.js";
+import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import { dogeConfig } from "@/modules/network/libs/modules/config/index.js";
 import type {
   DeriveItemFromMnemonicParameters,

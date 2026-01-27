@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getNetwork } from "../../get-network/index.js";
+import { getNetwork } from "../../get-network/get-network.js";
 import { evmConfig } from "../../libs/modules/config/index.js";
 import {
   FIRST_ITEM_INDEX,

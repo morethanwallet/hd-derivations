@@ -14,7 +14,8 @@ import type {
   SolExodusKeyDerivation,
   TonExodusKeyDerivation,
   AdaExodusKeyDerivation,
-} from "@/libs/modules/key-derivation/index.js";
+  DotLedgerKeyDerivation,
+} from "@/libs/modules/key-derivation/networks.js";
 import type {
   GetDerivationTypeUnion,
   DerivationTypeUnion,
@@ -26,7 +27,7 @@ import { type DeriveItemsBatchFromMnemonic } from "./derive-items-batch-from-mne
 import { type DoesPKBelongToMnemonic } from "./does-p-k-belong-to-mnemonic.type.js";
 import type { CommonNetworkPurposeUnion } from "../network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "../ton-address-derivation-config.type.js";
-import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/index.js";
+import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/address.js";
 import type { Curve } from "@/libs/enums/enums.js";
 
 type AvaxParameters = {
@@ -82,6 +83,10 @@ type DotStandardHdParameters = {
   keysDerivationInstance: CommonEd25519KeyDerivation;
 } & Ss58Format;
 
+type DotLedgerParameters = {
+  keysDerivationInstance: DotLedgerKeyDerivation;
+} & Ss58Format;
+
 type DotBaseParameters = {
   keysDerivationInstance: DotBaseKeyDerivation;
   scheme: Curve["ED25519" | "SECP256K1" | "SR25519"];
@@ -131,6 +136,7 @@ type GetDerivationHandlersParameters = Record<
   Record<GetDerivationTypeUnion<"bnbBase">, BnbParameters> &
   Record<GetDerivationTypeUnion<"evmBase">, EvmParameters> &
   Record<GetDerivationTypeUnion<"dotStandardHd">, DotStandardHdParameters> &
+  Record<GetDerivationTypeUnion<"dotLedger">, DotLedgerParameters> &
   Record<GetDerivationTypeUnion<"dotBase">, DotBaseParameters> &
   Record<GetDerivationTypeUnion<"bchCashAddr">, BchParameters> &
   Record<GetDerivationTypeUnion<"solBase">, SolBaseParameters> &

@@ -1,4 +1,4 @@
-import { SuiKeyDerivation } from "@/libs/modules/key-derivation/index.js";
+import { SuiKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import type {
   DeriveItemFromMnemonicParameters,
   GetCredentialFromPKParameters,

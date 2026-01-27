@@ -12,7 +12,7 @@ import type {
 } from "@/modules/network/libs/types/index.js";
 import { getTransparentDerivationHandlers } from "./libs/helpers/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
-import { TransparentKeyDerivation } from "@/libs/modules/key-derivation/index.js";
+import { TransparentKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Zec implements AbstractNetwork<"zecTransparent"> {

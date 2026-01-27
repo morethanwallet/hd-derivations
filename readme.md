@@ -20,12 +20,11 @@ hd-derivations is a powerful and flexible hierarchical deterministic (HD) key de
 
 With support for multiple key types, derivation schemes, and other network specific configs, `hd-derivations` is a reliable solution for developers working with Bitcoin, Ethereum-compatible chains, Cardano, and more. Whether you are generating wallets, recovering accounts, or working with advanced key management, this package simplifies the process while maintaining security and flexibility.
 
+
 ## License
 
-This package is **free for non-commercial use only**.
-
-Commercial use is not permitted without an explicit license.
-See the LICENSE file for details.
+Licensed under the PolyForm Noncommercial License 1.0.0.
+Commercial use requires a separate license.
 
 <a id="features"></a>
 ## Key Features

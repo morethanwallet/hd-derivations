@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getNetwork } from "../../get-network/index.js";
+import { getNetwork } from "../../get-network/get-network.js";
 import type { AdaNetworkPurposeUnion } from "../../libs/types/index.js";
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { Ada } from "../ada.network.js";

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { Xrp } from "../xrp.network.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
-import { getNetwork } from "../../get-network/index.js";
+import { getNetwork } from "../../get-network/get-network.js";
 import { xrpConfig } from "../../libs/modules/config/index.js";
 import {
   FIRST_ITEM_INDEX,
