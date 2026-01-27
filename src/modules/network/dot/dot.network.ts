@@ -1,7 +1,8 @@
 import {
   CommonEd25519KeyDerivation,
   DotBaseKeyDerivation,
-} from "@/libs/modules/key-derivation/index.js";
+  DotLedgerKeyDerivation,
+} from "@/libs/modules/key-derivation/networks.js";
 import type {
   DeriveItemFromMnemonicParameters,
   GetCredentialFromPKParameters,
@@ -15,8 +16,9 @@ import type {
 } from "@/modules/network/libs/types/index.js";
 import {
   getBaseDerivationHandlers,
+  getLedgerDerivationHandlers,
   getStandardHdDerivationHandlers,
-} from "./libs/helpers/index.js";
+} from "./libs/helpers/helpers.js";
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { Ed25519Curve } from "@/libs/modules/curves/curves.js";
 
@@ -41,6 +43,10 @@ class Dot implements AbstractNetwork<DerivationTypeUnionByNetwork["dot"]> {
         scheme,
         ss58Format,
         keysDerivationInstance: new DotBaseKeyDerivation(dotMnemonic),
+      }),
+      dotLedger: getLedgerDerivationHandlers({
+        keysDerivationInstance: new DotLedgerKeyDerivation(dotMnemonic),
+        ss58Format,
       }),
     };
 

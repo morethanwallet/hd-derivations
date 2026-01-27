@@ -12,7 +12,7 @@ import { Bch } from "../bch/index.js";
 import { Xrp } from "../xrp/index.js";
 import { Bnb } from "../bnb/index.js";
 import { Evm } from "../evm/index.js";
-import { Dot } from "../dot/index.js";
+import { Dot } from "../dot/dot.js";
 import { Sol } from "../sol/index.js";
 import { Doge } from "../doge/index.js";
 import { Zec } from "../zec/index.js";

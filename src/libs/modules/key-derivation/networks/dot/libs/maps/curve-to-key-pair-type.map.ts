@@ -1,7 +1,7 @@
 import type { Curve } from "@/libs/enums/enums";
 import type { KeypairType } from "@polkadot/util-crypto/types";
 
-const schemeToKeyPairType: Record<
+const curveToKeyPairType: Record<
   Curve["ED25519"] | Curve["SECP256K1"] | Curve["SR25519"],
   KeypairType
 > = {
@@ -10,4 +10,4 @@ const schemeToKeyPairType: Record<
   sr25519: "sr25519",
 };
 
-export { schemeToKeyPairType };
+export { curveToKeyPairType };

@@ -2,7 +2,7 @@ import {
   getBtcLegacyAddress,
   getBtcNativeSegWitAddress,
   getBtcSegWitAddress,
-} from "@/libs/modules/address/index.js";
+} from "@/libs/modules/address/address.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,

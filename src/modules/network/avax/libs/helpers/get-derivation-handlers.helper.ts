@@ -1,4 +1,4 @@
-import { getAvaxAddress } from "@/libs/modules/address/index.js";
+import { getAvaxAddress } from "@/libs/modules/address/address.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,

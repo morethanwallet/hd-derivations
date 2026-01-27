@@ -23,6 +23,7 @@ type DerivationTypeUnion =
   | "suiBase"
   | "dotBase"
   | "dotStandardHd"
+  | "dotLedger"
   | "solBase"
   | "solExodus" // TODO: Refactor codebase to exclude clients from the `derivationTypeUnion` and accepting id only of the shape similar to "network.derivationType.curve.hdScheme.authenticationScheme.client". Explore whether there's need for the `hdScheme` and the following type: type HdSchemeUnion = "bip32-secp256k1" | "bip32-ed25519" | "slip10-ed25519" | "schnorrkel-sr25519";
   | "dogeLegacy"
@@ -53,7 +54,7 @@ type AptDerivationTypeUnion = GetDerivationTypeUnion<"aptBase" | "aptLegacy">;
 
 type LtcDerivationTypeUnion = GetDerivationTypeUnion<"ltcLegacy" | "ltcSegWit" | "ltcNativeSegWit">;
 
-type DotDerivationTypeUnion = GetDerivationTypeUnion<"dotBase" | "dotStandardHd">;
+type DotDerivationTypeUnion = GetDerivationTypeUnion<"dotBase" | "dotStandardHd" | "dotLedger">;
 
 type SolDerivationTypeUnion = GetDerivationTypeUnion<"solBase" | "solExodus">;
 

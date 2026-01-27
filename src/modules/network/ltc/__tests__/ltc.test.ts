@@ -1,5 +1,5 @@
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
-import { getNetwork } from "../../get-network/index.js";
+import { getNetwork } from "../../get-network/get-network.js";
 import { ltcConfig } from "../../libs/modules/config/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
 import { Ltc } from "../ltc.network.js";

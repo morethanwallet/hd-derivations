@@ -8,7 +8,7 @@ import { type Bch } from "@/modules/network/bch/index.js";
 import { type Xrp } from "@/modules/network/xrp/index.js";
 import { type Bnb } from "@/modules/network/bnb/index.js";
 import { type Evm } from "@/modules/network/evm/index.js";
-import { type Dot } from "@/modules/network/dot/index.js";
+import { type Dot } from "@/modules/network/dot/dot.js";
 import { type Sol } from "@/modules/network/sol/index.js";
 import { type Doge } from "@/modules/network/doge/index.js";
 import { type Zec } from "@/modules/network/zec/index.js";

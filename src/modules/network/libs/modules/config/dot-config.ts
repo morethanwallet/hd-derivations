@@ -7,8 +7,14 @@ type DotConfig = {
   >;
 };
 
+const ED25519_CURVE_DERIVATION_PATH_PREFIX = "m/44'/354'";
+
 const dotConfig: DotConfig = {
-  derivationPathPrefix: { dotStandardHd: "m/44'/354'", dotBase: "" },
+  derivationPathPrefix: {
+    dotStandardHd: ED25519_CURVE_DERIVATION_PATH_PREFIX,
+    dotBase: "",
+    dotLedger: ED25519_CURVE_DERIVATION_PATH_PREFIX,
+  },
 };
 
 export { dotConfig };

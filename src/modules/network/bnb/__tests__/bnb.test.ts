@@ -1,4 +1,4 @@
-import { getNetwork } from "../../get-network/index.js";
+import { getNetwork } from "../../get-network/get-network.js";
 import {
   INDEX_LOOKUP_FROM,
   INDEX_LOOKUP_TO,

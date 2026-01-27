@@ -20,7 +20,7 @@ import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import {
   AdaBaseKeyDerivation,
   AdaCommonKeyDerivation,
-} from "@/libs/modules/key-derivation/index.js";
+} from "@/libs/modules/key-derivation/networks.js";
 import { AdaExodusKeyDerivation } from "@/libs/modules/key-derivation/networks/ada/ada-exodus-key-derivation.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 

@@ -1,4 +1,4 @@
-import { getSuiAddress } from "@/libs/modules/address/index.js";
+import { getSuiAddress } from "@/libs/modules/address/address.js";
 import {
   deriveItemsBatchFromMnemonic,
   doesPKExistInBatch,

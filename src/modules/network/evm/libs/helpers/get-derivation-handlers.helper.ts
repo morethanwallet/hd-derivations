@@ -1,4 +1,4 @@
-import { getEvmAddress } from "@/libs/modules/address/index.js";
+import { getEvmAddress } from "@/libs/modules/address/address.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
