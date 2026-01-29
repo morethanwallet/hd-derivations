@@ -24,7 +24,6 @@ import type {
 const DERIVATION_PATH_PATTERN = {
   enterprise: "m/1852'/1815'/0'/0",
   reward: "m/1852'/1815'/0'/2",
-  exodus: "m/44'/1815'/0'/0",
 };
 
 function getEnterpriseDerivationHandlers({
@@ -98,7 +97,7 @@ function getRewardDerivationHandlers({
         derivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
       });
 
-      itemsBatch.push(...this.deriveItemsBatchFromMnemonic({ ...parameters }));
+      itemsBatch.push(...this.deriveItemsBatchFromMnemonic(parameters));
 
       if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) return true;
 
@@ -137,18 +136,7 @@ function getExodusDerivationHandlers({
         shouldUseHardenedAddress,
       );
     },
-    doesPKBelongToMnemonic(parameters) {
-      const itemsBatch = this.deriveItemsBatchFromMnemonic({
-        ...parameters,
-        derivationPathPrefix: DERIVATION_PATH_PATTERN.exodus,
-      });
-
-      itemsBatch.push(...this.deriveItemsBatchFromMnemonic({ ...parameters }));
-
-      if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) return true;
-
-      return (doesPKBelongToMnemonic<"adaExodus">).call(this, parameters);
-    },
+    doesPKBelongToMnemonic: doesPKBelongToMnemonic<"adaExodus">,
   };
 }
 

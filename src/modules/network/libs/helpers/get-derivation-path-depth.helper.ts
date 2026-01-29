@@ -1,8 +1,8 @@
-import { DerivationPathSymbol } from "@/libs/enums/enums.js";
+import { getDerivationPathSegmentsArray } from "@/libs/helpers";
 import type { CommonDerivationPath } from "@/libs/types/types.js";
 
 function getDerivationPathDepth(derivationPath: CommonDerivationPath["derivationPath"]): number {
-  return derivationPath.split(DerivationPathSymbol.DELIMITER).length;
+  return getDerivationPathSegmentsArray(derivationPath).length;
 }
 
 export { getDerivationPathDepth };

@@ -1,15 +1,17 @@
+import { describe, it, expect } from "vitest";
+
 import { getNetwork } from "../../get-network/get-network.js";
 import { tonConfig } from "../../libs/modules/config/index.js";
-import { Ton } from "../ton.network.js";
-import { describe, it, expect } from "vitest";
+import { type Ton } from "../ton.network.js";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
-import type { TonAddressRequiredData } from "@/libs/modules/address/address.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
+
+import type { TonAddressRequiredData } from "@/libs/modules/address/address.js";
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 const DerivationPath = {
