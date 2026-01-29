@@ -1,15 +1,16 @@
-import type { PrefixConfig } from "@/libs/modules/curves/curves.js";
-import type {
-  DerivationTypeUnionByNetwork,
-  AuthSchemeUnion,
-  GetDerivationTypeUnion,
-} from "@/libs/types/types.js";
 import type {
   AdaNetworkPurposeUnion,
   CommonNetworkPurposeRegTestExtendedUnion,
   CommonNetworkPurposeUnion,
 } from "./network-purpose-union.type.js";
 import type { TonAddressDerivationConfig } from "./ton-address-derivation-config.type.js";
+
+import type { PrefixConfig } from "@/libs/modules/curves/curves.js";
+import type {
+  DerivationTypeUnionByNetwork,
+  AuthSchemeUnion,
+  GetDerivationTypeUnion,
+} from "@/libs/types/types.js";
 import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/address.js";
 import type { Curve } from "@/libs/enums/enums.js";
 
@@ -92,6 +93,14 @@ type SolDerivationConfig = {
   derivationType: DerivationTypeUnionByNetwork["sol"];
 };
 
+type EvmDerivationConfig = {
+  derivationType: DerivationTypeUnionByNetwork["evm"];
+} & PrefixConfigProperty;
+
+type BnbDerivationConfig = {
+  derivationType: DerivationTypeUnionByNetwork["bnb"];
+} & PrefixConfigProperty;
+
 type DerivationConfig = {
   ada: AdaDerivationConfig;
   avax: AvaxDerivationConfig;
@@ -107,8 +116,8 @@ type DerivationConfig = {
   apt: AptDerivationConfig;
   ltc: LtcDerivationConfig;
   sol: SolDerivationConfig;
-} & {
-  [key in "evm" | "bnb"]: PrefixConfigProperty;
+  evm: EvmDerivationConfig;
+  bnb: BnbDerivationConfig;
 };
 
 type GetDerivationConfig<T extends keyof DerivationConfig> = DerivationConfig[T];

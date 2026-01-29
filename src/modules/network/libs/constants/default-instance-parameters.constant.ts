@@ -64,10 +64,12 @@ const DEFAULT_XRP_INSTANCE_PARAMETERS: InstanceParameters["xrp"] = {
 
 const DEFAULT_BNB_INSTANCE_PARAMETERS: InstanceParameters["bnb"] = {
   network: "bnb",
+  derivationConfig: { derivationType: "bnbBase" },
 };
 
 const DEFAULT_EVM_INSTANCE_PARAMETERS: InstanceParameters["evm"] = {
   network: "evm",
+  derivationConfig: { derivationType: "evmBase" },
 };
 
 const DEFAULT_DOT_INSTANCE_PARAMETERS: InstanceParameters["dot"] = {

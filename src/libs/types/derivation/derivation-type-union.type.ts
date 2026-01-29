@@ -75,6 +75,8 @@ type DerivationTypeUnionByNetwork = {
   sui: GetDerivationTypeUnion<"suiBase">;
   doge: GetDerivationTypeUnion<"dogeLegacy">;
   zec: GetDerivationTypeUnion<"zecTransparent">;
+  evm: GetDerivationTypeUnion<"evmBase">;
+  bnb: GetDerivationTypeUnion<"bnbBase">;
 };
 
 export type { GetDerivationTypeUnion, DerivationTypeUnion, DerivationTypeUnionByNetwork };

@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+
 import { getNetwork } from "../../get-network/get-network.js";
 import { evmConfig } from "../../libs/modules/config/index.js";
 import {
@@ -7,7 +8,7 @@ import {
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
-import { Evm } from "../evm.network.js";
+import { type Evm } from "../evm.network.js";
 
 const MOCK_DERIVATION_PATH = {
   eth: "m/44'/60'/0'/0/0",
@@ -66,6 +67,7 @@ beforeAll(() => {
   evmNetworkDerivation = getNetwork({
     network: "evm",
     mnemonic: MNEMONIC,
+    derivationConfig: { derivationType: "evmBase" },
   });
 });
 
