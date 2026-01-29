@@ -41,7 +41,7 @@ Commercial use requires a separate license.
 ## Installation
 
 ```bash
-yarn add @morethanwallet/hd-derivations
+yarn add @extra-wallet/hd-derivations
 ```
 
 <a id="how-to-use"></a>
@@ -52,13 +52,13 @@ yarn add @morethanwallet/hd-derivations
 - Node JS:
 
 ```ts
-import { getNetwork } from "@morethanwallet/hd-derivations/node";
+import { getNetwork } from "@extra-wallet/hd-derivations/node";
 ```
 
 - Browser:
 
 ```ts
-import { getNetwork } from "@morethanwallet/hd-derivations/browser";
+import { getNetwork } from "@extra-wallet/hd-derivations/browser";
 ```
 
 ### 2. Create Network
@@ -92,7 +92,7 @@ const network = getNetwork({
 - Using the default parameters:
 
 ```ts
-import { DEFAULT_BCH_INSTANCE_PARAMETERS, getNetwork } from "@morethanwallet/hd-derivations/node"; // Or "@morethanwallet/hd-derivations/browser"
+import { DEFAULT_BCH_INSTANCE_PARAMETERS, getNetwork } from "@extra-wallet/hd-derivations/node"; // Or "@extra-wallet/hd-derivations/browser"
 
 const network = getNetwork(DEFAULT_BCH_INSTANCE_PARAMETERS);
 ```

@@ -11,49 +11,58 @@ import {
   MNEMONIC,
 } from "../../libs/constants/index.js";
 
-const MOCK_COMMON_DERIVATION_PATH = {
+const DERIVATION_PATH = {
   mainnet: {
     btcLegacy: "m/44'/0'/0'/0/0",
+    btcP2wshInP2sh: "m/48'/0'/0'/1'/0/0",
+    btcP2wsh: "m/48'/0'/0'/2'/0/0",
     btcSegWit: "m/49'/0'/0'/0/0",
     btcNativeSegWit: "m/84'/0'/0'/0/0",
     btcTaproot: "m/86'/0'/0'/0/0",
   },
   testnet: {
     btcLegacy: "m/44'/1'/0'/0/0",
+    btcP2wshInP2sh: "m/48'/1'/0'/1'/0/0",
+    btcP2wsh: "m/48'/1'/0'/2'/0/0",
     btcSegWit: "m/49'/1'/0'/0/0",
     btcNativeSegWit: "m/84'/1'/0'/0/0",
     btcTaproot: "m/86'/1'/0'/0/0",
   },
 };
 
-const MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX = {
+const DERIVATION_PATH_BATCH_PREFIX = {
   mainnet: {
     btcLegacy: "m/44'/0'/0'/0",
+    btcP2wshInP2sh: "m/48'/0'/0'/1'/0",
+    btcP2wsh: "m/48'/0'/0'/2'/0",
     btcSegWit: "m/49'/0'/0'/0",
     btcNativeSegWit: "m/84'/0'/0'/0",
     btcTaproot: "m/86'/0'/0'/0",
   },
   testnet: {
     btcLegacy: "m/44'/1'/0'/0",
+    btcP2wshInP2sh: "m/48'/1'/0'/1'/0",
+    btcP2wsh: "m/48'/1'/0'/2'/0",
     btcSegWit: "m/49'/1'/0'/0",
     btcNativeSegWit: "m/84'/1'/0'/0",
     btcTaproot: "m/86'/1'/0'/0",
   },
 };
 
-const MOCK_COMMON_MAINNET_SEG_WIT_CREDENTIAL = {
-  privateKey: "KzJPKD7B7wezTn9QZvHAGSH2CXvdhmcurq3WoEvsgPpBwzitdC81",
-  publicKey: "0317e1f9c3fd3d6d630cf1f1f4ec442cb9a93ff8c076ab71bcad5bb7ed8d17348c",
-};
-
-const MOCK_MAINNET_CREDENTIAL = {
+const MAINNET_CREDENTIAL = {
   btcLegacy: {
     privateKey: "L3hhRruT6ZGHKutu49Spfq68zHuhGDm8b7ahr4bcLD2AbTJWBJnr",
     publicKey: "03d3f020b78cc3c5b0e7bb49ef8e13d9718ef223b34819fb4c5c35ddec76bc90c0",
     address: "176d1FZHP88mMFoyaTA2sZ5UA19CY33Phn",
   },
+  btcP2wshInP2sh: {
+    privateKey: "L1XUVsfZmeB1Hxdnys2NmyCBJo1NTJQXhSqqVYpYxV4Nw8RpoJzS",
+    publicKey: "02b46c87fcf2b93d36f1489ef53d834c6f60c21e14feeb3332bde1c4d4420f6af3",
+    address: "389tywTtZCDkyppKAJbAdr6ZEFtA6Y3ANC",
+  },
   btcSegWit: {
-    ...MOCK_COMMON_MAINNET_SEG_WIT_CREDENTIAL,
+    privateKey: "KzJPKD7B7wezTn9QZvHAGSH2CXvdhmcurq3WoEvsgPpBwzitdC81",
+    publicKey: "0317e1f9c3fd3d6d630cf1f1f4ec442cb9a93ff8c076ab71bcad5bb7ed8d17348c",
     address: "3QZgY2mGE3ugcjjjq956v4JsbFVjr6xCd9",
   },
   btcNativeSegWit: {
@@ -61,81 +70,68 @@ const MOCK_MAINNET_CREDENTIAL = {
     publicKey: "02326c7f6b115952cf752f27bfbedcebfa93f6b3f460aac780e76be12d805a9d04",
     address: "bc1qzccrsckwsr7t76sz54kjwmhkxyts94e573hpd8",
   },
+  btcP2wsh: {
+    privateKey: "Ky8VH8MQNz1Ln923KjGwaeGH6fgH4fgkJ7ceoViivozfz48h6EYv",
+    publicKey: "02d8e9929c42e1013fc1e9718d9afebd66350daa6729bd52b9a3f0bd27939a465d",
+    address: "bc1q0kqr3q9jdqn800t7du5xjr4atslfq529xvxw0pwqgu2hu6cmhw4s8ck63d",
+  },
   btcTaproot: {
     privateKey: "L4obzibVhVrw5V2hCUQAiipuXBw5X8W1bdR3WzTZUgafDLmeUzzR",
     publicKey: "eb2c29de66f2581f95f881847492bab0a9e9000856202bf1f10d537f6eeacfe5",
     address: "bc1pqlgwhczvyfftzu8kjwkmyxay4xd2qghmazwqty8dtw5sempknd2qhkag2t",
   },
-  btcP2wsh: {
-    ...MOCK_COMMON_MAINNET_SEG_WIT_CREDENTIAL,
-    address: "bc1q6vdym5mjce2jc00qv03eu7t0g7cprr5kye6xcvvw5xs2uf250nns3r3sn6",
+};
+
+const MAINNET_EXTRINSIC_PRIVATE_KEY = {
+  btcLegacy: { privateKey: "L1644zJDRxpgQxdaTZceJikbCcVUR1XyqzeRY1ZHqk15ZMnojQSh" },
+  btcP2wshInP2sh: { privateKey: "KzipLdnpzuwrKdD59dudAC7EyeiGDMy2Ra6YXshh8vpPMdZ41J6i" },
+  btcSegWit: { privateKey: "L15ASq4MPHFcqgqePPRPPaRE5W5uBdpP6sufvfMUWwty6Kj1nrAo" },
+  btcNativeSegWit: { privateKey: "L1kBHe9oFPGGTtgXBhbSogi1gryYBqGkJKvHcyzZaVBy7gjfdMKP" },
+  btcP2wsh: { privateKey: "Kz93uu3MzBYnU1wvaowx6r7XTLeLYCRmMmZgv24pcVwCVEk7h9Da" },
+  btcTaproot: { privateKey: "L5ddnhKfVpkZGoS5aygVCHU6xYQGDAwhoUSiew1QCmbtMhEnmhf8" },
+};
+
+const MAINNET_ITEM = {
+  btcLegacy: {
+    ...MAINNET_CREDENTIAL.btcLegacy,
+    derivationPath: DERIVATION_PATH.mainnet.btcLegacy,
   },
   btcP2wshInP2sh: {
-    ...MOCK_COMMON_MAINNET_SEG_WIT_CREDENTIAL,
-    address: "3HRjXgMDRKK8rn9wfVFad28jyHT82KPfo3",
-  },
-};
-
-const MOCK_COMMON_MAINNET_EXTRINSIC_SEG_WIT_PRIVATE_KEY =
-  "L15ASq4MPHFcqgqePPRPPaRE5W5uBdpP6sufvfMUWwty6Kj1nrAo";
-
-const MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY = {
-  btcLegacy: {
-    privateKey: "L1644zJDRxpgQxdaTZceJikbCcVUR1XyqzeRY1ZHqk15ZMnojQSh",
-  },
-  btcSegWit: { privateKey: MOCK_COMMON_MAINNET_EXTRINSIC_SEG_WIT_PRIVATE_KEY },
-  btcNativeSegWit: {
-    privateKey: "L1kBHe9oFPGGTtgXBhbSogi1gryYBqGkJKvHcyzZaVBy7gjfdMKP",
-  },
-  btcTaproot: {
-    privateKey: "L5ddnhKfVpkZGoS5aygVCHU6xYQGDAwhoUSiew1QCmbtMhEnmhf8",
-  },
-  btcP2wsh: {
-    privateKey: MOCK_COMMON_MAINNET_EXTRINSIC_SEG_WIT_PRIVATE_KEY,
-  },
-  btcP2wshInP2sh: { privateKey: MOCK_COMMON_MAINNET_EXTRINSIC_SEG_WIT_PRIVATE_KEY },
-};
-
-const MOCK_MAINNET_ITEM = {
-  btcLegacy: {
-    ...MOCK_MAINNET_CREDENTIAL.btcLegacy,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.mainnet.btcLegacy,
+    ...MAINNET_CREDENTIAL.btcP2wshInP2sh,
+    derivationPath: DERIVATION_PATH.mainnet.btcP2wshInP2sh,
   },
   btcSegWit: {
-    ...MOCK_MAINNET_CREDENTIAL.btcSegWit,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.mainnet.btcSegWit,
+    ...MAINNET_CREDENTIAL.btcSegWit,
+    derivationPath: DERIVATION_PATH.mainnet.btcSegWit,
   },
   btcNativeSegWit: {
-    ...MOCK_MAINNET_CREDENTIAL.btcNativeSegWit,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.mainnet.btcNativeSegWit,
-  },
-  btcTaproot: {
-    ...MOCK_MAINNET_CREDENTIAL.btcTaproot,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.mainnet.btcTaproot,
+    ...MAINNET_CREDENTIAL.btcNativeSegWit,
+    derivationPath: DERIVATION_PATH.mainnet.btcNativeSegWit,
   },
   btcP2wsh: {
-    ...MOCK_MAINNET_CREDENTIAL.btcP2wsh,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.mainnet.btcSegWit,
+    ...MAINNET_CREDENTIAL.btcP2wsh,
+    derivationPath: DERIVATION_PATH.mainnet.btcP2wsh,
   },
-  btcP2wshInP2sh: {
-    ...MOCK_MAINNET_CREDENTIAL.btcP2wshInP2sh,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.mainnet.btcSegWit,
+  btcTaproot: {
+    ...MAINNET_CREDENTIAL.btcTaproot,
+    derivationPath: DERIVATION_PATH.mainnet.btcTaproot,
   },
 };
 
-const MOCK_COMMON_TESTNET_SEG_WIT_CREDENTIAL = {
-  privateKey: "cQjBQLBCeuyn1FeJE72M93vQJgMjoMXH9CkgidtjqjBsiLRjJKLK",
-  publicKey: "0338848902420d91c7789bd62edb88814ce27ecd48f5ac9dd1d0f08682864c6755",
-};
-
-const MOCK_TESTNET_CREDENTIAL = {
+const TESTNET_CREDENTIAL = {
   btcLegacy: {
     address: "mk2hF1aSuKkBZtCUM9jDfjgFLE5gGJ8U8c",
     privateKey: "cQEPGT34NWGzWnW1JE3d5GKaBcEQJqUsDdxH2jXD97CkXaAaXHEn",
     publicKey: "02d76e63231c59c216550ef886d362d58ba96ee30eb56caa99f5cdaf651b9a9a6e",
   },
+  btcP2wshInP2sh: {
+    privateKey: "cNuhdRezqQUPV5dMHmeQeqqGKPfbQkbVDPKy8SKNKtonGKkCXtBM",
+    publicKey: "02a0782d65e1013e463a911beb867ddad694d57ff0d05535b4132cb7a6b39e0547",
+    address: "2N8K3VJ1FgzN1dbYQBeDGinqwZzebQtF9c2",
+  },
   btcSegWit: {
-    ...MOCK_COMMON_TESTNET_SEG_WIT_CREDENTIAL,
+    privateKey: "cQjBQLBCeuyn1FeJE72M93vQJgMjoMXH9CkgidtjqjBsiLRjJKLK",
+    publicKey: "0338848902420d91c7789bd62edb88814ce27ecd48f5ac9dd1d0f08682864c6755",
     address: "2NDrscWiWSvuxUmQp3stwgauM7PLXyA5Jba",
   },
   btcNativeSegWit: {
@@ -143,116 +139,102 @@ const MOCK_TESTNET_CREDENTIAL = {
     privateKey: "cU7MwjFKfWjDPkaKhEJmsbG6DwPjSZs6WLY4BYXiSzeGRnd232i3",
     publicKey: "03d5f0a7cc993f8a296111637c6dd2d80ab917ebeedcb6ed30a600cef49a4d63a1",
   },
+  btcP2wsh: {
+    privateKey: "cT6pGoCE6CvWaejAkLcESXZHuMDMfVnx844LH1vet9f31fzjKUM6",
+    publicKey: "02232bd030355da6e9c035d91382a0f68112a4630c3715f9d4106899609a848d8b",
+    address: "tb1qar0qmnftfnqr9emnfdchqse54ylsz6t2s7s3qq02glvu7x0702vqwdjuzp",
+  },
   btcTaproot: {
     address: "tb1p0q0ya6q34wml2h2katjm8486f27czctx7vghcvh08pmvhu9zdvlq7ne7zu",
     privateKey: "cPQEyhkUdfSCTZfEcWsFm5JLBo2ysAvsTzsYJ9Vv1mYTJmSZAj8A",
     publicKey: "5b0e1610c136eaa57159acd0bd602278b5de45f9664691b9c39ed244a4d46dd7",
   },
-  btcP2wsh: {
-    ...MOCK_COMMON_TESTNET_SEG_WIT_CREDENTIAL,
-    address: "tb1qaan4la2jzw7ww7f8f2uqrmcyyfyfqcmlxvn7r2dtc4gfhy2gl7fseyq9wd",
+};
+
+const TESTNET_EXTRINSIC_PRIVATE_KEY = {
+  btcLegacy: { privateKey: "cRT3XuJ4s2WwaQ6qqyRmg3Fepqnt5Tdfv2nteS1oLrf5p6rVY682" },
+  btcP2wshInP2sh: { privateKey: "cNx9Q1RnbNY1PA3si6wJpaZnoP6V2fmm7ParGqwxX4iaSpgbZJwN" },
+  btcSegWit: { privateKey: "cRS9uk4CpLwt18JumoEWktvHhjPJr5v5Av4935oz24YyM4t8zz1k" },
+  btcNativeSegWit: { privateKey: "cS7AkZ9egSxXdL9na7QaB1D5K6GwrHNSNN4kjQT55bqyNRqoMJ1E" },
+  btcP2wsh: { privateKey: "cNDE1QCiu2zZEhD8QyfHLN3BMfqAiwoXzeoQhnW8THfUeKiaz9zn" },
+  btcTaproot: { privateKey: "cVzdFcKWvtSpSEuLyPVcZbyAamhfsd3PsWbBmMTuhtFtcSKDSKN1" },
+};
+
+const TESTNET_ITEM = {
+  btcLegacy: {
+    ...TESTNET_CREDENTIAL.btcLegacy,
+    derivationPath: DERIVATION_PATH.testnet.btcLegacy,
   },
   btcP2wshInP2sh: {
-    ...MOCK_COMMON_TESTNET_SEG_WIT_CREDENTIAL,
-    address: "2NFcaS5rkUcss4LrN9SKwN2FkBTaLtfEaiL",
-  },
-};
-
-const MOCK_COMMON_TESTNET_EXTRINSIC_SEG_WIT_PRIVATE_KEY =
-  "cRS9uk4CpLwt18JumoEWktvHhjPJr5v5Av4935oz24YyM4t8zz1k";
-
-const MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY = {
-  btcLegacy: {
-    privateKey: "cRT3XuJ4s2WwaQ6qqyRmg3Fepqnt5Tdfv2nteS1oLrf5p6rVY682",
-  },
-  btcSegWit: { privateKey: MOCK_COMMON_TESTNET_EXTRINSIC_SEG_WIT_PRIVATE_KEY },
-  btcNativeSegWit: {
-    privateKey: "cS7AkZ9egSxXdL9na7QaB1D5K6GwrHNSNN4kjQT55bqyNRqoMJ1E",
-  },
-  btcTaproot: {
-    privateKey: "cVzdFcKWvtSpSEuLyPVcZbyAamhfsd3PsWbBmMTuhtFtcSKDSKN1",
-  },
-  btcP2wsh: {
-    privateKey: MOCK_COMMON_TESTNET_EXTRINSIC_SEG_WIT_PRIVATE_KEY,
-  },
-  btcP2wshInP2sh: { privateKey: MOCK_COMMON_TESTNET_EXTRINSIC_SEG_WIT_PRIVATE_KEY },
-};
-
-const MOCK_TESTNET_ITEM = {
-  btcLegacy: {
-    ...MOCK_TESTNET_CREDENTIAL.btcLegacy,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcLegacy,
+    ...TESTNET_CREDENTIAL.btcP2wshInP2sh,
+    derivationPath: DERIVATION_PATH.testnet.btcP2wshInP2sh,
   },
   btcSegWit: {
-    ...MOCK_TESTNET_CREDENTIAL.btcSegWit,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcSegWit,
+    ...TESTNET_CREDENTIAL.btcSegWit,
+    derivationPath: DERIVATION_PATH.testnet.btcSegWit,
   },
   btcNativeSegWit: {
-    ...MOCK_TESTNET_CREDENTIAL.btcNativeSegWit,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcNativeSegWit,
-  },
-  btcTaproot: {
-    ...MOCK_TESTNET_CREDENTIAL.btcTaproot,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcTaproot,
+    ...TESTNET_CREDENTIAL.btcNativeSegWit,
+    derivationPath: DERIVATION_PATH.testnet.btcNativeSegWit,
   },
   btcP2wsh: {
-    ...MOCK_TESTNET_CREDENTIAL.btcP2wsh,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcSegWit,
+    ...TESTNET_CREDENTIAL.btcP2wsh,
+    derivationPath: DERIVATION_PATH.testnet.btcP2wsh,
+  },
+  btcTaproot: {
+    ...TESTNET_CREDENTIAL.btcTaproot,
+    derivationPath: DERIVATION_PATH.testnet.btcTaproot,
+  },
+};
+
+const REGTEST_CREDENTIAL = {
+  btcLegacy: {
+    ...TESTNET_CREDENTIAL.btcLegacy,
   },
   btcP2wshInP2sh: {
-    ...MOCK_TESTNET_CREDENTIAL.btcP2wshInP2sh,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcSegWit,
-  },
-};
-
-const MOCK_REGTEST_CREDENTIAL = {
-  btcLegacy: {
-    ...MOCK_TESTNET_CREDENTIAL.btcLegacy,
+    ...TESTNET_CREDENTIAL.btcP2wshInP2sh,
   },
   btcSegWit: {
-    ...MOCK_TESTNET_CREDENTIAL.btcSegWit,
+    ...TESTNET_CREDENTIAL.btcSegWit,
   },
   btcNativeSegWit: {
-    ...MOCK_TESTNET_CREDENTIAL.btcNativeSegWit,
+    ...TESTNET_CREDENTIAL.btcNativeSegWit,
     address: "bcrt1q3vuwtgm82zhsc6yppzuq25rvkdcknuqlve437h",
   },
-  btcTaproot: {
-    ...MOCK_TESTNET_CREDENTIAL.btcTaproot,
-    address: "bcrt1p0q0ya6q34wml2h2katjm8486f27czctx7vghcvh08pmvhu9zdvlqn2nchx",
-  },
   btcP2wsh: {
-    ...MOCK_TESTNET_CREDENTIAL.btcP2wsh,
-    address: "bcrt1qaan4la2jzw7ww7f8f2uqrmcyyfyfqcmlxvn7r2dtc4gfhy2gl7fs5a2rmh",
+    ...TESTNET_CREDENTIAL.btcP2wsh,
+    address: "bcrt1qar0qmnftfnqr9emnfdchqse54ylsz6t2s7s3qq02glvu7x0702vqr5c6hm",
   },
-  btcP2wshInP2sh: {
-    ...MOCK_TESTNET_CREDENTIAL.btcP2wshInP2sh,
+  btcTaproot: {
+    ...TESTNET_CREDENTIAL.btcTaproot,
+    address: "bcrt1p0q0ya6q34wml2h2katjm8486f27czctx7vghcvh08pmvhu9zdvlqn2nchx",
   },
 };
 
-const MOCK_REGTEST_ITEM = {
+const REGTEST_ITEM = {
   btcLegacy: {
-    ...MOCK_REGTEST_CREDENTIAL.btcLegacy,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcLegacy,
-  },
-  btcSegWit: {
-    ...MOCK_REGTEST_CREDENTIAL.btcSegWit,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcSegWit,
-  },
-  btcNativeSegWit: {
-    ...MOCK_REGTEST_CREDENTIAL.btcNativeSegWit,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcNativeSegWit,
-  },
-  btcTaproot: {
-    ...MOCK_REGTEST_CREDENTIAL.btcTaproot,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcTaproot,
-  },
-  btcP2wsh: {
-    ...MOCK_REGTEST_CREDENTIAL.btcP2wsh,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcSegWit,
+    ...REGTEST_CREDENTIAL.btcLegacy,
+    derivationPath: DERIVATION_PATH.testnet.btcLegacy,
   },
   btcP2wshInP2sh: {
-    ...MOCK_REGTEST_CREDENTIAL.btcP2wshInP2sh,
-    derivationPath: MOCK_COMMON_DERIVATION_PATH.testnet.btcSegWit,
+    ...REGTEST_CREDENTIAL.btcP2wshInP2sh,
+    derivationPath: DERIVATION_PATH.testnet.btcP2wshInP2sh,
+  },
+  btcSegWit: {
+    ...REGTEST_CREDENTIAL.btcSegWit,
+    derivationPath: DERIVATION_PATH.testnet.btcSegWit,
+  },
+  btcNativeSegWit: {
+    ...REGTEST_CREDENTIAL.btcNativeSegWit,
+    derivationPath: DERIVATION_PATH.testnet.btcNativeSegWit,
+  },
+  btcP2wsh: {
+    ...REGTEST_CREDENTIAL.btcP2wsh,
+    derivationPath: DERIVATION_PATH.testnet.btcP2wsh,
+  },
+  btcTaproot: {
+    ...REGTEST_CREDENTIAL.btcTaproot,
+    derivationPath: DERIVATION_PATH.testnet.btcTaproot,
   },
 };
 
@@ -311,171 +293,171 @@ describe("Btc", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct legacy item", () => {
         const derivedItem = networkDerivationsInstances.mainnet.btcLegacy.deriveItemFromMnemonic({
-          derivationPath: MOCK_MAINNET_ITEM.btcLegacy.derivationPath,
+          derivationPath: MAINNET_ITEM.btcLegacy.derivationPath,
         });
 
-        expect(MOCK_MAINNET_ITEM.btcLegacy).toEqual(derivedItem);
+        expect(MAINNET_ITEM.btcLegacy).toEqual(derivedItem);
       });
 
       it("Derives correct segWit item", () => {
         const derivedItem = networkDerivationsInstances.mainnet.btcSegWit.deriveItemFromMnemonic({
-          derivationPath: MOCK_MAINNET_ITEM.btcSegWit.derivationPath,
+          derivationPath: MAINNET_ITEM.btcSegWit.derivationPath,
         });
 
-        expect(MOCK_MAINNET_ITEM.btcSegWit).toEqual(derivedItem);
+        expect(MAINNET_ITEM.btcSegWit).toEqual(derivedItem);
       });
 
       it("Derives correct native segWit item", () => {
         const derivedItem =
           networkDerivationsInstances.mainnet.btcNativeSegWit.deriveItemFromMnemonic({
-            derivationPath: MOCK_MAINNET_ITEM.btcNativeSegWit.derivationPath,
+            derivationPath: MAINNET_ITEM.btcNativeSegWit.derivationPath,
           });
 
-        expect(MOCK_MAINNET_ITEM.btcNativeSegWit).toEqual(derivedItem);
+        expect(MAINNET_ITEM.btcNativeSegWit).toEqual(derivedItem);
       });
 
       it("Derives correct taproot item", () => {
         const derivedItem = networkDerivationsInstances.mainnet.btcTaproot.deriveItemFromMnemonic({
-          derivationPath: MOCK_MAINNET_ITEM.btcTaproot.derivationPath,
+          derivationPath: MAINNET_ITEM.btcTaproot.derivationPath,
         });
 
-        expect(MOCK_MAINNET_ITEM.btcTaproot).toEqual(derivedItem);
+        expect(MAINNET_ITEM.btcTaproot).toEqual(derivedItem);
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) item", () => {
         const derivedItem = networkDerivationsInstances.mainnet.btcP2wsh.deriveItemFromMnemonic({
-          derivationPath: MOCK_MAINNET_ITEM.btcP2wsh.derivationPath,
+          derivationPath: MAINNET_ITEM.btcP2wsh.derivationPath,
         });
 
-        expect(MOCK_MAINNET_ITEM.btcP2wsh).toEqual(derivedItem);
+        expect(MAINNET_ITEM.btcP2wsh).toEqual(derivedItem);
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) item", () => {
         const derivedItem =
           networkDerivationsInstances.mainnet.btcP2wshInP2sh.deriveItemFromMnemonic({
-            derivationPath: MOCK_MAINNET_ITEM.btcP2wshInP2sh.derivationPath,
+            derivationPath: MAINNET_ITEM.btcP2wshInP2sh.derivationPath,
           });
 
-        expect(MOCK_MAINNET_ITEM.btcP2wshInP2sh).toEqual(derivedItem);
+        expect(MAINNET_ITEM.btcP2wshInP2sh).toEqual(derivedItem);
       });
     });
 
     describe("getCredentialFromPK", () => {
       it("Derives correct legacy credential", () => {
         const credential = networkDerivationsInstances.mainnet.btcLegacy.getCredentialFromPK({
-          privateKey: MOCK_MAINNET_CREDENTIAL.btcLegacy.privateKey,
+          privateKey: MAINNET_CREDENTIAL.btcLegacy.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_MAINNET_CREDENTIAL.btcLegacy);
+        expect(credential).toEqual(MAINNET_CREDENTIAL.btcLegacy);
       });
 
       it("Derives correct segWit credential", () => {
         const credential = networkDerivationsInstances.mainnet.btcSegWit.getCredentialFromPK({
-          privateKey: MOCK_MAINNET_CREDENTIAL.btcSegWit.privateKey,
+          privateKey: MAINNET_CREDENTIAL.btcSegWit.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_MAINNET_CREDENTIAL.btcSegWit);
+        expect(credential).toEqual(MAINNET_CREDENTIAL.btcSegWit);
       });
 
       it("Derives correct native segWit credential", () => {
         const credential = networkDerivationsInstances.mainnet.btcNativeSegWit.getCredentialFromPK({
-          privateKey: MOCK_MAINNET_CREDENTIAL.btcNativeSegWit.privateKey,
+          privateKey: MAINNET_CREDENTIAL.btcNativeSegWit.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_MAINNET_CREDENTIAL.btcNativeSegWit);
+        expect(credential).toEqual(MAINNET_CREDENTIAL.btcNativeSegWit);
       });
 
       it("Derives correct taproot credential", () => {
         const credential = networkDerivationsInstances.mainnet.btcTaproot.getCredentialFromPK({
-          privateKey: MOCK_MAINNET_CREDENTIAL.btcTaproot.privateKey,
+          privateKey: MAINNET_CREDENTIAL.btcTaproot.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_MAINNET_CREDENTIAL.btcTaproot);
+        expect(credential).toEqual(MAINNET_CREDENTIAL.btcTaproot);
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) credential", () => {
         const credential = networkDerivationsInstances.mainnet.btcP2wsh.getCredentialFromPK({
-          privateKey: MOCK_MAINNET_CREDENTIAL.btcP2wsh.privateKey,
+          privateKey: MAINNET_CREDENTIAL.btcP2wsh.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_MAINNET_CREDENTIAL.btcP2wsh);
+        expect(credential).toEqual(MAINNET_CREDENTIAL.btcP2wsh);
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) credential", () => {
         const credential = networkDerivationsInstances.mainnet.btcP2wshInP2sh.getCredentialFromPK({
-          privateKey: MOCK_MAINNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
+          privateKey: MAINNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_MAINNET_CREDENTIAL.btcP2wshInP2sh);
+        expect(credential).toEqual(MAINNET_CREDENTIAL.btcP2wshInP2sh);
       });
     });
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct legacy items batch", () => {
         const items = networkDerivationsInstances.mainnet.btcLegacy.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcLegacy,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.mainnet.btcLegacy,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.btcLegacy);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MAINNET_ITEM.btcLegacy);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct segWit items batch", () => {
         const items = networkDerivationsInstances.mainnet.btcSegWit.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcSegWit,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.mainnet.btcSegWit,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.btcSegWit);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MAINNET_ITEM.btcSegWit);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct native segWit items batch", () => {
         const items =
           networkDerivationsInstances.mainnet.btcNativeSegWit.deriveItemsBatchFromMnemonic({
-            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcNativeSegWit,
+            derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.mainnet.btcNativeSegWit,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
           });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.btcNativeSegWit);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MAINNET_ITEM.btcNativeSegWit);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct taproot items batch", () => {
         const items = networkDerivationsInstances.mainnet.btcTaproot.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcTaproot,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.mainnet.btcTaproot,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.btcTaproot);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MAINNET_ITEM.btcTaproot);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) items batch", () => {
         const items = networkDerivationsInstances.mainnet.btcP2wsh.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcSegWit,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.mainnet.btcP2wsh,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.btcP2wsh);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MAINNET_ITEM.btcP2wsh);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) items batch", () => {
         const items =
           networkDerivationsInstances.mainnet.btcP2wshInP2sh.deriveItemsBatchFromMnemonic({
-            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.mainnet.btcSegWit,
+            derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.mainnet.btcP2wshInP2sh,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
           });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.btcP2wshInP2sh);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MAINNET_ITEM.btcP2wshInP2sh);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
@@ -487,7 +469,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.mainnet.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.btcLegacy.privateKey,
+            privateKey: MAINNET_CREDENTIAL.btcLegacy.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -498,7 +480,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.mainnet.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.btcSegWit.privateKey,
+            privateKey: MAINNET_CREDENTIAL.btcSegWit.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -510,7 +492,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.mainnet.btcNativeSegWit.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_MAINNET_CREDENTIAL.btcNativeSegWit.privateKey,
+              privateKey: MAINNET_CREDENTIAL.btcNativeSegWit.privateKey,
             });
 
           expect(isNative).toBe(true);
@@ -521,7 +503,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.mainnet.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.btcTaproot.privateKey,
+            privateKey: MAINNET_CREDENTIAL.btcTaproot.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -532,7 +514,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.mainnet.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.btcP2wsh.privateKey,
+            privateKey: MAINNET_CREDENTIAL.btcP2wsh.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -544,7 +526,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.mainnet.btcP2wshInP2sh.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_MAINNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
+              privateKey: MAINNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
             });
 
           expect(isNative).toBe(true);
@@ -557,7 +539,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.mainnet.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.btcLegacy.privateKey,
+            privateKey: MAINNET_EXTRINSIC_PRIVATE_KEY.btcLegacy.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -568,7 +550,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.mainnet.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.btcSegWit.privateKey,
+            privateKey: MAINNET_EXTRINSIC_PRIVATE_KEY.btcSegWit.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -580,7 +562,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.mainnet.btcNativeSegWit.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
+              privateKey: MAINNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
             });
 
           expect(isNative).toBe(false);
@@ -591,7 +573,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.mainnet.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.btcTaproot.privateKey,
+            privateKey: MAINNET_EXTRINSIC_PRIVATE_KEY.btcTaproot.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -602,7 +584,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.mainnet.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.btcP2wsh.privateKey,
+            privateKey: MAINNET_EXTRINSIC_PRIVATE_KEY.btcP2wsh.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -614,7 +596,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.mainnet.btcP2wshInP2sh.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_MAINNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
+              privateKey: MAINNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
             });
 
           expect(isNative).toBe(false);
@@ -627,171 +609,171 @@ describe("Btc", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct legacy item", () => {
         const derivedItem = networkDerivationsInstances.testnet.btcLegacy.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_ITEM.btcLegacy.derivationPath,
+          derivationPath: TESTNET_ITEM.btcLegacy.derivationPath,
         });
 
-        expect(MOCK_TESTNET_ITEM.btcLegacy).toEqual(derivedItem);
+        expect(TESTNET_ITEM.btcLegacy).toEqual(derivedItem);
       });
 
       it("Derives correct segWit item", () => {
         const derivedItem = networkDerivationsInstances.testnet.btcSegWit.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_ITEM.btcSegWit.derivationPath,
+          derivationPath: TESTNET_ITEM.btcSegWit.derivationPath,
         });
 
-        expect(MOCK_TESTNET_ITEM.btcSegWit).toEqual(derivedItem);
+        expect(TESTNET_ITEM.btcSegWit).toEqual(derivedItem);
       });
 
       it("Derives correct native segWit item", () => {
         const derivedItem =
           networkDerivationsInstances.testnet.btcNativeSegWit.deriveItemFromMnemonic({
-            derivationPath: MOCK_TESTNET_ITEM.btcNativeSegWit.derivationPath,
+            derivationPath: TESTNET_ITEM.btcNativeSegWit.derivationPath,
           });
 
-        expect(MOCK_TESTNET_ITEM.btcNativeSegWit).toEqual(derivedItem);
+        expect(TESTNET_ITEM.btcNativeSegWit).toEqual(derivedItem);
       });
 
       it("Derives correct taproot item", () => {
         const derivedItem = networkDerivationsInstances.testnet.btcTaproot.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_ITEM.btcTaproot.derivationPath,
+          derivationPath: TESTNET_ITEM.btcTaproot.derivationPath,
         });
 
-        expect(MOCK_TESTNET_ITEM.btcTaproot).toEqual(derivedItem);
+        expect(TESTNET_ITEM.btcTaproot).toEqual(derivedItem);
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) item", () => {
         const derivedItem = networkDerivationsInstances.testnet.btcP2wsh.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_ITEM.btcP2wsh.derivationPath,
+          derivationPath: TESTNET_ITEM.btcP2wsh.derivationPath,
         });
 
-        expect(MOCK_TESTNET_ITEM.btcP2wsh).toEqual(derivedItem);
+        expect(TESTNET_ITEM.btcP2wsh).toEqual(derivedItem);
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) item", () => {
         const derivedItem =
           networkDerivationsInstances.testnet.btcP2wshInP2sh.deriveItemFromMnemonic({
-            derivationPath: MOCK_TESTNET_ITEM.btcP2wshInP2sh.derivationPath,
+            derivationPath: TESTNET_ITEM.btcP2wshInP2sh.derivationPath,
           });
 
-        expect(MOCK_TESTNET_ITEM.btcP2wshInP2sh).toEqual(derivedItem);
+        expect(TESTNET_ITEM.btcP2wshInP2sh).toEqual(derivedItem);
       });
     });
 
     describe("getCredentialFromPK", () => {
       it("Derives correct legacy credential", () => {
         const credential = networkDerivationsInstances.testnet.btcLegacy.getCredentialFromPK({
-          privateKey: MOCK_TESTNET_CREDENTIAL.btcLegacy.privateKey,
+          privateKey: TESTNET_CREDENTIAL.btcLegacy.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_TESTNET_CREDENTIAL.btcLegacy);
+        expect(credential).toEqual(TESTNET_CREDENTIAL.btcLegacy);
       });
 
       it("Derives correct segWit credential", () => {
         const credential = networkDerivationsInstances.testnet.btcSegWit.getCredentialFromPK({
-          privateKey: MOCK_TESTNET_CREDENTIAL.btcSegWit.privateKey,
+          privateKey: TESTNET_CREDENTIAL.btcSegWit.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_TESTNET_CREDENTIAL.btcSegWit);
+        expect(credential).toEqual(TESTNET_CREDENTIAL.btcSegWit);
       });
 
       it("Derives correct native segWit credential", () => {
         const credential = networkDerivationsInstances.testnet.btcNativeSegWit.getCredentialFromPK({
-          privateKey: MOCK_TESTNET_CREDENTIAL.btcNativeSegWit.privateKey,
+          privateKey: TESTNET_CREDENTIAL.btcNativeSegWit.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_TESTNET_CREDENTIAL.btcNativeSegWit);
+        expect(credential).toEqual(TESTNET_CREDENTIAL.btcNativeSegWit);
       });
 
       it("Derives correct taproot credential", () => {
         const credential = networkDerivationsInstances.testnet.btcTaproot.getCredentialFromPK({
-          privateKey: MOCK_TESTNET_CREDENTIAL.btcTaproot.privateKey,
+          privateKey: TESTNET_CREDENTIAL.btcTaproot.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_TESTNET_CREDENTIAL.btcTaproot);
+        expect(credential).toEqual(TESTNET_CREDENTIAL.btcTaproot);
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) credential", () => {
         const credential = networkDerivationsInstances.testnet.btcP2wsh.getCredentialFromPK({
-          privateKey: MOCK_TESTNET_CREDENTIAL.btcP2wsh.privateKey,
+          privateKey: TESTNET_CREDENTIAL.btcP2wsh.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_TESTNET_CREDENTIAL.btcP2wsh);
+        expect(credential).toEqual(TESTNET_CREDENTIAL.btcP2wsh);
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) credential", () => {
         const credential = networkDerivationsInstances.testnet.btcP2wshInP2sh.getCredentialFromPK({
-          privateKey: MOCK_TESTNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
+          privateKey: TESTNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_TESTNET_CREDENTIAL.btcP2wshInP2sh);
+        expect(credential).toEqual(TESTNET_CREDENTIAL.btcP2wshInP2sh);
       });
     });
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct legacy items batch", () => {
         const items = networkDerivationsInstances.testnet.btcLegacy.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcLegacy,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcLegacy,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.btcLegacy);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(TESTNET_ITEM.btcLegacy);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct segWit items batch", () => {
         const items = networkDerivationsInstances.testnet.btcSegWit.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.btcSegWit);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(TESTNET_ITEM.btcSegWit);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct native segWit items batch", () => {
         const items =
           networkDerivationsInstances.testnet.btcNativeSegWit.deriveItemsBatchFromMnemonic({
-            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcNativeSegWit,
+            derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcNativeSegWit,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
           });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.btcNativeSegWit);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(TESTNET_ITEM.btcNativeSegWit);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct taproot items batch", () => {
         const items = networkDerivationsInstances.testnet.btcTaproot.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcTaproot,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcTaproot,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.btcTaproot);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(TESTNET_ITEM.btcTaproot);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) items batch", () => {
         const items = networkDerivationsInstances.testnet.btcP2wsh.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcP2wsh,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.btcP2wsh);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(TESTNET_ITEM.btcP2wsh);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) items batch", () => {
         const items =
           networkDerivationsInstances.testnet.btcP2wshInP2sh.deriveItemsBatchFromMnemonic({
-            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
+            derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcP2wshInP2sh,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
           });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.btcP2wshInP2sh);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(TESTNET_ITEM.btcP2wshInP2sh);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
@@ -803,7 +785,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.testnet.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_CREDENTIAL.btcLegacy.privateKey,
+            privateKey: TESTNET_CREDENTIAL.btcLegacy.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -814,7 +796,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.testnet.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_CREDENTIAL.btcSegWit.privateKey,
+            privateKey: TESTNET_CREDENTIAL.btcSegWit.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -826,7 +808,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.testnet.btcNativeSegWit.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_TESTNET_CREDENTIAL.btcNativeSegWit.privateKey,
+              privateKey: TESTNET_CREDENTIAL.btcNativeSegWit.privateKey,
             });
 
           expect(isNative).toBe(true);
@@ -837,7 +819,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.testnet.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_CREDENTIAL.btcTaproot.privateKey,
+            privateKey: TESTNET_CREDENTIAL.btcTaproot.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -848,7 +830,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.testnet.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_CREDENTIAL.btcP2wsh.privateKey,
+            privateKey: TESTNET_CREDENTIAL.btcP2wsh.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -860,7 +842,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.testnet.btcP2wshInP2sh.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_TESTNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
+              privateKey: TESTNET_CREDENTIAL.btcP2wshInP2sh.privateKey,
             });
 
           expect(isNative).toBe(true);
@@ -873,7 +855,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.testnet.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcLegacy.privateKey,
+            privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcLegacy.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -884,7 +866,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.testnet.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcSegWit.privateKey,
+            privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcSegWit.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -896,7 +878,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.testnet.btcNativeSegWit.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
+              privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
             });
 
           expect(isNative).toBe(false);
@@ -907,7 +889,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.testnet.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcTaproot.privateKey,
+            privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcTaproot.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -918,7 +900,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.testnet.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wsh.privateKey,
+            privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wsh.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -930,7 +912,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.testnet.btcP2wshInP2sh.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
+              privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
             });
 
           expect(isNative).toBe(false);
@@ -943,171 +925,171 @@ describe("Btc", () => {
     describe("deriveItemFromMnemonic", () => {
       it("Derives correct legacy item", () => {
         const derivedItem = networkDerivationsInstances.regtest.btcLegacy.deriveItemFromMnemonic({
-          derivationPath: MOCK_REGTEST_ITEM.btcLegacy.derivationPath,
+          derivationPath: REGTEST_ITEM.btcLegacy.derivationPath,
         });
 
-        expect(MOCK_REGTEST_ITEM.btcLegacy).toEqual(derivedItem);
+        expect(REGTEST_ITEM.btcLegacy).toEqual(derivedItem);
       });
 
       it("Derives correct segWit item", () => {
         const derivedItem = networkDerivationsInstances.regtest.btcSegWit.deriveItemFromMnemonic({
-          derivationPath: MOCK_REGTEST_ITEM.btcSegWit.derivationPath,
+          derivationPath: REGTEST_ITEM.btcSegWit.derivationPath,
         });
 
-        expect(MOCK_REGTEST_ITEM.btcSegWit).toEqual(derivedItem);
+        expect(REGTEST_ITEM.btcSegWit).toEqual(derivedItem);
       });
 
       it("Derives correct native segWit item", () => {
         const derivedItem =
           networkDerivationsInstances.regtest.btcNativeSegWit.deriveItemFromMnemonic({
-            derivationPath: MOCK_REGTEST_ITEM.btcNativeSegWit.derivationPath,
+            derivationPath: REGTEST_ITEM.btcNativeSegWit.derivationPath,
           });
 
-        expect(MOCK_REGTEST_ITEM.btcNativeSegWit).toEqual(derivedItem);
+        expect(REGTEST_ITEM.btcNativeSegWit).toEqual(derivedItem);
       });
 
       it("Derives correct taproot item", () => {
         const derivedItem = networkDerivationsInstances.regtest.btcTaproot.deriveItemFromMnemonic({
-          derivationPath: MOCK_REGTEST_ITEM.btcTaproot.derivationPath,
+          derivationPath: REGTEST_ITEM.btcTaproot.derivationPath,
         });
 
-        expect(MOCK_REGTEST_ITEM.btcTaproot).toEqual(derivedItem);
+        expect(REGTEST_ITEM.btcTaproot).toEqual(derivedItem);
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) item", () => {
         const derivedItem = networkDerivationsInstances.regtest.btcP2wsh.deriveItemFromMnemonic({
-          derivationPath: MOCK_REGTEST_ITEM.btcP2wsh.derivationPath,
+          derivationPath: REGTEST_ITEM.btcP2wsh.derivationPath,
         });
 
-        expect(MOCK_REGTEST_ITEM.btcP2wsh).toEqual(derivedItem);
+        expect(REGTEST_ITEM.btcP2wsh).toEqual(derivedItem);
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) item", () => {
         const derivedItem =
           networkDerivationsInstances.regtest.btcP2wshInP2sh.deriveItemFromMnemonic({
-            derivationPath: MOCK_REGTEST_ITEM.btcP2wshInP2sh.derivationPath,
+            derivationPath: REGTEST_ITEM.btcP2wshInP2sh.derivationPath,
           });
 
-        expect(MOCK_REGTEST_ITEM.btcP2wshInP2sh).toEqual(derivedItem);
+        expect(REGTEST_ITEM.btcP2wshInP2sh).toEqual(derivedItem);
       });
     });
 
     describe("getCredentialFromPK", () => {
       it("Derives correct legacy credential", () => {
         const credential = networkDerivationsInstances.regtest.btcLegacy.getCredentialFromPK({
-          privateKey: MOCK_REGTEST_CREDENTIAL.btcLegacy.privateKey,
+          privateKey: REGTEST_CREDENTIAL.btcLegacy.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_REGTEST_CREDENTIAL.btcLegacy);
+        expect(credential).toEqual(REGTEST_CREDENTIAL.btcLegacy);
       });
 
       it("Derives correct segWit credential", () => {
         const credential = networkDerivationsInstances.regtest.btcSegWit.getCredentialFromPK({
-          privateKey: MOCK_REGTEST_CREDENTIAL.btcSegWit.privateKey,
+          privateKey: REGTEST_CREDENTIAL.btcSegWit.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_REGTEST_CREDENTIAL.btcSegWit);
+        expect(credential).toEqual(REGTEST_CREDENTIAL.btcSegWit);
       });
 
       it("Derives correct native segWit credential", () => {
         const credential = networkDerivationsInstances.regtest.btcNativeSegWit.getCredentialFromPK({
-          privateKey: MOCK_REGTEST_CREDENTIAL.btcNativeSegWit.privateKey,
+          privateKey: REGTEST_CREDENTIAL.btcNativeSegWit.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_REGTEST_CREDENTIAL.btcNativeSegWit);
+        expect(credential).toEqual(REGTEST_CREDENTIAL.btcNativeSegWit);
       });
 
       it("Derives correct taproot credential", () => {
         const credential = networkDerivationsInstances.regtest.btcTaproot.getCredentialFromPK({
-          privateKey: MOCK_REGTEST_CREDENTIAL.btcTaproot.privateKey,
+          privateKey: REGTEST_CREDENTIAL.btcTaproot.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_REGTEST_CREDENTIAL.btcTaproot);
+        expect(credential).toEqual(REGTEST_CREDENTIAL.btcTaproot);
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) credential", () => {
         const credential = networkDerivationsInstances.regtest.btcP2wsh.getCredentialFromPK({
-          privateKey: MOCK_REGTEST_CREDENTIAL.btcP2wsh.privateKey,
+          privateKey: REGTEST_CREDENTIAL.btcP2wsh.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_REGTEST_CREDENTIAL.btcP2wsh);
+        expect(credential).toEqual(REGTEST_CREDENTIAL.btcP2wsh);
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) credential", () => {
         const credential = networkDerivationsInstances.regtest.btcP2wshInP2sh.getCredentialFromPK({
-          privateKey: MOCK_REGTEST_CREDENTIAL.btcP2wshInP2sh.privateKey,
+          privateKey: REGTEST_CREDENTIAL.btcP2wshInP2sh.privateKey,
         });
 
-        expect(credential).toEqual(MOCK_REGTEST_CREDENTIAL.btcP2wshInP2sh);
+        expect(credential).toEqual(REGTEST_CREDENTIAL.btcP2wshInP2sh);
       });
     });
 
     describe("deriveItemsBatchFromMnemonic", () => {
       it("Derives correct legacy items batch", () => {
         const items = networkDerivationsInstances.regtest.btcLegacy.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcLegacy,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcLegacy,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_REGTEST_ITEM.btcLegacy);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(REGTEST_ITEM.btcLegacy);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct segWit items batch", () => {
         const items = networkDerivationsInstances.regtest.btcSegWit.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_REGTEST_ITEM.btcSegWit);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(REGTEST_ITEM.btcSegWit);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct native segWit items batch", () => {
         const items =
           networkDerivationsInstances.regtest.btcNativeSegWit.deriveItemsBatchFromMnemonic({
-            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcNativeSegWit,
+            derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcNativeSegWit,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
           });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_REGTEST_ITEM.btcNativeSegWit);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(REGTEST_ITEM.btcNativeSegWit);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct taproot items batch", () => {
         const items = networkDerivationsInstances.regtest.btcTaproot.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcTaproot,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcTaproot,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_REGTEST_ITEM.btcTaproot);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(REGTEST_ITEM.btcTaproot);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct p2wsh (1-of-1 multisig) items batch", () => {
         const items = networkDerivationsInstances.regtest.btcP2wsh.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
+          derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcP2wsh,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
         });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_REGTEST_ITEM.btcP2wsh);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(REGTEST_ITEM.btcP2wsh);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
       it("Derives correct p2wsh in p2sh (1-of-1 multisig) items batch", () => {
         const items =
           networkDerivationsInstances.regtest.btcP2wshInP2sh.deriveItemsBatchFromMnemonic({
-            derivationPathPrefix: MOCK_COMMON_DERIVATION_PATH_BATCH_PREFIX.testnet.btcSegWit,
+            derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet.btcP2wshInP2sh,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
           });
 
-        expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_REGTEST_ITEM.btcP2wshInP2sh);
+        expect(items[FIRST_ITEM_INDEX]).toEqual(REGTEST_ITEM.btcP2wshInP2sh);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
@@ -1119,7 +1101,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.regtest.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_REGTEST_CREDENTIAL.btcLegacy.privateKey,
+            privateKey: REGTEST_CREDENTIAL.btcLegacy.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -1130,7 +1112,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.regtest.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_REGTEST_CREDENTIAL.btcSegWit.privateKey,
+            privateKey: REGTEST_CREDENTIAL.btcSegWit.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -1142,7 +1124,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.regtest.btcNativeSegWit.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_REGTEST_CREDENTIAL.btcNativeSegWit.privateKey,
+              privateKey: REGTEST_CREDENTIAL.btcNativeSegWit.privateKey,
             });
 
           expect(isNative).toBe(true);
@@ -1153,7 +1135,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.regtest.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_REGTEST_CREDENTIAL.btcTaproot.privateKey,
+            privateKey: REGTEST_CREDENTIAL.btcTaproot.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -1164,7 +1146,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.regtest.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_REGTEST_CREDENTIAL.btcP2wsh.privateKey,
+            privateKey: REGTEST_CREDENTIAL.btcP2wsh.privateKey,
           });
 
           expect(isNative).toBe(true);
@@ -1176,7 +1158,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.regtest.btcP2wshInP2sh.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_REGTEST_CREDENTIAL.btcP2wshInP2sh.privateKey,
+              privateKey: REGTEST_CREDENTIAL.btcP2wshInP2sh.privateKey,
             });
 
           expect(isNative).toBe(true);
@@ -1189,7 +1171,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.regtest.btcLegacy.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcLegacy.privateKey,
+            privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcLegacy.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -1200,7 +1182,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.regtest.btcSegWit.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcSegWit.privateKey,
+            privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcSegWit.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -1212,7 +1194,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.regtest.btcNativeSegWit.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
+              privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcNativeSegWit.privateKey,
             });
 
           expect(isNative).toBe(false);
@@ -1223,7 +1205,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.regtest.btcTaproot.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcTaproot.privateKey,
+            privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcTaproot.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -1234,7 +1216,7 @@ describe("Btc", () => {
             derivationPathPrefix: btcConfig.regtest.btcP2wsh.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wsh.privateKey,
+            privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wsh.privateKey,
           });
 
           expect(isNative).toBe(false);
@@ -1246,7 +1228,7 @@ describe("Btc", () => {
               derivationPathPrefix: btcConfig.regtest.btcP2wshInP2sh.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
-              privateKey: MOCK_TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
+              privateKey: TESTNET_EXTRINSIC_PRIVATE_KEY.btcP2wshInP2sh.privateKey,
             });
 
           expect(isNative).toBe(false);

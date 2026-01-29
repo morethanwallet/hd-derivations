@@ -1,6 +1,7 @@
-import type { Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import type { GetDerivationConfig } from "./derivation-config.type.js";
 import type { NetworkTypeMap } from "./network-type-map.type.js";
+
+import type { Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
 type MnemonicProperty = { mnemonic?: Mnemonic["mnemonic"] };
 

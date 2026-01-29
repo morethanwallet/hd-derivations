@@ -33,7 +33,7 @@ export default defineConfig({
     outDir: resolve(__dirname, "build/browser"),
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "@morethanwallet/hd-derivations",
+      name: "@extra-wallet/hd-derivations",
       formats: ["es"],
     },
     rollupOptions: {

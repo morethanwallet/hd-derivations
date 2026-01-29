@@ -3,3 +3,4 @@ coverage
 build
 .env
 .vscode
+publish-logs.log

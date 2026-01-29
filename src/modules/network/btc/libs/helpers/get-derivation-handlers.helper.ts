@@ -10,11 +10,17 @@ import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
   validateDerivationPath,
+  doesPKExistInBatch,
 } from "@/modules/network/libs/helpers/index.js";
 import type {
   GetDerivationHandlersParameters,
   GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
+
+const DERIVATION_PATH_PATTERN = {
+  p2wshInP2sh: "m/48'/0'/0'/1'/0",
+  p2wsh: "m/48'/0'/0'/2'/0",
+};
 
 function getLegacyDerivationHandlers({
   keysDerivationInstance,
@@ -193,7 +199,18 @@ function getP2wshDerivationHandlers({
         shouldUseHardenedAddress,
       );
     },
-    doesPKBelongToMnemonic: doesPKBelongToMnemonic<"btcP2wsh">,
+    doesPKBelongToMnemonic(parameters) {
+      const itemsBatch = this.deriveItemsBatchFromMnemonic({
+        ...parameters,
+        derivationPathPrefix: DERIVATION_PATH_PATTERN.p2wsh,
+      });
+
+      itemsBatch.push(...this.deriveItemsBatchFromMnemonic(parameters));
+
+      if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) return true;
+
+      return (doesPKBelongToMnemonic<"btcP2wsh">).call(this, parameters);
+    },
   };
 }
 
@@ -228,7 +245,18 @@ function getP2wshInP2shDerivationHandlers({
         shouldUseHardenedAddress,
       );
     },
-    doesPKBelongToMnemonic: doesPKBelongToMnemonic<"btcP2wshInP2sh">,
+    doesPKBelongToMnemonic(parameters) {
+      const itemsBatch = this.deriveItemsBatchFromMnemonic({
+        ...parameters,
+        derivationPathPrefix: DERIVATION_PATH_PATTERN.p2wshInP2sh,
+      });
+
+      itemsBatch.push(...this.deriveItemsBatchFromMnemonic(parameters));
+
+      if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) return true;
+
+      return (doesPKBelongToMnemonic<"btcP2wshInP2sh">).call(this, parameters);
+    },
   };
 }
 

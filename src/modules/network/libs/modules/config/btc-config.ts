@@ -3,18 +3,13 @@ import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 import type { Secp256k1Config } from "./libs/types/secp256k1-config.type.js";
 
-const commonSegWitDerivationPathPrefix = {
-  mainnet: "m/49'/0'",
-  testnet: "m/49'/1'",
-};
-
 const commonTestnetsDerivationPathPrefix = {
   btcLegacy: "m/44'/1'",
-  btcSegWit: commonSegWitDerivationPathPrefix.testnet,
+  btcSegWit: "m/49'/1'",
   btcNativeSegWit: "m/84'/1'",
   btcTaproot: "m/86'/1'",
-  btcP2wsh: commonSegWitDerivationPathPrefix.testnet,
-  btcP2wshInP2sh: commonSegWitDerivationPathPrefix.testnet,
+  btcP2wsh: "m/48'/1'/0'/2'/0",
+  btcP2wshInP2sh: "m/48'/1'/0'/1'/0",
 };
 
 const btcConfig: Secp256k1Config<
@@ -26,24 +21,24 @@ const btcConfig: Secp256k1Config<
       derivationPathPrefix: "m/44'/0'",
       ...getCommonPrefixConfig("mainnet"),
     },
+    btcP2wshInP2sh: {
+      derivationPathPrefix: "m/48'/0'/0'/1'/0",
+      ...getCommonPrefixConfig("mainnet"),
+    },
     btcSegWit: {
-      derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
+      derivationPathPrefix: "m/49'/0'",
       ...getCommonPrefixConfig("mainnet"),
     },
     btcNativeSegWit: {
       derivationPathPrefix: "m/84'/0'",
       ...getCommonPrefixConfig("mainnet"),
     },
+    btcP2wsh: {
+      derivationPathPrefix: "m/48'/0'/0'/2'/0",
+      ...getCommonPrefixConfig("mainnet"),
+    },
     btcTaproot: {
       derivationPathPrefix: "m/86'/0'",
-      ...getCommonPrefixConfig("mainnet"),
-    },
-    btcP2wsh: {
-      derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
-      ...getCommonPrefixConfig("mainnet"),
-    },
-    btcP2wshInP2sh: {
-      derivationPathPrefix: commonSegWitDerivationPathPrefix.mainnet,
       ...getCommonPrefixConfig("mainnet"),
     },
   },
