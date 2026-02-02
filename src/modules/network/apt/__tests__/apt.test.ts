@@ -1,5 +1,6 @@
-import { getNetwork } from "../../get-network/get-network.js";
 import { describe, it, expect } from "vitest";
+
+import { getNetwork } from "../../get-network/get-network.js";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,

@@ -1,14 +1,15 @@
-import { type GetDerivationTypeUnion, type DerivationTypeUnion } from "@/libs/types/types.js";
 import { type DerivedItem } from "../derived-item.type.js";
 import { type LookupHandlersCommonParameters } from "./lookup-handlers-common-parameters.type.js";
 import type { DerivationPathPrefix } from "./derivation-path-prefix.type.js";
+
+import { type GetDerivationTypeUnion, type DerivationTypeUnion } from "@/libs/types/types.js";
 
 type DeriveItemsBatchFromMnemonicParameters<T extends DerivationTypeUnion> =
   LookupHandlersCommonParameters<T> &
     DerivationPathPrefix<T> & {
       shouldUseHardenedAddress?: boolean;
       addressPosition?: number;
-    } & (T extends GetDerivationTypeUnion<"dotBase"> ? { isSecondIteration?: boolean } : {});
+    } & (T extends GetDerivationTypeUnion<"dotBase"> ? { isSecondIteration?: boolean } : {}); // TODO: Simplify the code by removing `isSecondIteration` property and handle it inside the function by checking if the "" is present
 
 type DeriveItemsBatchFromMnemonic<T extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicParameters<T>,

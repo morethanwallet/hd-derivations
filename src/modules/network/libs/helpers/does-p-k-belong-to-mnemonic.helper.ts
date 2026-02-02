@@ -1,19 +1,20 @@
 import type {
+  DeriveItemsBatchFromMnemonic,
+  DoesPKBelongToMnemonicParameters,
+} from "../types/index.js";
+import { doesPKExistInBatch } from "./does-p-k-exist-in-batch.helper.js";
+import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/index.js";
+import { increaseDerivationPathDepth } from "./derivation-path/increase-derivation-path-depth.helper.js";
+import { getDerivationPathDepth } from "./derivation-path/get-derivation-path-depth.helper.js";
+import { validateDerivationPath } from "./derivation-path/validate-derivation-path/index.js";
+
+import { DerivationPathSymbol } from "@/libs/enums/enums.js";
+import { checkHardenedSuffixEnding, getDerivationPathSegments } from "@/libs/helpers/helpers.js";
+import type {
   DerivationTypeUnionByNetwork,
   GetDerivationTypeUnion,
   DerivationTypeUnion,
 } from "@/libs/types/types.js";
-import type {
-  DeriveItemsBatchFromMnemonic,
-  DoesPKBelongToMnemonicParameters,
-} from "../types/index.js";
-import { checkHardenedSuffixEnding, getDerivationPathSegmentsArray } from "@/libs/helpers/index.js";
-import { DerivationPathSymbol } from "@/libs/enums/enums.js";
-import { doesPKExistInBatch } from "./does-p-k-exist-in-batch.helper.js";
-import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "../constants/index.js";
-import { increaseDerivationPathDepth } from "./increase-derivation-path-depth.helper.js";
-import { getDerivationPathDepth } from "./get-derivation-path-depth.helper.js";
-import { validateDerivationPath } from "./validate-derivation-path/index.js";
 
 type SupportedDerivationTypes = Exclude<
   DerivationTypeUnion,
@@ -63,7 +64,7 @@ function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
     }
 
     if (derivationPathDepth === MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY) {
-      const derivationPathHardenedPart = getDerivationPathSegmentsArray(updatedDerivationPath)
+      const derivationPathHardenedPart = getDerivationPathSegments(updatedDerivationPath)
         .filter((part) => {
           return (
             part.includes(DerivationPathSymbol.HARDENED_SUFFIX) ||

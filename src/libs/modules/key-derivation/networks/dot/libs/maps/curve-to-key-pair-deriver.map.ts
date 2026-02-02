@@ -1,10 +1,11 @@
-import type { Curve } from "@/libs/enums/enums";
 import {
   secp256k1PairFromSeed,
   ed25519PairFromSeed,
   sr25519PairFromSeed,
 } from "@polkadot/util-crypto";
 import type { Keypair } from "@polkadot/util-crypto/types";
+
+import type { Curve } from "@/libs/enums/enums.js";
 
 const curveToKeyPairDeriver: Record<
   Curve["ED25519"] | Curve["SECP256K1"] | Curve["SR25519"],

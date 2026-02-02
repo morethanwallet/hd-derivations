@@ -1,5 +1,6 @@
-import { convertHexToBytes } from "@/libs/utils";
 import { Bip32PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
+
+import { convertHexToBytes } from "@/libs/utils/index.js";
 
 const EMPTY_PASSWORD = "";
 

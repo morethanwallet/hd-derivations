@@ -23,7 +23,7 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
+import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/helpers.js";
 import { type DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 

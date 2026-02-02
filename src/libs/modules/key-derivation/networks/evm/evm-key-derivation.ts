@@ -1,4 +1,10 @@
 import { bufferToHex } from "ethereumjs-util";
+
+import {
+  getSecp256k1NodeFromMnemonic,
+  getKeyPairFromPrivateKeyBytes,
+} from "../../libs/helpers/index.js";
+
 import { checkAndRemoveHexPrefix, addHexPrefix, convertHexToBytes } from "@/libs/utils/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { type Secp256k1Curve, type PrefixConfig } from "@/libs/modules/curves/curves.js";
@@ -7,7 +13,6 @@ import {
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
-import { getSecp256k1NodeFromMnemonic, getKeyPairFromPrivateKeyBytes } from "../../libs/helpers";
 
 class EvmKeyDerivation implements AbstractKeyDerivation<"evmBase"> {
   public prefixConfig: PrefixConfig;

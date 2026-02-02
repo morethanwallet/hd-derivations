@@ -1,7 +1,7 @@
 import { DerivationPathSymbol } from "../enums/enums.js";
 
-function getDerivationPathSegmentsArray(derivationPath: string): string[] {
+function getDerivationPathSegments(derivationPath: string): string[] {
   return derivationPath.split(DerivationPathSymbol.DELIMITER);
 }
 
-export { getDerivationPathSegmentsArray };
+export { getDerivationPathSegments };

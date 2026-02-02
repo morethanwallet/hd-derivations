@@ -11,6 +11,6 @@ type AdaBasePrivateKey = {
 };
 
 type PrivateKey<T extends DerivationTypeUnion> =
-  T extends GetDerivationTypeUnion<"adaBase"> ? AdaBasePrivateKey : CommonPrivateKey;
+  T extends GetDerivationTypeUnion<"adaBase" | "adaLedger"> ? AdaBasePrivateKey : CommonPrivateKey;
 
 export { type PrivateKey, type CommonPrivateKey, type AdaBasePrivateKey };

@@ -1,9 +1,11 @@
 import { mnemonicToEntropy } from "@polkadot/util-crypto";
-import { Mnemonic } from "./mnemonic.js";
-import { convertBytesToHex } from "@/libs/utils/index.js";
 import { stringToU8a } from "@polkadot/util";
-import { pbkdf2 } from "@noble/hashes/pbkdf2";
-import { sha512 } from "@noble/hashes/sha512";
+import { pbkdf2 } from "@noble/hashes/pbkdf2.js";
+import { sha512 } from "@noble/hashes/sha2.js";
+
+import { Mnemonic } from "./mnemonic.js";
+
+import { convertBytesToHex } from "@/libs/utils/index.js";
 import { ThirtyTwoBytePrivateKeyIndex } from "@/libs/enums/enums.js";
 
 class DotMnemonic extends Mnemonic {

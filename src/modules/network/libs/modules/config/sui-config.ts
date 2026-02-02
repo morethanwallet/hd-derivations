@@ -1,4 +1,4 @@
-import type { Curve } from "@/libs/enums/enums";
+import type { Curve } from "@/libs/enums/enums.js";
 
 type SuiConfig = {
   suiBase: {

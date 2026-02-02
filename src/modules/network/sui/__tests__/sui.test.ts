@@ -1,13 +1,15 @@
+import { describe, it, expect } from "vitest";
+
 import { getNetwork } from "../../get-network/get-network.js";
 import { suiConfig } from "../../libs/modules/config/index.js";
-import { Sui } from "../sui.network.js";
-import { describe, it, expect } from "vitest";
+import { type Sui } from "../sui.network.js";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
+
 import type { GetDerivationTypeUnion } from "@/libs/types/types.js";
 import type { Curve } from "@/libs/enums/enums.js";
 

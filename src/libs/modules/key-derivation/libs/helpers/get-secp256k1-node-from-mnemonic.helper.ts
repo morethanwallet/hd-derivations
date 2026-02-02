@@ -1,12 +1,14 @@
+import type { BIP32Interface } from "bip32";
+
+import { KeyDerivationError } from "../exceptions/exceptions.js";
+
 import type {
   NonNullableBip32Interface,
   PrefixConfig,
   Secp256k1Curve,
-} from "@/libs/modules/curves/curves";
-import type { Mnemonic } from "@/libs/modules/mnemonic";
-import type { BIP32Interface } from "bip32";
-import { KeyDerivationError } from "../exceptions";
-import { ExceptionMessage } from "@/libs/enums/enums";
+} from "@/libs/modules/curves/curves.js";
+import type { Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
+import { ExceptionMessage } from "@/libs/enums/enums.js";
 
 type Parameters = {
   mnemonic: Mnemonic;

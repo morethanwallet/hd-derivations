@@ -1,16 +1,17 @@
 import type { CommonBipDerivationTypeUnion } from "./common-bip-derivation-type-union.type.js";
+import type { HandlersCommonParameters } from "./handlers-common-parameters.type.js";
+
 import type {
   DerivationTypeUnionByNetwork,
   DerivationPath,
   DerivationTypeUnion,
   KeyPair,
 } from "@/libs/types/types.js";
-import type { HandlersCommonParameters } from "./handlers-common-parameters.type.js";
 import type { Curve } from "@/libs/enums/enums.js";
 
 type AptDeriveFromMnemonicParameters = {
   isLegacy: boolean;
-  scheme: Curve["ED25519"] | Curve["SECP256K1"] | Curve["SECP256R1"];
+  scheme: Curve["ED25519" | "SECP256K1" | "SECP256R1"];
   isMultiSig?: boolean;
 };
 

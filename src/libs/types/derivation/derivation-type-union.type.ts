@@ -13,6 +13,7 @@ type DerivationTypeUnion =
   | "adaReward"
   | "adaEnterprise"
   | "adaExodus"
+  | "adaLedger"
   | "bnbBase"
   | "evmBase"
   | "xrpBase"
@@ -41,7 +42,7 @@ type BtcDerivationTypeUnion = GetDerivationTypeUnion<
 >;
 
 type AdaDerivationTypeUnion = GetDerivationTypeUnion<
-  "adaEnterprise" | "adaReward" | "adaBase" | "adaExodus"
+  "adaEnterprise" | "adaReward" | "adaBase" | "adaExodus" | "adaLedger"
 >;
 
 type XrpDerivationTypeUnion = GetDerivationTypeUnion<"xrpX" | "xrpBase">;

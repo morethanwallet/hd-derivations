@@ -1,1 +1,1 @@
-export { ValidationError } from "./validation-error.exception";
+export { ValidationError } from "./validation-error.exception.js";

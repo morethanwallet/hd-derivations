@@ -13,6 +13,7 @@ import {
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { convertHexToBytes } from "@/libs/utils/index.js";
 
+//  TODO: Rename to Secp256k1Bip32KeyDerivation
 class CommonBipKeyDerivation implements AbstractKeyDerivation<CommonBipDerivationTypeUnion> {
   public prefixConfig: PrefixConfig;
   private isPrivateKeyWifFormatted: boolean;

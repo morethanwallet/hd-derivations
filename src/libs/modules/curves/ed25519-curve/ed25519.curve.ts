@@ -1,5 +1,6 @@
 import { derivePath, getPublicKey } from "ed25519-hd-key";
-import { Ed25519SecretKeyBytePosition } from "./libs/enums/enums";
+
+import { Ed25519SecretKeyBytePosition } from "./libs/enums/enums.js";
 
 type Keys = {
   chainCode: Buffer;

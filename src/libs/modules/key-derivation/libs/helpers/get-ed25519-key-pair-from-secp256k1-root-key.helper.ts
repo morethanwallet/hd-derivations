@@ -1,8 +1,9 @@
-import type { Ed25519Curve } from "@/libs/modules/curves/curves";
-import { getEd25519KeyPairFromSecp256k1Node } from "./get-ed25519-key-pair-from-secp256k1-node.helper";
-import { getSecp256k1NodeFromMnemonic } from "./get-secp256k1-node-from-mnemonic.helper";
-import type { Mnemonic } from "@/libs/modules/mnemonic";
-import type { Secp256k1Curve } from "@/libs/modules/curves/curves";
+import { getEd25519KeyPairFromSecp256k1Node } from "./get-ed25519-key-pair-from-secp256k1-node.helper.js";
+import { getSecp256k1NodeFromMnemonic } from "./get-secp256k1-node-from-mnemonic.helper.js";
+
+import type { Ed25519Curve } from "@/libs/modules/curves/curves.js";
+import type { Mnemonic } from "@/libs/modules/mnemonic/index.js";
+import type { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 type DerivationParameters = {
   derivationPath: string;

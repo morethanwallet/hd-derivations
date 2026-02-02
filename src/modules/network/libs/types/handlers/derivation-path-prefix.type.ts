@@ -15,7 +15,7 @@ type AdaDerivationPathPrefix = {
 };
 
 type DerivationPathPrefix<T extends DerivationTypeUnion> =
-  T extends GetDerivationTypeUnion<"adaBase">
+  T extends GetDerivationTypeUnion<"adaBase" | "adaLedger">
     ? AdaDerivationPathPrefix
     : CommonDerivationPathPrefix;
 

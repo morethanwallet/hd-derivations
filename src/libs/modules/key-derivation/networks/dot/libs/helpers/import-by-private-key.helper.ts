@@ -1,8 +1,9 @@
-import type { CommonKeyPair } from "@/libs/types/keys";
-import { curveToPublicKeyDeriver } from "../maps/maps";
-import { Curve } from "@/libs/enums/enums";
-import { convertHexToBytes } from "@/libs/utils";
-import { convertBytesKeyPairToHex } from "./convert-bytes-key-pair-to-hex.helper";
+import { curveToPublicKeyDeriver } from "../maps/maps.js";
+import { convertBytesKeyPairToHex } from "./convert-bytes-key-pair-to-hex.helper.js";
+
+import type { CommonKeyPair } from "@/libs/types/keys/index.js";
+import { type Curve } from "@/libs/enums/enums.js";
+import { convertHexToBytes } from "@/libs/utils/index.js";
 
 function importByPrivateKey(
   privateKeyHex: string,

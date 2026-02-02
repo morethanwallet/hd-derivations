@@ -1,7 +1,9 @@
+import { Wallet } from "xrpl";
+
+import type { DestinationTagProperty } from "./libs/types/index.js";
+
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
 import { type CommonKeyPair, type DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
-import { Wallet } from "xrpl";
-import type { DestinationTagProperty } from "./libs/types/index.js";
 
 type GetXrpAddressParameters = {
   publicKey: CommonKeyPair["publicKey"];

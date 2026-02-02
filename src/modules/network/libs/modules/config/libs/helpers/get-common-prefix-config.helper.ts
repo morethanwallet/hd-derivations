@@ -1,5 +1,6 @@
-import type { CommonNetworkPurposeRegTestExtendedUnion } from "@/modules/network/libs/types/index.js";
 import { networks } from "bitcoinjs-lib";
+
+import type { CommonNetworkPurposeRegTestExtendedUnion } from "@/modules/network/libs/types/index.js";
 
 function getCommonPrefixConfig(networkPurpose: CommonNetworkPurposeRegTestExtendedUnion) {
   return networkPurpose === "mainnet"

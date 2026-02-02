@@ -1,11 +1,12 @@
+import { getBase58EncodedKeyPair, importByPrivateKey } from "./libs/helpers/helpers.js";
+
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
-import { type Mnemonic } from "@/libs/modules/mnemonic";
-import { type Ed25519Curve } from "@/libs/modules/curves/curves";
-import { getBase58EncodedKeyPair, importByPrivateKey } from "./libs/helpers/helpers.js";
+import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
+import { type Ed25519Curve } from "@/libs/modules/curves/curves.js";
 
 class SolBaseKeyDerivation implements AbstractKeyDerivation<"solBase"> {
   private mnemonic: Mnemonic;

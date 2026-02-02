@@ -1,16 +1,3 @@
-import { ExceptionMessage as CommonExceptionMessage } from "@/libs/enums/enums.js";
-import { KeyDerivationError } from "../../libs/exceptions/index.js";
-import type {
-  DerivationTypeUnionByNetwork,
-  CommonDerivationPath,
-  CommonKeyPair,
-  CommonPrivateKey,
-} from "@/libs/types/types.js";
-import type {
-  AbstractKeyDerivation,
-  DeriveFromMnemonicParameters,
-  ImportByPrivateKeyParameters,
-} from "../../libs/types/index.js";
 import {
   Account,
   type AnyPublicKey,
@@ -21,24 +8,39 @@ import {
   MultiKeyAccount,
   PrivateKey,
   type PrivateKeyInput,
-  PrivateKeyVariants,
+  type PrivateKeyVariants,
   Secp256k1PrivateKey,
   SingleKeyAccount,
 } from "@aptos-labs/ts-sdk";
-import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants/index.js";
 import { HDKey } from "@scure/bip32";
-import { secp256r1 } from "@noble/curves/p256";
+import { p256 } from "@noble/curves/nist.js";
+import { sha3_256 } from "@noble/hashes/sha3.js";
+
 import {
   APTOS_LIBRARY_PRIVATE_KEY_DELIMITER,
   APTOS_LIBRARY_PRIVATE_KEY_DELIMITER_LENGTH,
   VALIDATION_MESSAGE_TO_SIGN,
 } from "./libs/constants/index.js";
-import { sha3_256 } from "@noble/hashes/sha3";
+import type {
+  AbstractKeyDerivation,
+  DeriveFromMnemonicParameters,
+  ImportByPrivateKeyParameters,
+} from "../../libs/types/index.js";
+import { KeyDerivationError } from "../../libs/exceptions/exceptions.js";
 import { ExceptionMessage } from "../../libs/enums/enums.js";
 import {
   signatureSchemeToPrivateKeyVariant,
   signatureSchemeToSchemeId,
 } from "./libs/maps/index.js";
+
+import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants/index.js";
+import type {
+  DerivationTypeUnionByNetwork,
+  CommonDerivationPath,
+  CommonKeyPair,
+  CommonPrivateKey,
+} from "@/libs/types/types.js";
+import { ExceptionMessage as CommonExceptionMessage } from "@/libs/enums/enums.js";
 import {
   addHexPrefix,
   convertBytesToHex,
@@ -146,7 +148,7 @@ class AptKeyDerivation implements AbstractKeyDerivation<DerivationTypeUnionByNet
     const privateKeyBytes =
       typeof sourceKey === "string" ? convertHexToBytes(removeHexPrefix(sourceKey)) : sourceKey;
 
-    const publicKeyBytes = secp256r1.getPublicKey(privateKeyBytes, true);
+    const publicKeyBytes = p256.getPublicKey(privateKeyBytes, true);
     this.validateSecp256r1KeyPair(privateKeyBytes, publicKeyBytes);
     const privateKey = addHexPrefix(convertBytesToHex(privateKeyBytes));
     const publicKey = addHexPrefix(convertBytesToHex(publicKeyBytes));
@@ -160,10 +162,10 @@ class AptKeyDerivation implements AbstractKeyDerivation<DerivationTypeUnionByNet
   ): void | never {
     const encoder = new TextEncoder();
     const encodedMessage = encoder.encode(VALIDATION_MESSAGE_TO_SIGN);
-    const messageHash = convertBytesToHex(sha3_256(encodedMessage));
-    const signature = secp256r1.sign(messageHash, privateKeyBytes, { lowS: true });
+    const messageBytes = sha3_256(encodedMessage);
+    const signature = p256.sign(messageBytes, privateKeyBytes, { lowS: true });
 
-    if (!secp256r1.verify(signature, messageHash, publicKeyBytes, { lowS: true })) {
+    if (!p256.verify(signature, messageBytes, publicKeyBytes, { lowS: true })) {
       throw new KeyDerivationError(ExceptionMessage.INVALID_PRIVATE_KEY);
     }
   }

@@ -1,3 +1,5 @@
+import { getAvaxDerivationHandlers } from "./libs/helpers/index.js";
+
 import type {
   AbstractNetwork,
   DeriveItemFromMnemonicParameters,
@@ -9,9 +11,8 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { getAvaxDerivationHandlers } from "./libs/helpers/index.js";
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
-import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
+import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/helpers.js";
 import { type DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { avaxConfig } from "@/modules/network/libs/modules/config/index.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";

@@ -1,5 +1,5 @@
-import type { CommonKeyPair } from "@/libs/types/keys";
-import { convertBytesToHex } from "@/libs/utils";
+import type { CommonKeyPair } from "@/libs/types/keys/index.js";
+import { convertBytesToHex } from "@/libs/utils/index.js";
 
 function convertBytesKeyPairToHex(
   publicKeyBytes: Uint8Array,

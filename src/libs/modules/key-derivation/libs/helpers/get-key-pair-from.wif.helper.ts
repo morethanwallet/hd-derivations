@@ -1,4 +1,4 @@
-import { type PrefixConfig } from "@/libs/modules/curves/curves";
+import { type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import { ecPair, type ECPairInterface } from "@/libs/modules/ecc/ecc.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
 

@@ -11,7 +11,7 @@ import {
   deriveItemsBatchFromMnemonic,
   validateDerivationPath,
   doesPKExistInBatch,
-} from "@/modules/network/libs/helpers/index.js";
+} from "@/modules/network/libs/helpers/helpers.js";
 import type {
   GetDerivationHandlersParameters,
   GetDerivationHandlersReturnType,

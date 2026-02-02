@@ -1,0 +1,7 @@
+const Ed25519PrivateKeyClamp = {
+  LOW_3_BITS_MASK: 0b0000_0111,
+  CLEAR_HIGHEST_BIT_MASK: 0b1000_0000,
+  SET_SECOND_HIGHEST_BIT_MASK: 0b0100_0000,
+} as const;
+
+export { Ed25519PrivateKeyClamp };

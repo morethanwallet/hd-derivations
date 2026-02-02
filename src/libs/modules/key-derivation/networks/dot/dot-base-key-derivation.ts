@@ -1,15 +1,17 @@
+import { keyExtractSuri, keyFromPath } from "@polkadot/util-crypto";
+
+import { curveToKeyPairType, curveToKeyPairDeriver } from "./libs/maps/maps.js";
+import { DEV_PHRASE } from "./libs/constants/index.js";
+import { convertBytesKeyPairToHex, importByPrivateKey } from "./libs/helpers/helpers.js";
+
 import type {
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
   ImportByPrivateKeyParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import type { CommonKeyPair } from "@/libs/types/types.js";
-import { DotMnemonic } from "@/libs/modules/mnemonic";
-import { keyExtractSuri, keyFromPath } from "@polkadot/util-crypto";
-import { curveToKeyPairType, curveToKeyPairDeriver } from "./libs/maps/maps.js";
-import { DEV_PHRASE } from "./libs/constants/index.js";
+import { type DotMnemonic } from "@/libs/modules/mnemonic/index.js";
 import { DerivationPathSymbol } from "@/libs/enums/enums.js";
-import { convertBytesKeyPairToHex, importByPrivateKey } from "./libs/helpers/helpers.js";
 
 class DotBaseKeyDerivation implements AbstractKeyDerivation<"dotBase"> {
   private mnemonic: DotMnemonic;

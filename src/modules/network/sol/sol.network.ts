@@ -1,4 +1,9 @@
 import {
+  getSolBaseDerivationHandlers,
+  getSolExodusDerivationHandlers,
+} from "./libs/helpers/helpers.js";
+
+import {
   SolBaseKeyDerivation,
   SolExodusKeyDerivation,
 } from "@/libs/modules/key-derivation/networks.js";
@@ -13,10 +18,6 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import {
-  getSolBaseDerivationHandlers,
-  getSolExodusDerivationHandlers,
-} from "./libs/helpers/helpers.js";
 import { Ed25519Curve, Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 import { type DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 

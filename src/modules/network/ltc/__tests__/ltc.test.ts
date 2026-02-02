@@ -1,15 +1,17 @@
-import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
+import { describe, it, expect } from "vitest";
+
 import { getNetwork } from "../../get-network/get-network.js";
 import { ltcConfig } from "../../libs/modules/config/index.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
-import { Ltc } from "../ltc.network.js";
-import { describe, it, expect } from "vitest";
+import { type Ltc } from "../ltc.network.js";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
+
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 const DERIVATION_PATH = {
   mainnet: {

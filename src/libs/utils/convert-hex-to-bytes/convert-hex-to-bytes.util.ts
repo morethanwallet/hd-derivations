@@ -1,6 +1,7 @@
-import { ValidationError } from "@/libs/exceptions/index.js";
 import { ExceptionMessage } from "./libs/enums/index.js";
 import { EVEN_NUMBER_CHECK_DIVIDER, EVEN_NUMBER_IDENTIFIER } from "./libs/constants/index.js";
+
+import { ValidationError } from "@/libs/exceptions/index.js";
 
 function convertHexToBytes(hex: string): Uint8Array {
   const hexLength = hex.length;

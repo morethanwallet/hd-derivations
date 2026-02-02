@@ -2,7 +2,7 @@ import {
   Ed25519SecretKeyBytePosition,
   type Ed25519Curve,
   type NonNullableBip32Interface,
-} from "@/libs/modules/curves/curves";
+} from "@/libs/modules/curves/curves.js";
 
 type KeyPair = {
   secretKey: Buffer;

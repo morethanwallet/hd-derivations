@@ -1,11 +1,12 @@
+import { getEd25519KeyPairFromSecp256k1RootKey } from "../../libs/helpers/index.js";
+
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
-import { type Mnemonic } from "@/libs/modules/mnemonic";
-import { type Secp256k1Curve, type Ed25519Curve } from "@/libs/modules/curves/curves";
-import { getEd25519KeyPairFromSecp256k1RootKey } from "../../libs/helpers/index.js";
+import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
+import { type Secp256k1Curve, type Ed25519Curve } from "@/libs/modules/curves/curves.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
 
 class TonExodusKeyDerivation implements AbstractKeyDerivation<"tonExodus"> {

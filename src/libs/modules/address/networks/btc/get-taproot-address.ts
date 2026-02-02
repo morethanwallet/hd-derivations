@@ -1,9 +1,11 @@
-import { ExceptionMessage } from "@/libs/modules/address/libs/enums/enums.js";
+import { payments } from "bitcoinjs-lib";
+
 import { AddressError } from "../../libs/exceptions/index.js";
+
+import { ExceptionMessage } from "@/libs/modules/address/libs/enums/enums.js";
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
 import { type CommonKeyPair } from "@/libs/types/types.js";
 import { type PrefixConfig } from "@/libs/modules/curves/curves.js";
-import { payments } from "bitcoinjs-lib";
 import { convertHexToBytes } from "@/libs/utils/index.js";
 
 function getTaprootAddress(

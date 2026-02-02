@@ -7,6 +7,7 @@ import eslintPluginFilenames from "eslint-plugin-filenames";
 import prettierConfig from "./prettier.config.cjs";
 
 const config: Linter.Config[] = [
+  { ignores: ["build/**", "coverage/**", "node_modules"] },
   {
     files: ["src/**/*.ts"],
     languageOptions: {
@@ -40,7 +41,6 @@ const config: Linter.Config[] = [
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/no-unused-vars": ["warn"],
     },
-    ignores: ["node_modules"],
   },
 ];
 

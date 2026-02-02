@@ -1,4 +1,4 @@
-import { ALLOWED_MNEMONIC_LENGTHS } from "../constants";
+import { ALLOWED_MNEMONIC_LENGTHS } from "../constants/index.js";
 
 const MNEMONIC_LENGTHS_LIST_DIVIDER = ", ";
 

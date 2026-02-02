@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { Dot } from "../dot.network.js";
+
+import { type Dot } from "../dot.network.js";
 import { getNetwork } from "../../get-network/get-network.js";
 import {
   FIRST_ITEM_INDEX,
@@ -8,6 +9,7 @@ import {
   MNEMONIC,
 } from "../../libs/constants/index.js";
 import { dotConfig } from "../../libs/modules/config/index.js";
+
 import {
   type DerivationTypeUnionByNetwork,
   type GetDerivationTypeUnion,

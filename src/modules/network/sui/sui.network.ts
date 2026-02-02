@@ -1,3 +1,5 @@
+import { getSuiDerivationHandlers } from "./libs/helpers/index.js";
+
 import { SuiKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import type {
   DeriveItemFromMnemonicParameters,
@@ -10,7 +12,6 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { getSuiDerivationHandlers } from "./libs/helpers/index.js";
 
 class Sui implements AbstractNetwork<"suiBase"> {
   private derivationHandlers: DerivationsHandlers<"suiBase">["suiBase"];

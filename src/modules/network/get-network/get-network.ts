@@ -1,6 +1,7 @@
+import { cryptoWaitReady } from "@polkadot/util-crypto";
+
 import type { NetworkTypeUnion } from "../libs/types/index.js";
 import type { GetNetworkParameters, NetworkNameToNetwork } from "./libs/types/index.js";
-import { DotMnemonic, Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { ExceptionMessage } from "../libs/enums/index.js";
 import { Btc } from "../btc/index.js";
 import { Ada } from "../ada/index.js";
@@ -19,7 +20,8 @@ import { Zec } from "../zec/index.js";
 import { Apt } from "../apt/index.js";
 import { Ltc } from "../ltc/index.js";
 import { NetworkError } from "../libs/exceptions/index.js";
-import { cryptoWaitReady } from "@polkadot/util-crypto";
+
+import { DotMnemonic, Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
 // Initialization is necessary for the @polkadot/util-crypto WASM package to work correctly
 await cryptoWaitReady();

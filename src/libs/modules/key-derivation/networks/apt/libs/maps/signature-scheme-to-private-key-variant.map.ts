@@ -1,5 +1,6 @@
-import type { Curve } from "@/libs/enums/enums";
 import { PrivateKeyVariants } from "@aptos-labs/ts-sdk";
+
+import type { Curve } from "@/libs/enums/enums.js";
 
 const signatureSchemeToPrivateKeyVariant: Record<
   Curve["ED25519"] | Curve["SECP256K1"],

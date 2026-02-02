@@ -1,17 +1,18 @@
+import { validateDerivationPath } from "./validate-derivation-path.helper.js";
+import { appendAddressToDerivationPath } from "./append-address-to-derivation-path.helper.js";
+
 import { getDotAddress } from "@/libs/modules/address/address.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
   validateDerivationPath as commonValidateDerivationPath,
   doesPKExistInBatch,
-} from "@/modules/network/libs/helpers/index.js";
+} from "@/modules/network/libs/helpers/helpers.js";
 import type {
   DerivedItem,
   GetDerivationHandlersParameters,
   GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
-import { validateDerivationPath } from "./validate-derivation-path.helper.js";
-import { appendAddressToDerivationPath } from "./append-address-to-derivation-path.helper.js";
 
 function getStandardHdDerivationHandlers({
   keysDerivationInstance,

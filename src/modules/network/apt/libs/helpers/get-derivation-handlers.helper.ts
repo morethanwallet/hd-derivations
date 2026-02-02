@@ -3,7 +3,7 @@ import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import {
   deriveItemsBatchFromMnemonic,
   doesPKExistInBatch,
-} from "@/modules/network/libs/helpers/index.js";
+} from "@/modules/network/libs/helpers/helpers.js";
 import type {
   GetDerivationHandlersParameters,
   GetDerivationHandlersReturnType,

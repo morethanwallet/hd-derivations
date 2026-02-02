@@ -1,3 +1,15 @@
+import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
+import { type GetCredentialFromPK } from "./get-credential-from-p-k.type.js";
+import { type DeriveItemsBatchFromMnemonic } from "./derive-items-batch-from-mnemonic.type.js";
+import { type DoesPKBelongToMnemonic } from "./does-p-k-belong-to-mnemonic.type.js";
+import type { CommonNetworkPurposeUnion } from "../network-purpose-union.type.js";
+import type { TonAddressDerivationConfig } from "../ton-address-derivation-config.type.js";
+
+import type {
+  GetDerivationTypeUnion,
+  DerivationTypeUnion,
+  DerivationTypeUnionByNetwork,
+} from "@/libs/types/types.js";
 import type {
   TaprootKeyDerivation,
   CommonBipKeyDerivation,
@@ -15,18 +27,8 @@ import type {
   TonExodusKeyDerivation,
   AdaExodusKeyDerivation,
   DotLedgerKeyDerivation,
+  AdaLedgerKeyDerivation,
 } from "@/libs/modules/key-derivation/networks.js";
-import type {
-  GetDerivationTypeUnion,
-  DerivationTypeUnion,
-  DerivationTypeUnionByNetwork,
-} from "@/libs/types/types.js";
-import { type DeriveItemFromMnemonic } from "./derive-item-from-mnemonic.type.js";
-import { type GetCredentialFromPK } from "./get-credential-from-p-k.type.js";
-import { type DeriveItemsBatchFromMnemonic } from "./derive-items-batch-from-mnemonic.type.js";
-import { type DoesPKBelongToMnemonic } from "./does-p-k-belong-to-mnemonic.type.js";
-import type { CommonNetworkPurposeUnion } from "../network-purpose-union.type.js";
-import type { TonAddressDerivationConfig } from "../ton-address-derivation-config.type.js";
 import type { DestinationTagProperty, Ss58Format } from "@/libs/modules/address/address.js";
 import type { Curve } from "@/libs/enums/enums.js";
 
@@ -50,6 +52,11 @@ type AdaExoodusParameters = {
 type AdaBaseParameters = {
   networkId: number;
   keysDerivationInstance: AdaBaseKeyDerivation;
+};
+
+type AdaLedgerParameters = {
+  networkId: number;
+  keysDerivationInstance: AdaLedgerKeyDerivation;
 };
 
 type TonCommonParameters = {
@@ -129,6 +136,7 @@ type GetDerivationHandlersParameters = Record<
   Record<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">, AdaCommonParameters> &
   Record<GetDerivationTypeUnion<"adaExodus">, AdaExoodusParameters> &
   Record<GetDerivationTypeUnion<"adaBase">, AdaBaseParameters> &
+  Record<GetDerivationTypeUnion<"adaLedger">, AdaLedgerParameters> &
   Record<GetDerivationTypeUnion<"tonBase">, TonBaseParameters> &
   Record<GetDerivationTypeUnion<"tonExodus">, TonExodusParameters> &
   Record<GetDerivationTypeUnion<"suiBase">, SuiParameters> &

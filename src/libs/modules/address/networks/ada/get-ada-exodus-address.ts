@@ -1,5 +1,6 @@
 import { BaseAddress } from "@emurgo/cardano-serialization-lib-nodejs";
-import { getCredential } from "./libs/helpers/index.js";
+
+import { getCredential } from "./libs/helpers/helpers.js";
 
 function getAdaExodusAddress(publicKey: string, networkId: number): string {
   const credential = getCredential(publicKey);

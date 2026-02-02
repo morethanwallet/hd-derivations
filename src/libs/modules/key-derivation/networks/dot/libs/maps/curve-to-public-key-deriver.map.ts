@@ -1,7 +1,8 @@
 import { getPublicKey } from "micro-sr25519";
-import { ed25519 } from "@noble/curves/ed25519";
-import { secp256k1 } from "@noble/curves/secp256k1";
-import { Curve, ThirtyTwoBytePrivateKeyIndex } from "@/libs/enums/enums";
+import { ed25519 } from "@noble/curves/ed25519.js";
+import { secp256k1 } from "@noble/curves/secp256k1.js";
+
+import { type Curve, ThirtyTwoBytePrivateKeyIndex } from "@/libs/enums/enums.js";
 
 const curveToPublicKeyDeriver: Record<
   Curve["ED25519"] | Curve["SECP256K1"] | Curve["SR25519"],

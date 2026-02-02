@@ -1,3 +1,5 @@
+import { getTrxDerivationHandlers } from "./libs/helpers/index.js";
+
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import { trxConfig } from "@/modules/network/libs/modules/config/index.js";
 import type {
@@ -11,7 +13,6 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { getTrxDerivationHandlers } from "./libs/helpers/index.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Trx implements AbstractNetwork<"trxBase"> {

@@ -1,4 +1,4 @@
-import type { Curve } from "@/libs/enums/enums";
+import type { Curve } from "@/libs/enums/enums.js";
 import type { GetDerivationTypeUnion, DerivationTypeUnion } from "@/libs/types/types.js";
 
 type DotBaseDeriveFromMnemonicParameters = {

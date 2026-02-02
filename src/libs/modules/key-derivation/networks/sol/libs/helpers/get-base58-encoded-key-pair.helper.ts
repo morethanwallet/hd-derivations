@@ -1,6 +1,8 @@
 import base58 from "bs58";
-import { type CommonKeyPair } from "@/libs/types/types.js";
+
 import { getBase58EncodedPublicKey } from "./get-base58-encoded-public-key.helper.js";
+
+import { type CommonKeyPair } from "@/libs/types/types.js";
 
 function getBase58EncodedKeyPair(secretKey: Buffer, publicKey: Buffer): CommonKeyPair {
   return {

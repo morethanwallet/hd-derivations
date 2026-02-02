@@ -1,4 +1,9 @@
 import {
+  getTonBaseDerivationHandlers,
+  getTonExodusDerivationHandlers,
+} from "./libs/helpers/helpers.js";
+
+import {
   CommonEd25519KeyDerivation,
   TonExodusKeyDerivation,
 } from "@/libs/modules/key-derivation/networks.js";
@@ -13,10 +18,6 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import {
-  getTonBaseDerivationHandlers,
-  getTonExodusDerivationHandlers,
-} from "./libs/helpers/helpers.js";
 import { Ed25519Curve, Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
@@ -44,7 +45,7 @@ class Ton implements AbstractNetwork<DerivationTypeUnionByNetwork["ton"]> {
       }),
     };
 
-    this.derivationHandlers = derivationHandlers[derivationConfig.derivationType];
+    this.derivationHandlers = derivationHandlers[derivationType];
   }
 
   public deriveItemFromMnemonic(
