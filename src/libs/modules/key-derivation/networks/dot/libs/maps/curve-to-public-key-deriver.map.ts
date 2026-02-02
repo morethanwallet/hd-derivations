@@ -1,4 +1,4 @@
-import { getPublicKey } from "micro-sr25519";
+import { getPublicKey } from "@scure/sr25519";
 import { ed25519 } from "@noble/curves/ed25519.js";
 import { secp256k1 } from "@noble/curves/secp256k1.js";
 
