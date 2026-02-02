@@ -1,5 +1,7 @@
 import { RewardAddress } from "@emurgo/cardano-serialization-lib-nodejs";
-import { getCredential } from "./libs/helpers/index.js";
+
+import { getCredential } from "./libs/helpers/helpers.js";
+
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
 import { type CommonKeyPair } from "@/libs/types/types.js";
 

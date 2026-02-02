@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { Bch } from "../bch.network.js";
+
+import { type Bch } from "../bch.network.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../libs/types/index.js";
-import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { getNetwork } from "../../get-network/get-network.js";
 import { bchConfig } from "../../libs/modules/config/index.js";
 import {
@@ -10,6 +10,8 @@ import {
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
+
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 const MOCK_COMMON_DERIVATION_PATH = { mainnet: "m/44'/145'/0'/0/0", testnet: "m/44'/1'/0'/0/0" };
 

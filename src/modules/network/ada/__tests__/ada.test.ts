@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
+
 import { getNetwork } from "../../get-network/get-network.js";
 import type { AdaNetworkPurposeUnion } from "../../libs/types/index.js";
-import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
-import { Ada } from "../ada.network.js";
+import { type Ada } from "../ada.network.js";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
@@ -10,6 +10,8 @@ import {
   MNEMONIC,
 } from "../../libs/constants/index.js";
 import { adaConfig } from "../../libs/modules/config/index.js";
+
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 const DERIVATION_PATH = {
   adaEnterprise: "m/1852'/1815'/0'/0/0",
@@ -37,24 +39,23 @@ const MAINNET_EXTRINSIC_PRIVATE_KEY = {
   },
 };
 
-const COMMON_MAINNET_CREDENTIAL = {
-  adaEnterprise: {
-    privateKey:
-      "787b42151ab18f281a977f1004996a245046756c1961d43f067290983d4f1244017a63d7848a8f409efb7a1a5e104eff76ed943551b8afbea5e9fd4c7291c998",
-    publicKey: "30e5928414c7c1da4e664c4c0546d22aa3551fedfebf2faed61a05be20403b79",
-    address: "addr1vyygp308craka57n2yhsru0n3r6yxu8fyleh4jmq2qrc6hsksfj9u",
-  },
-  adaReward: {
-    privateKey:
-      "d0c8e6c886b1420526a4d3acf79eb9cd4c83dc931bc72f06fe07c4da364f124448c5e25c8acdd5bfa7f88dbbc83f10c09849671bbe2fa2749c42f68bed9dec18",
-    publicKey: "ea60f453c2c9a1bebf3fea99f79786921894150b73aae4fcb6104918a4dfa0ba",
-    address: "stake1uxgww2q7fxf3maz5fwdgma9pef0jwyt25jd4daz092rdteqpx4rss",
-  },
+const ENTERPRISE_MAINNET_CREDENTIAL = {
+  privateKey:
+    "787b42151ab18f281a977f1004996a245046756c1961d43f067290983d4f1244017a63d7848a8f409efb7a1a5e104eff76ed943551b8afbea5e9fd4c7291c998",
+  publicKey: "30e5928414c7c1da4e664c4c0546d22aa3551fedfebf2faed61a05be20403b79",
+  address: "addr1vyygp308craka57n2yhsru0n3r6yxu8fyleh4jmq2qrc6hsksfj9u",
+};
+
+const REWARD_MAINNET_CREDENTIAL = {
+  privateKey:
+    "d0c8e6c886b1420526a4d3acf79eb9cd4c83dc931bc72f06fe07c4da364f124448c5e25c8acdd5bfa7f88dbbc83f10c09849671bbe2fa2749c42f68bed9dec18",
+  publicKey: "ea60f453c2c9a1bebf3fea99f79786921894150b73aae4fcb6104918a4dfa0ba",
+  address: "stake1uxgww2q7fxf3maz5fwdgma9pef0jwyt25jd4daz092rdteqpx4rss",
 };
 
 const MAINNET_CREDENTIAL = {
-  adaEnterprise: COMMON_MAINNET_CREDENTIAL.adaEnterprise,
-  adaReward: COMMON_MAINNET_CREDENTIAL.adaReward,
+  adaEnterprise: ENTERPRISE_MAINNET_CREDENTIAL,
+  adaReward: REWARD_MAINNET_CREDENTIAL,
   adaExodus: {
     privateKey: "533bd39fd5566d0dbf68e70b011fd0686fd63901f4bc817f2f8509103294c0a4",
     publicKey: "c1ba8711b990e2ca1582a10803cb5d9bf1d224da61eee3e2819aa19104e1751f",
@@ -62,12 +63,22 @@ const MAINNET_CREDENTIAL = {
       "addr1qymnxusdlakesfm4kmef2ca4ryf5jukfrlvkrc8xzpktc2ehxdeqmlmdnqnhtdhjj43m2xgnf9evj87ev8swvyrvhs4shxt4jt",
   },
   adaBase: {
-    enterprisePrivateKey: COMMON_MAINNET_CREDENTIAL.adaEnterprise.privateKey,
-    enterprisePublicKey: COMMON_MAINNET_CREDENTIAL.adaEnterprise.publicKey,
-    rewardPrivateKey: COMMON_MAINNET_CREDENTIAL.adaReward.privateKey,
-    rewardPublicKey: COMMON_MAINNET_CREDENTIAL.adaReward.publicKey,
+    enterprisePrivateKey: ENTERPRISE_MAINNET_CREDENTIAL.privateKey,
+    enterprisePublicKey: ENTERPRISE_MAINNET_CREDENTIAL.publicKey,
+    rewardPrivateKey: REWARD_MAINNET_CREDENTIAL.privateKey,
+    rewardPublicKey: REWARD_MAINNET_CREDENTIAL.publicKey,
     address:
       "addr1qyygp308craka57n2yhsru0n3r6yxu8fyleh4jmq2qrc6h5suu5pujvnrh69gju63h62rjjlyugk4fym2m6y725x6hjq0gkvw0",
+  },
+  adaLedger: {
+    enterprisePrivateKey:
+      "18907bc8f4935f8f852fb12861f3e07b96d273ae9f8936fd135de83398af3f44b6b2290fb7c8043f8b2bea23bfb8814dd57223c8fb775b427e0215058d1d7f23",
+    enterprisePublicKey: "13e752ee53646ba2adbe6741e57793bb592e7c1d7d9aff10e305f15a0363d1dc",
+    rewardPrivateKey:
+      "400d0e408fead334db467e8cdeb20e4f950e10081d2debea33f038de99af3f444a6e9876179cc74b55a886b84305ee0bf1f3c3bbf93c6800cc25dc4210f220ea",
+    rewardPublicKey: "7cfaf18f522cee0d6e6a54d73f7619331183d28408cc49b62101dd10aff9ea30",
+    address:
+      "addr1q93p7vtx0z59msutzf7ms5j6u7jvm0e7w7tut957wew49f4t3269gmqktfscr4jej4j5g3lu589829yhhysw4f9cz8csr5c2l8",
   },
 };
 
@@ -89,29 +100,33 @@ const MAINNET_ITEM = {
     enterpriseDerivationPath: DERIVATION_PATH.adaEnterprise,
     rewardDerivationPath: DERIVATION_PATH.adaReward,
   },
+  adaLedger: {
+    ...MAINNET_CREDENTIAL.adaLedger,
+    enterpriseDerivationPath: DERIVATION_PATH.adaEnterprise,
+    rewardDerivationPath: DERIVATION_PATH.adaReward,
+  },
 };
 
 const TESTNET_PREVIEW_EXTRINSIC_PRIVATE_KEY = { ...MAINNET_EXTRINSIC_PRIVATE_KEY };
 
-const COMMON_TESTNET_PREVIEW_CREDENTIAL = {
-  adaEnterprise: {
-    ...COMMON_MAINNET_CREDENTIAL.adaEnterprise,
-    address: "addr_test1vqygp308craka57n2yhsru0n3r6yxu8fyleh4jmq2qrc6hsdcaw2e",
-  },
-  adaReward: {
-    ...COMMON_MAINNET_CREDENTIAL.adaReward,
-    address: "stake_test1uzgww2q7fxf3maz5fwdgma9pef0jwyt25jd4daz092rdteqxvlp5d",
-  },
+const ENTERPRISE_TESTNET_PREVIEW_CREDENTIAL = {
+  ...ENTERPRISE_MAINNET_CREDENTIAL,
+  address: "addr_test1vqygp308craka57n2yhsru0n3r6yxu8fyleh4jmq2qrc6hsdcaw2e",
+};
+
+const REWARD_TESTNET_PREVIEW_CREDENTIAL = {
+  ...REWARD_MAINNET_CREDENTIAL,
+  address: "stake_test1uzgww2q7fxf3maz5fwdgma9pef0jwyt25jd4daz092rdteqxvlp5d",
 };
 
 const TESTNET_PREVIEW_CREDENTIAL = {
-  adaEnterprise: COMMON_TESTNET_PREVIEW_CREDENTIAL.adaEnterprise,
-  adaReward: COMMON_TESTNET_PREVIEW_CREDENTIAL.adaReward,
+  adaEnterprise: ENTERPRISE_TESTNET_PREVIEW_CREDENTIAL,
+  adaReward: REWARD_TESTNET_PREVIEW_CREDENTIAL,
   adaBase: {
-    enterprisePrivateKey: COMMON_TESTNET_PREVIEW_CREDENTIAL.adaEnterprise.privateKey,
-    enterprisePublicKey: COMMON_TESTNET_PREVIEW_CREDENTIAL.adaEnterprise.publicKey,
-    rewardPrivateKey: COMMON_TESTNET_PREVIEW_CREDENTIAL.adaReward.privateKey,
-    rewardPublicKey: COMMON_TESTNET_PREVIEW_CREDENTIAL.adaReward.publicKey,
+    enterprisePrivateKey: ENTERPRISE_TESTNET_PREVIEW_CREDENTIAL.privateKey,
+    enterprisePublicKey: ENTERPRISE_TESTNET_PREVIEW_CREDENTIAL.publicKey,
+    rewardPrivateKey: REWARD_TESTNET_PREVIEW_CREDENTIAL.privateKey,
+    rewardPublicKey: REWARD_TESTNET_PREVIEW_CREDENTIAL.publicKey,
     address:
       "addr_test1qqygp308craka57n2yhsru0n3r6yxu8fyleh4jmq2qrc6h5suu5pujvnrh69gju63h62rjjlyugk4fym2m6y725x6hjqv7tvzs",
   },
@@ -159,6 +174,7 @@ beforeAll(() => {
     "adaEnterprise",
     "adaReward",
     "adaExodus",
+    "adaLedger",
   ] as const;
 
   networkDerivationsInstances = networkPurposes.reduce<NetworkDerivationsInstances>(
@@ -223,6 +239,15 @@ describe("Ada", () => {
 
         expect(MAINNET_ITEM.adaExodus).toEqual(derivedItem);
       });
+
+      it("Derives correct ledger item", () => {
+        const derivedItem = networkDerivationsInstances.mainnet.adaLedger.deriveItemFromMnemonic({
+          enterpriseDerivationPath: DERIVATION_PATH.adaEnterprise,
+          rewardDerivationPath: DERIVATION_PATH.adaReward,
+        });
+
+        expect(MAINNET_ITEM.adaLedger).toEqual(derivedItem);
+      });
     });
 
     describe("getCredentialFromPK", () => {
@@ -257,6 +282,15 @@ describe("Ada", () => {
         });
 
         expect(MAINNET_CREDENTIAL.adaExodus).toEqual(derivedItem);
+      });
+
+      it("Derives correct ledger credential", () => {
+        const derivedItem = networkDerivationsInstances.mainnet.adaLedger.getCredentialFromPK({
+          enterprisePrivateKey: MAINNET_CREDENTIAL.adaLedger.enterprisePrivateKey,
+          rewardPrivateKey: MAINNET_CREDENTIAL.adaLedger.rewardPrivateKey,
+        });
+
+        expect(derivedItem).toEqual(MAINNET_CREDENTIAL.adaLedger);
       });
     });
 
@@ -304,6 +338,18 @@ describe("Ada", () => {
         });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MAINNET_ITEM.adaExodus);
+        expect(items.length).toBe(INDEX_LOOKUP_TO);
+      });
+
+      it("Derives correct ledger items batch", () => {
+        const items = networkDerivationsInstances.mainnet.adaLedger.deriveItemsBatchFromMnemonic({
+          enterpriseDerivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.adaEnterprise,
+          rewardDerivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.adaReward,
+          indexLookupFrom: INDEX_LOOKUP_FROM,
+          indexLookupTo: INDEX_LOOKUP_TO,
+        });
+
+        expect(items[FIRST_ITEM_INDEX]).toEqual(MAINNET_ITEM.adaLedger);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
     });
@@ -365,6 +411,27 @@ describe("Ada", () => {
 
           expect(isNative).toBe(true);
         });
+
+        it("Returns true for ledger private key", () => {
+          const isEnterpriseKeyNative =
+            networkDerivationsInstances.mainnet.adaLedger.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.mainnet.adaLedger.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MAINNET_CREDENTIAL.adaLedger.enterprisePrivateKey,
+            });
+
+          const isRewardKeyNative =
+            networkDerivationsInstances.mainnet.adaLedger.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.mainnet.adaLedger.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MAINNET_CREDENTIAL.adaLedger.rewardPrivateKey,
+            });
+
+          expect(isEnterpriseKeyNative).toBe(true);
+          expect(isRewardKeyNative).toBe(true);
+        });
       });
 
       describe("Validates extrinsic private key correctly", () => {
@@ -422,6 +489,27 @@ describe("Ada", () => {
           });
 
           expect(isNative).toBe(false);
+        });
+
+        it("Returns false for base private key", () => {
+          const isEnterpriseKeyNative =
+            networkDerivationsInstances.mainnet.adaLedger.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.mainnet.adaLedger.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MAINNET_EXTRINSIC_PRIVATE_KEY.adaEnterprise.privateKey,
+            });
+
+          const isRewardKeyNative =
+            networkDerivationsInstances.mainnet.adaLedger.doesPKBelongToMnemonic({
+              derivationPathPrefix: adaConfig.mainnet.adaLedger.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MAINNET_EXTRINSIC_PRIVATE_KEY.adaReward.privateKey,
+            });
+
+          expect(isEnterpriseKeyNative).toBe(false);
+          expect(isRewardKeyNative).toBe(false);
         });
       });
     });

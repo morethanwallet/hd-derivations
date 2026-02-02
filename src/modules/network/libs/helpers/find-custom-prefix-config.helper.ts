@@ -1,6 +1,7 @@
+import type { GetDerivationConfig } from "../types/index.js";
+
 import type { PrefixConfig } from "@/libs/modules/curves/curves.js";
 import { type DerivationTypeUnion } from "@/libs/types/types.js";
-import type { GetDerivationConfig } from "../types/index.js";
 
 type DerivationConfigUnion = GetDerivationConfig<
   "trx" | "avax" | "btc" | "bch" | "xrp" | "doge" | "zec" | "ltc"

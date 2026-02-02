@@ -4,4 +4,5 @@ export {
   getRewardDerivationHandlers,
   getExodusDerivationHandlers,
   getBaseDerivationHandlers,
+  getLedgerDerivationHandlers,
 } from "./get-derivation-handlers.helper.js";

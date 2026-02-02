@@ -1,3 +1,5 @@
+import { getTransparentDerivationHandlers } from "./libs/helpers/index.js";
+
 import { zecConfig } from "@/modules/network/libs/modules/config/index.js";
 import type {
   DeriveItemFromMnemonicParameters,
@@ -10,8 +12,7 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import { getTransparentDerivationHandlers } from "./libs/helpers/index.js";
-import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
+import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/helpers.js";
 import { TransparentKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 

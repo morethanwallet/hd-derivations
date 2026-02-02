@@ -10,6 +10,8 @@ type AdaBaseDerivationPath = {
 };
 
 type DerivationPath<T extends DerivationTypeUnion> =
-  T extends GetDerivationTypeUnion<"adaBase"> ? AdaBaseDerivationPath : CommonDerivationPath;
+  T extends GetDerivationTypeUnion<"adaBase" | "adaLedger">
+    ? AdaBaseDerivationPath
+    : CommonDerivationPath;
 
 export type { CommonDerivationPath, AdaBaseDerivationPath, DerivationPath };

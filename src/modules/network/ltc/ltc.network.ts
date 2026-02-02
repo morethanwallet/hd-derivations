@@ -1,3 +1,9 @@
+import {
+  getLegacyDerivationHandlers,
+  getSegWitDerivationHandlers,
+  getNativeSegWitDerivationHandlers,
+} from "./libs/helpers/index.js";
+
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import { ltcConfig } from "@/modules/network/libs/modules/config/index.js";
 import type {
@@ -11,12 +17,7 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import {
-  getLegacyDerivationHandlers,
-  getSegWitDerivationHandlers,
-  getNativeSegWitDerivationHandlers,
-} from "./libs/helpers/index.js";
-import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/index.js";
+import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/helpers.js";
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 

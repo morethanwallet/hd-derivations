@@ -1,13 +1,14 @@
+import { DEFAULT_SOL_BASE_ADDRESS_POSITION } from "../constants/index.js";
+
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
   validateDerivationPath,
-} from "@/modules/network/libs/helpers/index.js";
+} from "@/modules/network/libs/helpers/helpers.js";
 import type {
   GetDerivationHandlersParameters,
   GetDerivationHandlersReturnType,
 } from "@/modules/network/libs/types/index.js";
-import { DEFAULT_SOL_BASE_ADDRESS_POSITION } from "../constants";
 
 function getSolBaseDerivationHandlers({
   keysDerivationInstance,

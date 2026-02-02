@@ -1,6 +1,8 @@
 import { networks } from "bitcoinjs-lib";
+
 import type { CommonNetworkPurposeUnion } from "../../types/index.js";
 import type { Secp256k1Config } from "./libs/types/index.js";
+
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 const COMMON_DERIVATION_PATH_PREFIX = "m/44'/9000'";

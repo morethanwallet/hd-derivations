@@ -1,6 +1,7 @@
-import type { DerivationTypeUnion, DerivationPath } from "@/libs/types/types.js";
 import { type HandlersCommonParameters } from "./handlers-common-parameters.type.js";
 import { type DerivedItem } from "../derived-item.type.js";
+
+import type { DerivationTypeUnion, DerivationPath } from "@/libs/types/types.js";
 
 type DeriveItemFromMnemonicParameters<T extends DerivationTypeUnion> = DerivationPath<T> &
   HandlersCommonParameters<T>;

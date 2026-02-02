@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { Zec } from "../zec.network.js";
+
+import { type Zec } from "../zec.network.js";
 import { getNetwork } from "../../get-network/get-network.js";
 import { zecConfig } from "../../libs/modules/config/index.js";
 import {

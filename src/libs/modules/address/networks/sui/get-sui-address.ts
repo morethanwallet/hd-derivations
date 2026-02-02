@@ -1,7 +1,9 @@
-import type { CommonKeyPair } from "@/libs/types/types.js";
-import type { Address } from "../../libs/types/index.js";
 import { fromBase64 } from "@mysten/sui/utils";
+
+import type { Address } from "../../libs/types/index.js";
 import { getPublicKeyHandler } from "./libs/helpers/index.js";
+
+import type { CommonKeyPair } from "@/libs/types/types.js";
 import type { Curve } from "@/libs/enums/enums.js";
 
 function getSuiAddress(

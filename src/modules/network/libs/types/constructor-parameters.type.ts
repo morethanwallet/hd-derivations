@@ -1,10 +1,11 @@
+import type { GetDerivationConfig } from "./derivation-config.type.js";
+
 import type {
   DerivationTypeUnion,
   GetDerivationTypeUnion,
   DerivationTypeUnionByNetwork,
 } from "@/libs/types/types.js";
-import { DotMnemonic, type Mnemonic } from "@/libs/modules/mnemonic/index.js";
-import type { GetDerivationConfig } from "./derivation-config.type.js";
+import { type DotMnemonic, type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 
 // TODO: Try to use mapping here
 type ConstructorDerivationConfigParameters<T extends DerivationTypeUnion> =

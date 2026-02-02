@@ -1,7 +1,8 @@
+import { describe, it, expect } from "vitest";
+
 import { getNetwork } from "../../get-network/get-network.js";
 import { avaxConfig } from "../../libs/modules/config/index.js";
-import { Avax } from "../avax.network.js";
-import { describe, it, expect } from "vitest";
+import { type Avax } from "../avax.network.js";
 import {
   FIRST_ITEM_INDEX,
   INDEX_LOOKUP_FROM,
@@ -9,6 +10,7 @@ import {
   MNEMONIC,
 } from "../../libs/constants/index.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
+
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 const MOCK_COMMON_DERIVATION_PATH = "m/44'/9000'/0'/0/0";

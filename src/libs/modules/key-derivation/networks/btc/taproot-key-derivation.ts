@@ -1,14 +1,15 @@
 import { toXOnlyPublicKey } from "./libs/helpers/index.js";
+import { getKeyPairFromWif } from "../../libs/helpers/get-key-pair-from.wif.helper.js";
+import { getKeyPairFromBip32Interface } from "../../libs/helpers/get-key-pair-from-bip32-interface.helper.js";
+
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
-import { Secp256k1Curve, type PrefixConfig } from "@/libs/modules/curves/curves.js";
+import { type Secp256k1Curve, type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { convertBytesToHex, convertHexToBytes } from "@/libs/utils/index.js";
-import { getKeyPairFromWif } from "../../libs/helpers/get-key-pair-from.wif.helper.js";
-import { getKeyPairFromBip32Interface } from "../../libs/helpers/get-key-pair-from-bip32-interface.helper.js";
 
 class TaprootKeyDerivation implements AbstractKeyDerivation<"btcTaproot"> {
   public prefixConfig: PrefixConfig;

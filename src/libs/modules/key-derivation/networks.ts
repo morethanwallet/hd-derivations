@@ -3,6 +3,7 @@ export {
   AdaBaseKeyDerivation,
   AdaCommonKeyDerivation,
   AdaExodusKeyDerivation,
+  AdaLedgerKeyDerivation,
 } from "./networks/ada/ada.js";
 export { CommonBipKeyDerivation, CommonEd25519KeyDerivation } from "./networks/common/index.js";
 export { SuiKeyDerivation } from "./networks/sui/index.js";

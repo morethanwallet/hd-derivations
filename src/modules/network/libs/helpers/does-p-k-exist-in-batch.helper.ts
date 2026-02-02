@@ -1,5 +1,6 @@
-import type { CommonPrivateKey, DerivationTypeUnion } from "@/libs/types/types.js";
 import type { DerivedItem } from "../types/index.js";
+
+import type { CommonPrivateKey, DerivationTypeUnion } from "@/libs/types/types.js";
 
 function doesPKExistInBatch<T extends DerivationTypeUnion>(
   batch: DerivedItem<T>[],

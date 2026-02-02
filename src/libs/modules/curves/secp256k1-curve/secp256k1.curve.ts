@@ -1,7 +1,9 @@
 import { BIP32Factory } from "bip32";
+
 import { type PrefixConfig } from "./libs/types/types.js";
-import { ecc, type ECPairInterface, ecPair } from "@/libs/modules/ecc/ecc.js";
 import type { BIP32Interface, BIP32API } from "./libs/types/types.js";
+
+import { ecc, type ECPairInterface, ecPair } from "@/libs/modules/ecc/ecc.js";
 
 class Secp256k1Curve {
   private readonly bip32: BIP32API = BIP32Factory(ecc);

@@ -1,4 +1,5 @@
 import { networks } from "bitcoinjs-lib";
+
 import type { Secp256k1DerivationConfig } from "./libs/types/index.js";
 
 type TrxConfig = {

@@ -1,3 +1,5 @@
+import { describe, it, expect } from "vitest";
+
 import { getNetwork } from "../../get-network/get-network.js";
 import {
   INDEX_LOOKUP_FROM,
@@ -6,8 +8,7 @@ import {
   FIRST_ITEM_INDEX,
 } from "../../libs/constants/index.js";
 import { bnbConfig } from "../../libs/modules/config/index.js";
-import { describe, it, expect } from "vitest";
-import { Bnb } from "../bnb.network.js";
+import { type Bnb } from "../bnb.network.js";
 
 const MOCK_DERIVATION_PATH = "m/44'/714'/0'/0/0";
 
@@ -34,6 +35,7 @@ beforeAll(() => {
   bnbNetworkDerivation = getNetwork({
     network: "bnb",
     mnemonic: MNEMONIC,
+    derivationConfig: { derivationType: "bnbBase" },
   });
 });
 

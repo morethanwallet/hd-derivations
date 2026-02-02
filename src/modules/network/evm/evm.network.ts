@@ -1,4 +1,3 @@
-import { EvmKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import type {
   ConstructorParameters,
   AbstractNetwork,
@@ -12,6 +11,8 @@ import type {
 } from "../libs/types/index.js";
 import { getEvmDerivationHandlers } from "./libs/helpers/index.js";
 import { evmConfig } from "../libs/modules/config/index.js";
+
+import { EvmKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
 
 class Evm implements AbstractNetwork<"evmBase"> {

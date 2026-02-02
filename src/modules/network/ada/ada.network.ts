@@ -1,3 +1,12 @@
+import {
+  getNetworkId,
+  getEnterpriseDerivationHandlers,
+  getRewardDerivationHandlers,
+  getExodusDerivationHandlers,
+  getBaseDerivationHandlers,
+  getLedgerDerivationHandlers,
+} from "./libs/helpers/helpers.js";
+
 import type {
   DeriveItemFromMnemonicParameters,
   AbstractNetwork,
@@ -9,17 +18,11 @@ import type {
   DerivationsHandlers,
   GetCredentialFromPKParameters,
 } from "@/modules/network/libs/types/index.js";
-import {
-  getNetworkId,
-  getEnterpriseDerivationHandlers,
-  getRewardDerivationHandlers,
-  getExodusDerivationHandlers,
-  getBaseDerivationHandlers,
-} from "./libs/helpers/index.js";
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import {
   AdaBaseKeyDerivation,
   AdaCommonKeyDerivation,
+  AdaLedgerKeyDerivation,
 } from "@/libs/modules/key-derivation/networks.js";
 import { AdaExodusKeyDerivation } from "@/libs/modules/key-derivation/networks/ada/ada-exodus-key-derivation.js";
 import { Secp256k1Curve } from "@/libs/modules/curves/curves.js";
@@ -53,6 +56,10 @@ class Ada implements AbstractNetwork<DerivationTypeUnionByNetwork["ada"]> {
       adaExodus: getExodusDerivationHandlers({
         networkId,
         keysDerivationInstance: new AdaExodusKeyDerivation(mnemonic, secp256k1Curve),
+      }),
+      adaLedger: getLedgerDerivationHandlers({
+        networkId,
+        keysDerivationInstance: new AdaLedgerKeyDerivation(mnemonic),
       }),
     };
 

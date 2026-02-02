@@ -52,12 +52,12 @@ type XrpInstanceParameters = {
 
 type BnbInstanceParameters = {
   network: NetworkTypeMap["bnb"];
-  derivationConfig?: GetDerivationConfig<"bnb">;
+  derivationConfig: GetDerivationConfig<"bnb">;
 } & MnemonicProperty;
 
 type EvmInstanceParameters = {
   network: NetworkTypeMap["evm"];
-  derivationConfig?: GetDerivationConfig<"evm">;
+  derivationConfig: GetDerivationConfig<"evm">;
 } & MnemonicProperty;
 
 type SolInstanceParameters = {

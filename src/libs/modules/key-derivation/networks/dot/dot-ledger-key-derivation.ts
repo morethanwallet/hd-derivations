@@ -1,14 +1,16 @@
+import { hdLedger } from "@polkadot/util-crypto";
+
+import { convertBytesKeyPairToHex } from "./libs/helpers/convert-bytes-key-pair-to-hex.helper.js";
+import { importByPrivateKey } from "./libs/helpers/helpers.js";
+
 import type {
   AbstractKeyDerivation,
   DeriveFromMnemonicParameters,
   ImportByPrivateKeyParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import type { CommonKeyPair } from "@/libs/types/types.js";
-import { DotMnemonic } from "@/libs/modules/mnemonic";
-import { hdLedger } from "@polkadot/util-crypto";
+import { type DotMnemonic } from "@/libs/modules/mnemonic/index.js";
 import { Curve } from "@/libs/enums/curve.type.js";
-import { convertBytesKeyPairToHex } from "./libs/helpers/convert-bytes-key-pair-to-hex.helper.js";
-import { importByPrivateKey } from "./libs/helpers/helpers.js";
 
 class DotLedgerKeyDerivation implements AbstractKeyDerivation<"dotLedger"> {
   private mnemonic: DotMnemonic;

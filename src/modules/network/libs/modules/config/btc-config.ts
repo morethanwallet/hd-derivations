@@ -1,7 +1,8 @@
-import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import type { CommonNetworkPurposeRegTestExtendedUnion } from "../../types/index.js";
 import { getCommonPrefixConfig } from "./libs/helpers/index.js";
 import type { Secp256k1Config } from "./libs/types/secp256k1-config.type.js";
+
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 const commonTestnetsDerivationPathPrefix = {
   btcLegacy: "m/44'/1'",

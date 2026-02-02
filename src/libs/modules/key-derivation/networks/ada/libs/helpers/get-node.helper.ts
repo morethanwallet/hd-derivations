@@ -1,26 +1,14 @@
-import { DerivationPathSymbol } from "@/libs/enums/enums.js";
-import {
-  checkHardenedSuffixEnding,
-  getDerivationPathSegmentsArray,
-  hardenDerivationPathValue,
-} from "@/libs/helpers/index.js";
-import { Bip32PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
+import { type Bip32PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
+
+import { getDerivationPathNumericValues } from "./get-derivation-path-numeric-values.helper.js";
 
 function getNode(rootKey: Bip32PrivateKey, derivationPath: string): Bip32PrivateKey {
-  const pathSegmentsArray = getDerivationPathSegmentsArray(derivationPath);
+  const numericDerivationPathValues = getDerivationPathNumericValues(derivationPath);
 
   let node = rootKey;
 
-  for (const segment of pathSegmentsArray) {
-    if (segment === DerivationPathSymbol.MASTER_KEY) continue;
-
-    const isHardened = checkHardenedSuffixEnding(segment);
-
-    const formattedSegment = isHardened
-      ? hardenDerivationPathValue(Number.parseInt(segment))
-      : Number(segment);
-
-    node = node.derive(formattedSegment);
+  for (const numericDerivationPathValue of numericDerivationPathValues) {
+    node = node.derive(numericDerivationPathValue);
   }
 
   return node;

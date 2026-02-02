@@ -1,12 +1,15 @@
 import { DerivationPathSymbol } from "@/libs/enums/enums.js";
-import { appendAddressToDerivationPath, checkHardenedSuffixEnding } from "@/libs/helpers/index.js";
+import {
+  appendAddressToDerivationPath,
+  checkHardenedSuffixEnding,
+} from "@/libs/helpers/helpers.js";
 import {
   getAdaExodusAddress,
   getBaseAddress,
   getEnterpriseAddress,
   getRewardAddress,
 } from "@/libs/modules/address/address.js";
-import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "@/modules/network/libs/constants";
+import { MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY } from "@/modules/network/libs/constants/index.js";
 import {
   doesPKBelongToMnemonic,
   deriveItemsBatchFromMnemonic,
@@ -14,7 +17,7 @@ import {
   increaseDerivationPathDepth,
   getDerivationPathDepth,
   validateDerivationPath,
-} from "@/modules/network/libs/helpers/index.js";
+} from "@/modules/network/libs/helpers/helpers.js";
 import type {
   DerivedItem,
   GetDerivationHandlersParameters,
@@ -286,9 +289,156 @@ function getBaseDerivationHandlers({
   };
 }
 
+function getLedgerDerivationHandlers({
+  keysDerivationInstance,
+  networkId,
+}: GetDerivationHandlersParameters["adaLedger"]): GetDerivationHandlersReturnType<"adaLedger"> {
+  return {
+    deriveItemFromMnemonic: (parameters) => {
+      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+      const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
+
+      return {
+        ...keys,
+        address,
+        enterpriseDerivationPath: parameters.enterpriseDerivationPath,
+        rewardDerivationPath: parameters.rewardDerivationPath,
+      };
+    },
+    getCredentialFromPK: (parameters) => {
+      const keys = keysDerivationInstance.importByPrivateKey(parameters);
+      const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
+
+      return { ...keys, address };
+    },
+    deriveItemsBatchFromMnemonic(
+      this: {
+        deriveItemFromMnemonic: GetDerivationHandlersReturnType<"adaLedger">["deriveItemFromMnemonic"];
+      },
+      {
+        enterpriseDerivationPathPrefix,
+        rewardDerivationPathPrefix,
+        indexLookupFrom,
+        indexLookupTo,
+        shouldUseHardenedAddress,
+      },
+    ) {
+      validateDerivationPath(enterpriseDerivationPathPrefix);
+      validateDerivationPath(rewardDerivationPathPrefix);
+      let itemsBatch: DerivedItem<"adaLedger">[] = [];
+
+      for (let i = indexLookupFrom; i < indexLookupTo; i++) {
+        const enterpriseDerivationPathWithAddressIndex = appendAddressToDerivationPath({
+          shouldHarden: shouldUseHardenedAddress,
+          derivationPath: enterpriseDerivationPathPrefix,
+          addressIndex: i,
+        });
+
+        const rewardDerivationPathWithAddressIndex = appendAddressToDerivationPath({
+          shouldHarden: shouldUseHardenedAddress,
+          derivationPath: rewardDerivationPathPrefix,
+          addressIndex: i,
+        });
+
+        itemsBatch.push(
+          this.deriveItemFromMnemonic({
+            enterpriseDerivationPath: enterpriseDerivationPathWithAddressIndex,
+            rewardDerivationPath: rewardDerivationPathWithAddressIndex,
+          }),
+        );
+      }
+
+      return itemsBatch;
+    },
+    doesPKBelongToMnemonic(parameters) {
+      validateDerivationPath(parameters.derivationPathPrefix);
+
+      const itemsBatch = this.deriveItemsBatchFromMnemonic({
+        ...parameters,
+        enterpriseDerivationPathPrefix: DERIVATION_PATH_PATTERN.enterprise,
+        rewardDerivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
+      });
+
+      itemsBatch.push(
+        ...this.deriveItemsBatchFromMnemonic({
+          ...parameters,
+          enterpriseDerivationPathPrefix: DERIVATION_PATH_PATTERN.enterprise,
+          rewardDerivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
+          shouldUseHardenedAddress: true,
+        }),
+      );
+
+      if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) {
+        return true;
+      }
+
+      let updatedDerivationPath = parameters.derivationPathPrefix;
+      let derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
+
+      do {
+        const itemsBatch = this.deriveItemsBatchFromMnemonic({
+          ...parameters,
+          enterpriseDerivationPathPrefix: updatedDerivationPath,
+          rewardDerivationPathPrefix: updatedDerivationPath,
+        });
+
+        itemsBatch.push(
+          ...this.deriveItemsBatchFromMnemonic({
+            ...parameters,
+            enterpriseDerivationPathPrefix: updatedDerivationPath,
+            rewardDerivationPathPrefix: updatedDerivationPath,
+            shouldUseHardenedAddress: true,
+          }),
+        );
+
+        if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) {
+          return true;
+        }
+
+        if (derivationPathDepth < MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY) {
+          updatedDerivationPath = increaseDerivationPathDepth({
+            derivationPath: updatedDerivationPath,
+          });
+
+          derivationPathDepth++;
+          continue;
+        }
+
+        if (derivationPathDepth === MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY) {
+          const derivationPathHardenedPart = updatedDerivationPath
+            .split(DerivationPathSymbol.DELIMITER)
+            .filter(
+              (part) =>
+                part.includes(DerivationPathSymbol.HARDENED_SUFFIX) ||
+                part === DerivationPathSymbol.MASTER_KEY,
+            )
+            .join(DerivationPathSymbol.DELIMITER);
+
+          updatedDerivationPath = increaseDerivationPathDepth({
+            shouldHarden: true,
+            derivationPath: derivationPathHardenedPart,
+          });
+
+          derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
+        }
+
+        if (
+          derivationPathDepth > MAX_DERIVATION_PATH_DEPTH_TO_CHECK_PRIVATE_KEY &&
+          checkHardenedSuffixEnding(updatedDerivationPath)
+        ) {
+          break;
+        }
+      } while (true);
+
+      return false;
+    },
+  };
+}
+
 export {
   getEnterpriseDerivationHandlers,
   getRewardDerivationHandlers,
   getExodusDerivationHandlers,
   getBaseDerivationHandlers,
+  getLedgerDerivationHandlers,
 };

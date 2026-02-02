@@ -12,6 +12,6 @@ type AdaBaseKeyPair = {
 } & AdaBasePrivateKey;
 
 type KeyPair<T extends DerivationTypeUnion> =
-  T extends GetDerivationTypeUnion<"adaBase"> ? AdaBaseKeyPair : CommonKeyPair;
+  T extends GetDerivationTypeUnion<"adaBase" | "adaLedger"> ? AdaBaseKeyPair : CommonKeyPair;
 
 export { type CommonKeyPair, type AdaBaseKeyPair, type KeyPair };

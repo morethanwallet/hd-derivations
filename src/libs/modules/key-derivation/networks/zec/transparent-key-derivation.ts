@@ -1,17 +1,19 @@
 import bs58check from "bs58check";
-import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { networks } from "bitcoinjs-lib";
-import { Secp256k1Curve, type PrefixConfig } from "@/libs/modules/curves/curves.js";
+
+import { KeyDerivationError } from "../../libs/exceptions/exceptions.js";
+import { getKeyPairFromBip32Interface } from "../../libs/helpers/get-key-pair-from-bip32-interface.helper.js";
+import { getSecp256k1NodeFromMnemonic } from "../../libs/helpers/get-secp256k1-node-from-mnemonic.helper.js";
+
+import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
+import { type Secp256k1Curve, type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import {
   type AbstractKeyDerivation,
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
-import { KeyDerivationError } from "../../libs/exceptions/index.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
-import { getKeyPairFromBip32Interface } from "../../libs/helpers/get-key-pair-from-bip32-interface.helper.js";
 import { ExceptionMessage } from "@/libs/enums/enums.js";
-import { getSecp256k1NodeFromMnemonic } from "../../libs/helpers/get-secp256k1-node-from-mnemonic.helper.js";
 
 class TransparentKeyDerivation implements AbstractKeyDerivation<"zecTransparent"> {
   public readonly prefixConfig: PrefixConfig;

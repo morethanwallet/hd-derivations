@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { Xrp } from "../xrp.network.js";
+
+import { type Xrp } from "../xrp.network.js";
 import type { CommonNetworkPurposeUnion } from "../../libs/types/index.js";
-import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { getNetwork } from "../../get-network/get-network.js";
 import { xrpConfig } from "../../libs/modules/config/index.js";
 import {
@@ -10,6 +10,8 @@ import {
   INDEX_LOOKUP_TO,
   MNEMONIC,
 } from "../../libs/constants/index.js";
+
+import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 
 const MOCK_DERIVATION_PATH = "m/44'/144'/0'/0/0";
 

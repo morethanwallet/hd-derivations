@@ -1,6 +1,3 @@
-import type { Address, TonAddressRequiredData } from "@/libs/modules/address/libs/types/index.js";
-import { type CommonKeyPair } from "@/libs/types/types.js";
-import { type ContractVersionToContract } from "./libs/types/index.js";
 import {
   WalletContractV1R1,
   WalletContractV1R2,
@@ -12,6 +9,11 @@ import {
   WalletContractV4,
   WalletContractV5R1,
 } from "@ton/ton";
+
+import { type ContractVersionToContract } from "./libs/types/index.js";
+
+import type { Address, TonAddressRequiredData } from "@/libs/modules/address/libs/types/index.js";
+import { type CommonKeyPair } from "@/libs/types/types.js";
 
 type GetTonAddressParameters = {
   publicKey: CommonKeyPair["publicKey"];

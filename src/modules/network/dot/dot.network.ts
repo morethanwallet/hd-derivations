@@ -1,4 +1,10 @@
 import {
+  getBaseDerivationHandlers,
+  getLedgerDerivationHandlers,
+  getStandardHdDerivationHandlers,
+} from "./libs/helpers/helpers.js";
+
+import {
   CommonEd25519KeyDerivation,
   DotBaseKeyDerivation,
   DotLedgerKeyDerivation,
@@ -14,11 +20,6 @@ import type {
   DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
-import {
-  getBaseDerivationHandlers,
-  getLedgerDerivationHandlers,
-  getStandardHdDerivationHandlers,
-} from "./libs/helpers/helpers.js";
 import type { DerivationTypeUnionByNetwork } from "@/libs/types/types.js";
 import { Ed25519Curve } from "@/libs/modules/curves/curves.js";
 

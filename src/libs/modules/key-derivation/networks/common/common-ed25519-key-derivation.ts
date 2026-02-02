@@ -5,9 +5,10 @@ import type {
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { convertBytesToHex } from "@/libs/utils/index.js";
-import { type Mnemonic } from "@/libs/modules/mnemonic";
-import { type Ed25519Curve } from "@/libs/modules/curves/curves";
+import { type Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
+import { type Ed25519Curve } from "@/libs/modules/curves/curves.js";
 
+//  TODO: Rename to Ed25519Slip10KeyDerivation
 class CommonEd25519KeyDerivation implements AbstractKeyDerivation<CommonEd25519DerivationTypeUnion> {
   private mnemonic: Mnemonic;
   private ed25519Curve: Ed25519Curve;
