@@ -1,17 +1,17 @@
 import { type Btc } from "@/modules/network/btc/index.js";
 import { type Ada } from "@/modules/network/ada/index.js";
 import { type Avax } from "@/modules/network/avax/index.js";
-import { type Trx } from "@/modules/network/trx/index.js";
+import { type Trx } from "@/modules/network/trx/trx.js";
 import { type Ton } from "@/modules/network/ton/index.js";
 import { type Sui } from "@/modules/network/sui/index.js";
 import { type Bch } from "@/modules/network/bch/index.js";
-import { type Xrp } from "@/modules/network/xrp/index.js";
+import { type Xrp } from "@/modules/network/xrp/xrp.js";
 import { type Bnb } from "@/modules/network/bnb/index.js";
 import { type Evm } from "@/modules/network/evm/index.js";
 import { type Dot } from "@/modules/network/dot/dot.js";
 import { type Sol } from "@/modules/network/sol/index.js";
 import { type Doge } from "@/modules/network/doge/index.js";
-import { type Zec } from "@/modules/network/zec/index.js";
+import { type Zec } from "@/modules/network/zec/zec.js";
 import { type Apt } from "@/modules/network/apt/index.js";
 import { type Ltc } from "@/modules/network/ltc/index.js";
 

@@ -1,5 +1,5 @@
 import {
-  Ed25519SecretKeyBytePosition,
+  Ed25519PrivateKeyBytePosition,
   type Ed25519Curve,
   type NonNullableBip32Interface,
 } from "@/libs/modules/curves/curves.js";
@@ -14,8 +14,8 @@ function getEd25519KeyPairFromSecp256k1Node(
   ed25519Curve: Ed25519Curve,
 ): KeyPair {
   const secretKeyBytes = node.privateKey.subarray(
-    Ed25519SecretKeyBytePosition.START,
-    Ed25519SecretKeyBytePosition.END,
+    Ed25519PrivateKeyBytePosition.START,
+    Ed25519PrivateKeyBytePosition.END,
   );
 
   const secretKey = Buffer.from(secretKeyBytes);

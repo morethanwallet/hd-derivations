@@ -1,6 +1,6 @@
-import { PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
+import { PrivateKey } from "@stricahq/bip32ed25519";
 
-import { getNode, getNodeRawKeys, getRootKey } from "./libs/helpers/helpers.js";
+import { getNode, getKeyPairFromNode, getRootKey } from "./libs/helpers/helpers.js";
 
 import type {
   ImportByPrivateKeyParameters,
@@ -9,6 +9,7 @@ import type {
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import type { GetDerivationTypeUnion, KeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
+import { convertBytesToHex, convertHexToBytes } from "@/libs/utils/utils.js";
 
 class AdaCommonKeyDerivation implements AbstractKeyDerivation<
   GetDerivationTypeUnion<"adaEnterprise" | "adaReward">
@@ -19,21 +20,17 @@ class AdaCommonKeyDerivation implements AbstractKeyDerivation<
     this.mnemonic = mnemonic;
   }
 
-  public deriveFromMnemonic({
+  public async deriveFromMnemonic({
     derivationPath,
-  }: DeriveFromMnemonicParameters<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>): KeyPair<
-    GetDerivationTypeUnion<"adaEnterprise" | "adaReward">
+  }: DeriveFromMnemonicParameters<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>): Promise<
+    KeyPair<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>
   > {
-    const entropy = this.mnemonic.getEntropy();
-    const rootKey = getRootKey(entropy);
+    const rootKey = await getRootKey(this.mnemonic);
 
     const node = getNode(rootKey, derivationPath);
-    const { privateKey, publicKey } = getNodeRawKeys(node);
+    const { privateKey, publicKey } = getKeyPairFromNode(node);
 
-    return {
-      privateKey: privateKey.to_hex(),
-      publicKey: publicKey.to_hex(),
-    };
+    return { privateKey, publicKey };
   }
 
   public importByPrivateKey({
@@ -41,12 +38,11 @@ class AdaCommonKeyDerivation implements AbstractKeyDerivation<
   }: ImportByPrivateKeyParameters<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>):
     | KeyPair<GetDerivationTypeUnion<"adaEnterprise" | "adaReward">>
     | never {
-    const rawPublicKey = PrivateKey.from_hex(privateKey).to_public();
+    const privateKeyInstance = new PrivateKey(Buffer.from(convertHexToBytes(privateKey)));
+    const publicKeyInstance = privateKeyInstance.toPublicKey();
+    const publicKey = convertBytesToHex(publicKeyInstance.toBytes());
 
-    return {
-      privateKey,
-      publicKey: rawPublicKey.to_hex(),
-    };
+    return { privateKey, publicKey };
   }
 }
 

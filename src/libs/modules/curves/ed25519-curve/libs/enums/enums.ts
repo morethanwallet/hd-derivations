@@ -1,1 +1,1 @@
-export { Ed25519SecretKeyBytePosition } from "./ed25519-secret-key-byte-position.enum.js";
+export { Ed25519PrivateKeyBytePosition } from "./ed25519-private-key-byte-position.enum.js";

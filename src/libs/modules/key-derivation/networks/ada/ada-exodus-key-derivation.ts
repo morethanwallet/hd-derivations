@@ -1,4 +1,3 @@
-import { PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
 import { createHmac, createHash } from "crypto";
 
 import { KeyDerivationError } from "../../libs/exceptions/exceptions.js";
@@ -12,8 +11,10 @@ import type {
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import type { GetDerivationTypeUnion, KeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
-import { type Secp256k1Curve } from "@/libs/modules/curves/curves.js";
-import { Ed25519SecretKeyBytePosition } from "@/libs/modules/curves/curves.js";
+import { type Ed25519Curve, type Secp256k1Curve } from "@/libs/modules/curves/curves.js";
+import { Ed25519PrivateKeyBytePosition } from "@/libs/modules/curves/curves.js";
+import { convertBytesToHex } from "@/libs/utils/convert-bytes-to-hex.util.js";
+import { convertHexToBytes } from "@/libs/utils/utils.js";
 
 const Ed25519ClampMask = {
   LOW: 0b11111000, // 248
@@ -21,7 +22,7 @@ const Ed25519ClampMask = {
   HIGH_SET: 0b01000000, // 64
 } as const;
 
-const Ed25519SecretKeyByteIndex = {
+const Ed25519PrivateKeyByteIndex = {
   FIRST: 0,
   LAST: 31,
 } as const;
@@ -34,10 +35,16 @@ const INVALID_SCALAR_BIT_MASK = 0b00100000;
 class AdaExodusKeyDerivation implements AbstractKeyDerivation<GetDerivationTypeUnion<"adaExodus">> {
   private readonly mnemonic: Mnemonic;
   private readonly secp256k1Curve: Secp256k1Curve;
+  private readonly ed25519Curve: Ed25519Curve;
 
-  public constructor(mnemonic: Mnemonic, secp256k1Curve: Secp256k1Curve) {
+  public constructor(
+    mnemonic: Mnemonic,
+    secp256k1Curve: Secp256k1Curve,
+    ed25519Curve: Ed25519Curve,
+  ) {
     this.mnemonic = mnemonic;
     this.secp256k1Curve = secp256k1Curve;
+    this.ed25519Curve = ed25519Curve;
   }
 
   public deriveFromMnemonic({
@@ -51,34 +58,29 @@ class AdaExodusKeyDerivation implements AbstractKeyDerivation<GetDerivationTypeU
       secp256k1Curve: this.secp256k1Curve,
     });
 
-    const secretKey = this.deriveByronSecretKey(node.privateKey);
-    const rawPrivateKey = PrivateKey.from_normal_bytes(Buffer.from(secretKey));
-    const rawPublicKey = rawPrivateKey.to_public();
+    const privateKeyBuffer = this.deriveByronPrivateKey(node.privateKey);
+    const privateKey = convertBytesToHex(privateKeyBuffer);
+    const publicKey = this.getPublicKeyFromPrivateKeyBuffer(privateKeyBuffer);
 
-    return {
-      privateKey: rawPrivateKey.to_hex(),
-      publicKey: rawPublicKey.to_hex(),
-    };
+    return { privateKey, publicKey };
   }
 
   public importByPrivateKey({
     privateKey,
-  }: ImportByPrivateKeyParameters<GetDerivationTypeUnion<"adaExodus">>):
-    | KeyPair<GetDerivationTypeUnion<"adaExodus">>
-    | never {
-    const rawPublicKey = PrivateKey.from_hex(privateKey).to_public();
+  }: ImportByPrivateKeyParameters<GetDerivationTypeUnion<"adaExodus">>): KeyPair<
+    GetDerivationTypeUnion<"adaExodus">
+  > {
+    const privateKeyBuffer = Buffer.from(convertHexToBytes(privateKey));
+    const publicKey = this.getPublicKeyFromPrivateKeyBuffer(privateKeyBuffer);
 
-    return {
-      privateKey,
-      publicKey: rawPublicKey.to_hex(),
-    };
+    return { privateKey, publicKey };
   }
 
-  private clampEd25519SecretKey(secretKeyBuffer: Buffer): Buffer {
-    const clampedSecretKey = Buffer.from(secretKeyBuffer);
-    clampedSecretKey[Ed25519SecretKeyByteIndex.FIRST]! &= Ed25519ClampMask.LOW;
-    clampedSecretKey[Ed25519SecretKeyByteIndex.LAST]! &= Ed25519ClampMask.HIGH_CLEAR;
-    clampedSecretKey[Ed25519SecretKeyByteIndex.LAST]! |= Ed25519ClampMask.HIGH_SET;
+  private clampEd25519PrivateKey(privateKeyBuffer: Buffer): Buffer {
+    const clampedSecretKey = Buffer.from(privateKeyBuffer);
+    clampedSecretKey[Ed25519PrivateKeyByteIndex.FIRST]! &= Ed25519ClampMask.LOW;
+    clampedSecretKey[Ed25519PrivateKeyByteIndex.LAST]! &= Ed25519ClampMask.HIGH_CLEAR;
+    clampedSecretKey[Ed25519PrivateKeyByteIndex.LAST]! |= Ed25519ClampMask.HIGH_SET;
 
     return clampedSecretKey;
   }
@@ -92,7 +94,7 @@ class AdaExodusKeyDerivation implements AbstractKeyDerivation<GetDerivationTypeU
    * Validity check: clamp(SHA512(iL)[0..31]) and ensure bit 5 of last byte is 0.
    * If invalid → increment counter and retry.
    */
-  private deriveByronSecretKey(bip32Seed: Uint8Array): Buffer {
+  private deriveByronPrivateKey(bip32Seed: Uint8Array): Buffer {
     const hmacKey = Buffer.from(bip32Seed);
     let counter = 1;
 
@@ -105,17 +107,17 @@ class AdaExodusKeyDerivation implements AbstractKeyDerivation<GetDerivationTypeU
       }
 
       const secretKey = I.subarray(
-        Ed25519SecretKeyBytePosition.START,
-        Ed25519SecretKeyBytePosition.END,
+        Ed25519PrivateKeyBytePosition.START,
+        Ed25519PrivateKeyBytePosition.END,
       );
 
       const hashed = createHash(SHA512_ALGORITHM)
         .update(secretKey)
         .digest()
-        .subarray(Ed25519SecretKeyBytePosition.START, Ed25519SecretKeyBytePosition.END);
+        .subarray(Ed25519PrivateKeyBytePosition.START, Ed25519PrivateKeyBytePosition.END);
 
-      const candidate = this.clampEd25519SecretKey(hashed);
-      const lastByte = candidate.at(Ed25519SecretKeyByteIndex.LAST);
+      const candidate = this.clampEd25519PrivateKey(hashed);
+      const lastByte = candidate.at(Ed25519PrivateKeyByteIndex.LAST);
 
       if (lastByte && (lastByte & INVALID_SCALAR_BIT_MASK) === 0) {
         return Buffer.from(secretKey);
@@ -123,6 +125,12 @@ class AdaExodusKeyDerivation implements AbstractKeyDerivation<GetDerivationTypeU
 
       counter += 1;
     }
+  }
+
+  private getPublicKeyFromPrivateKeyBuffer(privateKeyBuffer: Buffer): string {
+    const publicKeyBuffer = this.ed25519Curve.getPublicKeyBuffer(privateKeyBuffer, false);
+
+    return convertBytesToHex(publicKeyBuffer);
   }
 }
 

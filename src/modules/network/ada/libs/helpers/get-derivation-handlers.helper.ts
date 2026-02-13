@@ -34,9 +34,9 @@ function getEnterpriseDerivationHandlers({
   networkId,
 }: GetDerivationHandlersParameters["adaEnterprise"]): GetDerivationHandlersReturnType<"adaEnterprise"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: async ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+      const keys = await keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getEnterpriseAddress(keys.publicKey, networkId);
 
       return { ...keys, address, derivationPath };
@@ -47,7 +47,7 @@ function getEnterpriseDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({
+    async deriveItemsBatchFromMnemonic({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,
@@ -69,8 +69,8 @@ function getRewardDerivationHandlers({
   networkId,
 }: GetDerivationHandlersParameters["adaReward"]): GetDerivationHandlersReturnType<"adaReward"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
+    deriveItemFromMnemonic: async ({ derivationPath }) => {
+      const keys = await keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getRewardAddress(keys.publicKey, networkId);
 
       return { ...keys, address, derivationPath };
@@ -81,7 +81,7 @@ function getRewardDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({
+    async deriveItemsBatchFromMnemonic({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,
@@ -94,13 +94,13 @@ function getRewardDerivationHandlers({
         shouldUseHardenedAddress,
       );
     },
-    doesPKBelongToMnemonic(parameters) {
-      const itemsBatch = this.deriveItemsBatchFromMnemonic({
+    async doesPKBelongToMnemonic(parameters) {
+      const itemsBatch = await this.deriveItemsBatchFromMnemonic({
         ...parameters,
         derivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
       });
 
-      itemsBatch.push(...this.deriveItemsBatchFromMnemonic(parameters));
+      itemsBatch.push(...(await this.deriveItemsBatchFromMnemonic(parameters)));
 
       if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) return true;
 
@@ -114,7 +114,7 @@ function getExodusDerivationHandlers({
   networkId,
 }: GetDerivationHandlersParameters["adaExodus"]): GetDerivationHandlersReturnType<"adaExodus"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: async ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getAdaExodusAddress(keys.publicKey, networkId);
 
@@ -126,7 +126,7 @@ function getExodusDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({
+    async deriveItemsBatchFromMnemonic({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,
@@ -148,8 +148,8 @@ function getBaseDerivationHandlers({
   networkId,
 }: GetDerivationHandlersParameters["adaBase"]): GetDerivationHandlersReturnType<"adaBase"> {
   return {
-    deriveItemFromMnemonic: (parameters) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+    deriveItemFromMnemonic: async (parameters) => {
+      const keys = await keysDerivationInstance.deriveFromMnemonic(parameters);
       const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
 
       return {
@@ -165,7 +165,7 @@ function getBaseDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic(
+    async deriveItemsBatchFromMnemonic(
       this: {
         deriveItemFromMnemonic: GetDerivationHandlersReturnType<"adaBase">["deriveItemFromMnemonic"];
       },
@@ -194,32 +194,32 @@ function getBaseDerivationHandlers({
           addressIndex: i,
         });
 
-        itemsBatch.push(
-          this.deriveItemFromMnemonic({
-            enterpriseDerivationPath: enterpriseDerivationPathWithAddressIndex,
-            rewardDerivationPath: rewardDerivationPathWithAddressIndex,
-          }),
-        );
+        const derivedItem = await this.deriveItemFromMnemonic({
+          enterpriseDerivationPath: enterpriseDerivationPathWithAddressIndex,
+          rewardDerivationPath: rewardDerivationPathWithAddressIndex,
+        });
+
+        itemsBatch.push(derivedItem);
       }
 
       return itemsBatch;
     },
-    doesPKBelongToMnemonic(parameters) {
+    async doesPKBelongToMnemonic(parameters) {
       validateDerivationPath(parameters.derivationPathPrefix);
 
-      const itemsBatch = this.deriveItemsBatchFromMnemonic({
+      const itemsBatch = await this.deriveItemsBatchFromMnemonic({
         ...parameters,
         enterpriseDerivationPathPrefix: DERIVATION_PATH_PATTERN.enterprise,
         rewardDerivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
       });
 
       itemsBatch.push(
-        ...this.deriveItemsBatchFromMnemonic({
+        ...(await this.deriveItemsBatchFromMnemonic({
           ...parameters,
           enterpriseDerivationPathPrefix: DERIVATION_PATH_PATTERN.enterprise,
           rewardDerivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
           shouldUseHardenedAddress: true,
-        }),
+        })),
       );
 
       if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) {
@@ -230,19 +230,19 @@ function getBaseDerivationHandlers({
       let derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
 
       do {
-        const itemsBatch = this.deriveItemsBatchFromMnemonic({
+        const itemsBatch = await this.deriveItemsBatchFromMnemonic({
           ...parameters,
           enterpriseDerivationPathPrefix: updatedDerivationPath,
           rewardDerivationPathPrefix: updatedDerivationPath,
         });
 
         itemsBatch.push(
-          ...this.deriveItemsBatchFromMnemonic({
+          ...(await this.deriveItemsBatchFromMnemonic({
             ...parameters,
             enterpriseDerivationPathPrefix: updatedDerivationPath,
             rewardDerivationPathPrefix: updatedDerivationPath,
             shouldUseHardenedAddress: true,
-          }),
+          })),
         );
 
         if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) {
@@ -294,8 +294,8 @@ function getLedgerDerivationHandlers({
   networkId,
 }: GetDerivationHandlersParameters["adaLedger"]): GetDerivationHandlersReturnType<"adaLedger"> {
   return {
-    deriveItemFromMnemonic: (parameters) => {
-      const keys = keysDerivationInstance.deriveFromMnemonic(parameters);
+    deriveItemFromMnemonic: async (parameters) => {
+      const keys = await keysDerivationInstance.deriveFromMnemonic(parameters);
       const address = getBaseAddress(keys.enterprisePublicKey, keys.rewardPublicKey, networkId);
 
       return {
@@ -311,7 +311,7 @@ function getLedgerDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic(
+    async deriveItemsBatchFromMnemonic(
       this: {
         deriveItemFromMnemonic: GetDerivationHandlersReturnType<"adaLedger">["deriveItemFromMnemonic"];
       },
@@ -340,32 +340,32 @@ function getLedgerDerivationHandlers({
           addressIndex: i,
         });
 
-        itemsBatch.push(
-          this.deriveItemFromMnemonic({
-            enterpriseDerivationPath: enterpriseDerivationPathWithAddressIndex,
-            rewardDerivationPath: rewardDerivationPathWithAddressIndex,
-          }),
-        );
+        const derivedItem = await this.deriveItemFromMnemonic({
+          enterpriseDerivationPath: enterpriseDerivationPathWithAddressIndex,
+          rewardDerivationPath: rewardDerivationPathWithAddressIndex,
+        });
+
+        itemsBatch.push(derivedItem);
       }
 
       return itemsBatch;
     },
-    doesPKBelongToMnemonic(parameters) {
+    async doesPKBelongToMnemonic(parameters) {
       validateDerivationPath(parameters.derivationPathPrefix);
 
-      const itemsBatch = this.deriveItemsBatchFromMnemonic({
+      const itemsBatch = await this.deriveItemsBatchFromMnemonic({
         ...parameters,
         enterpriseDerivationPathPrefix: DERIVATION_PATH_PATTERN.enterprise,
         rewardDerivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
       });
 
       itemsBatch.push(
-        ...this.deriveItemsBatchFromMnemonic({
+        ...(await this.deriveItemsBatchFromMnemonic({
           ...parameters,
           enterpriseDerivationPathPrefix: DERIVATION_PATH_PATTERN.enterprise,
           rewardDerivationPathPrefix: DERIVATION_PATH_PATTERN.reward,
           shouldUseHardenedAddress: true,
-        }),
+        })),
       );
 
       if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) {
@@ -376,19 +376,19 @@ function getLedgerDerivationHandlers({
       let derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
 
       do {
-        const itemsBatch = this.deriveItemsBatchFromMnemonic({
+        const itemsBatch = await this.deriveItemsBatchFromMnemonic({
           ...parameters,
           enterpriseDerivationPathPrefix: updatedDerivationPath,
           rewardDerivationPathPrefix: updatedDerivationPath,
         });
 
         itemsBatch.push(
-          ...this.deriveItemsBatchFromMnemonic({
+          ...(await this.deriveItemsBatchFromMnemonic({
             ...parameters,
             enterpriseDerivationPathPrefix: updatedDerivationPath,
             rewardDerivationPathPrefix: updatedDerivationPath,
             shouldUseHardenedAddress: true,
-          }),
+          })),
         );
 
         if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) {

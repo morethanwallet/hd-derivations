@@ -21,32 +21,32 @@ type SupportedDerivationTypes = Exclude<
   GetDerivationTypeUnion<"suiBase" | "adaBase" | "dotBase"> & DerivationTypeUnionByNetwork["apt"]
 >;
 
-function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
+async function doesPKBelongToMnemonic<T extends SupportedDerivationTypes>(
   this: {
     deriveItemsBatchFromMnemonic: DeriveItemsBatchFromMnemonic<SupportedDerivationTypes>;
   },
   parameters: DoesPKBelongToMnemonicParameters<T>,
   isStrictHardened?: boolean,
-): boolean {
+): Promise<boolean> {
   let updatedDerivationPath = parameters.derivationPathPrefix;
   validateDerivationPath(updatedDerivationPath, isStrictHardened);
   let derivationPathDepth = getDerivationPathDepth(updatedDerivationPath);
 
   do {
-    const itemsBatch = this.deriveItemsBatchFromMnemonic({
+    const itemsBatch = await this.deriveItemsBatchFromMnemonic({
       ...parameters,
       derivationPathPrefix: updatedDerivationPath,
       shouldUseHardenedAddress: isStrictHardened,
     });
 
     if (!isStrictHardened) {
-      itemsBatch.push(
-        ...this.deriveItemsBatchFromMnemonic({
-          ...parameters,
-          derivationPathPrefix: updatedDerivationPath,
-          shouldUseHardenedAddress: false,
-        }),
-      );
+      const itemsBatch = await this.deriveItemsBatchFromMnemonic({
+        ...parameters,
+        derivationPathPrefix: updatedDerivationPath,
+        shouldUseHardenedAddress: false,
+      });
+
+      itemsBatch.push(...itemsBatch);
     }
 
     if (doesPKExistInBatch(itemsBatch, parameters.privateKey)) {

@@ -3,8 +3,6 @@ import type {
   DerivationsHandlers,
   ConstructorParameters,
   DeriveItemFromMnemonicParameters,
-  DerivedCredential,
-  DerivedItem,
   DeriveItemsBatchFromMnemonicParameters,
   DoesPKBelongToMnemonicParameters,
   GetCredentialFromPKParameters,
@@ -57,13 +55,13 @@ class Bch implements AbstractNetwork<DerivationTypeUnionByNetwork["bch"]> {
 
   public deriveItemFromMnemonic(
     parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["bch"]>,
-  ): DerivedItem<DerivationTypeUnionByNetwork["bch"]> {
+  ) {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
     parameters: GetCredentialFromPKParameters<DerivationTypeUnionByNetwork["bch"]>,
-  ): DerivedCredential<DerivationTypeUnionByNetwork["bch"]> {
+  ) {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 

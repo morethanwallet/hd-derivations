@@ -1,13 +1,14 @@
-import { Bip32PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
+import { Bip32PrivateKey } from "@stricahq/bip32ed25519";
 
-import { convertHexToBytes } from "@/libs/utils/index.js";
+import { convertHexToBytes } from "@/libs/utils/utils.js";
+import type { Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
 
-const EMPTY_PASSWORD = "";
-
-function getRootKey(entropy: string): Bip32PrivateKey {
+async function getRootKey(mnemonic: Mnemonic): Promise<Bip32PrivateKey> {
+  const entropy = mnemonic.getEntropy();
   const entropyBytes = convertHexToBytes(entropy);
+  const rootKey = await Bip32PrivateKey.fromEntropy(Buffer.from(entropyBytes));
 
-  return Bip32PrivateKey.from_bip39_entropy(entropyBytes, convertHexToBytes(EMPTY_PASSWORD));
+  return rootKey;
 }
 
 export { getRootKey };

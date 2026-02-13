@@ -1,4 +1,4 @@
-import { getTrxDerivationHandlers } from "./libs/helpers/index.js";
+import { getTrxDerivationHandlers } from "./libs/helpers/helpers.js";
 
 import { CommonBipKeyDerivation } from "@/libs/modules/key-derivation/networks.js";
 import { trxConfig } from "@/modules/network/libs/modules/config/index.js";

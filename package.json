@@ -60,13 +60,14 @@
   "dependencies": {
     "@aptos-labs/ts-sdk": "6.0.0",
     "@binance-chain/javascript-sdk": "4.2.2",
-    "@emurgo/cardano-serialization-lib-nodejs": "14.1.2",
     "@mysten/sui": "2.1.0",
     "@noble/curves": "2.0.1",
     "@noble/hashes": "2.0.1",
     "@polkadot/util-crypto": "14.0.1",
     "@scure/bip32": "1.6.2",
     "@scure/sr25519": "1.0.0",
+    "@stricahq/bip32ed25519": "1.1.2",
+    "@stricahq/typhonjs": "3.0.1",
     "@ton/core": "0.62.0",
     "@ton/crypto": "3.3.0",
     "@ton/ton": "16.1.0",
@@ -85,7 +86,6 @@
     "xrpl": "4.4.3"
   },
   "devDependencies": {
-    "@emurgo/cardano-serialization-lib-browser": "14.0.0",
     "@types/bchaddrjs": "0.4.3",
     "@typescript-eslint/eslint-plugin": "8.48.1",
     "@typescript-eslint/parser": "8.48.1",

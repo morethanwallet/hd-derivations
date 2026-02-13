@@ -11,7 +11,7 @@ import {
   getKeyPairFromWif,
 } from "@/libs/modules/key-derivation/libs/helpers/index.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
-import { convertHexToBytes } from "@/libs/utils/index.js";
+import { convertHexToBytes } from "@/libs/utils/utils.js";
 
 //  TODO: Rename to Secp256k1Bip32KeyDerivation
 class CommonBipKeyDerivation implements AbstractKeyDerivation<CommonBipDerivationTypeUnion> {

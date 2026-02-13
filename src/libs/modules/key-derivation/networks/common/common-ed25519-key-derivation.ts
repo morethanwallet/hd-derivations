@@ -4,7 +4,7 @@ import type {
   DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
-import { convertBytesToHex } from "@/libs/utils/index.js";
+import { convertBytesToHex } from "@/libs/utils/utils.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
 import { type Ed25519Curve } from "@/libs/modules/curves/curves.js";
 

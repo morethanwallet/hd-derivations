@@ -13,7 +13,7 @@ function getTrxDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["trxBase"]): GetDerivationHandlersReturnType<"trxBase"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: async ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getTrxAddress(keys.publicKey, keysDerivationInstance.prefixConfig.pubKeyHash);
@@ -26,13 +26,13 @@ function getTrxDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({
+    async deriveItemsBatchFromMnemonic({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
     }) {
-      return (deriveItemsBatchFromMnemonic<"trxBase">).call(
+      return await (deriveItemsBatchFromMnemonic<"trxBase">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },

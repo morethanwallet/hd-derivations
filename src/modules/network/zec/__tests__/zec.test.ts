@@ -89,9 +89,9 @@ beforeAll(() => {
 describe("Zec", () => {
   describe("mainnet", () => {
     describe("deriveItemFromMnemonic", () => {
-      it("Derives correct transparent item", () => {
+      it("Derives correct transparent item", async () => {
         const derivedItem =
-          networkDerivationsInstances.mainnet.zecTransparent.deriveItemFromMnemonic({
+          await networkDerivationsInstances.mainnet.zecTransparent.deriveItemFromMnemonic({
             derivationPath: ITEM.mainnet.zecTransparent.derivationPath,
           });
 
@@ -110,9 +110,9 @@ describe("Zec", () => {
     });
 
     describe("deriveItemsBatchFromMnemonic", () => {
-      it("Derives correct transparent items batch", () => {
+      it("Derives correct transparent items batch", async () => {
         const items =
-          networkDerivationsInstances.mainnet.zecTransparent.deriveItemsBatchFromMnemonic({
+          await networkDerivationsInstances.mainnet.zecTransparent.deriveItemsBatchFromMnemonic({
             derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.mainnet,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -125,9 +125,9 @@ describe("Zec", () => {
 
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
-        it("Returns true for transparent private key", () => {
+        it("Returns true for transparent private key", async () => {
           const isNative =
-            networkDerivationsInstances.mainnet.zecTransparent.doesPKBelongToMnemonic({
+            await networkDerivationsInstances.mainnet.zecTransparent.doesPKBelongToMnemonic({
               derivationPathPrefix: zecConfig.mainnet.zecTransparent.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -139,9 +139,9 @@ describe("Zec", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns false for transparent private key", () => {
+        it("Returns false for transparent private key", async () => {
           const isNative =
-            networkDerivationsInstances.mainnet.zecTransparent.doesPKBelongToMnemonic({
+            await networkDerivationsInstances.mainnet.zecTransparent.doesPKBelongToMnemonic({
               derivationPathPrefix: zecConfig.mainnet.zecTransparent.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -156,9 +156,9 @@ describe("Zec", () => {
 
   describe("testnet", () => {
     describe("deriveItemFromMnemonic", () => {
-      it("Derives correct transparent item", () => {
+      it("Derives correct transparent item", async () => {
         const derivedItem =
-          networkDerivationsInstances.testnet.zecTransparent.deriveItemFromMnemonic({
+          await networkDerivationsInstances.testnet.zecTransparent.deriveItemFromMnemonic({
             derivationPath: ITEM.testnet.zecTransparent.derivationPath,
           });
 
@@ -177,9 +177,9 @@ describe("Zec", () => {
     });
 
     describe("deriveItemsBatchFromMnemonic", () => {
-      it("Derives correct transparent items batch", () => {
+      it("Derives correct transparent items batch", async () => {
         const items =
-          networkDerivationsInstances.testnet.zecTransparent.deriveItemsBatchFromMnemonic({
+          await networkDerivationsInstances.testnet.zecTransparent.deriveItemsBatchFromMnemonic({
             derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -192,9 +192,9 @@ describe("Zec", () => {
 
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
-        it("Returns true for transparent private key", () => {
+        it("Returns true for transparent private key", async () => {
           const isNative =
-            networkDerivationsInstances.testnet.zecTransparent.doesPKBelongToMnemonic({
+            await networkDerivationsInstances.testnet.zecTransparent.doesPKBelongToMnemonic({
               derivationPathPrefix: zecConfig.testnet.zecTransparent.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -206,9 +206,9 @@ describe("Zec", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns false for transparent private key", () => {
+        it("Returns false for transparent private key", async () => {
           const isNative =
-            networkDerivationsInstances.testnet.zecTransparent.doesPKBelongToMnemonic({
+            await networkDerivationsInstances.testnet.zecTransparent.doesPKBelongToMnemonic({
               derivationPathPrefix: zecConfig.testnet.zecTransparent.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -223,9 +223,9 @@ describe("Zec", () => {
 
   describe("regtest", () => {
     describe("deriveItemFromMnemonic", () => {
-      it("Derives correct transparent item", () => {
+      it("Derives correct transparent item", async () => {
         const derivedItem =
-          networkDerivationsInstances.regtest.zecTransparent.deriveItemFromMnemonic({
+          await networkDerivationsInstances.regtest.zecTransparent.deriveItemFromMnemonic({
             derivationPath: ITEM.regtest.zecTransparent.derivationPath,
           });
 
@@ -244,9 +244,9 @@ describe("Zec", () => {
     });
 
     describe("deriveItemsBatchFromMnemonic", () => {
-      it("Derives correct transparent items batch", () => {
+      it("Derives correct transparent items batch", async () => {
         const items =
-          networkDerivationsInstances.regtest.zecTransparent.deriveItemsBatchFromMnemonic({
+          await networkDerivationsInstances.regtest.zecTransparent.deriveItemsBatchFromMnemonic({
             derivationPathPrefix: DERIVATION_PATH_BATCH_PREFIX.testnet,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -259,9 +259,9 @@ describe("Zec", () => {
 
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
-        it("Returns true for transparent private key", () => {
+        it("Returns true for transparent private key", async () => {
           const isNative =
-            networkDerivationsInstances.regtest.zecTransparent.doesPKBelongToMnemonic({
+            await networkDerivationsInstances.regtest.zecTransparent.doesPKBelongToMnemonic({
               derivationPathPrefix: zecConfig.regtest.zecTransparent.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,
@@ -273,9 +273,9 @@ describe("Zec", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns false for transparent private key", () => {
+        it("Returns false for transparent private key", async () => {
           const isNative =
-            networkDerivationsInstances.regtest.zecTransparent.doesPKBelongToMnemonic({
+            await networkDerivationsInstances.regtest.zecTransparent.doesPKBelongToMnemonic({
               derivationPathPrefix: zecConfig.regtest.zecTransparent.derivationPathPrefix,
               indexLookupFrom: INDEX_LOOKUP_FROM,
               indexLookupTo: INDEX_LOOKUP_TO,

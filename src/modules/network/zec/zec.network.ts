@@ -1,4 +1,4 @@
-import { getTransparentDerivationHandlers } from "./libs/helpers/index.js";
+import { getTransparentDerivationHandlers } from "./libs/helpers/helpers.js";
 
 import { zecConfig } from "@/modules/network/libs/modules/config/index.js";
 import type {
@@ -8,8 +8,6 @@ import type {
   ConstructorParameters,
   DeriveItemsBatchFromMnemonicParameters,
   DoesPKBelongToMnemonicParameters,
-  DerivedCredential,
-  DerivedItem,
   DerivationsHandlers,
 } from "@/modules/network/libs/types/index.js";
 import { findCustomPrefixConfig } from "@/modules/network/libs/helpers/helpers.js";
@@ -37,15 +35,11 @@ class Zec implements AbstractNetwork<"zecTransparent"> {
     this.derivationHandlers = derivationsHandlers[derivationType];
   }
 
-  public deriveItemFromMnemonic(
-    parameters: DeriveItemFromMnemonicParameters<"zecTransparent">,
-  ): DerivedItem<"zecTransparent"> {
+  public deriveItemFromMnemonic(parameters: DeriveItemFromMnemonicParameters<"zecTransparent">) {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
-  public getCredentialFromPK(
-    parameters: GetCredentialFromPKParameters<"zecTransparent">,
-  ): DerivedCredential<"zecTransparent"> {
+  public getCredentialFromPK(parameters: GetCredentialFromPKParameters<"zecTransparent">) {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 

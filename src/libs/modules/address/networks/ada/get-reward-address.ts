@@ -1,4 +1,4 @@
-import { RewardAddress } from "@emurgo/cardano-serialization-lib-nodejs";
+import { address } from "@stricahq/typhonjs";
 
 import { getCredential } from "./libs/helpers/helpers.js";
 
@@ -10,9 +10,9 @@ function getRewardAddress(
   networkId: number,
 ): Address["address"] {
   const credential = getCredential(publicKey);
-  const address = RewardAddress.new(networkId, credential);
+  const rewardAddress = new address.RewardAddress(networkId, credential);
 
-  return address.to_address().to_bech32();
+  return rewardAddress.getBech32();
 }
 
 export { getRewardAddress };

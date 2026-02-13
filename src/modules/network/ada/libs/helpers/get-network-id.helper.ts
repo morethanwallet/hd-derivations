@@ -1,17 +1,16 @@
-import { NetworkInfo } from "@emurgo/cardano-serialization-lib-nodejs";
+import { NetworkId } from "@stricahq/typhonjs/dist/types.js";
 
 import type { AdaNetworkPurposeUnion } from "@/modules/network/libs/types/index.js";
 
 function getNetworkId(networkPurpose: AdaNetworkPurposeUnion): number {
   switch (networkPurpose) {
     case "mainnet": {
-      return NetworkInfo.mainnet().network_id();
+      return NetworkId.MAINNET;
     }
-    case "testnetPreprod": {
-      return NetworkInfo.testnet_preprod().network_id();
-    }
+
+    case "testnetPreprod":
     case "testnetPreview": {
-      return NetworkInfo.testnet_preview().network_id();
+      return NetworkId.TESTNET;
     }
   }
 }

@@ -6,7 +6,7 @@ import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
 import { type PrefixConfig } from "@/libs/modules/curves/curves.js";
 import type { CommonKeyPair } from "@/libs/types/types.js";
-import { convertHexToBytes } from "@/libs/utils/index.js";
+import { convertHexToBytes } from "@/libs/utils/utils.js";
 
 const REGTEST_PREFIX = "bchreg";
 const HRP_DELIMITER = ":";

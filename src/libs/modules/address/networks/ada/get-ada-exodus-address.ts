@@ -1,12 +1,12 @@
-import { BaseAddress } from "@emurgo/cardano-serialization-lib-nodejs";
+import { address } from "@stricahq/typhonjs";
 
 import { getCredential } from "./libs/helpers/helpers.js";
 
 function getAdaExodusAddress(publicKey: string, networkId: number): string {
   const credential = getCredential(publicKey);
-  const address = BaseAddress.new(networkId, credential, credential);
+  const baseAddress = new address.BaseAddress(networkId, credential, credential);
 
-  return address.to_address().to_bech32();
+  return baseAddress.getBech32();
 }
 
 export { getAdaExodusAddress };

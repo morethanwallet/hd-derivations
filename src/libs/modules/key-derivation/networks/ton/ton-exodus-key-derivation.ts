@@ -7,7 +7,7 @@ import {
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/index.js";
 import { type Secp256k1Curve, type Ed25519Curve } from "@/libs/modules/curves/curves.js";
-import { convertBytesToHex } from "@/libs/utils/index.js";
+import { convertBytesToHex } from "@/libs/utils/utils.js";
 
 class TonExodusKeyDerivation implements AbstractKeyDerivation<"tonExodus"> {
   private mnemonic: Mnemonic;

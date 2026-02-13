@@ -3,7 +3,7 @@ import { toChecksumAddress } from "ethereumjs-util";
 import { type Address } from "@/libs/modules/address/libs/types/index.js";
 import { type CommonKeyPair } from "@/libs/types/types.js";
 import { getEvmAddressBuffer } from "@/libs/modules/address/libs/helpers/index.js";
-import { addHexPrefix } from "@/libs/utils/index.js";
+import { addHexPrefix } from "@/libs/utils/utils.js";
 
 function getEvmAddress(publicKey: CommonKeyPair["publicKey"]): Address["address"] {
   const addressBuffer = getEvmAddressBuffer(publicKey);

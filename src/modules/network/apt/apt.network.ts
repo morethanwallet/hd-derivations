@@ -31,9 +31,9 @@ class Apt implements AbstractNetwork<DerivationTypeUnionByNetwork["apt"]> {
     });
   }
 
-  public deriveItemFromMnemonic(
+  public async deriveItemFromMnemonic(
     parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["apt"]>,
-  ): DerivedItem<DerivationTypeUnionByNetwork["apt"]> {
+  ): Promise<DerivedItem<DerivationTypeUnionByNetwork["apt"]>> {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 

@@ -17,7 +17,7 @@ function getXrpDerivationHandlers({
   DerivationTypeUnionByNetwork["xrp"]
 > {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: async ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getXrpAddress({ ...keys, ...parameters });
@@ -30,13 +30,13 @@ function getXrpDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({
+    async deriveItemsBatchFromMnemonic({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
     }) {
-      return (deriveItemsBatchFromMnemonic<DerivationTypeUnionByNetwork["xrp"]>).call(
+      return await (deriveItemsBatchFromMnemonic<DerivationTypeUnionByNetwork["xrp"]>).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },

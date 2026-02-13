@@ -24,7 +24,7 @@ type DeriveFromMnemonicParameters<T extends DerivationTypeUnion> = DerivationPat
 
 type DeriveFromMnemonic<T extends DerivationTypeUnion> = (
   parameters: DeriveFromMnemonicParameters<T>,
-) => KeyPair<T>;
+) => KeyPair<T> | Promise<KeyPair<T>>;
 
 export {
   type DeriveFromMnemonic,

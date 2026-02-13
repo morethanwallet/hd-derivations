@@ -18,7 +18,7 @@ function getAptDerivationHandlers({
   DerivationTypeUnionByNetwork["apt"]
 > {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: async ({ derivationPath }) => {
       const keys = keysDerivationInstance.deriveFromMnemonic({
         derivationPath,
         scheme,
@@ -36,7 +36,7 @@ function getAptDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
+    async deriveItemsBatchFromMnemonic({ derivationPathPrefix, indexLookupFrom, indexLookupTo }) {
       return (deriveItemsBatchFromMnemonic<DerivationTypeUnionByNetwork["apt"]>).call(
         this,
         { indexLookupFrom, indexLookupTo },

@@ -1,10 +1,10 @@
-import { PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
 import { concatBytes, utf8ToBytes } from "@noble/hashes/utils.js";
 
 import {
   encodeEd25519PointToBytes,
   getAdaLedgerExtendedPrivateKeyFromNode,
   getDerivationPathNumericValues,
+  importAdaBaseKeyPairByPrivateKey,
   multiplyEd25519BasePointByScalar,
 } from "./libs/helpers/helpers.js";
 import {
@@ -47,6 +47,7 @@ import type {
 import type { KeyPair } from "@/libs/types/types.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
 import { HARDENED_RANGE_OFFSET } from "@/libs/constants/index.js";
+import { convertBytesToHex } from "@/libs/utils/utils.js";
 
 class AdaLedgerKeyDerivation implements AbstractKeyDerivation<"adaLedger"> {
   private readonly mnemonic: Mnemonic;
@@ -55,62 +56,64 @@ class AdaLedgerKeyDerivation implements AbstractKeyDerivation<"adaLedger"> {
     this.mnemonic = mnemonic;
   }
 
-  public deriveFromMnemonic(
+  public async deriveFromMnemonic(
     parameters: DeriveFromMnemonicParameters<"adaLedger">,
-  ): KeyPair<"adaLedger"> {
+  ): Promise<KeyPair<"adaLedger">> {
     const seed = this.mnemonic.getSeed();
 
     const enterpriseNode = this.deriveNodeFromSeed(parameters.enterpriseDerivationPath, seed);
     const rewardNode = this.deriveNodeFromSeed(parameters.rewardDerivationPath, seed);
 
-    const enterprisePrivateKey = getAdaLedgerExtendedPrivateKeyFromNode(enterpriseNode);
-    const rewardPrivateKey = getAdaLedgerExtendedPrivateKeyFromNode(rewardNode);
+    const enterpriseExtendedPrivateKeyInstance =
+      getAdaLedgerExtendedPrivateKeyFromNode(enterpriseNode);
+    const rewardExtendedPrivateKeyInstance = getAdaLedgerExtendedPrivateKeyFromNode(rewardNode);
 
-    const enterprisePublicKey = enterprisePrivateKey.to_public();
-    const rewardPublicKey = rewardPrivateKey.to_public();
+    const enterprisePrivateKeyInstance = enterpriseExtendedPrivateKeyInstance.toPrivateKey();
+    const rewardPrivateKeyInstance = rewardExtendedPrivateKeyInstance.toPrivateKey();
 
-    const derivedEnterprisePubBytes = enterprisePublicKey.as_bytes();
-    const derivedRewardPubBytes = rewardPublicKey.as_bytes();
+    const enterprisePublicKeyInstance = enterprisePrivateKeyInstance.toPublicKey();
+    const rewardPublicKeyInstance = rewardPrivateKeyInstance.toPublicKey();
 
-    if (derivedEnterprisePubBytes.length !== ED25519_PUBLIC_KEY_LENGTH_BYTES) {
+    const enterprisePublicKeyBytes = enterprisePublicKeyInstance.toBytes();
+    const rewardPublicKeyBytes = rewardPublicKeyInstance.toBytes();
+
+    const enterprisePrivateKey = convertBytesToHex(enterprisePrivateKeyInstance.toBytes());
+    const rewardPrivateKey = convertBytesToHex(rewardPrivateKeyInstance.toBytes());
+
+    const enterprisePublicKey = convertBytesToHex(enterprisePublicKeyBytes);
+    const rewardPublicKey = convertBytesToHex(rewardPublicKeyBytes);
+
+    if (enterprisePublicKeyBytes.length !== ED25519_PUBLIC_KEY_LENGTH_BYTES) {
       throw new KeyDerivationError(ExceptionMessage.FAILED_TO_FORMAT_BYTES);
     }
 
-    if (derivedRewardPubBytes.length !== ED25519_PUBLIC_KEY_LENGTH_BYTES) {
+    if (rewardPublicKeyBytes.length !== ED25519_PUBLIC_KEY_LENGTH_BYTES) {
       throw new KeyDerivationError(ExceptionMessage.FAILED_TO_FORMAT_BYTES);
     }
 
-    if (!areUint8ArraysEqual(derivedEnterprisePubBytes, enterpriseNode.publicKeyBytes)) {
+    if (!areUint8ArraysEqual(enterprisePublicKeyBytes, enterpriseNode.publicKeyBytes)) {
       throw new KeyDerivationError(ExceptionMessage.FAILED_TO_FORMAT_BYTES);
     }
 
-    if (!areUint8ArraysEqual(derivedRewardPubBytes, rewardNode.publicKeyBytes)) {
+    if (!areUint8ArraysEqual(rewardPublicKeyBytes, rewardNode.publicKeyBytes)) {
       throw new KeyDerivationError(ExceptionMessage.FAILED_TO_FORMAT_BYTES);
     }
 
     return {
-      enterprisePrivateKey: enterprisePrivateKey.to_hex(),
-      enterprisePublicKey: enterprisePublicKey.to_hex(),
-      rewardPrivateKey: rewardPrivateKey.to_hex(),
-      rewardPublicKey: rewardPublicKey.to_hex(),
+      enterprisePrivateKey,
+      enterprisePublicKey,
+      rewardPrivateKey,
+      rewardPublicKey,
     };
   }
 
   public importByPrivateKey(
     parameters: ImportByPrivateKeyParameters<"adaLedger">,
   ): KeyPair<"adaLedger"> {
-    const enterprisePrivateKey = PrivateKey.from_hex(parameters.enterprisePrivateKey);
-    const rewardPrivateKey = PrivateKey.from_hex(parameters.rewardPrivateKey);
-
-    const enterprisePublicKey = enterprisePrivateKey.to_public();
-    const rewardPublicKey = rewardPrivateKey.to_public();
-
-    return {
-      enterprisePrivateKey: enterprisePrivateKey.to_hex(),
-      enterprisePublicKey: enterprisePublicKey.to_hex(),
-      rewardPrivateKey: rewardPrivateKey.to_hex(),
-      rewardPublicKey: rewardPublicKey.to_hex(),
-    };
+    return importAdaBaseKeyPairByPrivateKey(
+      parameters.enterprisePrivateKey,
+      parameters.rewardPrivateKey,
+    );
   }
 
   private deriveRootNodeFromSeed(seedBytes: Uint8Array): LedgerEd25519PrivateNode {

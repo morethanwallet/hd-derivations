@@ -10,6 +10,6 @@ type DoesPKBelongToMnemonicParameters<T extends DerivationTypeUnion> = {
 
 type DoesPKBelongToMnemonic<T extends DerivationTypeUnion> = (
   parameters: DoesPKBelongToMnemonicParameters<T>,
-) => boolean;
+) => Promise<boolean>;
 
 export { type DoesPKBelongToMnemonic, type DoesPKBelongToMnemonicParameters };

@@ -10,7 +10,7 @@ import { MINIMUM_MULTISIG_ADDRESS_SIGNATURES_AMOUNT } from "@/libs/constants/ind
 import { type Curve, ExceptionMessage } from "@/libs/enums/enums.js";
 import { AddressError } from "@/libs/modules/address/libs/exceptions/index.js";
 import type { CommonKeyPair } from "@/libs/types/types.js";
-import { convertHexToBytes, removeHexPrefix } from "@/libs/utils/index.js";
+import { convertHexToBytes, removeHexPrefix } from "@/libs/utils/utils.js";
 
 const ED25519_LEGACY_PUBLIC_KEY_START_INDEX = 2;
 const SECP256K1_BYTES_PUBLIC_KEY_START_INDEX = 2;

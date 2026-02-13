@@ -13,7 +13,7 @@ function getLegacyDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["bchLegacy"]): GetDerivationHandlersReturnType<"bchLegacy"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: async ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getBtcLegacyAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
@@ -26,13 +26,13 @@ function getLegacyDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({
+    async deriveItemsBatchFromMnemonic({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
     }) {
-      return (deriveItemsBatchFromMnemonic<"bchLegacy">).call(
+      return await (deriveItemsBatchFromMnemonic<"bchLegacy">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
@@ -48,7 +48,7 @@ function getCashAddrDerivationHandlers({
   isRegtest,
 }: GetDerivationHandlersParameters["bchCashAddr"]): GetDerivationHandlersReturnType<"bchCashAddr"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: async ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getCashAddrAddress({
@@ -69,13 +69,13 @@ function getCashAddrDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({
+    async deriveItemsBatchFromMnemonic({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
     }) {
-      return (deriveItemsBatchFromMnemonic<"bchCashAddr">).call(
+      return await (deriveItemsBatchFromMnemonic<"bchCashAddr">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },
