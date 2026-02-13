@@ -2,14 +2,12 @@ import type {
   AbstractNetwork,
   DerivationsHandlers,
   ConstructorParameters,
-  DerivedCredential,
-  DerivedItem,
   DeriveItemFromMnemonicParameters,
   DeriveItemsBatchFromMnemonicParameters,
   DoesPKBelongToMnemonicParameters,
   GetCredentialFromPKParameters,
 } from "../libs/types/index.js";
-import { getXrpDerivationHandlers } from "./libs/helpers/index.js";
+import { getXrpDerivationHandlers } from "./libs/helpers/helpers.js";
 import { findCustomPrefixConfig } from "../libs/helpers/helpers.js";
 import { xrpConfig } from "../libs/modules/config/index.js";
 
@@ -60,13 +58,13 @@ class Xrp implements AbstractNetwork<DerivationTypeUnionByNetwork["xrp"]> {
 
   public deriveItemFromMnemonic(
     parameters: DeriveItemFromMnemonicParameters<DerivationTypeUnionByNetwork["xrp"]>,
-  ): DerivedItem<DerivationTypeUnionByNetwork["xrp"]> {
+  ) {
     return this.derivationHandlers.deriveItemFromMnemonic(parameters);
   }
 
   public getCredentialFromPK(
     parameters: GetCredentialFromPKParameters<DerivationTypeUnionByNetwork["xrp"]>,
-  ): DerivedCredential<DerivationTypeUnionByNetwork["xrp"]> {
+  ) {
     return this.derivationHandlers.getCredentialFromPK(parameters);
   }
 

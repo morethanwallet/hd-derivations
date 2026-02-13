@@ -1,4 +1,4 @@
-import { EnterpriseAddress } from "@emurgo/cardano-serialization-lib-nodejs";
+import { address } from "@stricahq/typhonjs";
 
 import { getCredential } from "./libs/helpers/helpers.js";
 
@@ -10,9 +10,9 @@ function getEnterpriseAddress(
   networkId: number,
 ): Address["address"] {
   const credential = getCredential(publicKey);
-  const address = EnterpriseAddress.new(networkId, credential);
+  const enterpriseAddress = new address.EnterpriseAddress(networkId, credential);
 
-  return address.to_address().to_bech32();
+  return enterpriseAddress.getBech32();
 }
 
 export { getEnterpriseAddress };

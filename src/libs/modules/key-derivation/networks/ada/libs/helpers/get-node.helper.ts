@@ -1,4 +1,4 @@
-import { type Bip32PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
+import type { Bip32PrivateKey } from "@stricahq/bip32ed25519";
 
 import { getDerivationPathNumericValues } from "./get-derivation-path-numeric-values.helper.js";
 

@@ -1,7 +1,7 @@
 import { KeyDerivationError } from "../exceptions/exceptions.js";
 
 import { type CommonKeyPair } from "@/libs/types/types.js";
-import { convertBytesToHex } from "@/libs/utils/index.js";
+import { convertBytesToHex } from "@/libs/utils/utils.js";
 import { ExceptionMessage } from "@/libs/enums/enums.js";
 import type { BIP32Interface } from "@/libs/modules/curves/curves.js";
 

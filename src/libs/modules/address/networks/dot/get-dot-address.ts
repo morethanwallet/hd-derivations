@@ -7,7 +7,7 @@ import {
   SECP256K1_UNCOMPRESSED_PUBLIC_KEY_LENGTH,
 } from "./libs/constants/index.js";
 
-import { convertHexToBytes } from "@/libs/utils/index.js";
+import { convertHexToBytes } from "@/libs/utils/utils.js";
 import { SECP256K1_COMPRESSED_PUBLIC_KEY_LENGTH } from "@/libs/constants/index.js";
 
 function getDotAddress(publicKey: string, ss58Format: Ss58Format["ss58Format"]) {

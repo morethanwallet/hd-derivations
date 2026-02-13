@@ -1,4 +1,4 @@
-import { BaseAddress } from "@emurgo/cardano-serialization-lib-nodejs";
+import { address } from "@stricahq/typhonjs";
 
 import { getCredential } from "./libs/helpers/helpers.js";
 
@@ -12,9 +12,10 @@ function getBaseAddress(
 ): Address["address"] {
   const enterpriseCredential = getCredential(enterprisePublicKey);
   const rewardCredential = getCredential(rewardPublicKey);
-  const address = BaseAddress.new(networkId, enterpriseCredential, rewardCredential);
 
-  return address.to_address().to_bech32();
+  const baseAddress = new address.BaseAddress(networkId, enterpriseCredential, rewardCredential);
+
+  return baseAddress.getBech32();
 }
 
 export { getBaseAddress };

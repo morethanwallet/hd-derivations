@@ -1,6 +1,9 @@
-import { PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
-
-import { getNode, getNodeRawKeys, getRootKey } from "./libs/helpers/helpers.js";
+import {
+  getNode,
+  getKeyPairFromNode,
+  getRootKey,
+  importAdaBaseKeyPairByPrivateKey,
+} from "./libs/helpers/helpers.js";
 
 import type {
   ImportByPrivateKeyParameters,
@@ -17,41 +20,30 @@ class AdaBaseKeyDerivation implements AbstractKeyDerivation<"adaBase"> {
     this.mnemonic = mnemonic;
   }
 
-  public deriveFromMnemonic(
+  public async deriveFromMnemonic(
     parameters: DeriveFromMnemonicParameters<"adaBase">,
-  ): KeyPair<"adaBase"> {
-    const entropy = this.mnemonic.getEntropy();
-    const rootKey = getRootKey(entropy);
+  ): Promise<KeyPair<"adaBase">> {
+    const rootKey = await getRootKey(this.mnemonic);
 
     const enterpriseNode = getNode(rootKey, parameters.enterpriseDerivationPath);
     const rewardNode = getNode(rootKey, parameters.rewardDerivationPath);
 
     const { privateKey: enterprisePrivateKey, publicKey: enterprisePublicKey } =
-      getNodeRawKeys(enterpriseNode);
+      getKeyPairFromNode(enterpriseNode);
 
-    const { privateKey: rewardPrivateKey, publicKey: rewardPublicKey } = getNodeRawKeys(rewardNode);
+    const { privateKey: rewardPrivateKey, publicKey: rewardPublicKey } =
+      getKeyPairFromNode(rewardNode);
 
-    return {
-      enterprisePrivateKey: enterprisePrivateKey.to_hex(),
-      enterprisePublicKey: enterprisePublicKey.to_hex(),
-      rewardPrivateKey: rewardPrivateKey.to_hex(),
-      rewardPublicKey: rewardPublicKey.to_hex(),
-    };
+    return { enterprisePrivateKey, enterprisePublicKey, rewardPrivateKey, rewardPublicKey };
   }
 
   public importByPrivateKey(
     parameters: ImportByPrivateKeyParameters<"adaBase">,
   ): KeyPair<"adaBase"> {
-    const rawEnterprisePublicKey = PrivateKey.from_hex(parameters.enterprisePrivateKey).to_public();
-
-    const rawRewardPublicKey = PrivateKey.from_hex(parameters.rewardPrivateKey).to_public();
-
-    return {
-      enterprisePrivateKey: parameters.enterprisePrivateKey,
-      enterprisePublicKey: rawEnterprisePublicKey.to_hex(),
-      rewardPrivateKey: parameters.rewardPrivateKey,
-      rewardPublicKey: rawRewardPublicKey.to_hex(),
-    };
+    return importAdaBaseKeyPairByPrivateKey(
+      parameters.enterprisePrivateKey,
+      parameters.rewardPrivateKey,
+    );
   }
 }
 

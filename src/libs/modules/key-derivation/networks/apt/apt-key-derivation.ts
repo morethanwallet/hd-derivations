@@ -46,7 +46,7 @@ import {
   convertBytesToHex,
   convertHexToBytes,
   removeHexPrefix,
-} from "@/libs/utils/index.js";
+} from "@/libs/utils/utils.js";
 import { type Mnemonic } from "@/libs/modules/mnemonic/mnemonic.js";
 
 class AptKeyDerivation implements AbstractKeyDerivation<DerivationTypeUnionByNetwork["apt"]> {

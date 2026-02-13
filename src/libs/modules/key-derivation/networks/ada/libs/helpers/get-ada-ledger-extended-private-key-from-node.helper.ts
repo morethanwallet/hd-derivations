@@ -1,10 +1,5 @@
 import { concatBytes } from "@noble/hashes/utils.js";
-import { PrivateKey } from "@emurgo/cardano-serialization-lib-nodejs";
-
-import { ED25519_EXTENDED_PRIVATE_KEY_LENGTH_BYTES } from "../constants/constants.js";
-import { ExceptionMessage } from "../enums/enums.js";
-
-import { KeyDerivationError } from "@/libs/modules/key-derivation/libs/exceptions/exceptions.js";
+import { Bip32PrivateKey } from "@stricahq/bip32ed25519";
 
 type AdaLedgerNode = {
   chainCodeBytes: Uint8Array; // 32
@@ -13,14 +8,26 @@ type AdaLedgerNode = {
   publicKeyBytes: Uint8Array; // 32 (A)
 };
 
-function getAdaLedgerExtendedPrivateKeyFromNode(node: AdaLedgerNode): PrivateKey {
-  const extendedPrivateKeyBytes = concatBytes(node.leftPrivateKeyBytes, node.rightPrivateKeyBytes);
+const LEDGER_CHAIN_CODE_LENGTH_BYTES = 32;
+const ED25519_KEY_PART_LENGTH_BYTES = 32;
 
-  if (extendedPrivateKeyBytes.length !== ED25519_EXTENDED_PRIVATE_KEY_LENGTH_BYTES) {
-    throw new KeyDerivationError(ExceptionMessage.FAILED_TO_FORMAT_BYTES);
+const BIP32_XPRV_LENGTH_BYTES =
+  ED25519_KEY_PART_LENGTH_BYTES + ED25519_KEY_PART_LENGTH_BYTES + LEDGER_CHAIN_CODE_LENGTH_BYTES;
+
+function getAdaLedgerExtendedPrivateKeyFromNode(node: AdaLedgerNode): Bip32PrivateKey {
+  const xprvBytes = concatBytes(
+    node.leftPrivateKeyBytes,
+    node.rightPrivateKeyBytes,
+    node.chainCodeBytes,
+  );
+
+  if (xprvBytes.length !== BIP32_XPRV_LENGTH_BYTES) {
+    throw new Error("Failed to format xprv bytes.");
   }
 
-  return PrivateKey.from_extended_bytes(extendedPrivateKeyBytes);
+  const bip32PrivateKey = new Bip32PrivateKey(Buffer.from(xprvBytes));
+
+  return bip32PrivateKey;
 }
 
 export { getAdaLedgerExtendedPrivateKeyFromNode };

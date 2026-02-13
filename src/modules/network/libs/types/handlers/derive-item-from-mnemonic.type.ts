@@ -8,6 +8,6 @@ type DeriveItemFromMnemonicParameters<T extends DerivationTypeUnion> = Derivatio
 
 type DeriveItemFromMnemonic<T extends DerivationTypeUnion> = (
   parameters: DeriveItemFromMnemonicParameters<T>,
-) => DerivedItem<T>;
+) => Promise<DerivedItem<T>>;
 
 export { type DeriveItemFromMnemonic, type DeriveItemFromMnemonicParameters };

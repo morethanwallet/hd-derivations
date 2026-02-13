@@ -1,6 +1,6 @@
 import { derivePath, getPublicKey } from "ed25519-hd-key";
 
-import { Ed25519SecretKeyBytePosition } from "./libs/enums/enums.js";
+import { Ed25519PrivateKeyBytePosition } from "./libs/enums/enums.js";
 
 type Keys = {
   chainCode: Buffer;
@@ -10,8 +10,8 @@ type Keys = {
 class Ed25519Curve {
   public getPublicKeyBuffer(privateKeyBuffer: Buffer, hasZeroByte: boolean): Buffer {
     const secretKeyBuffer = privateKeyBuffer.subarray(
-      Ed25519SecretKeyBytePosition.START,
-      Ed25519SecretKeyBytePosition.END,
+      Ed25519PrivateKeyBytePosition.START,
+      Ed25519PrivateKeyBytePosition.END,
     );
 
     return getPublicKey(secretKeyBuffer, hasZeroByte);

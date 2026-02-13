@@ -37,8 +37,8 @@ const networkDerivationsInstances = {
 
 describe("Trx", () => {
   describe("deriveItemFromMnemonic", () => {
-    it("Derives correct trx base item", () => {
-      const derivedItem = networkDerivationsInstances.trxBase.deriveItemFromMnemonic({
+    it("Derives correct trx base item", async () => {
+      const derivedItem = await networkDerivationsInstances.trxBase.deriveItemFromMnemonic({
         derivationPath: MOCK_ITEM.derivationPath,
       });
 
@@ -57,8 +57,8 @@ describe("Trx", () => {
   });
 
   describe("deriveItemsBatchFromMnemonic", () => {
-    it("Derives correct trx base items batch", () => {
-      const items = networkDerivationsInstances.trxBase.deriveItemsBatchFromMnemonic({
+    it("Derives correct trx base items batch", async () => {
+      const items = await networkDerivationsInstances.trxBase.deriveItemsBatchFromMnemonic({
         derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
         indexLookupFrom: INDEX_LOOKUP_FROM,
         indexLookupTo: INDEX_LOOKUP_TO,
@@ -71,8 +71,8 @@ describe("Trx", () => {
 
   describe("doesPKBelongToMnemonic", () => {
     describe("Validates native private key correctly", () => {
-      it("Returns true for trx base private key", () => {
-        const isNative = networkDerivationsInstances.trxBase.doesPKBelongToMnemonic({
+      it("Returns true for trx base private key", async () => {
+        const isNative = await networkDerivationsInstances.trxBase.doesPKBelongToMnemonic({
           derivationPathPrefix: trxConfig.trxBase.derivationPathPrefix,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -84,8 +84,8 @@ describe("Trx", () => {
     });
 
     describe("Validates extrinsic private key correctly", () => {
-      it("Returns false for trx base private key", () => {
-        const isNative = networkDerivationsInstances.trxBase.doesPKBelongToMnemonic({
+      it("Returns false for trx base private key", async () => {
+        const isNative = await networkDerivationsInstances.trxBase.doesPKBelongToMnemonic({
           derivationPathPrefix: trxConfig.trxBase.derivationPathPrefix,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,

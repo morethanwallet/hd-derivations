@@ -13,7 +13,7 @@ function getTransparentDerivationHandlers({
   keysDerivationInstance,
 }: GetDerivationHandlersParameters["zecTransparent"]): GetDerivationHandlersReturnType<"zecTransparent"> {
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: async ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({ derivationPath });
       const address = getTransparentAddress(keys.publicKey, keysDerivationInstance.prefixConfig);
@@ -26,13 +26,13 @@ function getTransparentDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({
+    async deriveItemsBatchFromMnemonic({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,
       shouldUseHardenedAddress,
     }) {
-      return (deriveItemsBatchFromMnemonic<"zecTransparent">).call(
+      return await (deriveItemsBatchFromMnemonic<"zecTransparent">).call(
         this,
         { indexLookupFrom, indexLookupTo },
         { derivationPath: derivationPathPrefix },

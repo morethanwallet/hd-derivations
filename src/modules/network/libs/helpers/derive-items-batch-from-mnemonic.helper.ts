@@ -19,13 +19,13 @@ type DeriveItemsBatchFromMnemonicParameters<T extends SupportedDerivationTypes> 
   keyof DeriveItemFromMnemonicParameters<SupportedDerivationTypes> | "derivationPathPrefix"
 >;
 
-function deriveItemsBatchFromMnemonic<T extends SupportedDerivationTypes>(
+async function deriveItemsBatchFromMnemonic<T extends SupportedDerivationTypes>(
   this: { deriveItemFromMnemonic: DeriveItemFromMnemonic<T> },
   parameters: DeriveItemsBatchFromMnemonicParameters<T>,
   deriveItemFromMnemonicParameters: DeriveItemFromMnemonicParameters<T>,
   isStrictHardened?: boolean,
   addressPosition?: number,
-) {
+): Promise<DerivedItem<T>[]> {
   const { derivationPath } = deriveItemFromMnemonicParameters;
   const { indexLookupFrom, indexLookupTo } = parameters;
   validateDerivationPath(derivationPath, isStrictHardened);
@@ -39,12 +39,12 @@ function deriveItemsBatchFromMnemonic<T extends SupportedDerivationTypes>(
       addressPosition,
     });
 
-    batch.push(
-      this.deriveItemFromMnemonic({
-        ...deriveItemFromMnemonicParameters,
-        derivationPath: derivationPathWithAddressIndex,
-      }),
-    );
+    const derivedItem = await this.deriveItemFromMnemonic({
+      ...deriveItemFromMnemonicParameters,
+      derivationPath: derivationPathWithAddressIndex,
+    });
+
+    batch.push(derivedItem);
   }
 
   return batch;

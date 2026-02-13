@@ -5,7 +5,7 @@ import { sha512 } from "@noble/hashes/sha2.js";
 
 import { Mnemonic } from "./mnemonic.js";
 
-import { convertBytesToHex } from "@/libs/utils/index.js";
+import { convertBytesToHex } from "@/libs/utils/utils.js";
 import { ThirtyTwoBytePrivateKeyIndex } from "@/libs/enums/enums.js";
 
 class DotMnemonic extends Mnemonic {

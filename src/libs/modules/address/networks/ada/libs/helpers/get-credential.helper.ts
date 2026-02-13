@@ -1,9 +1,14 @@
-import { PublicKey, Credential } from "@emurgo/cardano-serialization-lib-nodejs";
+import { PublicKey } from "@stricahq/bip32ed25519";
+import type { types } from "@stricahq/typhonjs";
+import { HashType } from "@stricahq/typhonjs/dist/types.js";
 
-function getCredential(publicKey: string): Credential {
-  const rawPublicKey = PublicKey.from_hex(publicKey);
+import { convertHexToBytes } from "@/libs/utils/utils.js";
 
-  return Credential.from_keyhash(rawPublicKey.hash());
+function getCredential(publicKey: string): types.Credential {
+  const publicKeyInstance = new PublicKey(Buffer.from(convertHexToBytes(publicKey)));
+  const keyHash = publicKeyInstance.hash();
+
+  return { hash: keyHash, type: HashType.ADDRESS };
 }
 
 export { getCredential };

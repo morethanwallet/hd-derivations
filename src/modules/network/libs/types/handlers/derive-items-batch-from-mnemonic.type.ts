@@ -13,6 +13,6 @@ type DeriveItemsBatchFromMnemonicParameters<T extends DerivationTypeUnion> =
 
 type DeriveItemsBatchFromMnemonic<T extends DerivationTypeUnion> = (
   parameters: DeriveItemsBatchFromMnemonicParameters<T>,
-) => DerivedItem<T>[];
+) => Promise<DerivedItem<T>[]>;
 
 export { type DeriveItemsBatchFromMnemonic, type DeriveItemsBatchFromMnemonicParameters };

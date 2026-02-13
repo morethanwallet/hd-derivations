@@ -19,7 +19,7 @@ function getAvaxDerivationHandlers({
   const bech32Prefix = keysDerivationInstance.prefixConfig.bech32;
 
   return {
-    deriveItemFromMnemonic: ({ derivationPath }) => {
+    deriveItemFromMnemonic: async ({ derivationPath }) => {
       validateDerivationPath(derivationPath);
       const keys = keysDerivationInstance.deriveFromMnemonic({
         derivationPath,
@@ -38,7 +38,7 @@ function getAvaxDerivationHandlers({
 
       return { ...keys, address };
     },
-    deriveItemsBatchFromMnemonic({
+    async deriveItemsBatchFromMnemonic({
       derivationPathPrefix,
       indexLookupFrom,
       indexLookupTo,

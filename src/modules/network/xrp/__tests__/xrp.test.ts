@@ -102,16 +102,17 @@ beforeAll(() => {
 describe("Xrp", () => {
   describe("mainnet", () => {
     describe("deriveItemFromMnemonic", () => {
-      it("Derives correct base item", () => {
-        const derivedItem = networkDerivationsInstances.mainnet.xrpBase.deriveItemFromMnemonic({
-          derivationPath: MOCK_MAINNET_ITEM.xrpBase.derivationPath,
-        });
+      it("Derives correct base item", async () => {
+        const derivedItem =
+          await networkDerivationsInstances.mainnet.xrpBase.deriveItemFromMnemonic({
+            derivationPath: MOCK_MAINNET_ITEM.xrpBase.derivationPath,
+          });
 
         expect(MOCK_MAINNET_ITEM.xrpBase).toEqual(derivedItem);
       });
 
-      it("Derives correct x item", () => {
-        const derivedItem = networkDerivationsInstances.mainnet.xrpX.deriveItemFromMnemonic({
+      it("Derives correct x item", async () => {
+        const derivedItem = await networkDerivationsInstances.mainnet.xrpX.deriveItemFromMnemonic({
           derivationPath: MOCK_MAINNET_ITEM.xrpX.derivationPath,
         });
 
@@ -138,19 +139,20 @@ describe("Xrp", () => {
     });
 
     describe("deriveItemsBatchFromMnemonic", () => {
-      it("Derives correct base items batch", () => {
-        const items = networkDerivationsInstances.mainnet.xrpBase.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+      it("Derives correct base items batch", async () => {
+        const items =
+          await networkDerivationsInstances.mainnet.xrpBase.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_MAINNET_ITEM.xrpBase);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
-      it("Derives correct x items batch", () => {
-        const items = networkDerivationsInstances.mainnet.xrpX.deriveItemsBatchFromMnemonic({
+      it("Derives correct x items batch", async () => {
+        const items = await networkDerivationsInstances.mainnet.xrpX.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -163,19 +165,21 @@ describe("Xrp", () => {
 
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
-        it("Returns true for base private key", () => {
-          const isNative = networkDerivationsInstances.mainnet.xrpBase.doesPKBelongToMnemonic({
-            derivationPathPrefix: xrpConfig.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_MAINNET_CREDENTIAL.xrpBase.privateKey,
-          });
+        it("Returns true for base private key", async () => {
+          const isNative = await networkDerivationsInstances.mainnet.xrpBase.doesPKBelongToMnemonic(
+            {
+              derivationPathPrefix: xrpConfig.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_MAINNET_CREDENTIAL.xrpBase.privateKey,
+            },
+          );
 
           expect(isNative).toBe(true);
         });
 
-        it("Returns true for x private key", () => {
-          const isNative = networkDerivationsInstances.mainnet.xrpX.doesPKBelongToMnemonic({
+        it("Returns true for x private key", async () => {
+          const isNative = await networkDerivationsInstances.mainnet.xrpX.doesPKBelongToMnemonic({
             derivationPathPrefix: xrpConfig.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -187,19 +191,21 @@ describe("Xrp", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns false for base private key", () => {
-          const isNative = networkDerivationsInstances.mainnet.xrpBase.doesPKBelongToMnemonic({
-            derivationPathPrefix: xrpConfig.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_EXTRINSIC_PRIVATE_KEY,
-          });
+        it("Returns false for base private key", async () => {
+          const isNative = await networkDerivationsInstances.mainnet.xrpBase.doesPKBelongToMnemonic(
+            {
+              derivationPathPrefix: xrpConfig.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_EXTRINSIC_PRIVATE_KEY,
+            },
+          );
 
           expect(isNative).toBe(false);
         });
 
-        it("Returns false for x private key", () => {
-          const isNative = networkDerivationsInstances.mainnet.xrpX.doesPKBelongToMnemonic({
+        it("Returns false for x private key", async () => {
+          const isNative = await networkDerivationsInstances.mainnet.xrpX.doesPKBelongToMnemonic({
             derivationPathPrefix: xrpConfig.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -214,16 +220,17 @@ describe("Xrp", () => {
 
   describe("testnet", () => {
     describe("deriveItemFromMnemonic", () => {
-      it("Derives correct base item", () => {
-        const derivedItem = networkDerivationsInstances.testnet.xrpBase.deriveItemFromMnemonic({
-          derivationPath: MOCK_TESTNET_ITEM.xrpBase.derivationPath,
-        });
+      it("Derives correct base item", async () => {
+        const derivedItem =
+          await networkDerivationsInstances.testnet.xrpBase.deriveItemFromMnemonic({
+            derivationPath: MOCK_TESTNET_ITEM.xrpBase.derivationPath,
+          });
 
         expect(MOCK_TESTNET_ITEM.xrpBase).toEqual(derivedItem);
       });
 
-      it("Derives correct x item", () => {
-        const derivedItem = networkDerivationsInstances.testnet.xrpX.deriveItemFromMnemonic({
+      it("Derives correct x item", async () => {
+        const derivedItem = await networkDerivationsInstances.testnet.xrpX.deriveItemFromMnemonic({
           derivationPath: MOCK_TESTNET_ITEM.xrpX.derivationPath,
         });
 
@@ -250,19 +257,20 @@ describe("Xrp", () => {
     });
 
     describe("deriveItemsBatchFromMnemonic", () => {
-      it("Derives correct base items batch", () => {
-        const items = networkDerivationsInstances.testnet.xrpBase.deriveItemsBatchFromMnemonic({
-          derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
-          indexLookupFrom: INDEX_LOOKUP_FROM,
-          indexLookupTo: INDEX_LOOKUP_TO,
-        });
+      it("Derives correct base items batch", async () => {
+        const items =
+          await networkDerivationsInstances.testnet.xrpBase.deriveItemsBatchFromMnemonic({
+            derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
+            indexLookupFrom: INDEX_LOOKUP_FROM,
+            indexLookupTo: INDEX_LOOKUP_TO,
+          });
 
         expect(items[FIRST_ITEM_INDEX]).toEqual(MOCK_TESTNET_ITEM.xrpBase);
         expect(items.length).toBe(INDEX_LOOKUP_TO);
       });
 
-      it("Derives correct x items batch", () => {
-        const items = networkDerivationsInstances.testnet.xrpX.deriveItemsBatchFromMnemonic({
+      it("Derives correct x items batch", async () => {
+        const items = await networkDerivationsInstances.testnet.xrpX.deriveItemsBatchFromMnemonic({
           derivationPathPrefix: MOCK_DERIVATION_PATH_BATCH_PREFIX,
           indexLookupFrom: INDEX_LOOKUP_FROM,
           indexLookupTo: INDEX_LOOKUP_TO,
@@ -275,19 +283,21 @@ describe("Xrp", () => {
 
     describe("doesPKBelongToMnemonic", () => {
       describe("Validates native private key correctly", () => {
-        it("Returns true for base private key", () => {
-          const isNative = networkDerivationsInstances.testnet.xrpBase.doesPKBelongToMnemonic({
-            derivationPathPrefix: xrpConfig.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_TESTNET_CREDENTIAL.xrpBase.privateKey,
-          });
+        it("Returns true for base private key", async () => {
+          const isNative = await networkDerivationsInstances.testnet.xrpBase.doesPKBelongToMnemonic(
+            {
+              derivationPathPrefix: xrpConfig.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_TESTNET_CREDENTIAL.xrpBase.privateKey,
+            },
+          );
 
           expect(isNative).toBe(true);
         });
 
-        it("Returns true for x private key", () => {
-          const isNative = networkDerivationsInstances.testnet.xrpX.doesPKBelongToMnemonic({
+        it("Returns true for x private key", async () => {
+          const isNative = await networkDerivationsInstances.testnet.xrpX.doesPKBelongToMnemonic({
             derivationPathPrefix: xrpConfig.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,
@@ -299,19 +309,21 @@ describe("Xrp", () => {
       });
 
       describe("Validates extrinsic private key correctly", () => {
-        it("Returns false for base private key", () => {
-          const isNative = networkDerivationsInstances.testnet.xrpBase.doesPKBelongToMnemonic({
-            derivationPathPrefix: xrpConfig.derivationPathPrefix,
-            indexLookupFrom: INDEX_LOOKUP_FROM,
-            indexLookupTo: INDEX_LOOKUP_TO,
-            privateKey: MOCK_EXTRINSIC_PRIVATE_KEY,
-          });
+        it("Returns false for base private key", async () => {
+          const isNative = await networkDerivationsInstances.testnet.xrpBase.doesPKBelongToMnemonic(
+            {
+              derivationPathPrefix: xrpConfig.derivationPathPrefix,
+              indexLookupFrom: INDEX_LOOKUP_FROM,
+              indexLookupTo: INDEX_LOOKUP_TO,
+              privateKey: MOCK_EXTRINSIC_PRIVATE_KEY,
+            },
+          );
 
           expect(isNative).toBe(false);
         });
 
-        it("Returns false for x private key", () => {
-          const isNative = networkDerivationsInstances.testnet.xrpX.doesPKBelongToMnemonic({
+        it("Returns false for x private key", async () => {
+          const isNative = await networkDerivationsInstances.testnet.xrpX.doesPKBelongToMnemonic({
             derivationPathPrefix: xrpConfig.derivationPathPrefix,
             indexLookupFrom: INDEX_LOOKUP_FROM,
             indexLookupTo: INDEX_LOOKUP_TO,

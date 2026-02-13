@@ -11,7 +11,7 @@ export {
   getRewardAddress,
   getBaseAddress,
   getAdaExodusAddress,
-} from "./ada/index.js";
+} from "./ada/ada.js";
 export { getXrpAddress, type DestinationTagProperty } from "./xrp/index.js";
 export { getBtcLegacyAddress } from "./common/index.js";
 export { getCashAddrAddress } from "./bch/index.js";

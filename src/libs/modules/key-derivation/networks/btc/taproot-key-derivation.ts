@@ -9,7 +9,7 @@ import {
   type DeriveFromMnemonicParameters,
 } from "@/libs/modules/key-derivation/libs/types/index.js";
 import { type PrivateKey, type CommonKeyPair } from "@/libs/types/types.js";
-import { convertBytesToHex, convertHexToBytes } from "@/libs/utils/index.js";
+import { convertBytesToHex, convertHexToBytes } from "@/libs/utils/utils.js";
 
 class TaprootKeyDerivation implements AbstractKeyDerivation<"btcTaproot"> {
   public prefixConfig: PrefixConfig;
